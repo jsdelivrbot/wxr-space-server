@@ -2,8 +2,10 @@ doctype html
 html
   head
     title= title
-    link(rel='stylesheet', href='/stylesheets/style.css')
+    link(rel='stylesheet', href='/lib/w3css/4/w3pro.css')
+    block meta
+    block styles
     block scripts
-	
-  body
+
+  body(class='w3-light-grey')
     block content
