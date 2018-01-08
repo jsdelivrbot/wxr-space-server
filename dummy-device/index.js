@@ -36,6 +36,10 @@ socket.on('connect', function(){
 				send_dof();
 			}
 			tracking_end();
+			
+			setTimeout(function() {
+				process.exit();
+			},1000);
 		}, 1000);
 	}, 1000);
 	
