@@ -1,3 +1,2 @@
 @echo off
-cd ../dummy-device
-npm start
+node ../dummy-device/index.js
