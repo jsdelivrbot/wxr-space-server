@@ -16,6 +16,13 @@ module.exports = function(http) {
 	  	let device_uuid = '';
 		socket.on('vrpn_event', function(msg) {
 
+			// Q: If timestamp is invalid, throw away it? Or create new one in event server?
+            // A message that has invalid timestamp will be dropped.
+            let timestamp = msg.detail.timestamp;
+            if (!timestamp) {
+            	return;
+			}
+
             if (msg.event === 'optitrack_server_on') {
                 const remote_address = socket.request.connection.remoteAddress.split(':')[3];
                 const server_name = msg.detail.server_name || 'noname';
@@ -37,13 +44,18 @@ module.exports = function(http) {
 			 * save optitrack_server_off event manually in event server
 			 * due to detecting websocket disconnected is only possible by event server
 			 *
+			 * < message structure >
 			 * { event: 'optitrack_server_off',
-			 *   detail: { server_name: 'dummy_server' } }
+			 *   detail: {
+			 *   	timestamp: timestamp,
+			 *   	server_name: 'dummy_server' } }
 			 */
 
 			let msg = {
 				event: 'optitrack_server_off',
-				detail: { }
+				detail: {
+					timestamp: Date.now()
+				}
 			}
             save_in_redis(msg);
 
@@ -57,8 +69,9 @@ module.exports = function(http) {
 			// copy obj
 			var o = Object.assign({}, obj);
 
-            // This is converted to "[object Object]" by using .toString() now and will return an error from v.3.0 on.
-            //     Please handle this in your code to make sure everything works as you intended it to.
+			// hmset(key, obj) method do convert each key and value to string by using .toString().
+			// and the method will return an error when a value that is converted to "[object Object]" exist.
+			// so stringify o.detail value by using JSON.stringify
 			for (let key in o) {
 				o[key].toString();
 				if (o[key].toString() === '[object Object]') {
@@ -68,7 +81,7 @@ module.exports = function(http) {
 
             // has_key: Event:device_uuid:timestamp
             if (device_uuid.length !== 0) {
-                const hash_key = 'event:' + device_uuid + ':' + Date.now();
+                const hash_key = 'event:' + device_uuid + ':' + obj.detail.timestamp;
                 client.hmset(hash_key, o);
 
                 console.log(`saved ${hash_key}`);

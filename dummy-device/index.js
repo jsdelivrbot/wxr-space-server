@@ -11,6 +11,7 @@ socket.on('connect', function(){
 		 * {
 		 *     "event": "optitrack_server_on",
 		 *     "detail": {
+		 *         "timestamp": time
 		 *         "server_name": server_name
 		 *     }
 		 * }
@@ -19,6 +20,7 @@ socket.on('connect', function(){
 	const msg = {
 		event: 'optitrack_server_on',
 		detail: {
+			timestamp: Date.now(),
 			server_name: 'dummy_server'
 		}
 	}
@@ -55,13 +57,17 @@ function send_dof() {
 		 *
 		 * {
 		 *     "event": "optitrack_tracking_start",
-		 *     "detail": {  }
+		 *     "detail": { 
+		 *         "timestamp": timestamp
+		 *     }
 		 * }
 		 *
 		 */
 		const msg = {
 			event: 'optitrack_tracking_start',
-			detail: {}
+			detail: {
+				timestamp: Date.now()
+			}
 		}
 		socket.emit('vrpn_event', msg);
 	}
@@ -72,6 +78,7 @@ function send_dof() {
 	 * {
 	 *     "event": "optitrack_tracking_6dof",
 	 *     "detail": {
+	 *         "timestamp": timestamp
 	 *         "pos": [p0, p1, p2],
 	 *         "quat": [q0, q1, q2, q3]
 	 *     }
@@ -81,6 +88,7 @@ function send_dof() {
 	const msg = {
 		event: 'optitrack_tracking_6dof',
 		detail: {
+			timestamp: Date.now(),
 			pos: [0.1, 0.2, 0.3],
 			quat: [0.01, 0.02, 0.03, 0.04]
 		}
@@ -94,13 +102,17 @@ function tracking_end() {
 	*
 	* {
 	*     "event": "optitrack_tracking_end",
-	*     "detail": {  }
+	*     "detail": { 
+	*         "timestamp": timestamp
+	*     }
 	* }
 	*
 	*/
 	const msg = {
 		event: 'optitrack_tracking_end',
-		detail: {}
+		detail: {
+			timestamp: Date.now()
+		}
 	}
 	socket.emit('vrpn_event', msg);
 	is_first_message = true;
