@@ -16,6 +16,11 @@ module.exports = function(http) {
 	  	let device_uuid = '';
 		socket.on('vrpn_event', function(msg) {
 
+			if (!msg || !msg.event || !msg.detail) {
+				console.error(`invalid msg!`);
+				return ;
+			}
+
 			// Q: If timestamp is invalid, throw away it? Or create new one in event server?
             // A message that has invalid timestamp will be dropped.
             let timestamp = msg.detail.timestamp;
@@ -79,7 +84,7 @@ module.exports = function(http) {
                 }
             }
 
-            // has_key: Event:device_uuid:timestamp
+            // has_key: event:device_uuid:timestamp
             if (device_uuid.length !== 0) {
                 const hash_key = 'event:' + device_uuid + ':' + obj.detail.timestamp;
                 client.hmset(hash_key, o);
