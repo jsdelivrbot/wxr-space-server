@@ -20,10 +20,17 @@ block content
       a.w3-bar-item.w3-button.w3-wide(href='#home') LOGO
       // Right-sided navbar links
       .w3-right.w3-hide-small
-        a.w3-bar-item.w3-button(href='#home') Home
-        a.w3-bar-item.w3-button(href='#javascript:void(0)', onclick='call_login_modal()')
-          i.fa.fa-user-circle-o
-          |  Login
+        a.w3-bar-item.w3-button(href='#home')
+          i.fa.fa-home
+          |  Home
+        if !user
+          a.w3-bar-item.w3-button(href='#javascript:void(0)', onclick='call_login_modal()')
+            i.fa.fa-user-circle-o
+            |  Login
+        else
+          a.w3-bar-item.w3-button(href='/auth/logout')
+            i.fa.fa-sign-out
+            |  Log out
       // Hide right-floated links on small screens and replace them with a menu icon
       a.w3-bar-item.w3-button.w3-right.w3-hide-large.w3-hide-medium(href='javascript:void(0)', onclick='w3_open()')
         i.fa.fa-bars

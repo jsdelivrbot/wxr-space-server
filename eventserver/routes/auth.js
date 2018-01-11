@@ -12,13 +12,50 @@ router.post('/login', passport.authenticate('local', {
 
 // default logout process
 router.get('/logout', function(req, res) {
-  req.session.destroy(function(err) {
-    if (err) {
-      console.log(err);
-    }
-    console.log('logout');
+  req.logout();
+  res.redirect('/');
+});
 
-    res.redirect('/');
+
+// signup
+router.post('/signup', function(req, res) {
+
+  console.log(`new register ${req.body.username}, ${req.body.password}`);
+
+  let key = `user:${req.body.username}`;
+  let user = {
+    name: 'someone',
+    password: req.body.password
+  }
+
+  client.hgetall(key, function(err, u) {
+
+    if (err) {
+      console.log('hgetall error');
+      return res.redirect('/');
+    }
+
+    if (!u) {
+      client.hmset(key, user, function(err) {
+
+        if (err) {
+          console.log('hmset error');
+          return res.redirect('/');
+        }
+
+        req.login(user, function(err) {
+
+          if (err) {
+            console.log('req.login error');
+          }
+
+          return res.redirect('/');
+        })
+      });
+    } else {
+      console.log('user already exist!!!');
+      return res.redirect('/');
+    }
   });
 });
 
