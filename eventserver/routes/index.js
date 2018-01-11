@@ -8,6 +8,11 @@ router.get('/', function(req, res, next) {
     user: req.user
   });
 });
+
+router.get('/view', function(req, res, next) {
+  res.render('view', {
+    title: 'Express',
+    user: req.user
   });
 });
 

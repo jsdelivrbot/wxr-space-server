@@ -13,7 +13,8 @@ router.use('/w3css', express.static(path.join(__dirname, '../node_modules/w3-css
 router.use('/font-awesome', express.static(path.join(__dirname, '../node_modules/font-awesome')));
 
 // three.js
-router.use('/threejs', express.static(path.join(__dirname, '../node_modules/three/build')));
+router.use('/three', express.static(path.join(__dirname, '../node_modules/three/build')));
+router.use('/three/js', express.static(path.join(__dirname, '../node_modules/three/example/js')));
 
 
 
