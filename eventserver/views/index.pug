@@ -164,14 +164,14 @@ block content
       .w3-center
         br
         span.w3-button.w3-xlarge.w3-transparent.w3-display-topright(onclick="close_login_modal()", title='Close Modal') ×
-      form.w3-container(action='/auth/login')
+      form.w3-container(action='/auth/login', method='post')
         .w3-section
           label
             b Username
-          input.w3-input.w3-border.w3-margin-bottom(type='text', placeholder='Enter Username', name='usrname', required='')
+          input.w3-input.w3-border.w3-margin-bottom(type='text', placeholder='Enter Username', name='username', required='')
           label
             b Password
-          input.w3-input.w3-border(type='text', placeholder='Enter Password', name='psw', required='')
+          input.w3-input.w3-border(type='text', placeholder='Enter Password', name='password', required='')
           button.w3-button.w3-block.w3-green.w3-section.w3-padding(type='submit') Login
           button.w3-button.w3-block.w3-indigo.w3-section.w3-padding(type='submit') Login with Facebook (dummy)
       .w3-container.w3-border-top.w3-padding-16.w3-light-grey
