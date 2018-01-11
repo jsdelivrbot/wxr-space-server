@@ -1,11 +1,6 @@
 
 
 window.onload = function() {
-    var socket = io();
-	console.log('connect');
-	socket.on('categories', function(msg) {
-		console.log(msg);
-	});
 }
 
 
@@ -35,4 +30,14 @@ function call_login_modal() {
 
 function close_login_modal() {
     document.getElementById('loginModalWindow').style.display='none';
+}
+
+function call_register_modal() {
+    close_login_modal();
+
+    document.getElementById('signupModalWindow').style.display='block';
+}
+
+function close_signup_modal() {
+    document.getElementById('signupModalWindow').style.display='none';
 }

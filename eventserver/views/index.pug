@@ -183,7 +183,19 @@ block content
           button.w3-button.w3-block.w3-indigo.w3-section.w3-padding(type='submit') Login with Facebook (dummy)
       .w3-container.w3-border-top.w3-padding-16.w3-light-grey
         button.w3-button.w3-red(onclick='close_login_modal()', type='button') Cancel
-        span.w3-right.w3-padding.w3-hide-small
-          a(href='#javascript:void(0)') Forgot password?
-          | &nbsp; or &nbsp;
-          a(href='#javascript:void(0)') Create new one?
+        button.w3-right.w3-button.w3-light-blue(onclick='call_register_modal()', type='button') Register
+  // W3.CSS Signup Modal
+  #signupModalWindow.w3-modal
+    .w3-modal-content.w3-card-4.w3-animate-zoom(style='max-width:600px')
+      .w3-center
+        br
+        span.w3-button.w3-xlarge.w3-transparent.w3-display-topright(onclick="close_signup_modal()", title='Close Modal') ×
+      form.w3-container(action='/auth/signup', method='post')
+        .w3-section
+          label
+            b Username
+          input.w3-input.w3-border.w3-margin-bottom(type='text', placeholder='Enter Username', name='username', required='')
+          label
+            b Password
+          input.w3-input.w3-border(type='text', placeholder='Enter Password', name='password', required='')
+          button.w3-button.w3-block.w3-green.w3-section.w3-padding(type='submit') Register
