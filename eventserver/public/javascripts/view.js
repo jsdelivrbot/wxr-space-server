@@ -14,7 +14,7 @@ window.onload = function() {
 
   var camera, tick = 0,
     scene, renderer, clock = new THREE.Clock(),
-    controls, container, gui = new dat.GUI( { width: 350 } ),
+    controls, container,
     options, spawnerOptions, particleSystem;
 
 
@@ -28,7 +28,8 @@ window.onload = function() {
     container = document.getElementById( 'container' );
 
     camera = new THREE.PerspectiveCamera( 28, window.innerWidth / window.innerHeight, 1, 10000 );
-    camera.position.z = 100;
+	camera.position.set( 20, 10, 20 );
+	camera.lookAt( new THREE.Vector3() );
 
     scene = new THREE.Scene();
 
@@ -65,35 +66,30 @@ window.onload = function() {
       timeScale: 1
     };
 
-    //
+	// grid helper
+	var size = 60;
+	var divisions = 60;
+	var colorCenterLine = 0x444444;
+	var colorGrid = 0x888888;
 
-    gui.add( options, "velocityRandomness", 0, 3 );
-    gui.add( options, "positionRandomness", 0, 3 );
-    gui.add( options, "size", 1, 20 );
-    gui.add( options, "sizeRandomness", 0, 25 );
-    gui.add( options, "colorRandomness", 0, 1 );
-    gui.add( options, "lifetime", .1, 10 );
-    gui.add( options, "turbulence", 0, 1 );
-
-    gui.add( spawnerOptions, "spawnRate", 10, 30000 );
-    gui.add( spawnerOptions, "timeScale", -1, 1 );
-
+	var gridHelper = new THREE.GridHelper( size, divisions, colorCenterLine, colorGrid );
+	scene.add( gridHelper );
 
     //
 
     renderer = new THREE.WebGLRenderer();
     renderer.setPixelRatio( window.devicePixelRatio );
     renderer.setSize( window.innerWidth, window.innerHeight );
+	renderer.setClearColor( 0xaaaaaa );
     container.appendChild( renderer.domElement );
 
     //
 
-    controls = new THREE.TrackballControls( camera, renderer.domElement );
-    controls.rotateSpeed = 5.0;
-    controls.zoomSpeed = 2.2;
-    controls.panSpeed = 1;
-    controls.dynamicDampingFactor = 0.3;
-
+    controls = new THREE.EditorControls( camera, renderer.domElement );
+	
+	//
+	
+	
     window.addEventListener( 'resize', onWindowResize, false );
 
   }
@@ -111,8 +107,6 @@ window.onload = function() {
 
     requestAnimationFrame( animate );
 
-    controls.update();
-
     var delta = clock.getDelta() * spawnerOptions.timeScale;
 
     tick += delta;
@@ -121,10 +115,12 @@ window.onload = function() {
 
     if ( delta > 0 ) {
 
+		/*
       options.position.x = Math.sin( tick * spawnerOptions.horizontalSpeed ) * 20;
       options.position.y = Math.sin( tick * spawnerOptions.verticalSpeed ) * 10;
       options.position.z = Math.sin( tick * spawnerOptions.horizontalSpeed + spawnerOptions.verticalSpeed ) * 5;
-
+*/
+		
       for ( var x = 0; x < spawnerOptions.spawnRate * delta; x++ ) {
 
         // Yep, that's really it.	Spawning particles is super cheap, and once you spawn them, the rest of
