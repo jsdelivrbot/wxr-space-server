@@ -14,7 +14,7 @@ router.use('/font-awesome', express.static(path.join(__dirname, '../node_modules
 
 // three.js
 router.use('/three', express.static(path.join(__dirname, '../node_modules/three/build')));
-router.use('/three/js', express.static(path.join(__dirname, '../node_modules/three/example/js')));
+router.use('/three/js', express.static(path.join(__dirname, '../node_modules/three/examples/js')));
 
 
 

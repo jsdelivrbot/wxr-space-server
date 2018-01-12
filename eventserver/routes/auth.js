@@ -1,11 +1,13 @@
 var express = require('express');
 var router = express.Router();
 var passport = require('passport');
+var redis = require('redis');
+var client = redis.createClient();
 
 // default login process
 router.post('/login', passport.authenticate('local', {
-    successRedirect: '/javascript:alert("login!!!")',
-    failureRedirect: '/javascript:alert("fail to lgo in")',
+    successRedirect: '/',
+    failureRedirect: '/',
     failureFlash: false
   })
 );
