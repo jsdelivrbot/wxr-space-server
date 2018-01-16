@@ -16,6 +16,12 @@ var port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
 
 /**
+ *  Object extend
+ */
+require('../object_extend');
+
+
+/**
  * Create HTTP server.
  */
 
