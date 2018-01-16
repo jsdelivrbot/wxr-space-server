@@ -1,5 +1,5 @@
-:# for bash
+: # for bash
 :; ../redis/src/redis-cli; exit $?
 
-:# for windows
+: # for windows
 start ../redis/redis-cli.exe
