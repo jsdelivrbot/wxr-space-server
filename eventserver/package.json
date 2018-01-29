@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www"
+    "start": "node ./bin/www",
+    "test": "NODE_ENV=dev ./node_modules/mocha/bin/mocha"
   },
   "dependencies": {
     "body-parser": "~1.18.2",
@@ -24,5 +25,8 @@
     "socket.io": "^2.0.4",
     "three": "^0.89.0",
     "w3-css": "^4.0.4"
+  },
+  "devDependencies": {
+    "mocha": "^5.0.0"
   }
 }
