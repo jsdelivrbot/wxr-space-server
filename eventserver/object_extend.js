@@ -11,10 +11,12 @@ String.prototype.hash = function(salt) {
 }
 
 
-// redis client extension example
-redis.RedisClient.prototype.parse_info = function (callback) {
-
-  console.log('parse_info');
-  callback('ok');
-
-};
+/**
+ * Redis client extension example
+ */
+// redis.RedisClient.prototype.parse_info = function (callback) {
+//
+//   console.log('parse_info');
+//   callback('ok');
+//
+// };
