@@ -16,6 +16,8 @@ router.use('/font-awesome', express.static(path.join(__dirname, '../node_modules
 router.use('/three', express.static(path.join(__dirname, '../node_modules/three/build')));
 router.use('/three/js', express.static(path.join(__dirname, '../node_modules/three/examples/js')));
 
+// jQuery
+router.use('/jquery', express.static(path.join(__dirname, '../node_modules/jquery/dist')));
 
 
 module.exports = router;
