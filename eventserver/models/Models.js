@@ -127,6 +127,8 @@ function getAllLinks (modelName, linkNames) {
 /*
  * Define global helper function
  */
+// Deprecated function
+// This was for unit test not using redis.client.flushdb()
 global.clearInstances = function (_r, cb) {
 	const removeList = [];
 	_r.forEach( e => e && e.remove && removeList.push(e) );
