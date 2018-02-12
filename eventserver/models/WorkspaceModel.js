@@ -52,9 +52,15 @@ const WorkspaceModel = nohm.model('WorkspaceModel', {
 		},
 
 		getAllMembers: function() {
-			const UserModel = nohm.getModels()['UserModel'];
-			return this.getAllLinks('UserModel', WorkspaceModel.USER_RIGHTS)
-				.then( ids => UserModel.propagateInstances(ids) );
+			return getMembersOfRights.call(this, WorkspaceModel.USER_RIGHTS);
+		},
+
+		getEditors: function () {
+			return getMembersOfRights.call(this, WorkspaceModel.RELATION_USER_EDITOR);
+		},
+
+		getViewers: function () {
+			return getMembersOfRights.call(this, WorkspaceModel.RELATION_USER_VIEWER);
 		},
 
 		getRightsOf: function (user) {
@@ -86,16 +92,6 @@ const WorkspaceModel = nohm.model('WorkspaceModel', {
 			rights.forEach( RIGHT => this.unlink(user, RIGHT) );
 
 			return this._pSave();
-		},
-
-		getEditors: function () {
-
-		},
-		addEditors: function (user) {
-
-		},
-		viewers: function (user) {
-
 		},
 
 
@@ -151,6 +147,12 @@ WorkspaceModel.create = function (owner, wsName) {
 }
 
 
+
+function getMembersOfRights(RIGHTS) {
+	const UserModel = nohm.getModels()['UserModel'];
+	return this.getAllLinks('UserModel', RIGHTS)
+		.then( ids => UserModel.propagateInstances(ids) );
+}
 
 
 module.exports = WorkspaceModel;
