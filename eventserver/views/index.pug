@@ -18,12 +18,12 @@ block content
   // Navbar (sit on top)
   .w3-top
     #myNavbar.w3-bar.w3-white.w3-card
-      a.w3-bar-item.w3-button.w3-wide(href='#home') LOGO
+      a.w3-bar-item.w3-button.w3-wide(href='#home') Motion Tracking
       // Right-sided navbar links
       .w3-right.w3-hide-small
-        a.w3-bar-item.w3-button(href='#home')
-          i.fa.fa-home
-          |  Home
+        a.w3-bar-item.w3-button(href='#javasciprt:void(0)', onclick='create_new_workspace()')
+          i.fa.fa-paper-plane
+          |  New Workspace
         if !user
           a.w3-bar-item.w3-button(href='#javascript:void(0)', onclick='call_login_modal()')
             i.fa.fa-user-circle-o

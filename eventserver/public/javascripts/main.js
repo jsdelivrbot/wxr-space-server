@@ -41,3 +41,18 @@ function call_register_modal() {
 function close_signup_modal() {
     document.getElementById('signupModalWindow').style.display='none';
 }
+
+function create_new_workspace() {
+	const body = {
+		name: ''
+	};
+
+	$.ajax({
+		url: '/workspace',    //Your api url
+		type: 'POST',   //type is any HTTP method
+		data: body,
+		success: function () {
+			console.log('ok');
+		}
+	})
+}
