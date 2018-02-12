@@ -4,11 +4,23 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var session = require('express-session');
-var bodyParser = require('body-parser');
 var RedisStore = require('connect-redis')(session);
+var bodyParser = require('body-parser');
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
+
+
+var REDIS_DATABASE_INDEX = 1;
+
 var redis = require('redis');
+var nohm = require('nohm').Nohm;
+client = redis.createClient({db: REDIS_DATABASE_INDEX});
+client.on('connect', () => {
+	nohm.setClient(client);
+	console.log('Database connection is done.');
+});
+var {UserModel} = require('./models/Models');
+
 
 var index = require('./routes/index');
 var auth = require('./routes/auth');
@@ -18,40 +30,29 @@ var app = express();
 
 
 // configure passport
-var client = redis.createClient();
 passport.serializeUser(function(user, done) {
-  // done(null, user.id);
-  done(null, user);
+	done(null, user.p('name'));
 });
 
-passport.deserializeUser(function(id, done) {
-  // User.findById(id, function(err, user) {
-  //     done(err, user);
-  // });
-  done(null, id);
+passport.deserializeUser(function(name, done) {
+	UserModel.findAndLoadByName(name)
+		.then( user => done(null, user) )
+		.catch( err => done(err, null) );
 });
 
 passport.use(new LocalStrategy(
-  function(username, password, done) {
-    const key = `user:${username}`;
-
-    client.hgetall(key, function(err, user) {
-      if (err) { return done(err); }
-      if (!user) {
-        return done(null, false, { message: 'Incorrect username.' });
-      }
-
-      // if (!user.validPassword(password)) {
-      if (user.password !== password) {
-          return done(null, false, { message: 'Incorrect password.' });
-      }
-
-      return done(null, user);
-    });
-
-  }
+	function(username, password, done) {
+		UserModel.login(username, password)
+			.then( user => done(null, user) )
+			.catch( err => {
+				if (err === 'not found') {
+					done(null, false);
+					return;
+				}
+				done(err, false)
+			});
+	}
 ));
-
 
 
 // view engine setup
@@ -65,10 +66,10 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({
-    secret: 'this is a key for hashing',
-    store: new RedisStore({client:client}),
-    saveUninitialized: false,
-    resave: false
+		secret: 'this is a key for hashing',
+		store: new RedisStore({client:client}),
+		saveUninitialized: false,
+		resave: false
 }));
 app.use(passport.initialize());
 app.use(passport.session());
@@ -80,20 +81,20 @@ app.use('/auth', auth);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-  var err = new Error('Not Found');
-  err.status = 404;
-  next(err);
+	var err = new Error('Not Found');
+	err.status = 404;
+	next(err);
 });
 
 // error handler
 app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
+	// set locals, only providing error in development
+	res.locals.message = err.message;
+	res.locals.error = req.app.get('env') === 'development' ? err : {};
 
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error');
+	// render the error page
+	res.status(err.status || 500);
+	res.render('error');
 });
 
 
