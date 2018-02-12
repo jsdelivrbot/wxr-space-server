@@ -61,3 +61,4 @@ typings/
 .next
 redis/
 */dump.rdb
+eventserver/.idea/
