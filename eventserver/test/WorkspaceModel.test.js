@@ -110,6 +110,15 @@ describe(`WorkspaceModel.test.js`, function() {
 				.then( () => done() );
 		});
 
+
+		it(`Test 'detachDevice' method`, function(done) {
+			ws.detachDevice(device)
+				.then( () => ws.getAttachedDevices() )
+				.then( _devices => assert.equal(_devices.length, 0) )
+				.catch( reason => assert.fail(reason) )
+				.then( () => done() );
+		});
+
 	});
 
 });

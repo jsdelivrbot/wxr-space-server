@@ -103,6 +103,11 @@ const WorkspaceModel = nohm.model('WorkspaceModel', {
 			return this._pSave();
 		},
 
+		detachDevice: function (device) {
+			this.unlink(device, WorkspaceModel.RELATION_DEVICE_TRACKER);
+			return this._pSave();
+		},
+
 		getAttachedDevices: function () {
 			const DeviceModel = nohm.getModels()['DeviceModel'];
 			return this.getAllLinks('DeviceModel', WorkspaceModel.RELATION_DEVICE_TRACKER)
