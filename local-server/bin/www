@@ -1,5 +1,7 @@
 #!/usr/bin/env node
 
+global.REMOTE_ORIGIN = '127.0.0.1:7862';
+
 /**
  * Module dependencies.
  */
