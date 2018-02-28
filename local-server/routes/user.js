@@ -41,6 +41,8 @@ router.post('/login', function(req, res, next) {
 		.then( parseBody => {
 			console.log(parseBody);
 		})
+		.then( () => request(global.REMOTE_ORIGIN + '/user/' + req.body.username + '/device/list') )
+		.then( device_list => global.DEVICES = device_list )
 		.catch( err => console.log(err) )
 		.then( () => res.end() );
 

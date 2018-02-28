@@ -4,7 +4,7 @@ var router = express.Router();
 
 
 // get workspaces
-router.get('/', function(req, res, next) {
+router.get('/list', function(req, res, next) {
 
 	const URI = global.REMOTE_ORIGIN + '/workspaces';
 
@@ -37,9 +37,9 @@ router.post('/', function(req, res, next) {
 
 
 // join workspaces
-router.get('/:id', function(req, res, next) {
+router.get('/:workspaceId', function(req, res, next) {
 
-	const URI = global.REMOTE_ORIGIN + '/workspaces/' + req.params.id;
+	const URI = global.REMOTE_ORIGIN + '/workspaces/' + req.params.workspaceId;
 	request(URI)
 		.then( response => console.log(response) )
 		.then( () => res.end() );
@@ -48,11 +48,28 @@ router.get('/:id', function(req, res, next) {
 
 
 // invite user
-router.post('/invite', function(req, res, next) {
+router.post('/:workspaceId/invite', function(req, res, next) {
 
-	
-	const URI = global.REMOTE_ORIGIN + '/workspaces/' + req.params.id;
+	const URI = global.REMOTE_ORIGIN + '/workspaces/' + req.params.workspaceId;
 	request(URI)
+		.then( response => console.log(response) )
+		.then( () => res.end() );
+
+});
+
+
+// change authority of member
+router.put('/:workspaceId/member/:userId', function(req, res, next) {
+
+	const options = {
+		method: 'PUT',
+		uri: global.REMOTE_ORIGIN + '/workspaces/' + workspaceId + '/member/' + userId,
+		body: {
+			authority: req.body.authority
+		}
+	};
+
+	request(options)
 		.then( response => console.log(response) )
 		.then( () => res.end() );
 
