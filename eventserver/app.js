@@ -8,13 +8,14 @@ var RedisStore = require('connect-redis')(session);
 var bodyParser = require('body-parser');
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
+var config = require('config');
 
 
-var REDIS_DATABASE_INDEX = 1;
 
+// connect to redis
 var redis = require('redis');
 var nohm = require('nohm').Nohm;
-client = redis.createClient({db: REDIS_DATABASE_INDEX});
+client = redis.createClient(config.get('dbConfig'));
 client.on('connect', () => {
 	nohm.setClient(client);
 	console.log('Database connection is done.');
