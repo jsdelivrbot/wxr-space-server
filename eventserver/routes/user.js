@@ -3,23 +3,11 @@ const router = express.Router();
 const passport = require('passport');
 const {UserModel} = require('../models/Models');
 
-// default login process
-router.post('/login', passport.authenticate('local', {
-		successRedirect: '/',
-		failureRedirect: '/',
-		failureFlash: false
-	})
-);
-
-// default logout process
-router.get('/logout', function(req, res) {
-	req.logout();
-	res.redirect('/');
-});
 
 
-// signup
-router.post('/signup', function(req, res) {
+// register new user
+// TODO: handle errors
+function register_new_user(req, res) {
 
 	const userInfo = {
 		name: req.body.username,
@@ -31,15 +19,41 @@ router.post('/signup', function(req, res) {
 		.then( user => {
 			req.login(user, err => {
 				if (err) throw Error(err);
-				res.redirect('/');
+				res.end();
 			});
 		})
 		.catch( err => {
 			console.log(err);
-			res.redirect('/');
+			res.end();
 		});
 
-});
+}
+
+
+// default login process
+function local_login_success(req, res) {
+	res.end();
+}
+
+
+// default logout process
+function user_logout(req, res) {
+	req.logout();
+	res.end();
+}
+
+
+
+
+
+router.route('/')
+	.post(register_new_user);
+
+router.route('/login/local')
+	.post(passport.authenticate('local'), local_login_success);
+
+router.route('/logout')
+	.get(user_logout);
 
 
 

@@ -11,6 +11,10 @@ var LocalStrategy = require('passport-local').Strategy;
 var config = require('config');
 
 
+var user = require('./routes/user');
+
+var app = express();
+
 
 // connect to redis
 var redis = require('redis');
@@ -21,13 +25,6 @@ client.on('connect', () => {
 	console.log('Database connection is done.');
 });
 var {UserModel} = require('./models/Models');
-
-
-var index = require('./routes/index');
-var auth = require('./routes/auth');
-var lib = require('./routes/lib');
-
-var app = express();
 
 
 // configure passport
@@ -75,9 +72,8 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use('/', index);
-app.use('/lib', lib);
-app.use('/auth', auth);
+
+app.use('/user', user);
 
 
 // catch 404 and forward to error handler
