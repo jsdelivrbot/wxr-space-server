@@ -36,7 +36,7 @@ describe(`Models.test.js`, function() {
 		let userInstance;
 
 
-		it(`Test overwritten 'findAndLoad' method`, function(done) {
+		it(`Test 'findAndLoadByName' method`, function(done) {
 			UserModel.findAndLoadByName('user1')
 				.then( instance => {
 					assert.equal(!!instance, true);
@@ -86,6 +86,14 @@ describe(`Models.test.js`, function() {
 			UserModel.propagateInstances(ids)
 				.then( instances => assert.equal(instances.length, 3) )
 				.catch( reason => done(reason) )
+				.then( () => done() );
+		});
+
+
+		it(`Test 'findAndLoadAll' method`, function(done) {
+			UserModel.findAndLoadAll()
+				.then( instances => assert.equal(instances.length, 4) )
+				.catch( reason => assert.fail(reason) )
 				.then( () => done() );
 		});
 

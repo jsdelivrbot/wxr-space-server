@@ -13,6 +13,7 @@ const Models = {
 
 // Overwrite static methods.
 const sm = [
+	findAndLoadAll,
 	findAndLoadByName,
 	propagateInstances,
 ];
@@ -21,6 +22,7 @@ const sm = [
 const bm = [
 	_pSave,
 	_pBelongsTo,
+	_allProperties,
 	getAllLinks,
 ];
 
@@ -54,12 +56,25 @@ module.exports = Models;
  *    unsubscribe
  *    remove
  */
+function findAndLoadAll() {
+	const model = nohm.factory(this.prototype.modelName);
+	return new Promise( (resolve, reject) => {
+		model.findAndLoad({}, (err, instances) => {
+			if (err === 'not found') instances = [];
+			else if (err) return reject(err);
+			resolve(instances);
+		});
+	});
+}
+
+
 function findAndLoadByName (name) {
 	const model = nohm.factory(this.prototype.modelName);
 	return new Promise( (resolve, reject) => {
 		model.findAndLoad({name: name}, (err, instances) => {
-			if (err) reject(err);
-			else resolve(instances[0]);
+			if (err === 'not found') instances = [];
+			else if (err) return reject(err);
+			resolve(instances[0]);
 		});
 	});
 }
@@ -68,9 +83,10 @@ function findAndLoadByName (name) {
 function propagateInstances (ids) {
 	const promisesArray = ids.map( id => {
 		return new Promise( (resolve, reject) => {
-			const instance = nohm.factory(this.prototype.modelName, id, (err, prop) => {
-				if (err) reject(err);
-				else resolve(instance);
+			let instance = nohm.factory(this.prototype.modelName, id, (err, prop) => {
+				if (err === 'not found') instance = undefined;
+				else if (err) return reject(err);
+				resolve(instance);
 			});
 		});
 	});
@@ -95,10 +111,18 @@ function _pSave() {
 function _pBelongsTo(instance, relation) {
 	return new Promise( (resolve, reject) => {
 		this.belongsTo(instance, relation, (err, isBelonged) => {
-			if (err) reject(err);
-			else resolve(isBelonged);
+			if (err === 'not found') isBelonged = false;
+			else if (err) return reject(err);
+			resolve(isBelonged);
 		});
 	});
+}
+
+
+function _allProperties() {
+	let props = this.allProperties();
+	delete props.id;
+	return props;
 }
 
 
@@ -107,7 +131,8 @@ function getAllLinks (modelName, linkNames) {
 	const promisesArray = linkNames.map(linkName => {
 		return new Promise((resolve, reject) => {
 			this.getAll(modelName, linkName, (err, roleIds) => {
-				if (err) reject(err);
+				if (err === 'not found') roleIds = [];
+				else if (err) return reject(err);
 				resolve(roleIds);
 			});
 		});
