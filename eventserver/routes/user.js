@@ -7,7 +7,7 @@ const {UserModel} = require('../models/Models');
 
 // register new user
 // TODO: handle errors
-function register_new_user(req, res) {
+function registerNewUser(req, res) {
 
 	const userInfo = {
 		name: req.body.username,
@@ -31,13 +31,13 @@ function register_new_user(req, res) {
 
 
 // default login process
-function local_login_success(req, res) {
+function localLoginSuccess(req, res) {
 	res.end();
 }
 
 
 // default logout process
-function user_logout(req, res) {
+function userLogout(req, res) {
 	req.logout();
 	res.end();
 }
@@ -47,13 +47,13 @@ function user_logout(req, res) {
 
 
 router.route('/')
-	.post(register_new_user);
+	.post(registerNewUser);
 
 router.route('/login/local')
-	.post(passport.authenticate('local'), local_login_success);
+	.post(passport.authenticate('local'), localLoginSuccess);
 
 router.route('/logout')
-	.get(user_logout);
+	.get(userLogout);
 
 
 

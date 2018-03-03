@@ -20,19 +20,19 @@ function checkUserSession(req, res, next) {
 
 
 // create new workspace
-function create_new_workspace(req, res) {
+function createNewWorkspace(req, res) {
 
 	const user = req.user;
 	const wsName = req.body.name;
 
 	user.createWorkspace(wsName)
-	// shift to enter_workspace logic
-		.then( () => enter_workspace(req,res) );
+	// shift to enterWorkspace logic
+		.then( () => enterWorkspace(req,res) );
 }
 
 
 // get list of all workspaces
-function get_workspace_list(req, res) {
+function getWorkspaceList(req, res) {
 	WorkspaceModel.getAllWorkspaces()
 		.then( instances => {
 			instancesPropertiesOnly = instances.map( i => i._allProperties() )
@@ -47,7 +47,7 @@ function get_workspace_list(req, res) {
 
 
 // workspace entering logic
-function enter_workspace(req, res) {
+function enterWorkspace(req, res) {
 
 	const user = req.user;
 	const workspaceId = req.params.id;
@@ -72,13 +72,13 @@ function enter_workspace(req, res) {
 
 // exit workspace
 // end getting socketio stream data
-function exit_workspace(req, res) {
+function exitWorkspace(req, res) {
 
 }
 
 
 // get list of all members joined in this workspace
-function get_all_members (req,res) {
+function getAllMembers (req,res) {
 
 	const user = req.user;
 	const workspaceId = req.params.id;
@@ -114,7 +114,7 @@ function get_all_members (req,res) {
 
 
 // invite a user to this workspace
-function invite_member(req, res) {
+function inviteMember(req, res) {
 
 	const user = req.user;
 	const workspaceId = req.params.id;
@@ -150,7 +150,7 @@ function invite_member(req, res) {
 
 // change authority of a member
 // In the present only can handle with authority of member
-function update_member_properties(req, res) {
+function updateMemberProperties(req, res) {
 
 	const user = req.user;
 	const workspaceId = req.params.id;
@@ -181,7 +181,7 @@ function update_member_properties(req, res) {
 	// change authority
 		.then( () => workspaceInstance.resetRightsOf(memberInstance, WorkspaceModel.USER_RIGHTS) )
 		.then( () => workspaceInstance.setRightsOf(memberInstance, authority) )
-		.then( () => res.end() )
+		.then( () => res.end('ok') )
 		// TODO: response unavailable access message
 		.catch( reason => {
 			const message = {
@@ -197,25 +197,25 @@ function update_member_properties(req, res) {
 router.use(checkUserSession);
 
 router.route('/')
-	.post(create_new_workspace);
+	.post(createNewWorkspace);
 
 router.route('/list')
-	.get(get_workspace_list);
+	.get(getWorkspaceList);
 
 router.route('/:id')
-	.get(enter_workspace);
+	.get(enterWorkspace);
 
 router.route('/:id/exit')
-	.get(exit_workspace);
+	.get(exitWorkspace);
 
 router.route('/:id/member/list')
-	.get(get_all_members);
+	.get(getAllMembers);
 
 router.route('/:id/member/invite')
-	.post(invite_member);
+	.post(inviteMember);
 
 router.route('/:id/member/:memberId')
-	.put(update_member_properties);
+	.put(updateMemberProperties);
 
 
 
