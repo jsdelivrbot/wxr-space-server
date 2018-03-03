@@ -12,6 +12,7 @@ var config = require('config');
 
 
 var user = require('./routes/user');
+var workspace = require('./routes/workspace');
 
 var app = express();
 
@@ -74,6 +75,7 @@ app.use(passport.session());
 
 
 app.use('/user', user);
+app.use('/workspace', workspace);
 
 
 // catch 404 and forward to error handler
