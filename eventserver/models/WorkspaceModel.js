@@ -152,6 +152,12 @@ WorkspaceModel.create = function (owner, wsName) {
 }
 
 
+// for further implementation, this function should accept filter option.
+WorkspaceModel.getAllWorkspaces = function () {
+	return this.findAndLoadAll();
+}
+
+
 
 function getMembersOfRights(RIGHTS) {
 	const UserModel = nohm.getModels()['UserModel'];
