@@ -4,13 +4,13 @@ var router = express.Router();
 
 
 // register
-router.post('/', function(req, res, next) {
+function createNewUser(req, res) {
 
 	const options = {
 		method: 'POST',
 		uri: global.REMOTE_ORIGIN + '/user',
 		body: {
-			name: req.body.username,
+			username: req.body.username,
 			password: req.body.password
 		}
 	};
@@ -21,18 +21,17 @@ router.post('/', function(req, res, next) {
 		})
 		.catch( err => console.log(err) )
 		.then( () => res.end() );
-
-});
+}
 
 
 // login
-router.post('/login', function(req, res, next) {
+function userLogin(req, res) {
 
 	const options = {
 		method: 'POST',
-		uri: global.REMOTE_ORIGIN + '/user/login',
+		uri: global.REMOTE_ORIGIN + '/user/login/local',
 		body: {
-			name: req.body.username,
+			username: req.body.username,
 			password: req.body.password
 		}
 	};
@@ -41,23 +40,31 @@ router.post('/login', function(req, res, next) {
 		.then( parseBody => {
 			console.log(parseBody);
 		})
-		.then( () => request(global.REMOTE_ORIGIN + '/user/' + req.body.username + '/device/list') )
-		.then( device_list => global.DEVICES = device_list )
 		.catch( err => console.log(err) )
 		.then( () => res.end() );
-
-});
+}
 
 
 // logout
-router.get('/logout', function(req, res, next) {
+function userLogout(req, res) {
 
 	const URI = global.REMOTE_ORIGIN + '/user/logout';
 	request(URI)
 		.then( response => console.log(response) )
 		.then( () => res.end() );
 
-});
+}
+
+
+
+router.route('/')
+	.post(createNewUser);
+
+router.route('/login')
+	.post(userLogin);
+
+router.route('/logout')
+	.get(userLogout);
 
 
 module.exports = router;

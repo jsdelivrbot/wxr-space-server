@@ -2,7 +2,7 @@
 
 
 // global variables
-global.REMOTE_ORIGIN = '127.0.0.1:7862';
+global.REMOTE_ORIGIN = '127.0.0.1:6701';
 global.DEVICES = [];
 
 
