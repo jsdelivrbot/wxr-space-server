@@ -173,7 +173,7 @@ UserModel.login = function(name, password) {
 		})
 		.then( () => this.findAndLoadByName(name) )
 		.then( user => {
-			if (user.validPassword(password))
+			if (user && user.validPassword(password))
 				return Promise.resolve(user);
 			else
 				return Promise.reject(new Error(`name or password is invalid`));
