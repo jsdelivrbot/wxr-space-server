@@ -13,3 +13,19 @@ String.prototype.hash = function(salt) {
 Array.prototype.union = function(target) {
 	return [...new Set([...this, ...target])];
 }
+
+// response message class
+global.APIResponseMessage = class APIResponseMessage {
+	constructor(status = 'ok', message = '') {
+		this.status = status;
+		this.message = message;
+	}
+
+	static OK(data) {
+		return new APIResponseMessage('ok', data);
+	}
+
+	static ERROR(message) {
+		return new APIResponseMessage('error', message);
+	}
+}

@@ -9,12 +9,7 @@ function checkUserSession(req, res, next) {
 	if (!!req.user === true) {
 		next();
 	} else {
-		// TODO: response unavailable access message
-		const message = {
-			status: `error`,
-			message: `You are not logged in`
-		}
-		res.json(message);
+		res.json( APIResponseMessage.ERROR('You are not logged in') );
 	}
 }
 
@@ -36,12 +31,12 @@ function getWorkspaceList(req, res) {
 	WorkspaceModel.getAllWorkspaces()
 		.then( instances => {
 			instancesPropertiesOnly = instances.map( i => i._allProperties() )
-			res.json(instancesPropertiesOnly);
+			res.json( APIResponseMessage.OK(instancesPropertiesOnly) );
 		})
 		.catch( reason => {
-			if (reason === 'not found') res.json([]);
+			if (reason === 'not found') res.json( APIResponseMessage.OK([]) );
 			// TODO: response unavailable access message
-			else res.end();
+			else res.json( APIResponseMessage.ERROR('Unavailable access.') );
 		});
 }
 
@@ -58,13 +53,9 @@ function enterWorkspace(req, res) {
 			const isJoined = !!members.find( _u => _u.id === user.id );
 			if (isJoined) {
 				// start getting socketio stream data
-				res.end('ok');
+				res.json( APIResponseMessage.OK() );
 			} else {
-				const message = {
-					status: `error`,
-					message: `You are not joined in this workspace`
-				}
-				res.json(message);
+				res.json( APIResponseMessage.ERROR('You are not joined in this workspace') );
 			}
 		});
 }
@@ -107,7 +98,7 @@ function getAllMembers (req,res) {
 				propertiesAndAuthorities[i].authority = propertiesAndAuthorities[i+1];
 				props.push(propertiesAndAuthorities[i]);
 			}
-			res.json(props);
+			res.json( APIResponseMessage.OK(props) );
 		});
 
 }
@@ -135,15 +126,8 @@ function inviteMember(req, res) {
 
 	// add member
 		.then( () => workspaceInstance.addMember(memberInstance) )
-		.then( () => res.end() )
-		// TODO: response unavailable access message
-		.catch( reason => {
-			const message = {
-				status: `error`,
-				message: reason
-			}
-			res.json(message);
-		});
+		.then( () => res.json(APIResponseMessage.OK()) )
+		.catch( reason => res.json(APIResponseMessage.ERROR(reason)) );
 
 }
 
@@ -181,15 +165,8 @@ function updateMemberProperties(req, res) {
 	// change authority
 		.then( () => workspaceInstance.resetRightsOf(memberInstance, WorkspaceModel.USER_RIGHTS) )
 		.then( () => workspaceInstance.setRightsOf(memberInstance, authority) )
-		.then( () => res.end('ok') )
-		// TODO: response unavailable access message
-		.catch( reason => {
-			const message = {
-				status: `error`,
-				message: reason
-			}
-			res.json(message);
-		});
+		.then( () => res.json(APIResponseMessage.OK()) )
+		.catch( reason => res.json(APIResponseMessage.ERROR(reason)) );
 }
 
 

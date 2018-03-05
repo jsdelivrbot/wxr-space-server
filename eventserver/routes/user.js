@@ -18,13 +18,13 @@ function registerNewUser(req, res) {
 	UserModel.newUser(userInfo)
 		.then( user => {
 			req.login(user, err => {
-				if (err) throw Error(err);
-				res.end();
+				if (err) return Promise.reject(err);
+				res.json( APIResponseMessage.OK() );
 			});
 		})
 		.catch( err => {
 			console.log(err);
-			res.end();
+			res.json( APIResponseMessage.ERROR(err) );
 		});
 
 }
@@ -32,14 +32,14 @@ function registerNewUser(req, res) {
 
 // default login process
 function localLoginSuccess(req, res) {
-	res.end();
+	res.json( APIResponseMessage.OK() );
 }
 
 
 // default logout process
 function userLogout(req, res) {
 	req.logout();
-	res.end();
+	res.json( APIResponseMessage.OK() );
 }
 
 
