@@ -6,53 +6,40 @@ var router = express.Router();
 // register
 function createNewUser(req, res) {
 
-	const options = {
-		method: 'POST',
-		uri: global.REMOTE_ORIGIN + '/user',
-		body: {
-			username: req.body.username,
-			password: req.body.password
-		}
-	};
+	const options = createJSONOptions('POST', '/user', {
+		username: req.body.username,
+		password: req.body.password});
 
 	request(options)
-		.then( parseBody => {
-			console.log(parseBody);
-		})
-		.catch( err => console.log(err) )
-		.then( () => res.end() );
+		.then( body => body.status === 'ok' ? Promise.resolve() : Promise.reject(JSON.stringify(body)) )
+		.then( () => res.end() )
+		.catch( err => res.end(err) );
 }
 
 
 // login
 function userLogin(req, res) {
 
-	const options = {
-		method: 'POST',
-		uri: global.REMOTE_ORIGIN + '/user/login/local',
-		body: {
-			username: req.body.username,
-			password: req.body.password
-		}
-	};
+	const options = createJSONOptions('POST', '/user/login/local', {
+		username: req.body.username,
+		password: req.body.password});
 
 	request(options)
-		.then( parseBody => {
-			console.log(parseBody);
-		})
-		.catch( err => console.log(err) )
-		.then( () => res.end() );
+		.then( body => body.status === 'ok' ? Promise.resolve() : Promise.reject(JSON.stringify(body)) )
+		.then( () => res.end() )
+		.catch( err => res.end(err) );
 }
 
 
 // logout
 function userLogout(req, res) {
 
-	const URI = global.REMOTE_ORIGIN + '/user/logout';
-	request(URI)
-		.then( response => console.log(response) )
-		.then( () => res.end() );
+	const options = createJSONOptions(null, '/user/logout');
 
+	request(options)
+		.then( body => body.status === 'ok' ? Promise.resolve() : Promise.reject(JSON.stringify(body)) )
+		.then( () => res.end() )
+		.catch( err => res.end(err) );
 }
 
 

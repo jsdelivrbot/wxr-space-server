@@ -2,8 +2,18 @@
 
 
 // global variables
-global.REMOTE_ORIGIN = '127.0.0.1:6701';
+global.REMOTE_ORIGIN = 'http://127.0.0.1:6701';
 global.DEVICES = [];
+global.createJSONOptions = function(method, uri, body) {
+
+  const options = {
+    method: method || 'GET',
+    uri: global.REMOTE_ORIGIN + (uri || '/'),
+    json: true,
+    body: body
+  };
+  return options;
+}
 
 
 /**
