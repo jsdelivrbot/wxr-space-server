@@ -22,7 +22,8 @@ function createNewWorkspace(req, res) {
 
 	user.createWorkspace(wsName)
 	// shift to enterWorkspace logic
-		.then( () => enterWorkspace(req,res) );
+		.then( () => enterWorkspace(req,res) )
+		.catch( err => res.json(APIResponseMessage.ERROR(err)) );
 }
 
 
