@@ -10,7 +10,10 @@ global.createJSONOptions = function(method, uri, body) {
     method: method || 'GET',
     uri: global.REMOTE_ORIGIN + (uri || '/'),
     json: true,
-    body: body
+    body: body,
+    headers: {
+	    'Cookie': createJSONOptions.cookie
+    }
   };
   return options;
 }

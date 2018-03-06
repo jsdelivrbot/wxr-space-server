@@ -9,9 +9,17 @@ function createNewUser(req, res) {
 	const options = createJSONOptions('POST', '/user', {
 		username: req.body.username,
 		password: req.body.password});
+	options.resolveWithFullResponse = true;
 
 	request(options)
-		.then( body => body.status === 'ok' ? Promise.resolve() : Promise.reject(JSON.stringify(body)) )
+		.then( response => {
+			if (response.body.status === 'ok') {
+				createJSONOptions.cookie = response.headers['set-cookie'][0];
+				return Promise.resolve();
+			} else {
+				return Promise.reject(JSON.stringify(body));
+			}
+		})
 		.then( () => res.end() )
 		.catch( err => res.end(err) );
 }
@@ -23,9 +31,17 @@ function userLogin(req, res) {
 	const options = createJSONOptions('POST', '/user/login/local', {
 		username: req.body.username,
 		password: req.body.password});
+	options.resolveWithFullResponse = true;
 
 	request(options)
-		.then( body => body.status === 'ok' ? Promise.resolve() : Promise.reject(JSON.stringify(body)) )
+		.then( response => {
+			if (response.body.status === 'ok') {
+				createJSONOptions.cookie = response.headers['set-cookie'][0];
+				return Promise.resolve();
+			} else {
+				return Promise.reject(JSON.stringify(body));
+			}
+		})
 		.then( () => res.end() )
 		.catch( err => res.end(err) );
 }
