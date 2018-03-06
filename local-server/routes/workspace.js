@@ -3,76 +3,94 @@ var request = require('request-promise-native');
 var router = express.Router();
 
 
-// get workspaces
-router.get('/list', function(req, res, next) {
-
-	const URI = global.REMOTE_ORIGIN + '/workspaces';
-
-	request(URI)
-		.then( response => console.log(response) )
-		.then( () => res.end() );
-
-});
+let currentWorkspaceId = null;
 
 
-// create workspaces
-router.post('/', function(req, res, next) {
+function createNewWorkspace(req, res) {
 
-	const options = {
-		method: 'POST',
-		uri: global.REMOTE_ORIGIN + '/workspaces',
-		body: {
-			name: req.body.name || 'noname'
-		}
-	};
+	const options = createJSONOptions('POST', '/workspace', {
+		name: req.body.name});
 
 	request(options)
-		.then( parseBody => {
-			console.log(parseBody);
-		})
-		.catch( err => console.log(err) )
-		.then( () => res.end() );
-
-});
+		.then( body => body.status === 'ok' ? Promise.resolve() : Promise.reject(JSON.stringify(body)) )
+		.then( () => res.end() )
+		.catch( err => res.end(err) );
+}
 
 
-// join workspaces
-router.get('/:workspaceId', function(req, res, next) {
+function getWorkspaceList(req, res) {
 
-	const URI = global.REMOTE_ORIGIN + '/workspaces/' + req.params.workspaceId;
-	request(URI)
-		.then( response => console.log(response) )
-		.then( () => res.end() );
-
-});
-
-
-// invite user
-router.post('/:workspaceId/invite', function(req, res, next) {
-
-	const URI = global.REMOTE_ORIGIN + '/workspaces/' + req.params.workspaceId;
-	request(URI)
-		.then( response => console.log(response) )
-		.then( () => res.end() );
-
-});
-
-
-// change authority of member
-router.put('/:workspaceId/member/:userId', function(req, res, next) {
-
-	const options = {
-		method: 'PUT',
-		uri: global.REMOTE_ORIGIN + '/workspaces/' + workspaceId + '/member/' + userId,
-		body: {
-			authority: req.body.authority
-		}
-	};
+	const options = createJSONOptions(null, '/workspace/list');
 
 	request(options)
-		.then( response => console.log(response) )
-		.then( () => res.end() );
+		.then( body => body.status === 'ok' ? Promise.resolve(JSON.stringify(body.message)) : Promise.reject(JSON.stringify(body)) )
+		.then( workspaceList => res.end(workspaceList) )
+		.catch( err => res.end(err) );
+}
 
-});
+
+// TODO: connect socketio stream
+function enterWorkspace(req, res) {
+
+}
+
+
+// TODO: exit socketio stream
+function exitWorkspace(req, res) {
+
+}
+
+
+function getAllMembers(req, res) {
+
+	const options = createJSONOptions(null, '/workspace' + currentWorkspaceId + '/member/list');
+
+	request(options)
+		.then( body => body.status === 'ok' ? Promise.resolve(body.message) : Promise.reject(JSON.stringify(body)) )
+		.then( workspaceList => res.end(workspaceList) )
+		.catch( err => res.end(err) );
+}
+
+
+function inviteMember(req, res) {
+
+	const options = createJSONOptions('POST', '/workspace' + currentWorkspaceId + 'member/invite', {
+		name: req.body.name});
+
+	request(options)
+		.then( body => body.status === 'ok' ? Promise.resolve() : Promise.reject(JSON.stringify(body)) )
+		.then( () => res.end() )
+		.catch( err => res.end(err) );
+}
+
+
+// TODO:
+function updateMemberProperties(req, res) {
+
+}
+
+
+
+
+router.route('/')
+	.post(createNewWorkspace);
+
+router.route('/list')
+	.get(getWorkspaceList);
+
+router.route('/:id')
+	.get(enterWorkspace);
+
+router.route('/:id/exit')
+	.get(exitWorkspace);
+
+router.route('/:id/member/list')
+	.get(getAllMembers);
+
+router.route('/:id/member/invite')
+	.post(inviteMember);
+
+router.route('/:id/member/:memberId')
+	.put(updateMemberProperties);
 
 module.exports = router;
