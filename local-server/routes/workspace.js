@@ -73,15 +73,29 @@ function updateMemberProperties(req, res) {
 
 function attachDevice(req, res) {
 
-	const deviceId = req.body.id;
-	const device = global.DEVICES[deviceId];
+	const deviceId = req.body.name;
+	const device = global.DEVICES.find( e => e['Server name'] === deviceId );
 
 	// check deviceId is right
 	if (!!device === false) {
 		return res.end('no that device');
 	}
 
-	global.ATTACHED_DEVICES[deviceId] = device;
+	global.ATTACHED_DEVICES.push(device);
+	res.end();
+}
+
+
+function detachDevice(req, res) {
+
+	const deviceId = req.body.name;
+	const index = global.ATTACHED_DEVICES.findIndex( e => e['Server name'] === deviceId );
+
+	if (index === -1) {
+		return res.end('no that device');
+	}
+
+	global.ATTACHED_DEVICES.splice(index, 1);
 	res.end();
 }
 
@@ -117,7 +131,8 @@ router.route('/:id/member/:memberId')
 	.put(updateMemberProperties);
 
 router.route('/:id/device')
-	.post(attachDevice);
+	.post(attachDevice)
+	.delete(detachDevice);
 
 router.route('/:id/device/list')
 	.get(getAttachedDeviceList);
