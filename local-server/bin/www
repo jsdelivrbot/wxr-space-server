@@ -4,6 +4,7 @@
 // global variables
 global.REMOTE_ORIGIN = 'http://127.0.0.1:6701';
 global.DEVICES = [];
+global.ATTACHED_DEVICES = [];
 global.createJSONOptions = function(method, uri, body) {
 
   const options = {

@@ -5,30 +5,16 @@ var router = express.Router();
 
 
 // Get device list in local machine
-router.get('/list', function(req, res, next) {
+function getDeviceList(req, res) {
 
-	const device_list = global.DEVICES;
-	res.send(device_list);
-	res.end();
-});
+	const deviceList = global.DEVICES;
+	res.json(deviceList);
+}
 
 
-// Delete device profile
-router.delete('/:deviceId', function(req, res, next) {
 
-	const options = {
-		method: 'DELETE',
-		uri: global.REMOTE_ORIGIN + '/user/'+ req.param.userId + '/device/' + req.param.deviceId
-	};
-
-	request(options)
-		.then( parseBody => {
-			console.log(parseBody);
-		})
-		.catch( err => console.log(err) )
-		.then( () => res.end() );
-
-});
+router.route('/list')
+	.get(getDeviceList);
 
 
 module.exports = router;

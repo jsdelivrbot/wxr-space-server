@@ -36,6 +36,7 @@ function enterWorkspace(req, res) {
 // TODO: exit socketio stream
 function exitWorkspace(req, res) {
 
+	ATTACHED_DEVICES = [];
 }
 
 
@@ -70,6 +71,28 @@ function updateMemberProperties(req, res) {
 }
 
 
+function attachDevice(req, res) {
+
+	const deviceId = req.body.id;
+	const device = global.DEVICES[deviceId];
+
+	// check deviceId is right
+	if (!!device === false) {
+		return res.end('no that device');
+	}
+
+	global.ATTACHED_DEVICES[deviceId] = device;
+	res.end();
+}
+
+
+function getAttachedDeviceList(req, res) {
+
+	const attachedDeviceList = global.ATTACHED_DEVICES;
+	res.json(attachedDeviceList);
+}
+
+
 
 
 router.route('/')
@@ -92,5 +115,11 @@ router.route('/:id/member/invite')
 
 router.route('/:id/member/:memberId')
 	.put(updateMemberProperties);
+
+router.route('/:id/device')
+	.post(attachDevice);
+
+router.route('/:id/device/list')
+	.get(getAttachedDeviceList);
 
 module.exports = router;
