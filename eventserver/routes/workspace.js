@@ -22,6 +22,7 @@ function createNewWorkspace(req, res) {
 
 	user.createWorkspace(wsName)
 	// shift to enterWorkspace logic
+		.then( () => req.params.id = `${user.p('name')}@${wsName}` )
 		.then( () => enterWorkspace(req,res) )
 		.catch( err => res.json(APIResponseMessage.ERROR(err)) );
 }
@@ -97,10 +98,12 @@ function getAllMembers (req,res) {
 			const props = [];
 			for (let i=0; i<propertiesAndAuthorities.length; i=i+2) {
 				propertiesAndAuthorities[i].authority = propertiesAndAuthorities[i+1];
+				delete propertiesAndAuthorities[i].password;
 				props.push(propertiesAndAuthorities[i]);
 			}
 			res.json( APIResponseMessage.OK(props) );
-		});
+		})
+		.catch( reason => res.json(APIResponseMessage.ERROR(reason)) );
 
 }
 
