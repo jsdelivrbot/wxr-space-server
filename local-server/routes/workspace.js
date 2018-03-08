@@ -3,8 +3,6 @@ var request = require('request-promise-native');
 var router = express.Router();
 
 
-let currentWorkspaceId = null;
-
 
 function createNewWorkspace(req, res) {
 
@@ -43,10 +41,11 @@ function exitWorkspace(req, res) {
 
 function getAllMembers(req, res) {
 
-	const options = createJSONOptions(null, '/workspace' + currentWorkspaceId + '/member/list');
+	const workspaceId = req.params.id;
+	const options = createJSONOptions(null, `/workspace/${workspaceId}/member/list`);
 
 	request(options)
-		.then( body => body.status === 'ok' ? Promise.resolve(body.message) : Promise.reject(JSON.stringify(body)) )
+		.then( body => body.status === 'ok' ? Promise.resolve(JSON.stringify(body.message)) : Promise.reject(JSON.stringify(body)) )
 		.then( workspaceList => res.end(workspaceList) )
 		.catch( err => res.end(err) );
 }
@@ -54,7 +53,8 @@ function getAllMembers(req, res) {
 
 function inviteMember(req, res) {
 
-	const options = createJSONOptions('POST', '/workspace' + currentWorkspaceId + 'member/invite', {
+	const workspaceId = req.params.id;
+	const options = createJSONOptions('POST', `/workspace/${workspaceId}/member/invite`, {
 		name: req.body.name});
 
 	request(options)
