@@ -14,14 +14,14 @@ function createNewUser(req, res) {
 	request(options)
 		.then( response => {
 			if (response.body.status === 'ok') {
-				createJSONOptions.cookie = response.headers['set-cookie'][0];
+				createJSONOptions.cookie = response.headers['set-cookie'] && response.headers['set-cookie'][0] || createJSONOptions.cookie;
 				return Promise.resolve();
 			} else {
-				return Promise.reject(JSON.stringify(body));
+				return Promise.reject(JSON.stringify(response.body));
 			}
 		})
 		.then( () => res.end() )
-		.catch( err => res.end(err) );
+		.catch( err => res.end(err.toString()) );
 }
 
 
@@ -36,7 +36,7 @@ function userLogin(req, res) {
 	request(options)
 		.then( response => {
 			if (response.body.status === 'ok') {
-				createJSONOptions.cookie = response.headers['set-cookie'][0];
+				createJSONOptions.cookie = response.headers['set-cookie'] && response.headers['set-cookie'][0] || createJSONOptions.cookie;
 				return Promise.resolve();
 			} else {
 				return Promise.reject(JSON.stringify(body));
