@@ -1,6 +1,7 @@
 var socket = require('socket.io-client')('http://localhost:3000');
 
 var is_first_message = true;
+var global_i = 0;
 
 socket.on('connect', function(){
 	console.log('socket.io is connected!');
@@ -26,24 +27,18 @@ socket.on('connect', function(){
 	}
 	socket.emit('vrpn_event', msg);
 	
-	
-	setTimeout(function() {
-		for (let i=0; i<5; ++i) {
-			send_dof();
-		}
-		tracking_end();
-		
+	(function timer1000() {
 		setTimeout(function() {
-			for (let i=0; i<10; ++i) {
-				send_dof();
+			send_dof();
+			if (++global_i < 10)
+				timer1000();
+			else {
+				tracking_end();
+				setTimeout(function() { process.exit() }, 1000);
 			}
-			tracking_end();
-			
-			setTimeout(function() {
-				process.exit();
-			},1000);
 		}, 1000);
-	}, 1000);
+	})();
+
 	
 });
 
