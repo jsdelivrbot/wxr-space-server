@@ -78,7 +78,7 @@ router.route('/')
 router.route('/list')
 	.get(getWorkspaceList);
 
-router.route('/:id')
+router.route('/:id/enter')
 	.get(enterWorkspace);
 
 router.route('/:id/exit')
