@@ -28,7 +28,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', index);
 app.use('/lib', lib);
 app.use('/user', user);
-app.use('/user/:userId/device', device);
+app.use('/device', device);
 app.use('/workspace', workspace);
 
 // catch 404 and forward to error handler
