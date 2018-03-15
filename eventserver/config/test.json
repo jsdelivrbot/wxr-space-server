@@ -2,5 +2,8 @@
   "port": 6701,
   "dbConfig": {
     "db": 1
+  },
+  "SocketIO": {
+    "port": 6711
   }
 }

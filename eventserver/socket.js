@@ -1,15 +1,19 @@
 
 
 
-module.exports = function(http) {
-  
-  var io = require('socket.io')(http);
+module.exports = function(passportAuthorize) {
+
+  var config = require('config');
+  var io = require('socket.io')(config.get('SocketIO.port'));
   var redis = require('redis');
   var client = redis.createClient();
   
   
+
+  // To get session of passport in socket logic, use passport.socketio middleware.
+  io.use(passportAuthorize);
+
   io.on('connection', function(socket){
-    console.log('a user connected');
 
     // device_uuid variable
     let device_uuid = '';

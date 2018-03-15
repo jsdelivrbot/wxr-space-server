@@ -8,6 +8,7 @@ var RedisStore = require('connect-redis')(session);
 var bodyParser = require('body-parser');
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
+var passportSocketio = require('passport.socketio');
 var config = require('config');
 
 
@@ -25,6 +26,8 @@ client.on('connect', () => {
 	nohm.setClient(client);
 	console.log('Database connection is done.');
 });
+var sessionStore = new RedisStore({client:client});
+var scretKey = 'this is a key for hashing';
 var {UserModel} = require('./models/Models');
 
 
@@ -66,7 +69,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({
 		secret: 'this is a key for hashing',
-		store: new RedisStore({client:client}),
+		store: sessionStore,
 		saveUninitialized: false,
 		resave: false
 }));
@@ -95,6 +98,25 @@ app.use(function(err, req, res, next) {
 	res.status(err.status || 500);
 	res.render('error');
 });
+
+
+
+/**
+ * Create Socket.io server
+ */
+
+var io = require('./socket')(passportSocketio.authorize({
+	key: 'connect.sid',
+	secret: scretKey,
+	store: sessionStore,
+	passport: passport,
+	cookieParser: cookieParser,
+	fail: function onAutohrizeFail(data, message, error, accept) {
+		// without session make following logic go.
+		accept(null, true);
+	}
+}));
+
 
 
 module.exports = app;

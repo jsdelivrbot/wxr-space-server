@@ -30,12 +30,6 @@ require('../object_extend');
 var server = http.createServer(app);
 
 /**
- * Create Socket.io server
- */
- 
-var io = require('../socket')(server);
-
-/**
  * Listen on provided port, on all network interfaces.
  */
 
