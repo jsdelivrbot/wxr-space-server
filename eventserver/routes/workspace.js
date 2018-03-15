@@ -44,6 +44,7 @@ function getWorkspaceList(req, res) {
 
 
 // workspace entering logic
+// TODO: 사실 이 부분은 소켓로직에서 해아할 것들.
 function enterWorkspace(req, res) {
 
 	const user = req.user;

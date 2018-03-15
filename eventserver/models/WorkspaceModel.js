@@ -100,7 +100,13 @@ const WorkspaceModel = nohm.model('WorkspaceModel', {
 		 */
 		attachDevice: function(device) {
 			this.link(device, WorkspaceModel.RELATION_DEVICE_TRACKER);
-			return this._pSave();
+
+			return this._pSave()
+			// For updating event data publishing list of device in socket instance, Calling refreshDeviceEventPublishListOf should be needed.
+				.then( workspace => {
+					refreshDeviceEventPublishListOf(device);
+					return Promise.resolve(device);
+				});
 		},
 
 		detachDevice: function (device) {
@@ -112,6 +118,13 @@ const WorkspaceModel = nohm.model('WorkspaceModel', {
 			const DeviceModel = nohm.getModels()['DeviceModel'];
 			return this.getAllLinks('DeviceModel', WorkspaceModel.RELATION_DEVICE_TRACKER)
 				.then( ids => DeviceModel.propagateInstances(ids) );
+		},
+
+		// Pub/Sub of redis has no relation to the key space. It was made to not interfere with it on any level, including database numbers.
+		// Publishing on db 10, will be heard by a subscriber on db 1.
+		// So we have to scoping by prefixing.
+		getChannelName: function() {
+			return `DATABASE${config.get('dbConfig.db')}:${this.p('name')}`;
 		}
 
 	}

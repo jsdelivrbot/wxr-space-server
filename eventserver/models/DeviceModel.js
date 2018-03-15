@@ -1,3 +1,4 @@
+const config = require('config');
 const nohm = require('nohm').Nohm;
 require('../object_extend');
 
@@ -83,11 +84,11 @@ const DeviceModel = nohm.model('DeviceModel', {
 			});
 		},
 
-		getEvents: function(from, to) {
+		getEvents: function(tFrom, tTo) {
 			const redisClient = nohm.client;
 			const key = this.p('eventSetKey');
-			const min = from || '-inf';
-			const max = to || '+inf';
+			const min = tFrom || '-inf';
+			const max = tTo || '+inf';
 
 			return new Promise( (resolve, reject) => {
 				redisClient.zrangebyscore(key, min, max, (err, ret) => {
@@ -96,6 +97,12 @@ const DeviceModel = nohm.model('DeviceModel', {
 				});
 			});
 		},
+
+		getLinkedWorkspaces: function() {
+			const WorkspaceModel = nohm.getModels()['WorkspaceModel'];
+			return this.getAllLinks('WorkspaceModel', DeviceModel.RELATION_WORKSPACE_LINKED)
+				.then( ids => WorkspaceModel.propagateInstances(ids) )
+		}
 
 	}
 });
@@ -108,6 +115,7 @@ DeviceModel.RELATIONS_WITH_USER = [
 	DeviceModel.RELATION_USER_SHARED
 ];
 
+DeviceModel.RELATION_WORKSPACE_LINKED = 'trackerForeign';
 
 
 /*
@@ -127,6 +135,9 @@ DeviceModel.create = function (ip, deviceName, owner) {
 	return device._pSave();
 }
 
+DeviceModel.resolveDeviceName = function (address, serverName) {
+	return `${address}@${serverName}`;
+}
 
 
 
