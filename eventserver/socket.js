@@ -51,7 +51,7 @@ module.exports = function(passportAuthorize) {
 			  .catch( reason => handleError(reason) )
 			  .then( workspaceInstance => {
 
-				  const channelName = workspaceInstance.p('name');
+				  const channelName = workspaceInstance.getChannelName();
 				  client.subscribe(channelName);
 			  	client.on('message', (channel, message) => {
 			  		socket.emit('vrpn_event', message);
@@ -183,7 +183,7 @@ module.exports = function(passportAuthorize) {
 		return device.getLinkedWorkspaces()
 			.then( workspaces => {
 				socket.data.eventDataPublishingList = [];
-				workspaces.forEach( e => socket.data.eventDataPublishingList.push(e.p('name')) );
+				workspaces.forEach( e => socket.data.eventDataPublishingList.push(e.getChannelName()) );
 			})
   }
 
