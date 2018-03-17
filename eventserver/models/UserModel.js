@@ -153,7 +153,14 @@ const UserModel = nohm.model('UserModel', {
 });
 
 
-UserModel.RELATION_WORKSPACE_JOINED = 'viewerForeign';
+UserModel.RELATION_WORKSPACE_VIEWER = 'viewerForeign';
+UserModel.RELATION_WORKSPACE_EDITOR = 'editorForeign';
+UserModel.RELATION_WORKSPACE_OWNER = 'ownerForeign';
+UserModel.RELATION_WORKSPACE_JOINED = [
+	UserModel.RELATION_WORKSPACE_VIEWER,
+	UserModel.RELATION_WORKSPACE_EDITOR,
+	UserModel.RELATION_WORKSPACE_OWNER
+];
 UserModel.RELATION_DEVICE_HAS = 'has';
 UserModel.RELATION_DEVICE_LINKED = 'linked';
 UserModel.RELATIONS_WITH_DEVICE = [
