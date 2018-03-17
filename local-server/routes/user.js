@@ -20,7 +20,7 @@ function createNewUser(req, res) {
 				return Promise.reject(JSON.stringify(response.body));
 			}
 		})
-		.then( () => res.end() )
+		.then( () => res.redirect('/') )
 		.catch( err => res.end(err.toString()) );
 }
 
@@ -42,7 +42,7 @@ function userLogin(req, res) {
 				return Promise.reject(JSON.stringify(body));
 			}
 		})
-		.then( () => res.end() )
+		.then( () => res.redirect('/') )
 		.catch( err => res.end(err) );
 }
 
@@ -51,10 +51,11 @@ function userLogin(req, res) {
 function userLogout(req, res) {
 
 	const options = createJSONOptions(null, '/user/logout');
+	createJSONOptions.cookie = null;
 
 	request(options)
 		.then( body => body.status === 'ok' ? Promise.resolve() : Promise.reject(JSON.stringify(body)) )
-		.then( () => res.end() )
+		.then( () => res.redirect('/') )
 		.catch( err => res.end(err) );
 }
 

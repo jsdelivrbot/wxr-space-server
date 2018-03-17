@@ -21,15 +21,15 @@ block content
       a.w3-bar-item.w3-button.w3-wide(href='#home') Motion Tracking
       // Right-sided navbar links
       .w3-right.w3-hide-small
-        a.w3-bar-item.w3-button(href='#javasciprt:void(0)', onclick='create_new_workspace()')
-          i.fa.fa-paper-plane
-          |  New Workspace
         if !user
           a.w3-bar-item.w3-button(href='#javascript:void(0)', onclick='call_login_modal()')
             i.fa.fa-user-circle-o
             |  Login
         else
-          a.w3-bar-item.w3-button(href='/auth/logout')
+          a.w3-bar-item.w3-button(href='#javasciprt:void(0)', onclick='create_new_workspace()')
+            i.fa.fa-paper-plane
+            |  New Workspace
+          a.w3-bar-item.w3-button(href='/user/logout')
             i.fa.fa-sign-out
             |  Log out
       // Hide right-floated links on small screens and replace them with a menu icon
@@ -51,112 +51,91 @@ block content
       h1
         b Motion Tracking
       p
-        | Welcome to the blog of
-        span.w3-tag unknown
+        | Track and See yourself with 
+        span.w3-tag Motion Tracking Service
     // Grid
     .w3-row
       // Blog entries
-      .w3-col.l8.s12
+      .w3-col.l12.s12
+        each worksapceInfo in workspaces
+          .w3-card-4.w3-margin.w3-white
+            // img(src='/w3images/woods.jpg', alt='Nature', style='width:100%')		<= this will be added as workspace preview.
+            .w3-container
+              h3
+                b #{worksapceInfo.name}
+              h5
+                | The owner: #{worksapceInfo.owner}
+            .w3-container
+              p
+                | Some description will be here.
+              .w3-row
+                .w3-col.m8.s12
+                  p
+                    button.w3-button.w3-padding-large.w3-white.w3-border
+                      b Go in »
+                .w3-col.m4.w3-hide-small
+                  p
+                    span.w3-padding-large.w3-right
+                      b Members  
+                      span.w3-tag 1
+          hr
         // Blog entry
-        .w3-card-4.w3-margin.w3-white
-          img(src='/w3images/woods.jpg', alt='Nature', style='width:100%')
-          .w3-container
-            h3
-              b TITLE HEADING
-            h5
-              | Title description,
-              span.w3-opacity April 7, 2014
-          .w3-container
-            p
-              | Mauris neque quam, fermentum ut nisl vitae, convallis maximus nisl. Sed mattis nunc id lorem euismod placerat. Vivamus porttitor magna enim, ac accumsan tortor cursus at. Phasellus sed ultricies mi non congue ullam corper. Praesent tincidunt sed
-              | tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla.
-            .w3-row
-              .w3-col.m8.s12
-                p
-                  button.w3-button.w3-padding-large.w3-white.w3-border
-                    b READ MORE »
-              .w3-col.m4.w3-hide-small
-                p
-                  span.w3-padding-large.w3-right
-                    b Comments  
-                    span.w3-tag 0
-        hr
-        // Blog entry
-        .w3-card-4.w3-margin.w3-white
-          img(src='/w3images/woods.jpg', alt='Nature', style='width:100%')
-          .w3-container
-            h3
-              b TITLE HEADING
-            h5
-              | Title description,
-              span.w3-opacity April 7, 2014
-          .w3-container
-            p
-              | Mauris neque quam, fermentum ut nisl vitae, convallis maximus nisl. Sed mattis nunc id lorem euismod placerat. Vivamus porttitor magna enim, ac accumsan tortor cursus at. Phasellus sed ultricies mi non congue ullam corper. Praesent tincidunt sed
-              | tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla.
-            .w3-row
-              .w3-col.m8.s12
-                p
-                  button.w3-button.w3-padding-large.w3-white.w3-border
-                    b READ MORE »
-              .w3-col.m4.w3-hide-small
-                p
-                  span.w3-padding-large.w3-right
-                    b Comments  
-                    span.w3-tag 0
-        hr
-        // Blog entry
-        .w3-card-4.w3-margin.w3-white
-          img(src='/w3images/bridge.jpg', alt='Norway', style='width:100%')
-          .w3-container
-            h3
-              b BLOG ENTRY
-            h5
-              | Title description,
-              span.w3-opacity April 2, 2014
-          .w3-container
-            p
-              | Mauris neque quam, fermentum ut nisl vitae, convallis maximus nisl. Sed mattis nunc id lorem euismod placerat. Vivamus porttitor magna enim, ac accumsan tortor cursus at. Phasellus sed ultricies mi non congue ullam corper. Praesent tincidunt sed
-              | tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla.
-            .w3-row
-              .w3-col.m8.s12
-                p
-                  button.w3-button.w3-padding-large.w3-white.w3-border
-                    b READ MORE »
-              .w3-col.m4.w3-hide-small
-                p
-                  span.w3-padding-large.w3-right
-                    b Comments  
-                    span.w3-badge 2
-        // END BLOG ENTRIES
+        // this section is remained for reference
+        //
+          .w3-card-4.w3-margin.w3-white
+            img(src='/w3images/woods.jpg', alt='Nature', style='width:100%')
+            .w3-container
+              h3
+                b TITLE HEADING
+              h5
+                | Title description,
+                span.w3-opacity April 7, 2014
+            .w3-container
+              p
+                | Mauris neque quam, fermentum ut nisl vitae, convallis maximus nisl. Sed mattis nunc id lorem euismod placerat. Vivamus porttitor magna enim, ac accumsan tortor cursus at. Phasellus sed ultricies mi non congue ullam corper. Praesent tincidunt sed
+                | tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla.
+              .w3-row
+                .w3-col.m8.s12
+                  p
+                    button.w3-button.w3-padding-large.w3-white.w3-border
+                      b READ MORE »
+                .w3-col.m4.w3-hide-small
+                  p
+                    span.w3-padding-large.w3-right
+                      b Comments  
+                      span.w3-tag 0
+          hr
+          // END BLOG ENTRIES
       // Introduction menu
-      .w3-col.l4
-        // Posts
-        .w3-card.w3-margin
-          .w3-container.w3-padding
-            h4 Visited
-          ul.w3-ul.w3-hoverable.w3-white
-            li.w3-padding-16
-              img.w3-left.w3-margin-right(src='/w3images/workshop.jpg', alt='Image', style='width:50px')
-              span.w3-large Lorem
-              br
-              span Sed mattis nunc
-            li.w3-padding-16
-              img.w3-left.w3-margin-right(src='/w3images/gondol.jpg', alt='Image', style='width:50px')
-              span.w3-large Ipsum
-              br
-              span Praes tinci sed
-            li.w3-padding-16
-              img.w3-left.w3-margin-right(src='/w3images/skies.jpg', alt='Image', style='width:50px')
-              span.w3-large Dorum
-              br
-              span Ultricies congue
-            li.w3-padding-16.w3-hide-medium.w3-hide-small
-              img.w3-left.w3-margin-right(src='/w3images/rock.jpg', alt='Image', style='width:50px')
-              span.w3-large Mingsum
-              br
-              span Lorem ipsum dipsum
-        hr
+      // this section is reained for future, 'joined worksapces list'
+      //
+        .w3-col.l4
+          // Posts
+          .w3-card.w3-margin
+            .w3-container.w3-padding
+              h4 Visited
+            ul.w3-ul.w3-hoverable.w3-white
+              li.w3-padding-16
+                img.w3-left.w3-margin-right(src='/w3images/workshop.jpg', alt='Image', style='width:50px')
+                span.w3-large Lorem
+                br
+                span Sed mattis nunc
+              li.w3-padding-16
+                img.w3-left.w3-margin-right(src='/w3images/gondol.jpg', alt='Image', style='width:50px')
+                span.w3-large Ipsum
+                br
+                span Praes tinci sed
+              li.w3-padding-16
+                img.w3-left.w3-margin-right(src='/w3images/skies.jpg', alt='Image', style='width:50px')
+                span.w3-large Dorum
+                br
+                span Ultricies congue
+              li.w3-padding-16.w3-hide-medium.w3-hide-small
+                img.w3-left.w3-margin-right(src='/w3images/rock.jpg', alt='Image', style='width:50px')
+                span.w3-large Mingsum
+                br
+                span Lorem ipsum dipsum
+          hr
         // END Introduction Menu
       // END GRID
     br
