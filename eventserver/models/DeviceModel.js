@@ -135,8 +135,8 @@ DeviceModel.create = function (ip, deviceName, owner) {
 	return device._pSave();
 }
 
-DeviceModel.resolveDeviceName = function (address, serverName) {
-	return `${address}@${serverName}`;
+DeviceModel.resolveDeviceName = function (ip, deviceName) {
+	return `${ip}@${deviceName}`;
 }
 
 
