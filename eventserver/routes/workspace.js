@@ -175,14 +175,14 @@ function updateMemberProperties(req, res) {
 }
 
 
+// Checking no session when getting the list
+router.route('/list')
+	.get(getWorkspaceList);
 
 router.use(checkUserSession);
 
 router.route('/')
 	.post(createNewWorkspace);
-
-router.route('/list')
-	.get(getWorkspaceList);
 
 router.route('/:id/enter')
 	.get(enterWorkspace);
