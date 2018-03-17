@@ -31,8 +31,17 @@ function registerNewUser(req, res) {
 
 
 // default login process
-function localLoginSuccess(req, res) {
-	res.json( APIResponseMessage.OK() );
+function localLogin(req, res) {
+	passport.authenticate('local', (err, user, info) => {
+		if (!!err === true || !!user === false) {
+			return res.json( APIResponseMessage.ERROR('Internal error') );
+		} else {
+			req.login(user, err => {
+				if (err) return APIResponseMessage.ERROR('username or password is not valid.');
+				res.json( APIResponseMessage.OK() );
+			});
+		}
+	})(req, res);
 }
 
 
@@ -50,7 +59,7 @@ router.route('/')
 	.post(registerNewUser);
 
 router.route('/login/local')
-	.post(passport.authenticate('local'), localLoginSuccess);
+	.post(localLogin);
 
 router.route('/logout')
 	.get(userLogout);

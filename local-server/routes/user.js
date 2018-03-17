@@ -43,7 +43,7 @@ function userLogin(req, res) {
 			}
 		})
 		.then( () => res.redirect('/') )
-		.catch( err => res.end(err) );
+		.catch( err => res.end(JSON.stringify(err)) );
 }
 
 
