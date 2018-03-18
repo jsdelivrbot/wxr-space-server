@@ -4,7 +4,7 @@ window.onload = function() {
 
   // socket connect
   var socket = io();
-	console.log('connect');
+	console.log('socket connected');
 	socket.on('vrpn_event', function(msg) {
 		console.log(msg);
 	});
@@ -28,8 +28,8 @@ window.onload = function() {
     container = document.getElementById( 'container' );
 
     camera = new THREE.PerspectiveCamera( 28, window.innerWidth / window.innerHeight, 1, 10000 );
-	camera.position.set( 20, 10, 20 );
-	camera.lookAt( new THREE.Vector3() );
+	  camera.position.set( 20, 10, 20 );
+	  camera.lookAt( new THREE.Vector3() );
 
     scene = new THREE.Scene();
 
@@ -37,9 +37,11 @@ window.onload = function() {
     // as you would any other scene graph component.	Particle positions will be
     // relative to the position of the particle system, but you will probably only need one
     // system for your whole scene
-
+	  var textureLoader = new THREE.TextureLoader();
     particleSystem = new THREE.GPUParticleSystem( {
-      maxParticles: 250000
+      maxParticles: 250000,
+	    particleNoiseTex: textureLoader.load("/textures/perlin-512.png"),
+	    particleSpriteTex: textureLoader.load("/textures/particle2.png")
     } );
 
     scene.add( particleSystem );
