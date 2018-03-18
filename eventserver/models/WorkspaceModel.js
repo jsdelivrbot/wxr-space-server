@@ -106,7 +106,7 @@ const WorkspaceModel = nohm.model('WorkspaceModel', {
 			// For updating event data publishing list of device in socket instance, Calling refreshDeviceEventPublishListOf should be needed.
 				.then( workspace => {
 					refreshDeviceEventPublishListOf(device);
-					return Promise.resolve(device);
+					return Promise.resolve(workspace);
 				});
 		},
 

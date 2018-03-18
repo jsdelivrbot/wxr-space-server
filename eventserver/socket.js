@@ -17,7 +17,8 @@ module.exports = function(passportAuthorize) {
   io.on('connection', function(socket){
 
   	// Pub/Sub client
-	  let client = redis.createClient();
+	  let pubClient = redis.createClient();
+	  let subClient = redis.createClient();
 
   	// namespace for saving event handling data.
   	socket.data = {
@@ -26,7 +27,8 @@ module.exports = function(passportAuthorize) {
 		  isLocalPackagedEvents: false,
 		  remoteAddress: '',
 		  serverName: '',
-		  deviceName: ''
+		  deviceName: '',
+		  deviceInstance: null
 	  };
 
 
@@ -51,13 +53,18 @@ module.exports = function(passportAuthorize) {
 			  .catch( reason => handleError(reason) )
 			  .then( workspaceInstance => {
 
-				  const channelName = workspaceInstance.p('name');
-				  client.subscribe(channelName);
-			  	client.on('message', (channel, message) => {
+				  const channelName = workspaceInstance.getChannelName();
+				  subClient.subscribe(channelName);
+				  subClient.on('message', (channel, message) => {
 			  		socket.emit('vrpn_event', message);
 				  });
 
-				  socket.emit('enter_workspace_response', 'ok');
+			  	if (!!socket.data.deviceInstance === true)
+			  	  workspaceInstance.attachDevice(socket.data.deviceInstance);
+			  	else
+			  		console.log(socket.data.deviceInstance);
+
+				  socket.emit('enter_workspace_response', `ok: ${channelName}`);
 
 			  })
 
@@ -159,7 +166,7 @@ module.exports = function(passportAuthorize) {
     // helper functions.
     function publishMessage(msg) {
 	    socket.data.deviceInstance.addEvent(msg);
-	    socket.data.eventDataPublishingList.forEach( workspaceName => client.publish(workspaceName, JSON.stringify(msg)) )
+	    socket.data.eventDataPublishingList.forEach( channelName => pubClient.publish(channelName, JSON.stringify(msg)) )
     }
 
     function handleError(message) {
@@ -183,6 +190,8 @@ module.exports = function(passportAuthorize) {
 			.then( workspaces => {
 				socket.data.eventDataPublishingList = [];
 				workspaces.forEach( e => socket.data.eventDataPublishingList.push(e.getChannelName()) );
+
+				console.log(socket.data.eventDataPublishingList);
 			})
   }
 
