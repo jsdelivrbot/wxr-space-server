@@ -51,7 +51,7 @@ module.exports = function(passportAuthorize) {
 			  .catch( reason => handleError(reason) )
 			  .then( workspaceInstance => {
 
-				  const channelName = workspaceInstance.getChannelName();
+				  const channelName = workspaceInstance.p('name');
 				  client.subscribe(channelName);
 			  	client.on('message', (channel, message) => {
 			  		socket.emit('vrpn_event', message);
@@ -74,7 +74,6 @@ module.exports = function(passportAuthorize) {
     socket.on('vrpn_event', function (msg) {
 
 	    if (!!msg === false || !!msg.event === false || !!msg.detail === false) {
-	    	console.log(msg);
 		    handleError(`invalid msg!: ${JSON.stringify(msg)}`);
 		    return;
 	    }
