@@ -39,11 +39,11 @@ function userLogin(req, res) {
 				createJSONOptions.cookie = response.headers['set-cookie'] && response.headers['set-cookie'][0] || createJSONOptions.cookie;
 				return Promise.resolve();
 			} else {
-				return Promise.reject(JSON.stringify(body));
+				return Promise.reject(JSON.stringify(response.body));
 			}
 		})
 		.then( () => res.redirect('/') )
-		.catch( err => res.end(JSON.stringify(err)) );
+		.catch( err => res.end(err) );
 }
 
 

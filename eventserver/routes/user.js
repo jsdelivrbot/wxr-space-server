@@ -34,7 +34,7 @@ function registerNewUser(req, res) {
 function localLogin(req, res) {
 	passport.authenticate('local', (err, user, info) => {
 		if (!!err === true || !!user === false) {
-			return res.json( APIResponseMessage.ERROR('Internal error') );
+			return res.json( APIResponseMessage.ERROR(`Internal error: ${err}`) );
 		} else {
 			req.login(user, err => {
 				if (err) return APIResponseMessage.ERROR('username or password is not valid.');
