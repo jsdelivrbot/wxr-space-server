@@ -55,6 +55,7 @@ module.exports = function(http) {
 			packagedMessage.detail.messages = messageQ;
 			console.log('send local_packaged_events');
 			ioForEventServer.emit('vrpn_event', packagedMessage);
+			io.local.emit('vrpn_event', packagedMessage);
 
 			// flush messageQ
 			messageQ.length = 0;
