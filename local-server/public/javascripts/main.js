@@ -43,16 +43,11 @@ function close_signup_modal() {
 }
 
 function create_new_workspace() {
-	const body = {
-		name: ''
-	};
 
-	$.ajax({
-		url: '/workspace',    //Your api url
-		type: 'POST',   //type is any HTTP method
-		data: body,
-		success: function () {
-			console.log('ok');
-		}
-	})
+	// create now form and fill the data
+	let $form = $('<form action="/workspace" method="post">');
+	$('<input name="name">', $form).val('');
+	// append form to document.body
+	$(document.body).append($form);
+	return $form.submit();
 }

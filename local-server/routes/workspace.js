@@ -10,9 +10,9 @@ function createNewWorkspace(req, res) {
 		name: req.body.name});
 
 	request(options)
-		.then( body => body.status === 'ok' ? Promise.resolve() : Promise.reject(JSON.stringify(body)) )
-		.then( () => res.end() )
-		.catch( err => res.end(err) );
+		.then( body => body.status === 'ok' ? Promise.resolve(body.message) : Promise.reject(JSON.stringify(body)) )
+		.catch( err => res.end(err) )
+		.then( workspaceId => res.redirect(`/workspace/${workspaceId}/enter`) );
 }
 
 
@@ -29,14 +29,16 @@ function getWorkspaceList(req, res) {
 
 // TODO: connect socketio stream
 function enterWorkspace(req, res) {
-
+	const workspaceId = req.params.id;
+	ioForEventServer.emit('enter_workspace', workspaceId);
+	res.render('view');
 }
 
 
 // TODO: exit socketio stream
 function exitWorkspace(req, res) {
 
-	ATTACHED_DEVICES = [];
+	// ATTACHED_DEVICES = [];
 }
 
 

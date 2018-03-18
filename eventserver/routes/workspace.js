@@ -23,7 +23,8 @@ function createNewWorkspace(req, res) {
 	user.createWorkspace(wsName)
 	// shift to enterWorkspace logic
 		.then( () => req.params.id = `${user.p('name')}@${wsName}` )
-		.then( () => enterWorkspace(req,res) )
+		// .then( () => enterWorkspace(req,res) )
+		.then( () => res.json(APIResponseMessage.OK(req.params.id)) )
 		.catch( err => res.json(APIResponseMessage.ERROR(err)) );
 }
 
