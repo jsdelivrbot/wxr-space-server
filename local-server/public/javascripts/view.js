@@ -2,11 +2,20 @@
 
 window.onload = function() {
 
+  var scale = 2;
   // socket connect
   var socket = io();
 	console.log('socket connected');
 	socket.on('vrpn_event', function(msg) {
-		console.log(msg);
+	  msg = JSON.parse(msg);
+
+	  if (msg.detail.messages.length > 0) {
+		  const message = msg.detail.messages[0];
+		  console.log(message.detail.pos);
+		  options.position.x = message.detail.pos[0] * scale;
+		  options.position.y = message.detail.pos[1] * scale;
+		  options.position.z = message.detail.pos[2] * scale;
+    }
 	});
 
 
@@ -56,8 +65,8 @@ window.onload = function() {
       color: 0xaa88ff,
       colorRandomness: .2,
       turbulence: .5,
-      lifetime: 2,
-      size: 5,
+      lifetime: 0.5,
+      size: 3,
       sizeRandomness: 1
     };
 
@@ -82,7 +91,7 @@ window.onload = function() {
     renderer = new THREE.WebGLRenderer();
     renderer.setPixelRatio( window.devicePixelRatio );
     renderer.setSize( window.innerWidth, window.innerHeight );
-	renderer.setClearColor( 0xaaaaaa );
+	  renderer.setClearColor( 0xaaaaaa );
     container.appendChild( renderer.domElement );
 
     //
