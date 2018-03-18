@@ -2,14 +2,17 @@
 
 
 // global variables
-global.REMOTE_ORIGIN = 'http://127.0.0.1:6701';
+global.REMOTE_ORIGIN = 'http://192.168.1.13';
+global.RESTAPI_ACCESS_PORT = 6701;
+global.WEBSOCKET_ACCESS_PORT = 6711;
 global.DEVICES = [];
 global.ATTACHED_DEVICES = [];
+global.ioForEventServer = null;
 global.createJSONOptions = function(method, uri, body) {
 
   const options = {
     method: method || 'GET',
-    uri: global.REMOTE_ORIGIN + (uri || '/'),
+    uri: `${global.REMOTE_ORIGIN}:${global.RESTAPI_ACCESS_PORT}${uri || '/'}`,
     json: true,
     body: body,
     headers: {

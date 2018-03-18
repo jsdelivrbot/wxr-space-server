@@ -4,10 +4,84 @@
 module.exports = function(http) {
 	
 	var io = require('socket.io')(http);
+	const ioClient = require('socket.io-client');
 
-	
+	const messageQ = [];
+	const lcoalServerName = 'dummy_server';
+
+
+	/*
+	 * logic for communicating with event server.
+	 */
+	function connectWebsocketToEventServer() {
+		const websocketAccessURL = `${global.REMOTE_ORIGIN}:${global.WEBSOCKET_ACCESS_PORT}`;   // This will be 192.168.1.x:6711
+		ioForEventServer = ioClient(websocketAccessURL, {
+			transportOptions: {
+				polling: {
+					extraHeaders: {
+						'Cookie': createJSONOptions.cookie
+					}
+				}
+			}
+		});
+		ioForEventServer.on('error', function(message) {
+			console.log(`error: ${message}`);
+		});
+
+		// send 'local_server_on' event
+		const serverOnMessage = {
+			event: 'local_server_on',
+			detail: {
+				serverName: lcoalServerName,
+				timestamp: Date.now()
+			}
+		}
+		console.log('send local_server_on');
+		ioForEventServer.emit('vrpn_event', serverOnMessage);
+
+		// send 'packagedMessage' event periodically in every 100 milliseconds.
+		const packagedMessage = {
+			event: 'local_packaged_events',
+			detail: {}
+		}
+		setInterval( () => {
+
+			// send message only if there are messages.
+			if (messageQ.length < 1) {
+				return;
+			}
+
+			packagedMessage.detail.timestamp = Date.now();
+			packagedMessage.detail.messages = messageQ;
+			console.log('send local_packaged_events');
+			ioForEventServer.emit('vrpn_event', packagedMessage);
+
+			// flush messageQ
+			messageQ.length = 0;
+		}, 100);
+		ioForEventServer.on('vrpn_event', function(message) {
+			io.local.emit('vrpn_event', message);
+		});
+		ioForEventServer.on('enter_workspace_response', message => console.log(`entering workspace reponse: ${message}`));
+	}
+
+	// trying to connect to event server after createJSONOptions.cookie value is set.
+	(function tryingToConnect() {
+		if (!!createJSONOptions.cookie === true) {
+			connectWebsocketToEventServer();
+		} else {
+			setTimeout(tryingToConnect, 1000);
+		}
+	})();
+
+
+
+
+	/*
+	 * logic for communicating with browser client or devices.
+	 */
 	io.on('connection', function(socket){
-		console.log('a user connected');
+
 
 		// device_uuid variable
 		let server_name = '';
@@ -39,25 +113,27 @@ module.exports = function(http) {
 						global.DEVICES.push(deviceProfile);
 					}
 
-					break;
 				case 'optitrack_tracking_start':
-
-					break;
 				case 'optitrack_tracking_6dof':
-
-					break;
 				case 'optitrack_tracking_end':
 
+					messageQ.push(msg);
+
+					break;
+
+				// when connected by browser.
+				default:
+
+					// do nothing.
 					break;
 			}
 
-			console.log(msg);
 		});
 
 		socket.on('disconnect', function() {
 			/*
-			 * save optitrack_server_off event manually in event server
-			 * due to detecting websocket disconnected is only possible by event server
+			 * invoke optitrack_server_off event manually in local server
+			 * due to detecting websocket disconnected is only possible by local server
 			 *
 			 * < message structure >
 			 * { event: 'optitrack_server_off',
@@ -73,10 +149,14 @@ module.exports = function(http) {
 				}
 			}
 
+			// only if the socket is connected by device channel, shut off device status.
+			const device = global.DEVICES.find( e => e['Server name'] === server_name );
+			if (!!device === true) {
+				device['Server state'] = 'off';
 
-			global.DEVICES.find( e => e['Server name'] === server_name )['Server state'] = 'off';
+				messageQ.push(msg);
+			}
 
-			console.log('user is disconnected');
 		});
 
 

@@ -57,21 +57,21 @@ block content
     .w3-row
       // Blog entries
       .w3-col.l12.s12
-        each worksapceInfo in workspaces
+        each workspaceInfo in workspaces
           .w3-card-4.w3-margin.w3-white
             // img(src='/w3images/woods.jpg', alt='Nature', style='width:100%')		<= this will be added as workspace preview.
             .w3-container
               h3
-                b #{worksapceInfo.name}
+                b #{workspaceInfo.name}
               h5
-                | The owner: #{worksapceInfo.owner}
+                | The owner: #{workspaceInfo.owner}
             .w3-container
               p
                 | Some description will be here.
               .w3-row
                 .w3-col.m8.s12
                   p
-                    button.w3-button.w3-padding-large.w3-white.w3-border
+                    a.w3-button.w3-padding-large.w3-white.w3-border(href=`/workspace/${workspaceInfo.name}/enter`)
                       b Go in »
                 .w3-col.m4.w3-hide-small
                   p
