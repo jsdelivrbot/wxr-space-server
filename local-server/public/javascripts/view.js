@@ -7,8 +7,8 @@ window.onload = function() {
   var socket = io();
 	console.log('socket connected');
 	socket.on('vrpn_event', function(msg) {
-	  msg = JSON.parse(msg);
-
+		msg = typeof msg === 'string' ? JSON.parse(msg) : msg;
+		
 	  if (msg.detail.messages.length > 0) {
 		  const message = msg.detail.messages[0];
 		  console.log(message.detail.pos);
