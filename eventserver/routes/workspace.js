@@ -18,13 +18,13 @@ function checkUserSession(req, res, next) {
 function createNewWorkspace(req, res) {
 
 	const user = req.user;
-	const wsName = req.body.name;
+	const wsName = req.body.name || 'noname';
 
 	user.createWorkspace(wsName)
 	// shift to enterWorkspace logic
 		.then( () => req.params.id = `${user.p('name')}@${wsName}` )
 		// .then( () => enterWorkspace(req,res) )
-		.then( () => res.json(APIResponseMessage.OK(req.params.id)) )
+		.then( () => res.redirect('/workspace/'+req.params.id) )
 		.catch( err => res.json(APIResponseMessage.ERROR(err)) );
 }
 
@@ -185,9 +185,6 @@ router.use(checkUserSession);
 router.route('/')
 	.post(createNewWorkspace);
 
-router.route('/:id/enter')
-	.get(enterWorkspace);
-
 router.route('/:id/exit')
 	.get(exitWorkspace);
 
@@ -199,6 +196,9 @@ router.route('/:id/member/invite')
 
 router.route('/:id/member/:memberId')
 	.put(updateMemberProperties);
+
+router.route('/:id')
+	.get(enterWorkspace);
 
 
 

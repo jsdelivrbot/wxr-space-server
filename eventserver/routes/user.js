@@ -19,7 +19,8 @@ function registerNewUser(req, res) {
 		.then( user => {
 			req.login(user, err => {
 				if (err) return Promise.reject(err);
-				res.json( APIResponseMessage.OK() );
+				res.redirect('/');
+				// res.json( APIResponseMessage.OK() );
 			});
 		})
 		.catch( err => {
@@ -38,7 +39,8 @@ function localLogin(req, res) {
 		} else {
 			req.login(user, err => {
 				if (err) return APIResponseMessage.ERROR('username or password is not valid.');
-				res.json( APIResponseMessage.OK() );
+				res.redirect('/');
+				// res.json( APIResponseMessage.OK() );
 			});
 		}
 	})(req, res);
@@ -48,7 +50,8 @@ function localLogin(req, res) {
 // default logout process
 function userLogout(req, res) {
 	req.logout();
-	res.json( APIResponseMessage.OK() );
+	res.redirect('/');
+	// res.json( APIResponseMessage.OK() );
 }
 
 
