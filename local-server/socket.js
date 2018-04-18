@@ -1,168 +1,236 @@
 
 
+const PORT = 6712;
+var io = require('socket.io')(PORT);
 
-module.exports = function(http) {
-	
-	var io = require('socket.io')(http);
-	const ioClient = require('socket.io-client');
 
-	const messageQ = [];
-	const lcoalServerName = 'dummy_server';
+// variables
+let clientSocket = null;
+let DeviceProfiles = [];
+const LiveDeviceList = [];
+
+// constants
+const DEVICE_NO_ID = 'device no id';
+const DEVICE_NO_NAME = 'noname';
+const DEVICE_NO_DEVICE = 'unknown device';
+const DEVICE_NO_CONNECTION_TYPE = 'unknown connection type';
+const DEVICE_NO_EVENT_TYPE = [];
+const EVENT_TYPE = {
+	'Tracker': [],
+	'Button': [],
+	'HandGesture': [],
+};
+
+const DEVICE_STATUS_OFF = 'disconnected';
+const DEVICE_STATUS_ON = 'connected';
+const DEVICE_STREAM_ON = true;
+const DEVICE_STREAM_OFF = false;
+
+
+
+io.on('connection', function(socket) {
 
 
 	/*
-	 * logic for communicating with event server.
+	 * Device control processes are here...
 	 */
-	function connectWebsocketToEventServer() {
-		const websocketAccessURL = `${global.REMOTE_ORIGIN}:${global.WEBSOCKET_ACCESS_PORT}`;   // This will be 192.168.1.x:6711
-		ioForEventServer = ioClient(websocketAccessURL, {
-			transportOptions: {
-				polling: {
-					extraHeaders: {
-						'Cookie': createJSONOptions.cookie
-					}
-				}
-			}
-		});
-		ioForEventServer.on('error', function(message) {
-			console.log(`error: ${message}`);
-		});
+	// Initialize device socket.
+	socket.on('WXRDeviceInit', function(deviceInformation) {
 
-		// send 'local_server_on' event
-		const serverOnMessage = {
-			event: 'local_server_on',
-			detail: {
-				serverName: lcoalServerName,
-				timestamp: Date.now()
-			}
+		// This event only once evoked at device initial time.
+		// For this, check LiveDeviceList.
+		if (LiveDeviceList.includes(socket) === true) {
+			HandleError(`This device is already initialized.`);
+			return;
 		}
-		console.log('send local_server_on');
-		ioForEventServer.emit('vrpn_event', serverOnMessage);
 
-		// send 'packagedMessage' event periodically in every 100 milliseconds.
-		const packagedMessage = {
-			event: 'local_packaged_events',
-			detail: {}
+		// Get device profile.
+		// First, create basic profile temporarily.
+		let profile = CreateDeviceProfile(deviceInformation);
+
+		// Then, check device name collision in LiveDeviceList.
+		const collisionExist = LiveDeviceList.find( socket => socket.data.profile.device === profile.device
+																														&& socket.data.profile.name === profile.name );
+		if (collisionExist) {
+			HandleError(`There is device name collision.`);
+			return;
 		}
-		setInterval( () => {
 
-			// send message only if there are messages.
-			if (messageQ.length < 1) {
-				return;
+		// Finally, search device profile in DeviceProfiles and save it at socket.data.profile
+		socket.data.profile = DeviceProfiles.find( p => p.device === profile.device && p.name === profile.name )
+														|| profile;   // if there isn't, use default profile.
+
+
+		// Store socket in LiveDeviceList
+		LiveDeviceList.push(socket);
+
+		// If profile is basic one, store profile in DeviceProfiles
+		if (DeviceProfiles.includes(socket.data.profile) === false) DeviceProfiles.push(socket.data.profile);
+
+		// Update DeviceProfiles.
+		if (clientSocket) {
+			clientSocket.emit('WXRUpdateDeviceProfiles', DeviceProfiles);
+		}
+	});
+
+
+	// Stream event data from device.
+	socket.on('WXREvent', function(msg) {
+
+		// Check if client is on and if this device event stream is disabled.
+		if (!clientSocket || !socket.data || !socket.data.profile.eventStreamEnable) return;
+
+		// Check message structure is valid.
+		if (!msg || !msg.event || !msg.detail) {
+			HandleError(`invalid msg!: ${msg}`);
+			return ;
+		}
+
+		msg.timestamp = msg.timestamp || Date.now();
+
+		// Send msg to client
+		clientSocket.emit('WXREvent', msg);
+	});
+
+
+	// When the device is shut off.
+	socket.on('disconnect', function() {
+
+		// Check if client is on and socket.data is initialized.
+		if (clientSocket && socket.data) {
+
+			// Send device is shut off message.
+			if (socket.data.profile.eventStreamEnable) {
+				const DeviceIsShutOffMessage = {
+					id: socket.data.profile.id,
+					event: 'WXRDeviceOff',
+					timestamp: Date.now(),
+					detail: { }
+				};
+
+				clientSocket.emit('WXREvent', DeviceIsShutOffMessage);
 			}
 
-			packagedMessage.detail.timestamp = Date.now();
-			packagedMessage.detail.messages = messageQ;
-			console.log('send local_packaged_events');
-			ioForEventServer.emit('vrpn_event', packagedMessage);
-			io.local.emit('vrpn_event', packagedMessage);
+			// Update device profile.
+			socket.data.profile.status = DEVICE_STATUS_OFF;
+			clientSocket.emit('WXRUpdateDeviceProfiles', DeviceProfiles);
+		}
 
-			// flush messageQ
-			messageQ.length = 0;
-		}, 100);
-		ioForEventServer.on('vrpn_event', function(message) {
-			io.local.emit('vrpn_event', message);
-		});
-		ioForEventServer.on('enter_workspace_response', message => console.log(`entering workspace reponse: ${message}`));
+		// Removes socket in LiveDeviceList.
+		let indexOfSocket = LiveDeviceList.indexOf(socket);
+		LiveDeviceList.splice(indexOfSocket, 1);
+	});
+
+
+
+	/*
+	 * Client instruction processes are here...
+	 */
+	// Update DeviceProfiles
+	socket.on('WXRUpdateDeviceProfiles', (profiles) => {
+		clientSocket = socket;
+		DeviceProfiles = profiles;
+		UpdateSocketAndProfileBinding();
+
+		// Send back updated device profiles.
+		clientSocket.emit('WXRUpdateDeviceProfiles', DeviceProfiles);
+	});
+
+
+	/*
+	 * Helper functions...
+	 */
+
+	function HandleError(msg) {
+		console.error(msg);
+		socket.emit('error', new Error(msg));
 	}
 
-	// trying to connect to event server after createJSONOptions.cookie value is set.
-	(function tryingToConnect() {
-		if (!!createJSONOptions.cookie === true) {
-			connectWebsocketToEventServer();
-		} else {
-			setTimeout(tryingToConnect, 1000);
+	function UpdateSocketAndProfileBinding() {
+
+		DeviceProfiles.forEach( profile => {
+
+			const deviceSocket = LiveDeviceList.find( socket => {
+				if (profile.id !== DEVICE_NO_ID && socket.data.profile.id === profile.id) return true; // Check if the socket is prelinked.
+				else if (socket.data.profile.device === profile.device && socket.data.profile.name === profile.name) return true; // Check if name and device property are same for unregistered device at server.
+			});
+
+			if (deviceSocket) {
+				deviceSocket.data.profile = profile;
+			} else {
+				profile.status = DEVICE_STATUS_OFF;
+			}
+		});
+
+		LiveDeviceList.forEach( socket => {
+			if (DeviceProfiles.includes(socket.data.profile) === false) {
+				DeviceProfiles.push(socket.data.profile);
+			}
+		});
+
+		NonameGenerator.reset();
+	}
+
+	function CreateDeviceProfile(deviceInformation) {
+		const profile = {};
+		profile.id = DEVICE_NO_ID;
+		profile.device = deviceInformation.device || DEVICE_NO_DEVICE;
+		profile.name = deviceInformation.name || NonameGenerator.next(profile.device); // Generate device name with no collision.
+		profile.connectionType = deviceInformation.connectionType || DEVICE_NO_CONNECTION_TYPE;
+		profile.eventType = EVENT_TYPE[profile.connectionType] || DEVICE_NO_EVENT_TYPE;
+		profile.status = DEVICE_STATUS_ON;
+		profile.eventStreamEnable = DEVICE_STREAM_ON;
+		return profile;
+	}
+});
+
+
+// Generate noname device as number sequence.
+const NonameGenerator = (function() {
+	const NUMBER_LENGTH = 2;
+	let pool = [];
+
+	this.next = function(device) {
+		if (pool[device] === undefined) pool[device] = [];
+		const dp = pool[device];
+
+		let i=0;
+		for ( ; i < dp.length+1; ++i) {
+			if (dp[i] === undefined) break;
 		}
-	})();
 
+		const name = DEVICE_NO_NAME + getFixedLengthString(i);
+		dp[i] = name;
+		dp[name] = i;
+		return name;
+	};
 
+	this.reset = function() {
+		pool = [];
 
+		DeviceProfiles.forEach( profile => {
+			let {name, device} = profile;
 
-	/*
-	 * logic for communicating with browser client or devices.
-	 */
-	io.on('connection', function(socket){
-
-
-		// device_uuid variable
-		let server_name = '';
-
-		socket.on('vrpn_event', function(msg) {
-
-			if (!msg || !msg.event || !msg.detail) {
-				console.error(`invalid msg!`);
-				return ;
-			}
-
-			// Q: If timestamp is invalid, throw away it? Or create new one in event server?
-			// A message that has invalid timestamp will be dropped.
-			let timestamp = msg.detail.timestamp;
-			if (!timestamp) {
+			if (isValidNonameString(name) === false)
 				return;
-			}
 
-			switch (msg.event) {
-				case 'optitrack_server_on':
-					server_name = msg.detail.server_name || 'noname';
-
-					if (!!global.DEVICES.find( e => e['Server name'] === server_name ) === false) {
-						// make device profile
-						const deviceProfile = {
-							'Server name'     : server_name,
-							'Server state'    : 'on',
-						}
-						global.DEVICES.push(deviceProfile);
-					}
-
-				case 'optitrack_tracking_start':
-				case 'optitrack_tracking_6dof':
-				case 'optitrack_tracking_end':
-
-					messageQ.push(msg);
-
-					break;
-
-				// when connected by browser.
-				default:
-
-					// do nothing.
-					break;
-			}
-
+			const i = parseInt(name.subString(DEVICE_NO_NAME.length));
+			pool[device][i] = name;
+			pool[device][name] = i;
 		});
+	};
 
-		socket.on('disconnect', function() {
-			/*
-			 * invoke optitrack_server_off event manually in local server
-			 * due to detecting websocket disconnected is only possible by local server
-			 *
-			 * < message structure >
-			 * { event: 'optitrack_server_off',
-			 *	 detail: {
-			 *		 timestamp: timestamp,
-			 *		 server_name: 'dummy_server' } }
-			 */
+	function getFixedLengthString(number) {
+		let n = number.toString();
+		while (n.length < NUMBER_LENGTH) {
+			n = '0' + n;
+		}
+		return n;
+	}
 
-			let msg = {
-				event: 'optitrack_server_off',
-				detail: {
-					timestamp: Date.now()
-				}
-			}
-
-			// only if the socket is connected by device channel, shut off device status.
-			const device = global.DEVICES.find( e => e['Server name'] === server_name );
-			if (!!device === true) {
-				device['Server state'] = 'off';
-
-				messageQ.push(msg);
-			}
-
-		});
-
-
-
-	});
-	
-	return io;
-}
+	function isValidNonameString(name) {
+		return name.length === DEVICE_NO_NAME.length + NUMBER_LENGTH
+						&& name.startsWith(DEVICE_NO_NAME) === true
+						&& Number.isInteger(parseInt(name.subString(DEVICE_NO_NAME.length))) === true
+	}
+})();
