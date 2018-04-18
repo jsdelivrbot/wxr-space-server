@@ -96,8 +96,8 @@ io.on('connection', function(socket) {
 	// When the device is shut off.
 	socket.on('disconnect', function() {
 
-		// Check if client is on and socket.data is initialized.
-		if (clientSocket && socket.data) {
+		// Check if client is on and socket is of device.
+		if (clientSocket && socket.data && socket.data.profile) {
 
 			// Send device is shut off message.
 			if (socket.data.profile.eventStreamEnable) {
@@ -186,7 +186,7 @@ io.on('connection', function(socket) {
 
 
 // Generate noname device as number sequence.
-const NonameGenerator = (function() {
+const NonameGenerator = new function() {
 	const NUMBER_LENGTH = 2;
 	let pool = [];
 
@@ -233,4 +233,4 @@ const NonameGenerator = (function() {
 						&& name.startsWith(DEVICE_NO_NAME) === true
 						&& Number.isInteger(parseInt(name.subString(DEVICE_NO_NAME.length))) === true
 	}
-})();
+};
