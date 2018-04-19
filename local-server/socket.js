@@ -14,11 +14,20 @@ const DEVICE_NO_ID = 'device no id';
 const DEVICE_NO_NAME = 'noname';
 const DEVICE_NO_DEVICE = 'unknown device';
 const DEVICE_NO_CONNECTION_TYPE = 'unknown connection type';
-const DEVICE_NO_EVENT_TYPE = [];
-const EVENT_TYPE = {
-	'Tracker': [],
+const DEVICE_NO_TYPE = 'unknown device type';
+const DEVICE_TYPES = {
+	'Tracker': [
+		'Optitrack', 'RealSense'
+	],
 	'Button': [],
 	'HandGesture': [],
+}
+const DEVICE_NO_EVENT_TYPE = [];
+const EVENT_TYPE = {
+	'Tracker': ['trackerDetected', 'trackerMoved', 'trackerMissed'],
+	'Button': ['buttonPressed', 'buttonUnpressed'],
+	'HandGesture': ['handgestureFingerExtended', 'handgesturePickUp', 'handgestureDropOff', 'handgesturePointing', 'handgestureSwipe',
+									'handgestureCircle', 'handgestureKeyTap', 'handgestureScreenTap', 'handgestureGrab', 'handgestureStretch'],
 };
 
 const DEVICE_STATUS_OFF = 'disconnected';
@@ -70,6 +79,18 @@ io.on('connection', function(socket) {
 		// Update DeviceProfiles.
 		if (clientSocket) {
 			clientSocket.emit('WXRUpdateDeviceProfiles', DeviceProfiles);
+
+			// Send device start on message.
+			if (socket.data.profile.eventStreamEnable) {
+				const DeviceStartOnMessage = {
+					id: socket.data.profile.id,
+					event: 'WXRDeviceOn',
+					timestamp: Date.now(),
+					detail: { }
+				};
+
+				clientSocket.emit('WXREvent', DeviceStartOnMessage);
+			}
 		}
 	});
 
@@ -86,6 +107,7 @@ io.on('connection', function(socket) {
 			return ;
 		}
 
+		msg.id = socket.data.profile.id;
 		msg.timestamp = msg.timestamp || Date.now();
 
 		// Send msg to client
@@ -177,10 +199,17 @@ io.on('connection', function(socket) {
 		profile.device = deviceInformation.device || DEVICE_NO_DEVICE;
 		profile.name = deviceInformation.name || NonameGenerator.next(profile.device); // Generate device name with no collision.
 		profile.connectionType = deviceInformation.connectionType || DEVICE_NO_CONNECTION_TYPE;
-		profile.eventType = EVENT_TYPE[profile.connectionType] || DEVICE_NO_EVENT_TYPE;
+		profile.deviceType = FindDeviceType(profile.device) || deviceInformation.deviceType || DEVICE_NO_TYPE;
+		profile.eventType = EVENT_TYPE[profile.deviceType] || DEVICE_NO_EVENT_TYPE;
 		profile.status = DEVICE_STATUS_ON;
 		profile.eventStreamEnable = DEVICE_STREAM_ON;
 		return profile;
+	}
+
+	function FindDeviceType(device) {
+		for (let key in DEVICE_TYPES) {
+			if (DEVICE_TYPES[key].includes(device)) return key;
+		}
 	}
 });
 
