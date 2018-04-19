@@ -58,14 +58,15 @@ io.on('connection', function(socket) {
 		let profile = CreateDeviceProfile(deviceInformation);
 
 		// Then, check device name collision in LiveDeviceList.
-		const collisionExist = LiveDeviceList.find( socket => socket.data.profile.device === profile.device
-																														&& socket.data.profile.name === profile.name );
+		const collisionExist = LiveDeviceList.find( liveSocket => liveSocket.data.profile.device === profile.device
+																														&& liveSocket.data.profile.name === profile.name );
 		if (collisionExist) {
 			HandleError(`There is device name collision.`);
 			return;
 		}
 
 		// Finally, search device profile in DeviceProfiles and save it at socket.data.profile
+		socket.data = socket.data || {};
 		socket.data.profile = DeviceProfiles.find( p => p.device === profile.device && p.name === profile.name )
 														|| profile;   // if there isn't, use default profile.
 
