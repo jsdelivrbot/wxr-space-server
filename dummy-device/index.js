@@ -1,8 +1,9 @@
-var socket = require('socket.io-client')('http://localhost:3000');
+var socket = require('socket.io-client')('http://localhost:6712');
 
 var is_first_message = true;
 var global_i = 0;
 
+				
 socket.on('connect', function(){
 	console.log('socket.io is connected!');
 	
@@ -18,25 +19,24 @@ socket.on('connect', function(){
 		 * }
 		 *
 		 */
-	const msg = {
-		event: 'optitrack_server_on',
-		detail: {
-			timestamp: Date.now(),
-			server_name: 'dummy_server'
-		}
+	deviceInformation = {
+		device: 'Optitrack',
+		name: 'MyOptitrack',
+		connectionType: 'VRPN'
 	}
-	socket.emit('vrpn_event', msg);
+	socket.emit('WXRDeviceInit', deviceInformation);
 	
-	(function timer1000() {
+	
+	(function timer(t_time) {
 		setTimeout(function() {
 			send_dof();
 			if (++global_i < 10)
-				timer1000();
+				timer(100);
 			else {
 				tracking_end();
 				setTimeout(function() { process.exit() }, 1000);
 			}
-		}, 1000);
+		}, t_time);
 	})();
 
 	
@@ -47,68 +47,32 @@ function send_dof() {
 	if (is_first_message == true) {
 		is_first_message = false;
 		
-		/*
-		 * "optitrack_tracking_start" event
-		 *
-		 * {
-		 *     "event": "optitrack_tracking_start",
-		 *     "detail": { 
-		 *         "timestamp": timestamp
-		 *     }
-		 * }
-		 *
-		 */
 		const msg = {
-			event: 'optitrack_tracking_start',
-			detail: {
-				timestamp: Date.now()
-			}
+			event: 'trackerDetected',
+			timestamp: Date.now(),
+			detail: { }
 		}
-		socket.emit('vrpn_event', msg);
+		socket.emit('WXREvent', msg);
 	}
 	
-		/*
-	 * "optitrack_tracking_6dof" event
-	 *
-	 * {
-	 *     "event": "optitrack_tracking_6dof",
-	 *     "detail": {
-	 *         "timestamp": timestamp
-	 *         "pos": [p0, p1, p2],
-	 *         "quat": [q0, q1, q2, q3]
-	 *     }
-	 * }
-	 *
-	 */
 	const msg = {
-		event: 'optitrack_tracking_6dof',
+		event: 'trackerMoved',
+		timestamp: Date.now(),
 		detail: {
-			timestamp: Date.now(),
 			pos: [0.1, 0.2, 0.3],
 			quat: [0.01, 0.02, 0.03, 0.04]
 		}
 	}
-	socket.emit('vrpn_event', msg);
+	socket.emit('WXREvent', msg);
 }
 
 function tracking_end() {
-	/*
-	* "optitrack_tracking_end" event
-	*
-	* {
-	*     "event": "optitrack_tracking_end",
-	*     "detail": { 
-	*         "timestamp": timestamp
-	*     }
-	* }
-	*
-	*/
+
 	const msg = {
-		event: 'optitrack_tracking_end',
-		detail: {
-			timestamp: Date.now()
-		}
+		event: 'trackerMissed',
+		timestamp: Date.now(),
+		detail: { }
 	}
-	socket.emit('vrpn_event', msg);
+	socket.emit('WXREvent', msg);
 	is_first_message = true;
 }
