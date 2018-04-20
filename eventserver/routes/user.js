@@ -15,7 +15,7 @@ function registerNewUser(req, res) {
 	};
 
 	console.log(`new register ${userInfo.name}, ${userInfo.password}`);
-	UserModel.newUser(userInfo)
+	UserModel.create(userInfo)
 		.then( user => {
 			req.login(user, err => {
 				if (err) return Promise.reject(err);

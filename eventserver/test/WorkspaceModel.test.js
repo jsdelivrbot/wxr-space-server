@@ -37,7 +37,7 @@ describe(`WorkspaceModel.test.js`, function() {
 		let owner, ws;
 
 		it(`Create base owner`, function(done) {
-			UserModel.newUser({name: 'aUser', password: 123123})
+			UserModel.create({name: 'aUser', password: 123123})
 				.then( _owner => owner = _owner)
 				.catch( reason => assert.fail(`this should not be failed. But error is occured: ${reason.err}, ${reason.info}`))
 				.then( () => done() );
@@ -65,13 +65,13 @@ describe(`WorkspaceModel.test.js`, function() {
 		it(`Create base owner and member users and an workspace for them`, function(done) {
 
 			// Create base owner and members
-			UserModel.newUser({name: 'uOwner', password: 123123})
+			UserModel.create({name: 'uOwner', password: 123123})
 				.then( _owner => owner = _owner )
-				.then( () => UserModel.newUser({name: 'm1', password:123123}) )
+				.then( () => UserModel.create({name: 'm1', password:123123}) )
 				.then( _user => user1 = _user )
-				.then( () => UserModel.newUser({name: 'm2', password:123123}) )
+				.then( () => UserModel.create({name: 'm2', password:123123}) )
 				.then( _user => user2 = _user )
-				.then( () => UserModel.newUser({name: 'm3', password:123123}) )
+				.then( () => UserModel.create({name: 'm3', password:123123}) )
 				.then( _user => user3 = _user )
 
 				// Create ws of owner

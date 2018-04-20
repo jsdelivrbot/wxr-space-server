@@ -47,8 +47,8 @@ describe(`UserModel.test.js`, function() {
 		let userInstance;
 
 		it(`Create a user account`, function(done) {
-			UserModel.newUser(testUserInfo)
-				.then( user => console.log(`user id: ${user.p('name')}`) )
+			UserModel.create(testUserInfo)
+				.then( user => console.log(`user id: `, user.allProperties()) )
 				.catch( reason => assert.fail(reason) )
 				.then( () => done() );
 		});
@@ -115,7 +115,7 @@ describe(`UserModel.test.js`, function() {
 
 
 		it(`Create new user`, function(done) {
-			UserModel.newUser(unregisteredUserInfo)
+			UserModel.create(unregisteredUserInfo)
 				.then( user => userClient = user )
 				.catch( reason => assert.fail(reason) )
 				.then( () => done() );

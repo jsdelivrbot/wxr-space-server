@@ -113,7 +113,7 @@ describe(`WorkspaceModel.test.js`, function() {
 			DeviceModel.create('127.0.0.1', 'testDevice')
 				.then( _device => device = _device )
 				.catch( reason => assert.fail(`Creating device instance is failed: ${reason.err}, ${reason.info}`) )
-				.then( () => UserModel.newUser(testUserInfo) )
+				.then( () => UserModel.create(testUserInfo) )
 				.then( _user => owner = _user )
 				.catch( reason => assert.fail(`This is should not be failed. But Error is occured: ${reason.err}, ${reason.info}`) )
 				.then( () => done() );
@@ -141,9 +141,9 @@ describe(`WorkspaceModel.test.js`, function() {
 
 
 		it(`Test 'shareDevice' and 'getDevices' method (Giving reference of device to other user and getting all linked devices of an user including his own devices`, function(done) {
-			UserModel.newUser(otherUserInfo1)
+			UserModel.create(otherUserInfo1)
 				.then( _otherUser => other1 = _otherUser )
-				.then( () => UserModel.newUser(otherUserInfo2) )
+				.then( () => UserModel.create(otherUserInfo2) )
 				.then( _otherUser => other2 = _otherUser )
 				.then( () => owner.shareDeviceWith(device, other1) )
 				.then( () => owner.shareDeviceWith(device, other2) )
