@@ -1,5 +1,6 @@
 const nohm = require('nohm').Nohm;
 require('../object_extend');
+const UUID = require('uuid/v4');
 
 
 const PASSWORD_MINLENGTH = 6;
@@ -9,12 +10,21 @@ const PASSWORD_MINLENGTH = 6;
  * Model definition of a simple user
  */
 const UserModel = nohm.model('UserModel', {
+	idGenerator: callback => callback(UUID()),
 	properties: {
-		name: {
+		email: {
 			type: 'string',
 			unique: true,
 			validations: [
-				// 'email',
+				'email',
+				'notEmpty'
+			]
+		},
+
+		name: {
+			type: 'string',
+			index: true,
+			validations: [
 				'notEmpty'
 			]
 		},
@@ -23,10 +33,7 @@ const UserModel = nohm.model('UserModel', {
 			type: 'timestamp',
 			defaultValue: function () {
 				return Date.now();
-			},
-			validations: [
-				'notEmpty'
-			]
+			}
 		},
 
 		password: {

@@ -1,15 +1,17 @@
 const nohm = require('nohm').Nohm;
 const config = require('config');
+const UUID = require('uuid/v4');
 
 
 /**
  * Model definition of Workspace
  */
 const WorkspaceModel = nohm.model('WorkspaceModel', {
+	idGenerator: callback => callback(UUID()),
 	properties: {
 		name: {
 			type: 'string',
-			unique: true,
+			index: true,
 			validations: [
 				'notEmpty',
 				/*
@@ -25,10 +27,7 @@ const WorkspaceModel = nohm.model('WorkspaceModel', {
 			type: 'timestamp',
 			defaultValue: function () {
 				return Date.now();
-			},
-			validations: [
-				'notEmpty'
-			]
+			}
 		},
 		owner: {
 			type: 'string',

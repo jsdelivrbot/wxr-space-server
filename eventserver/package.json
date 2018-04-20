@@ -33,6 +33,7 @@
     "serve-favicon": "~2.4.5",
     "socket.io": "^2.0.4",
     "three": "^0.89.0",
+    "uuid": "^3.2.1",
     "w3-css": "^4.0.4",
     "waypoints": "^4.0.1"
   },

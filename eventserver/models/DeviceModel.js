@@ -1,17 +1,26 @@
 const config = require('config');
 const nohm = require('nohm').Nohm;
 require('../object_extend');
+const UUID = require('uuid/v4');
 
 
 /**
  * Model definition of Workspace
  */
 const DeviceModel = nohm.model('DeviceModel', {
+	idGenerator: callback => callback(UUID()),
 	properties: {
+
+		device: {
+			type: 'string',
+			validations: [
+				'notEmpty',
+			]
+		},
 
 		name: {
 			type: 'string',
-			unique: true,
+			index: true,
 			validations: [
 				'notEmpty',
 				/*
@@ -28,10 +37,7 @@ const DeviceModel = nohm.model('DeviceModel', {
 			type: 'timestamp',
 			defaultValue: function () {
 				return Date.now();
-			},
-			validations: [
-				'notEmpty'
-			]
+			}
 		},
 
 		owner: {
