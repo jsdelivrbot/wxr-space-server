@@ -23,26 +23,44 @@ const DeviceModel = nohm.model('DeviceModel', {
 			index: true,
 			validations: [
 				'notEmpty',
-				/*
-				 * TODO: implement custom validation to check if owner_id is valid
-				 * refer this: https://maritz.github.io/nohm/#validators
-				 */
-				function checkIsValidOwner (value, options, callback) {
-					callback(true);
-				}
 			]
+		},
+
+		connectionType: {
+			type: 'string',
+			validations: [
+				'notEmpty',
+			]
+		},
+
+		deviceType: {
+			type: 'string',
+			validations: [
+				'notEmpty',
+			]
+		},
+
+		status: {
+			type: 'string',
+			defaultValue: function() {return 'disconnected';}
+		},
+
+		eventStreamEnable: {
+			type: 'boolean',
+			defaultValue: function() {return true}
 		},
 
 		createdDate: {
 			type: 'timestamp',
-			defaultValue: function () {
-				return Date.now();
-			}
+			defaultValue: function() {return Date.now()}
 		},
 
-		owner: {
+		ownerId: {
 			type: 'string',
-			validations: []
+			index: true,
+			validations: [
+				'notEmpty'
+			]
 		},
 
 		eventSetKey: {
@@ -56,37 +74,19 @@ const DeviceModel = nohm.model('DeviceModel', {
 
 	methods: {
 
-		destroy: function() {
-			return new Promise( (resolve, reject) => {
-				this.remove( err => {
-					if (err) return reject(err);
-					resolve();
-				});
-			});
-		},
-
-		setOwner: function(owner) {
-			this.p('owner', owner.p('name'));
-			return this._pSave();
-		},
-
-		getSharedUser: function() {
-			const UserModel = nohm.getModels()['UserModel'];
-			return this.getAllLinks('UserModel', DeviceModel.RELATION_USER_SHARED)
-				.then( ids => UserModel.propagateInstances(ids) );
-		},
+		// TODO: Unsupported method in nohm v0.9.8
+		// destroy: function() {
+		// 	return this._pRemove();
+		// },
 
 		addEvent: function(event) {
 			const redisClient = nohm.client;
 			const key = this.p('eventSetKey');
-			const score = event.detail.timestamp;
+			const score = event.timestamp;
 			const member = JSON.stringify(event);
 
-			return new Promise( (resolve, reject) => {
-				redisClient.zadd(key, score, member, (err, numOfSavedItems) => {
-					if (err) return reject(err);
-					resolve(numOfSavedItems); // numOfSavedItems will always be 1.
-				});
+			redisClient.zadd(key, score, member, (err, numOfSavedItems) => {
+				if (err) console.error(err);
 			});
 		},
 
@@ -114,12 +114,6 @@ const DeviceModel = nohm.model('DeviceModel', {
 });
 
 
-DeviceModel.RELATION_USER_OWNER = 'hasForeign';
-DeviceModel.RELATION_USER_SHARED = 'linkedForeign';
-DeviceModel.RELATIONS_WITH_USER = [
-	DeviceModel.RELATION_USER_OWNER,
-	DeviceModel.RELATION_USER_SHARED
-];
 
 DeviceModel.RELATION_WORKSPACE_LINKED = 'trackerForeign';
 
@@ -127,23 +121,20 @@ DeviceModel.RELATION_WORKSPACE_LINKED = 'trackerForeign';
 /*
  * Define static methods of DeviceModel
  */
-DeviceModel.create = function (ip, deviceName, owner) {
+DeviceModel.create = function (owner, deviceProfile) {
 	const device = nohm.factory('DeviceModel');
-	owner = owner && owner.p('name') || '';
-	const deviceInfo = {
-		name: `${ip}@${deviceName}`,
-		owner: owner,
-		eventSetKey: `zset:${ip}@${deviceName}:EVENT`
-	}
+	const deviceInfo = deviceProfile;
+	deviceInfo.ownerId = owner.id;
+	deviceInfo.eventSetKey = `WXR:zset:${deviceInfo.ownerId}@${deviceInfo.device}@${deviceInfo.name}:EVENT`;
 
 	device.p(deviceInfo);
 
 	return device._pSave();
-}
+};
 
-DeviceModel.resolveDeviceName = function (ip, deviceName) {
-	return `${ip}@${deviceName}`;
-}
+DeviceModel.getAllDevicesOf = function(userInstance) {
+	return DeviceModel._pFindAndLoad({ownerId: userInstance.id});
+};
 
 
 

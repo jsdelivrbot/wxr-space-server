@@ -8,15 +8,23 @@ const {inspect} = require('util');
 const {UserModel, WorkspaceModel} = require('../models/Models');
 
 
-const testUserInfo = {
-	name: 'yong',
+const userInfo_1 = {
+	email: 'user_1@gmail.com',
+	name: 'user_1',
 	password: 123123
-}
+};
 
-const unregisteredUserInfo = {
-	name: 'yongyong',
+const userInfo_2 = {
+	email: 'user_2@gmail.com',
+	name: 'user_2',
 	password: 123456
-}
+};
+
+const userInfo_3 = {
+	email: 'user_3@gmail.com',
+	name: 'user_3',
+	password: 321321
+};
 
 
 
@@ -47,31 +55,39 @@ describe(`UserModel.test.js`, function() {
 		let userInstance;
 
 		it(`Create a user account`, function(done) {
-			UserModel.create(testUserInfo)
-				.then( user => console.log(`user id: `, user.allProperties()) )
+			UserModel.create(userInfo_1)
+				.then( user => console.log(`user properties: `, user.allProperties()) )
+				.catch( reason => assert.fail(reason) )
+				.then( () => done() );
+		});
+
+
+		it(`Test 'findAndLoadByEmail' method`, function(done) {
+			UserModel.findAndLoadByEmail(userInfo_1.email)
+				.then( instance => assert.equal(instance.p('name'), userInfo_1.name) )
 				.catch( reason => assert.fail(reason) )
 				.then( () => done() );
 		});
 
 
 		it(`Login method test`, function(done) {
-			UserModel.login(testUserInfo.name, testUserInfo.password)
-				.then( user => userInstance = user )
+			UserModel.login(userInfo_1.email, userInfo_1.password)
+				.then( instance => {userInstance = instance} )
 				.catch( reason => assert.fail(reason) )
 				.then( () => done() );
 		});
 
 
 		it(`Try to login with unregistered user information`, function(done) {
-			UserModel.login(unregisteredUserInfo.name, unregisteredUserInfo.password)
-				.then( user => assert.fail(`This test should be end with error, user: ${user}`) )
-				.catch( reason => assert.equal(reason, 'not found') )
+			UserModel.login(userInfo_2.email, userInfo_2.password)
+				.then( instance => assert.fail(`This test should be end with error, user info: `, instance) )
+				.catch( reason => assert.equal(reason, 'Error: email or password is invalid') )
 				.then( () => done() );
 		});
 
 
 		it(`Test validPassword method`, function() {
-			const isValidPassword = userInstance.validPassword(unregisteredUserInfo.password);
+			const isValidPassword = userInstance.validPassword(userInfo_2.password);
 			assert.equal(isValidPassword, false);
 		});
 
@@ -86,9 +102,9 @@ describe(`UserModel.test.js`, function() {
 		let userHost, userClient;
 		let ws1, ws2, ws3;
 
-		it(`Load a user`, function(done) {
-			UserModel.findAndLoadByName(testUserInfo.name)
-				.then( user => userHost = user )
+		it(`Load a host user of workspace`, function(done) {
+			UserModel.findAndLoadByEmail(userInfo_1.email)
+				.then( instance => {userHost = instance} )
 				.catch( reason => assert.fail(reason) )
 				.then( () => done() );
 		});
@@ -96,11 +112,11 @@ describe(`UserModel.test.js`, function() {
 
 		it(`Test 'createWorkspace' method`, function(done) {
 			userHost.createWorkspace('myWS_1')
-				.then( ws => ws1 = ws )
+				.then( instance => {ws1 = instance} )
 				.then( () => userHost.createWorkspace('myWS_2') )
-				.then( ws => ws2 = ws )
+				.then( instance => {ws2 = instance} )
 				.then( () => userHost.createWorkspace('myWS_3') )
-				.then( ws => ws3 = ws )
+				.then( instance => {ws3 = instance} )
 				.catch( reason => assert.fail(reason) )
 				.then( () => done() );
 		});
@@ -108,15 +124,15 @@ describe(`UserModel.test.js`, function() {
 
 		it(`Test 'getMyWorkspaces' method`, function(done) {
 			userHost.getMyWorkspaces()
-				.then( wss => assert.equal(wss.length, 3) )
+				.then( instances => assert.equal(instances.length, 3) )
 				.catch( reason => assert.fail(reason) )
 				.then( () => done() );
 		});
 
 
 		it(`Create new user`, function(done) {
-			UserModel.create(unregisteredUserInfo)
-				.then( user => userClient = user )
+			UserModel.create(userInfo_2)
+				.then( instance => {userClient = instance} )
 				.catch( reason => assert.fail(reason) )
 				.then( () => done() );
 		});
@@ -129,39 +145,18 @@ describe(`UserModel.test.js`, function() {
 		});
 
 
-		it(`Test 'giveRights' method`, function(done) {
-			const rights = [
-				WorkspaceModel.RELATION_USER_EDITOR,
-				WorkspaceModel.RELATION_USER_OWNER];
+		it(`Test 'giveRight' method`, function(done) {
+			const right = WorkspaceModel.RELATION_USER_EDITOR;
 
-			userHost.giveRights(ws1, userClient, rights)
-				.then( setRights => assert.equal(setRights.length, rights.length) )
+			userHost.giveRight(ws1, userClient, right)
 				.catch( reason => assert.fail(reason) )
 				.then( () => done() );
 		});
 
 
 		it(`Test 'myRightsIn' method`, function(done) {
-			const rights = [
-				WorkspaceModel.RELATION_USER_VIEWER,
-				WorkspaceModel.RELATION_USER_EDITOR,
-				WorkspaceModel.RELATION_USER_OWNER];
-
-			userClient.getMyRightsIn(ws1)
-				.then( myRights => console.log(myRights) )
-				.catch( reason => assert.fail(reason) )
-				.then( () => done() );
-		});
-
-
-		it(`Test 'ridOfRights' method`, function(done) {
-			const rights = [
-				WorkspaceModel.RELATION_USER_EDITOR,
-				WorkspaceModel.RELATION_USER_OWNER];
-
-			userHost.ridOfRights(ws1, userClient, rights)
-				.then( () => userClient.getMyRightsIn(ws1) )
-				.then( myRights => assert.equal(myRights.length, 1) )
+			userClient.getMyRightIn(ws1)
+				.then( myRight => assert.equal(myRight, WorkspaceModel.RELATION_USER_EDITOR) )
 				.catch( reason => assert.fail(reason) )
 				.then( () => done() );
 		});
@@ -170,10 +165,100 @@ describe(`UserModel.test.js`, function() {
 		it(`Test 'exitWorkspace' method`, function(done) {
 			userClient.exitWorkspace(ws1)
 				.then( () => userClient.getMyWorkspaces() )
-				.then( wss => assert.equal(wss.length, 0) )
+				.then( instances => assert.equal(instances.length, 0) )
 				.catch( reason => assert.fail(reason) )
 				.then( () => done() );
 		});
 
+
+		// it(`Test 'removeWorkspace' method`, function(done) {
+		// 	userHost.removeWorkspace(ws3)
+		// 		.then( () => userHost.getMyWorkspaces() )
+		// 		.then( instances => assert.equal(instances.length, 2) )
+		// 		.catch( reason => assert.fail(reason) )
+		// 		.then( () => done() );
+		// });
+
 	});
+
+
+	/*
+	 * Test User-Device relation
+	 */
+	describe('# User-Device relation tests', function() {
+
+		let owner, ws, device;
+		const deviceProfile = {
+			device: 'Optitrack',
+			name: 'myDevice',
+			connectionType: 'VRPN',
+			deviceType: 'Tracker',
+		};
+
+
+		it(`Get user instances`, function(done) {
+			UserModel.findAndLoadByEmail(userInfo_1.email)
+				.then( instance => {owner = instance} )
+				.catch( reason => assert.fail(reason) )
+				.then( () => done() );
+		});
+
+
+		it(`Create device instance of owner user`, function(done) {
+			owner.registerDevice(deviceProfile)
+				.then( instance => {device = instance} )
+				.catch( reason => assert.fail(reason) )
+				.then( () => done() );
+		});
+
+
+		it(`Test 'getMyDevices' method`, function(done) {
+			owner.getMyDevices()
+				.then( instances => assert.equal(instances.length, 1) )
+				.catch( reason => assert.fail(reason) )
+				.then( () => done() );
+		});
+
+
+		it(`Test device profile update`, function(done) {
+			const newDeviceName = 'myNewOptitrackTrackerDevice';
+			device.p('name', newDeviceName);
+			device._pSave()
+				.then( deviceInstance => assert.equal(device.p('name'), newDeviceName) )
+				.catch( reason => assert.fail(reason) )
+				.then( () => done() );
+		});
+
+
+		// it(`Test 'removeDevice' method`, function(done) {
+		// 	owner.removeDevice(device)
+		// 		.then( () => owner.getMyDevices() )
+		// 		.then( instances => assert.equal(instances.length, 0) )
+		// 		.catch( reason => assert.fail(reason) )
+		// 		.then( () => done() );
+		// });
+
+
+		it(`Test 'attachDeviceTo' method`, function(done) {
+			owner.createWorkspace('mywwww')
+				.then( instance => {ws = instance} )
+				.then( () => owner.attachDeviceTo(ws, device) )
+				.then( wsInstance => device.getLinkedWorkspaces() )
+				.then( instances => assert.equal(instances[0].id, ws.id) )
+				.catch( reason => assert.fail(reason) )
+				.then( () => done() );
+		});
+
+
+		it(`Test 'detachDeviceFrom' method`, function(done) {
+			owner.detachDeviceFrom(ws, device)
+				.then( wsInstance => ws.getAttachedDevices() )
+				.then( instances => assert.equal(instances.length, 0) )
+				.catch( reason => assert.fail(reason) )
+				.then( () => done() );
+		});
+
+
+	});
+
 });

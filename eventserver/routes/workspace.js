@@ -168,8 +168,8 @@ function updateMemberProperties(req, res) {
 		.then( () => WorkspaceModel.USER_RIGHTS.includes(authority) ? Promise.resolve() : Promise.reject(`You cannot set authority of ${authority}`) )
 
 	// change authority
-		.then( () => workspaceInstance.resetRightsOf(memberInstance, WorkspaceModel.USER_RIGHTS) )
-		.then( () => workspaceInstance.setRightsOf(memberInstance, authority) )
+	// 	.then( () => workspaceInstance.resetRightsOf(memberInstance, WorkspaceModel.USER_RIGHTS) )
+		.then( () => workspaceInstance.setRightOf(memberInstance, authority) )
 		.then( () => res.json(APIResponseMessage.OK()) )
 		.catch( reason => res.json(APIResponseMessage.ERROR(reason)) );
 }

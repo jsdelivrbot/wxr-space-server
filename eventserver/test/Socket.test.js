@@ -220,7 +220,7 @@ describe(`Socket.test.js`, function() {
 				.then( () => DeviceModel.findAndLoadByName('127.0.0.1@dummy_server') )
 				.then( device => deviceInstance = device )
 				.then( () => !!deviceInstance === true ? Promise.resolve() : Promise.reject(`device is not exist`) )
-				.then( () => userInstance.addDevice(deviceInstance) )
+				.then( () => userInstance.registerDevice(deviceInstance) )
 				.catch( reason => assert.fail(reason) )
 
 			// attach device to 'myWorkspace'

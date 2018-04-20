@@ -3,7 +3,6 @@ const UserModel = require('./UserModel');
 const WorkspaceModel = require('./WorkspaceModel');
 const DeviceModel = require('./DeviceModel');
 const EventModel = require('./EventModel');
-const {inspect} = require('util');
 
 const Models = {
 	UserModel: UserModel,
@@ -23,6 +22,7 @@ const sm = [
 const bm = [
 	_pSave,
 	_pBelongsTo,
+	_pRemove,
 	getAllLinks,
 ];
 
@@ -54,7 +54,7 @@ for ( const key in Models ) {
 
 
 function _pFindAndLoad(indexSet) {
-	const model = nohm.factory(this.prototype.modelName);
+	const model = nohm.getModels()[this.prototype.modelName];
 	return new Promise( (resolve, reject) => {
 		model.findAndLoad(indexSet, (err, instances) => {
 			if (err === 'not found') instances = [];
@@ -71,8 +71,7 @@ function findAndLoadAll() {
 
 
 function findAndLoadByName(name) {
-	return _pFindAndLoad.call(this, {name: name})
-		.then( instances => Promise.resolve(instances[0]) );
+	return _pFindAndLoad.call(this, {name: name});
 }
 
 
@@ -110,6 +109,16 @@ function _pBelongsTo(instance, relation) {
 			if (err === 'not found') isBelonged = false;
 			else if (err) return reject(err);
 			resolve(isBelonged);
+		});
+	});
+}
+
+
+function _pRemove() {
+	return new Promise( (resolve, reject) => {
+		this.remove(err => {
+			if (err) return reject(err);
+			resolve();
 		});
 	});
 }

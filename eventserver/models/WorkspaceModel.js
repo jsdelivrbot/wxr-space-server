@@ -29,7 +29,7 @@ const WorkspaceModel = nohm.model('WorkspaceModel', {
 				return Date.now();
 			}
 		},
-		owner: {
+		ownerId: {
 			type: 'string',
 			validations: [
 				'notEmpty'
@@ -38,16 +38,19 @@ const WorkspaceModel = nohm.model('WorkspaceModel', {
 	},
 	methods: {
 
+		// TODO: Unsupported method in nohm v0.9.8
+		// destroy: function() {
+		// 	return this._pRemove();
+		// },
 
 		addMember: function (user) {
 			this.link(user, WorkspaceModel.RELATION_USER_VIEWER);
 			return this._pSave();
 		},
 
+		// TODO: if there are no participant, should it destroyed?
 		removeMember: function (user) {
-			WorkspaceModel.USER_RIGHTS.forEach( RIGHT => {
-				this.unlink(user, RIGHT);
-			});
+			WorkspaceModel.USER_RIGHTS.forEach( RIGHT => this.unlink(user, RIGHT) );
 			return this._pSave();
 		},
 
@@ -63,36 +66,29 @@ const WorkspaceModel = nohm.model('WorkspaceModel', {
 			return getMembersOfRights.call(this, WorkspaceModel.RELATION_USER_VIEWER);
 		},
 
-		getRightsOf: function (user) {
-			const rights = [];
+		getRightOf: function (user) {
+			let right = null;
 			const promisesArray = WorkspaceModel.USER_RIGHTS.map( RIGHT => {
 				return this._pBelongsTo(user, RIGHT)
-					.then( isBelonged => isBelonged ? rights.push(RIGHT) : 'not belonged' );
+					.then( isBelonged => isBelonged ? right = RIGHT : 'not belonged' );
 			});
 
 			return Promise.all(promisesArray)
-				.then( () => Promise.resolve(rights) );
+				.then( () => Promise.resolve(right) );
 		},
 
-		setRightsOf: function (user, rights) {
-			rights = Array.isArray(rights) ? rights : new Array(rights);
+		setRightOf: function (user, right) {
+			if (WorkspaceModel.USER_RIGHTS.includes(right) === false) {
+				return Promise.reject('Invalid right');
+			}
 
-			const setRights = WorkspaceModel.USER_RIGHTS.filter( RIGHT => {
-				if (rights.indexOf(RIGHT) !== -1) return !this.link(user, RIGHT);
-				else return false;
-			});
+			// Reset all rights was set.
+			WorkspaceModel.USER_RIGHTS.forEach( RIGHT => this.unlink(user, RIGHT) );
 
-			return this._pSave()
-				.then( () => Promise.resolve(setRights) );
-		},
-
-		resetRightsOf: function (user, rights) {
-			rights = Array.isArray(rights) ? rights : new Array(rights);
-
-			rights.forEach( RIGHT => this.unlink(user, RIGHT) );
-
+			this.link(user, right);
 			return this._pSave();
 		},
+
 
 
 		/*
@@ -104,7 +100,7 @@ const WorkspaceModel = nohm.model('WorkspaceModel', {
 			return this._pSave()
 			// For updating event data publishing list of device in socket instance, Calling refreshDeviceEventPublishListOf should be needed.
 				.then( workspace => {
-					refreshDeviceEventPublishListOf(device);
+					// refreshDeviceEventPublishListOf(device);
 					return Promise.resolve(workspace);
 				});
 		},
@@ -120,11 +116,11 @@ const WorkspaceModel = nohm.model('WorkspaceModel', {
 				.then( ids => DeviceModel.propagateInstances(ids) );
 		},
 
-		// Pub/Sub of redis has no relation to the key space. It was made to not interfere with it on any level, including database numbers.
+		// Pub/Sub of redis has no relation to the key space. It was made to not interfere with it on any level, by including database numbers.
 		// Publishing on db 10, will be heard by a subscriber on db 1.
 		// So we have to scoping by prefixing.
 		getChannelName: function() {
-			return `DATABASE${config.get('dbConfig.db')}:${this.p('name')}`;
+			return `DATABASE${config.get('dbConfig.db')}:${this.id}`;
 		}
 
 	}
@@ -150,26 +146,22 @@ WorkspaceModel.RELATION_DEVICE_TRACKER = 'tracker';
 WorkspaceModel.create = function (owner, wsName) {
 	const ws = nohm.factory('WorkspaceModel');
 	const workspaceInfo = {
-		name: owner.p('name') + '@' + wsName,
-		owner: owner.p('name')
-	}
-	const rights = WorkspaceModel.USER_RIGHTS;
+		name: wsName,
+		ownerId: owner.id
+	};
+	const right = WorkspaceModel.RELATION_USER_OWNER;
 
 	ws.p(workspaceInfo);
 
 	return ws._pSave()
-		.then( () => ws.setRightsOf(owner, rights) )
-		// ws.setRightsOf method will return the list of rights that is successfully saved.
-		// so to return created workspace instance to caller, process Promise.resolve(ws).
-		.then( rights => Promise.resolve(ws) );
-}
+		.then( () => ws.setRightOf(owner, right) );
+};
 
 
 // for further implementation, this function should accept filter option.
 WorkspaceModel.getAllWorkspaces = function () {
 	return this.findAndLoadAll();
-}
-
+};
 
 
 function getMembersOfRights(RIGHTS) {
@@ -177,6 +169,5 @@ function getMembersOfRights(RIGHTS) {
 	return this.getAllLinks('UserModel', RIGHTS)
 		.then( ids => UserModel.propagateInstances(ids) );
 }
-
 
 module.exports = WorkspaceModel;

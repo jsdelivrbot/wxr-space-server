@@ -34,148 +34,77 @@ describe(`WorkspaceModel.test.js`, function() {
 	 */
 	describe('# Device Model tests', function() {
 
-		let device, deviceName;
+		let owner, device;
+		const userInfo_1 = {
+			email: 'yong@gmail.com',
+			name: 'yong',
+			password: '123123'
+		};
+		const deviceProfile = {
+			device: 'Optitrack',
+			name: 'myDevice',
+			connectionType: 'VRPN',
+			deviceType: 'Tracker',
+		};
+
+
+		it(`Create base owner`, function(done) {
+			UserModel.create(userInfo_1)
+				.then( instance => {owner = instance} )
+				.catch( reason => assert.fail(`this should not be failed. But error is occured: ${reason.err}, ${reason.info}`))
+				.then( () => done() );
+		});
 
 
 		it(`Test 'DeviceModel.create' method`, function(done) {
-			DeviceModel.create('127.0.0.1', 'myDevice')
-				.then( _device => deviceName = _device.p('name') )
+			DeviceModel.create(owner, deviceProfile)
+				.then( instance => {
+					device = instance;
+					console.log(device.allProperties());
+				})
 				.catch( reason => assert.fail(`${reason.err}, ${reason.info}`) )
 				.then( () => done() );
 		});
 
 
-		it(`Check 'eventSetKey' property`, function(done) {
-			DeviceModel.findAndLoadByName(deviceName)
-				.then( _device => {
-					device = _device;
-					console.log(device.p('eventSetKey'));
-				})
-				.catch( reason => assert.fail(reason) )
-				.then( () => done() );
-		});
-
-
-		it(`Test 'addEvent' method (add 10 event object sequently)`, function(done) {
-			new Promise( (resolve, reject) => {
-				let index = 0;
-				(function add() {
-					if (index >= 10) return resolve();
-					const eventObj = {
-						event: 'dump_event',
-						detail: {
-							timestamp: Date.now(),
-							order: index++
-						}
+		it(`Test 'addEvent' method (add 10 event object sequently)`, function() {
+			for (let i=0; i<10; ++i) {
+				const eventObj = {
+					event: 'dump_event',
+					timestamp: Date.now(),
+					detail: {
+						order: i
 					}
-
-					device.addEvent(eventObj)
-						.then(add);
-				})(0);
-			})
-				.catch( reason => assert.fail(reason) )
-				.then( () => done() );
+				};
+				device.addEvent(eventObj);
+			}
 		});
 
 
 		it(`Test 'getEvents' method`, function(done) {
 			device.getEvents()
-				.then( events => assert.equal(events.length, 10) )
-				.catch( reason => assert.fail(reason) )
-				.then( () => done() );
-		});
-
-	});
-
-
-	/*
-	 * Test Workspace-User relation
-	 */
-	describe('# Device-User relation tests', function() {
-
-		let owner, other1, other2, device;
-
-		const testUserInfo = {
-			name: 'testDeviceOwner',
-			password: 123123
-		};
-		const otherUserInfo1 = {
-			name: 'oUser1',
-			password: 123123
-		};
-		const otherUserInfo2 = {
-			name: 'oUser2',
-			password: 123123
-		};
-
-
-		it(`Create device instance and owner user`, function(done) {
-			DeviceModel.create('127.0.0.1', 'testDevice')
-				.then( _device => device = _device )
-				.catch( reason => assert.fail(`Creating device instance is failed: ${reason.err}, ${reason.info}`) )
-				.then( () => UserModel.create(testUserInfo) )
-				.then( _user => owner = _user )
-				.catch( reason => assert.fail(`This is should not be failed. But Error is occured: ${reason.err}, ${reason.info}`) )
-				.then( () => done() );
-		});
-
-
-		it(`Test 'setOwner' method`, function(done) {
-			device.setOwner(owner)
-				.then( _device => assert.equal(device.p('owner'), owner.p('name')) )
-				.catch( reason => assert.fail(reason) )
-				.then( () => done() );
-		});
-
-
-		it(`Test 'addDevice' and 'getMyDevices' method (Setting owner of device and getting his own devices)`, function(done) {
-			owner.addDevice(device)
-				.then( owner => owner.getMyDevices() )
-				.then( devices => {
-					assert.equal( devices.length, 1 );
-					assert.equal( devices[0].p('name'), device.p('name') );
+				.then( events => {
+					console.log(events);
+					assert.equal(events.length, 10);
 				})
 				.catch( reason => assert.fail(reason) )
 				.then( () => done() );
 		});
 
 
-		it(`Test 'shareDevice' and 'getDevices' method (Giving reference of device to other user and getting all linked devices of an user including his own devices`, function(done) {
-			UserModel.create(otherUserInfo1)
-				.then( _otherUser => other1 = _otherUser )
-				.then( () => UserModel.create(otherUserInfo2) )
-				.then( _otherUser => other2 = _otherUser )
-				.then( () => owner.shareDeviceWith(device, other1) )
-				.then( () => owner.shareDeviceWith(device, other2) )
-				.then( () => other1.getDevices() )
-				.then( devices => {
-					assert.equal( devices.length, 1 );
-					assert.equal( devices[0].p('name'), device.p('name') );
-				})
-				.catch( reason => assert.fail(reason) )
-				.then( () => done() );
-		});
-
-
-		it(`Test 'cutSharingFrom' method (Taking device instance from other user)`, function(done) {
-			owner.cutSharingFrom(device, other1)
-				.then( () => other1.getDevices() )
-				.then( devices => assert.equal(devices.length, 0) )
-				.catch( reason => assert.fail(reason) )
-				.then( () => done() );
-		});
-
-
-		it(`Test 'removeDevice' method (Removing ownership and device)`, function(done) {
-			owner.removeDevice(device)
-				.then( () => owner.getDevices() )
-				.then( devices => assert.equal(devices.length, 0) )
-				.then( () => other2.getDevices() )
-				.then( devices => assert.equal(devices.length, 0) )
-				.catch( reason => assert.fail(reason) )
-				.then( () => done() );
-		});
+		// it(`Test 'destroy' method`, function(done) {
+		// 	DeviceModel.findAndLoadAll()
+		// 		.then( instances => {
+		// 			const promisesArray = instances.map( deviceInstance => deviceInstance.destroy() );
+		// 			return Promise.all(promisesArray);
+		// 		})
+		// 		.then( () => DeviceModel.findAndLoadAll() )
+		// 		.then( instances => assert.equal(instances.length, 0) )
+		// 		.catch( reason => assert.fail(reason) )
+		// 		.then( () => done() );
+		// });
 
 	});
+
 
 });

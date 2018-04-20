@@ -2,7 +2,6 @@ const nohm = require('nohm').Nohm;
 require('../object_extend');
 const UUID = require('uuid/v4');
 
-
 const PASSWORD_MINLENGTH = 6;
 
 
@@ -70,7 +69,7 @@ const UserModel = nohm.model('UserModel', {
 		 * workspace control helpers
 		 */
 		createWorkspace: function(wsName) {
-			const {WorkspaceModel} = nohm.getModels();
+			const WorkspaceModel = nohm.getModels()['WorkspaceModel'];
 			const owner = this;
 			return WorkspaceModel.create(owner, wsName);
 		},
@@ -82,79 +81,61 @@ const UserModel = nohm.model('UserModel', {
 		},
 
 		joinWorkspace: function (ws) {
-			return ws.addMember(this);
+			return ws.addMember(this)
+				.then( workspaceInstnace => Promise.resolve(this) );
 		},
 
 		exitWorkspace: function (ws) {
-			return ws.removeMember(this);
+			return ws.removeMember(this)
+				.then( workspaceInstnace => Promise.resolve(this) );
 		},
 
-		getMyRightsIn: function (ws) {
-			return ws.getRightsOf(this);
+		getMyRightIn: function (ws) {
+			return ws.getRightOf(this);
 		},
 
-		giveRights: function (ws, member, rights) {
-			return ws.setRightsOf(member, rights);
+		giveRight: function (ws, member, right) {
+			return ws.setRightOf(member, right)
+				.then( workspaceInstnace => Promise.resolve(this) );
 		},
 
-		ridOfRights: function (ws, member, rights) {
-			return ws.resetRightsOf(member, rights)
+		// TODO: Unsupported method in nohm v0.9.8
+		// removeWorkspace: function(ws) {
+		// 	const WorkspaceModel = nohm.getModels()['WorkspaceModel'];
+		// 	return ws.getRightOf(this)
+		// 		.then( right => right === WorkspaceModel.RELATION_USER_OWNER ? ws.destroy() : Promise.reject(`You are not owner of this workspace.`) );
+		// },
+
+		attachDeviceTo: function(ws, device) {
+			if (this.id !== device.p('ownerId')) return Promise.reject(new Error(`This device is not yours.`));
+			return ws.attachDevice(device);
 		},
 
-
+		detachDeviceFrom: function(ws, device) {
+			if (this.id !== device.p('ownerId')) return Promise.reject(new Error(`This device is not yours.`));
+			return ws.detachDevice(device);
+		},
 
 
 		/*
 		 * device control helpers
 		 */
-		addDevice: function(device) {
-			this.link(device, UserModel.RELATION_DEVICE_HAS);
-			return this._pSave();
-		},
-
-		shareDeviceWith: function(device, user) {
-			// TODO: Checking if the caller is device's owner.
-			user.link(device, UserModel.RELATION_DEVICE_LINKED)
-			return user._pSave()
-			// Added .then chain do nothing for returning undefined
-				.then();
+		registerDevice: function(deviceProfile) {
+			const DeviceModel = nohm.getModels()['DeviceModel'];
+			const owner = this;
+			return DeviceModel.create(owner, deviceProfile);
 		},
 
 		getMyDevices: function() {
 			const DeviceModel = nohm.getModels()['DeviceModel'];
-			return this.getAllLinks('DeviceModel', UserModel.RELATION_DEVICE_HAS)
-				.then( ids => DeviceModel.propagateInstances(ids) );
+			return DeviceModel.getAllDevicesOf(this);
 		},
 
-		getDevices: function() {
-			const DeviceModel = nohm.getModels()['DeviceModel'];
-
-			return this.getAllLinks('DeviceModel', UserModel.RELATIONS_WITH_DEVICE)
-				.then( ids => DeviceModel.propagateInstances(ids) );
-		},
-
-		cutSharingFrom: function(device, user) {
-			// TODO: Checking if the caller is device's owner.
-			user.unlink(device, UserModel.RELATION_DEVICE_LINKED);
-			return user._pSave()
-			// Added .then chain do nothing for returning undefined
-				.then();
-		},
-
-		removeDevice: function(device) {
-			if (this.p('name') === device.p('owner')) {
-				return device.getSharedUser()
-					.then( sharedUsers => {
-						const promisesArray = sharedUsers.map( user => {
-							return this.cutSharingFrom(device, user)
-						});
-						return Promise.all(promisesArray)
-					})
-					.then( () => device.destroy() );
-			}
-			this.unlink(device, UserModel.RELATION_DEVICE_LINKED);
-			return this._pSave();
-		}
+		// TODO: Unsupported method in nohm v0.9.8
+		// removeDevice: function(device) {
+		// 	if (this.id !== device.p('ownerId')) return Promise.reject(new Error(`This device is not yours.`));
+		// 	return device.destroy();
+		// }
 
 	}
 });
@@ -168,37 +149,36 @@ UserModel.RELATION_WORKSPACE_JOINED = [
 	UserModel.RELATION_WORKSPACE_EDITOR,
 	UserModel.RELATION_WORKSPACE_OWNER
 ];
-UserModel.RELATION_DEVICE_HAS = 'has';
-UserModel.RELATION_DEVICE_LINKED = 'linked';
-UserModel.RELATIONS_WITH_DEVICE = [
-	UserModel.RELATION_DEVICE_HAS,
-	UserModel.RELATION_DEVICE_LINKED
-];
 
 
 /*
  * Define static methods of UserModel
  */
-UserModel.login = function(name, password) {
+UserModel.create = function(userInfo) {
+	const user = nohm.factory('UserModel');
+	user.p(userInfo);
+	return user._pSave();
+};
+
+UserModel.login = function(email, password) {
 	return Promise.resolve()
 		.then( () => {
-			if (!name || name === '' || !password || password === '')
-				return Promise.reject(new Error(`name or password is invalid`));
+			if (!email || !password)
+				return Promise.reject(new Error(`email or password is invalid`));
 		})
-		.then( () => this.findAndLoadByName(name) )
+		.then( () => this.findAndLoadByEmail(email) )
 		.then( user => {
 			if (user && user.validPassword(password))
 				return Promise.resolve(user);
 			else
-				return Promise.reject(new Error(`name or password is invalid`));
+				return Promise.reject(new Error(`email or password is invalid`));
 		});
-}
+};
 
-UserModel.newUser = function(userInfo) {
-	const user = nohm.factory('UserModel');
-	user.p(userInfo);
-	return user._pSave();
-}
+UserModel.findAndLoadByEmail = function(email) {
+	return this._pFindAndLoad({email: email})
+		.then( instances => Promise.resolve(instances[0]) );
+};
 
 
 
