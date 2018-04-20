@@ -13,6 +13,7 @@ const Models = {
 
 // Overwrite static methods.
 const sm = [
+	_pFindAndLoad,
 	findAndLoadAll,
 	findAndLoadByName,
 	propagateInstances,
@@ -22,24 +23,18 @@ const sm = [
 const bm = [
 	_pSave,
 	_pBelongsTo,
-	_allProperties,
 	getAllLinks,
 ];
 
 
 for ( const key in Models ) {
-	sm.forEach( f => { Models[key][f.name] = f });
-	bm.forEach( f => { Models[key].prototype[f.name] = f } );
+	const model = Models[key];
+	sm.forEach( f => { model[f.name] = f });
+	bm.forEach( f => { model.prototype[f.name] = f } );
 }
 
 
 
-// EventModel is added manually because it is just pure javascript class not likely other models created by nohm.
-// So this model doesn't serve methods inherited from nohm model.
-Models.EventModel = EventModel;
-
-
-module.exports = Models;
 
 
 
@@ -56,10 +51,12 @@ module.exports = Models;
  *    unsubscribe
  *    remove
  */
-function findAndLoadAll() {
+
+
+function _pFindAndLoad(indexSet) {
 	const model = nohm.factory(this.prototype.modelName);
 	return new Promise( (resolve, reject) => {
-		model.findAndLoad({}, (err, instances) => {
+		model.findAndLoad(indexSet, (err, instances) => {
 			if (err === 'not found') instances = [];
 			else if (err) return reject(err);
 			resolve(instances);
@@ -68,15 +65,14 @@ function findAndLoadAll() {
 }
 
 
-function findAndLoadByName (name) {
-	const model = nohm.factory(this.prototype.modelName);
-	return new Promise( (resolve, reject) => {
-		model.findAndLoad({name: name}, (err, instances) => {
-			if (err === 'not found') instances = [];
-			else if (err) return reject(err);
-			resolve(instances[0]);
-		});
-	});
+function findAndLoadAll() {
+	return _pFindAndLoad.call(this, {});
+}
+
+
+function findAndLoadByName(name) {
+	return _pFindAndLoad.call(this, {name: name})
+		.then( instances => Promise.resolve(instances[0]) );
 }
 
 
@@ -119,15 +115,8 @@ function _pBelongsTo(instance, relation) {
 }
 
 
-function _allProperties() {
-	let props = this.allProperties();
-	delete props.id;
-	return props;
-}
-
-
 function getAllLinks (modelName, linkNames) {
-	linkNames = Array.isArray(linkNames) ? linkNames : new Array(linkNames);
+	linkNames = [].concat(linkNames);
 	const promisesArray = linkNames.map(linkName => {
 		return new Promise((resolve, reject) => {
 			this.getAll(modelName, linkName, (err, roleIds) => {
@@ -149,26 +138,12 @@ function getAllLinks (modelName, linkNames) {
 
 
 
-/*
- * Define global helper function
- */
-// Deprecated function
-// This was for unit test not using redis.client.flushdb()
-global.clearInstances = function (_r, cb) {
-	const removeList = [];
-	_r.forEach( e => e && e.remove && removeList.push(e) );
-
-	if (removeList.length === 0) {
-		cb();
-		return;
-	}
-	removeList.forEach( (instance, index) => {
-		instance.remove( () => {
-			if (index === removeList.length-1) {
-				cb();
-			}
-		});
-	});
-}
 
 
+
+// EventModel is added manually because it is just pure javascript class not likely other models created by nohm.
+// So this model doesn't serve methods inherited from nohm model.
+Models.EventModel = EventModel;
+
+
+module.exports = Models;

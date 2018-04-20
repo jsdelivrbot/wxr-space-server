@@ -4,8 +4,7 @@ const redis = require('redis');
 const nohm = require('nohm').Nohm;
 require('../object_extend');
 const assert = require('assert');
-const {inspect} = require('util');
-const {UserModel, WorkspaceModel} = require('../models/Models');
+const {UserModel} = require('../models/Models');
 
 
 describe(`Models.test.js`, function() {
@@ -34,35 +33,62 @@ describe(`Models.test.js`, function() {
 
 		let ids;
 		let userInstance;
+		const userInfo_1 = {
+			email: 'yong@gmail.com',
+			name: 'yong',
+			password: '123123',
+		};
 
 
-		it(`Test 'findAndLoadByName' method`, function(done) {
-			UserModel.findAndLoadByName('user1')
-				.then( instance => {
-					assert.equal(!!instance, true);
-				})
-				.catch( reason => {
-					assert.equal(reason, 'not found');
-				})
+		it(`Test '_pFindAndLoad' method`, function(done) {
+			UserModel._pFindAndLoad({email: userInfo_1.email})
+				.then( instances => assert.equal(instances.length, 0) )
+				.catch( reason => assert.fail(reason) )
 				.then( () => done() );
-
 		});
 
 
 		it(`Test '_pSave' method`, function(done) {
 			userInstance = nohm.factory('UserModel');
-			userInstance.p({name:'u', password:123123});
+			userInstance.p(userInfo_1);
 			userInstance._pSave()
-				.then( () => done() )
-				.catch( reason => done(reason) );
+				.catch( reason => assert.fail(reason) )
+				.then( instance => {
+					console.log(instance);
+					done();
+				} );
+		});
+
+
+		it(`Test again '_pFindAndLoad' method`, function(done) {
+			UserModel._pFindAndLoad({email: userInfo_1.email})
+				.then( instances => assert.equal(instances[0].p('email'), userInfo_1.email) )
+				.catch( reason => assert.fail(reason) )
+				.then( () => done() );
+		});
+
+
+		it(`Test 'findAndLoadAll' method`, function(done) {
+			UserModel.findAndLoadAll()
+				.then( instances => assert.equal(instances.length, 1) )
+				.catch( reason => assert.fail(reason) )
+				.then( () => done() );
+		});
+
+
+		it(`Test 'findAndLoadByName' method`, function(done) {
+			UserModel.findAndLoadByName(userInfo_1.name)
+				.then( instane => assert.equal(instane.p('name'), userInfo_1.name) )
+				.catch( reason => assert.fail(reason) )
+				.then( () => done() );
 		});
 
 
 		it(`Test 'getAllLinks' method`, function(done) {
 			let promisesArray = [];
 			for (let i=0; i < 3; ++i) {
-				const info = {name:`user_${i}`, password:123456};
-				promisesArray.push(UserModel.newUser(info));
+				const info = {email: `${userInfo_1.email}_${i}`, name: userInfo_1.name, password: userInfo_1.password};
+				promisesArray.push(UserModel.create(info));
 			}
 
 			Promise.all(promisesArray)
@@ -77,7 +103,7 @@ describe(`Models.test.js`, function() {
 				})
 				.then( _ids => ids = _ids )
 				.then( () => assert.equal(ids.length, 3) )
-				.catch( reason => done(reason) )
+				.catch( reason => assert.fail(reason) )
 				.then( () => done() );
 		});
 
@@ -85,17 +111,10 @@ describe(`Models.test.js`, function() {
 		it(`Test propagation ids`, function(done) {
 			UserModel.propagateInstances(ids)
 				.then( instances => assert.equal(instances.length, 3) )
-				.catch( reason => done(reason) )
-				.then( () => done() );
-		});
-
-
-		it(`Test 'findAndLoadAll' method`, function(done) {
-			UserModel.findAndLoadAll()
-				.then( instances => assert.equal(instances.length, 4) )
 				.catch( reason => assert.fail(reason) )
 				.then( () => done() );
 		});
+
 
 	});
 });

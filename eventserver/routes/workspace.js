@@ -33,8 +33,7 @@ function createNewWorkspace(req, res) {
 function getWorkspaceList(req, res) {
 	WorkspaceModel.getAllWorkspaces()
 		.then( instances => {
-			instancesPropertiesOnly = instances.map( i => i._allProperties() )
-			res.json( APIResponseMessage.OK(instancesPropertiesOnly) );
+			res.json( APIResponseMessage.OK(instances.allProperties()) );
 		})
 		.catch( reason => {
 			if (reason === 'not found') res.json( APIResponseMessage.OK([]) );
@@ -91,7 +90,7 @@ function getAllMembers (req,res) {
 		.then( members => {
 			const promisesArray = [];
 			for (let i=0; i<members.length; ++i) {
-				promisesArray[i * 2    ] = members[i]._allProperties();
+				promisesArray[i * 2    ] = members[i].allProperties();
 				promisesArray[i * 2 + 1] = members[i].getMyRightsIn(workspaceInstance);
 			}
 			return Promise.all(promisesArray);

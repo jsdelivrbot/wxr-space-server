@@ -14,10 +14,7 @@ function indexPage(req, res) {
 	};
 
 	WorkspaceModel.getAllWorkspaces()
-		.then( instances => {
-			instancesPropertiesOnly = instances.map( i => i._allProperties() );
-			options.workspaceList = instancesPropertiesOnly;
-		})
+		.then( instances => {options.workspaceList = instances.allProperties} )
 		.catch( reason => res.render('index', options) )
 		.then( () => res.render('index', options) );
 
