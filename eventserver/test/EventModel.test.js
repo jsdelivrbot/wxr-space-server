@@ -9,7 +9,8 @@ const {UserModel, WorkspaceModel, DeviceModel, EventModel} = require('../models/
 
 
 
-let client;
+let client = null;
+
 describe(`WorkspaceModel.test.js`, function() {
 
 	/*
@@ -41,6 +42,18 @@ describe(`WorkspaceModel.test.js`, function() {
 				events.push(new EventModel('track_start'));
 			}
 			console.log(events);
+		});
+
+	});
+
+
+	/*
+	 * test end
+	 */
+	describe(`# The test end - cleaning DB`, function() {
+
+		it(`flush db`, function() {
+			client.flushdb();
 		});
 
 	});

@@ -7,6 +7,8 @@ const assert = require('assert');
 const {UserModel} = require('../models/Models');
 
 
+let client = null;
+
 describe(`Models.test.js`, function() {
 
 	/*
@@ -15,7 +17,7 @@ describe(`Models.test.js`, function() {
 	describe(`# Connection init`, function() {
 
 		it(`Connect redis server and set it as nohm client`, function(done) {
-			const client = redis.createClient({db: 1});
+			client = redis.createClient({db: 1});
 			client.on('connect', () => {
 				client.flushdb();
 				nohm.setClient(client);
@@ -32,11 +34,16 @@ describe(`Models.test.js`, function() {
 	describe('# Test static methods', function() {
 
 		let ids;
-		let userInstance;
+		let userInstance, userInstance_2;
 		const userInfo_1 = {
 			email: 'yong@gmail.com',
 			name: 'yong',
 			password: '123123',
+		};
+		const userInfo_2 = {
+			email: 'bong@gmail.com',
+			name: 'bong',
+			password: 123456,
 		};
 
 
@@ -68,6 +75,29 @@ describe(`Models.test.js`, function() {
 		});
 
 
+		it(`Test '_pFindAndLoad' method by id`, function(done) {
+			UserModel._pFindAndLoad(userInstance.id)
+				.then( instance => assert.equal(instance.id, userInstance.id) )
+				.then( () => UserModel._pFindAndLoad('some_unvalid_id') )
+				.then( instance => assert.equal(instance, undefined) )
+				.catch( reason => assert.fail(reason) )
+				.then( () => done() );
+		});
+
+
+		it(`Test '_pRemove' method`, function(done) {
+			UserModel.create(userInfo_2)
+				.then( instance => {userInstance_2 = instance } )
+				.then( () => UserModel.findAndLoadAll() )
+				.then( instances => assert.equal(instances.length, 2) )
+				.then( () => userInstance_2._pRemove() )
+				.then( () => UserModel.findAndLoadAll() )
+				.then( instnaces => assert.equal(instnaces.length, 1) )
+				.catch( reason => assert.fail(reason) )
+				.then( () => done() );
+		});
+
+
 		it(`Test 'findAndLoadAll' method`, function(done) {
 			UserModel.findAndLoadAll()
 				.then( instances => assert.equal(instances.length, 1) )
@@ -78,7 +108,7 @@ describe(`Models.test.js`, function() {
 
 		it(`Test 'findAndLoadByName' method`, function(done) {
 			UserModel.findAndLoadByName(userInfo_1.name)
-				.then( instane => assert.equal(instane.p('name'), userInfo_1.name) )
+				.then( instances => assert.equal(instances[0].p('name'), userInfo_1.name) )
 				.catch( reason => assert.fail(reason) )
 				.then( () => done() );
 		});
@@ -109,12 +139,23 @@ describe(`Models.test.js`, function() {
 
 
 		it(`Test propagation ids`, function(done) {
-			UserModel.propagateInstances(ids)
+			UserModel.propagateInstance(ids)
 				.then( instances => assert.equal(instances.length, 3) )
 				.catch( reason => assert.fail(reason) )
 				.then( () => done() );
 		});
 
+
+	});
+
+	/*
+	 * test end
+	 */
+	describe(`# The test end - cleaning DB`, function() {
+
+		it(`flush db`, function() {
+			client.flushdb();
+		});
 
 	});
 });

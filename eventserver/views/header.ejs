@@ -1,0 +1,147 @@
+
+<!-- login Modal -->
+<% if (user === undefined) { %>
+<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered justify-content-center" role="document">
+		<div class="modal-content flip">
+			<div class="card">
+				<div class="card-body face front">
+					<form role="form" action="/user/login/local" method="post">
+						<br>
+						<h1 class="text-center">WXR Space</h1> <br>
+						<input class="form-control" type="email" placeholder="Email" name="email"/>
+						<input class="form-control" type="password" placeholder="Password" name="password"/>
+						<p class="text-right"><a href="#">Forgot Password</a></p>
+						<button class="btn btn-primary btn-block wxr-button">SIGN IN</button>
+						<hr>
+						<p>Sign in with</p>
+						<p><i class="fa fa-facebook-f fa-lg wxr-round-border"></i><i class="fa fa-twitter fa-lg wxr-round-border"></i></p>
+						<hr>
+						<p><a href="#" class="fliper-btn">Create new account?</a></p>
+					</form>
+				</div>
+				<div class="card-body face back">
+					<form role="form" action="/user" method="post">
+						<br>
+						<h1 class="text-center">WXR Space</h1> <br>
+						<label>Basic Information</label>
+						<input class="form-control" type="email" placeholder="Email" name="email"/>
+						<input class="form-control" type="text" placeholder="Fullname" name="name"/>
+						<label>Private Information</label>
+						<input class="form-control" type="password" placeholder="Password" name="password"/>
+						<input class="form-control" type="password" placeholder="Confirm Password"/>
+						<button class="btn btn-primary btn-block wxr-button">SIGN UP</button>
+						<p><a href="#" class="fliper-btn">Already have an account?</a></p>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<% } %>
+
+
+<!-- New Workspace Modal -->
+<div class="modal fade" id="newWorkspaceModal" tabindex="-1" role="dialog">
+	<div class="modal-dialog modal-dialog-centered justify-content-center" role="document">
+		<div class="modal-content">
+			<form id="createNewWorkspaceForm" role="form" action="/workspace" method="post">
+				<div class="modal-header">
+					<h5 class="modal-title">New Workspace</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<div class="form-group row">
+						<label for="workspaceTitle" class="col-sm-3 col-form-label">Title</label>
+						<div class="col-sm-9">
+							<input class="form-control wxr-form-control" type="text" id="workspaceTitle" placeholder="Noname" name="name">
+						</div>
+					</div>
+					<div class="form-group row">
+						<label for="workspaceDescription" class="col-sm-3 col-form-label">Description</label>
+						<div class="col-sm-9">
+							<textarea class="form-control wxr-form-control wxr-form-description" id="workspaceDescription" placeholder="Project description's here..." name="description"></textarea>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-danger wxr-button" data-dismiss="modal">Close</button>
+					<button type="submit" class="btn btn-primary wxr-button">Create</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+<% if (user === undefined) { %>
+<% } %>
+
+
+<header>
+	<nav class="navbar navbar-expand-lg bg-white">
+		<div class="container">
+			<a class="navbar-brand" href="/">WXR Space</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
+				<i class="fa fa-bars wxr-blue"></i>
+			</button>
+
+			<div class="collapse navbar-collapse" id="navbarToggler">
+				<ul class="navbar-nav align-items-center ml-auto mt-2 mt-lg-0">
+					<li class="nav-item active">
+						<button class="btn btn-link nav-link" data-toggle="modal" data-target="#newWorkspaceModal">New Workspace<span class="sr-only">(current)</span></button>
+					</li>
+					<% if (user === undefined) { %>
+					<li class="nav-item">
+						<button class="btn btn-primary wxr-button wxr-bg-blue" data-toggle="modal" data-target="#loginModal">Sign in</button>
+					</li>
+					<% } else { %>
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							<% if (user.userthumbnail) { %>
+							<% } else { %>
+							<i class="fa fa-user fa-lg fa-2x wxr-round-border" style=""></i>
+							<% } %>
+							<span class="pl-1">Hello, <%= user.p('name') %></span>
+						</a>
+						<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+							<a class="dropdown-item" href="/profile">Profile</a>
+							<a class="dropdown-item" href="/device_setting">Device settings</a>
+							<a class="dropdown-item" href="/workspace_manager">My Workspaces</a>
+							<div class="dropdown-divider"></div>
+							<a class="dropdown-item" href="/user/logout">Log out</a>
+						</div>
+					</li>
+					<% } %>
+				</ul>
+			</div>
+		</div>
+	</nav>
+</header>
+
+<hr class="wxr-divider wxr-border-blue"/>
+
+<script>
+	window.addEventListener("load", function(event) {
+		const $form = $('#createNewWorkspaceForm');
+		$form.on('submit', event => {
+			event.preventDefault();
+
+			$.ajax({
+				type: 'POST',
+				url: $form.attr('action'),
+				data: $form.serialize()
+			})
+				.done( data => {
+					console.log(`workspace creation call get response.`, data);
+
+					if (data.status === 'ok') {
+						return window.location.href = `${window.location.origin}/view/${data.message.id}`
+					} else {
+						console.log(`error: `, data);
+						$('#newWorkspaceModal').modal('toggle')
+					}
+				});
+		});
+	});
+</script>

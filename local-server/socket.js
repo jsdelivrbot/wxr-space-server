@@ -69,6 +69,7 @@ io.on('connection', function(socket) {
 		socket.data = socket.data || {};
 		socket.data.profile = DeviceProfiles.find( p => p.device === profile.device && p.name === profile.name )
 														|| profile;   // if there isn't, use default profile.
+		socket.data.profile.status = DEVICE_STATUS_ON;
 
 
 		// Store socket in LiveDeviceList

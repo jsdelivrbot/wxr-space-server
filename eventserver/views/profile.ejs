@@ -1,0 +1,150 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>XWR Space</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="A VR/AR content space for editing and viewing" />
+	<meta name="keywords" content="virtual reality, augmented reality, mixed reality, content web editor, webized network, webized device" />
+	<meta name="author" content="wrl.onl" />
+
+	<!--
+	//////////////////////////////////////////////////////
+
+	DEVELOPED by Yongjae Lee at Webizing Research Laboratory.
+
+	website:		http://www.wrl.onl/
+	Email:			yongjae.lee@wrl.onl
+
+	//////////////////////////////////////////////////////
+	 -->
+
+	<!-- Facebook and Twitter integration -->
+	<meta property="og:title" content=""/>
+	<meta property="og:image" content=""/>
+	<meta property="og:url" content=""/>
+	<meta property="og:site_name" content=""/>
+	<meta property="og:description" content=""/>
+	<meta name="twitter:title" content="" />
+	<meta name="twitter:image" content="" />
+	<meta name="twitter:url" content="" />
+	<meta name="twitter:card" content="" />
+
+	<link rel="icon" href="https://getbootstrap.com/favicon.ico">
+
+	<!-- Bootstrap core CSS -->
+	<link href="/lib/bootstrap/bootstrap.min.css" rel="stylesheet">
+
+	<!-- Font awesome CSS -->
+	<link href="/lib/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+
+	<!-- Custom styles for this template -->
+	<link href="/stylesheets/style.css" rel="stylesheet">
+</head>
+
+<body>
+
+	<!-- Header -->
+	<%- include('header'); -%>
+
+	<main role="main">
+		<div class="container">
+			<h1 class="pl-4 mt-5 mb-3">User Profile</h1>
+			<hr class="wxr-sm-divider">
+			<div class="row my-5">
+				<div class="col-lg-4 order-lg-1 text-center">
+					<img id="avatar" src="//placehold.it/150" class="mx-auto img-fluid d-block" alt="avatar">
+					<h4 class="mt-2"><%= user.p('name') %></h4>
+					<label class="wxr-custom-file mt-2">
+						<input type="file" id="file" class="wxr-custom-file-input" accept="image/*" onchange="updateAvatarImage(this.files)">
+						<span class="wxr-custom-file-control">Choose file</span>
+					</label>
+				</div>
+				<div class="col order-lg-2">
+					<div class="row container">
+						<form role="form" class="w-100">
+							<div class="form-group row">
+								<label class="col-lg-4 col-form-label form-control-label">Email</label>
+								<div class="col-lg-6">
+									<input class="form-control-plaintext" type="email" value="<%= user.p('email') %>" readonly>
+								</div>
+							</div>
+							<div class="form-group row">
+								<label class="col-lg-4 col-form-label form-control-label">Full Name</label>
+								<div class="col-lg-6">
+									<input class="form-control wxr-form-control" type="text" value="<%= user.p('name') %>">
+								</div>
+							</div>
+							<div class="form-group row">
+								<label class="col-lg-4 col-form-label form-control-label">Password</label>
+								<div class="col-lg-6">
+									<input class="form-control wxr-form-control" type="password" placeholder="••••••••••">
+								</div>
+							</div>
+							<div class="form-group row">
+								<label class="col-lg-4 col-form-label form-control-label">Confirm password</label>
+								<div class="col-lg-6">
+									<input class="form-control wxr-form-control" type="password" placeholder="••••••••••">
+								</div>
+							</div>
+							<div class="form-group mt-4 row">
+								<label class="col-lg-4 col-form-label form-control-label"></label>
+								<div class="col-lg-6">
+									<button type="reset" class="btn btn-secondary wxr-button">Close</button>
+									<button type="submit" class="btn btn-primary wxr-button">Save Changes</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</main>
+
+	<!-- Footer -->
+	<%- include('footer'); -%>
+
+
+	<!-- jQuery -->
+	<script src="/lib/jquery/jquery.min.js"></script>
+	<!-- autosize -->
+	<script src="/lib/jquery/jquery.autosize.js"></script>
+	<!-- Waypoints -->
+	<script src="/lib/jquery/jquery.waypoints.min.js"></script>
+	<!-- jQuery UI -->
+	<script src="/lib/jquery/ui/effect.js"></script>
+	<!-- Bootstrap -->
+	<script src="/lib/bootstrap/bootstrap.min.js"></script>
+	<!-- Socket.io -->
+	<script src="/lib/socket.io/socket.io.js"></script>
+	<!-- Webizing Device Configuration Manager -->
+	<script src="/js/webizingDeviceConfigurationManager.js"></script>
+
+	<script>
+		$('.fliper-btn').click(function(){
+			$('.flip').find('.card').toggleClass('flipped');
+		});
+
+		$('textarea').autosize({append:''});
+
+		$('.modal').on('hidden.bs.modal', function () {
+			$(this).find('input,textarea,select').val('').end();
+		});
+
+		function updateAvatarImage(files) {
+			const file = files[0];
+			const avatar = $('#avatar')[0];
+
+			if (!file || !file.type.startsWith('image/')) return;
+
+			const reader = new FileReader();
+			reader.onload = function(e) { avatar.src = e.target.result; };
+			reader.readAsDataURL(file);
+		}
+	</script>
+
+</body>
+
+</html>

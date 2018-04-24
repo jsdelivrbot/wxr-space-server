@@ -29,7 +29,7 @@ socket.on('connect', function(){
 	
 	(function timer(t_time) {
 		setTimeout(function() {
-			send_dof();
+			send_dof(global_i);
 			if (++global_i < 10)
 				timer(100);
 			else {
@@ -42,7 +42,7 @@ socket.on('connect', function(){
 	
 });
 
-function send_dof() {
+function send_dof(i) {
 	
 	if (is_first_message == true) {
 		is_first_message = false;
@@ -59,7 +59,7 @@ function send_dof() {
 		event: 'trackerMoved',
 		timestamp: Date.now(),
 		detail: {
-			pos: [0.1, 0.2, 0.3],
+			pos: [0.1*i, 0.2, 0.3],
 			quat: [0.01, 0.02, 0.03, 0.04]
 		}
 	}

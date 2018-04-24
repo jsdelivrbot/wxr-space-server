@@ -232,4 +232,17 @@ describe(`Socket.test.js`, function() {
 
 	});
 
+
+
+	/*
+	 * test end
+	 */
+	describe(`# The test end - cleaning DB`, function() {
+
+		it(`flush db`, function() {
+			client.flushdb();
+		});
+
+	});
+
 });

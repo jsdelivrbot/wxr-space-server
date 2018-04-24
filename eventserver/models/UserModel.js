@@ -68,16 +68,16 @@ const UserModel = nohm.model('UserModel', {
 		/*
 		 * workspace control helpers
 		 */
-		createWorkspace: function(wsName) {
+		createWorkspace: function(wsInfo) {
 			const WorkspaceModel = nohm.getModels()['WorkspaceModel'];
 			const owner = this;
-			return WorkspaceModel.create(owner, wsName);
+			return WorkspaceModel.create(owner, wsInfo);
 		},
 
 		getMyWorkspaces: function() {
 			const {UserModel, WorkspaceModel} = nohm.getModels();
 			return this.getAllLinks('WorkspaceModel', UserModel.RELATION_WORKSPACE_JOINED)
-				.then( ids => WorkspaceModel.propagateInstances(ids) );
+				.then( ids => WorkspaceModel.propagateInstance(ids) );
 		},
 
 		joinWorkspace: function (ws) {

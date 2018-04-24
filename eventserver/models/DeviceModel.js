@@ -13,6 +13,7 @@ const DeviceModel = nohm.model('DeviceModel', {
 
 		device: {
 			type: 'string',
+			index: true,
 			validations: [
 				'notEmpty',
 			]
@@ -41,30 +42,28 @@ const DeviceModel = nohm.model('DeviceModel', {
 		},
 
 		status: {
+			defaultValue: 'disconnected',
 			type: 'string',
-			defaultValue: function() {return 'disconnected';}
+			validations: [
+				function checkIsValidString(value, options, callback) {
+					callback(['disconnected', 'connected'].includes(value));
+				}
+			]
 		},
 
 		eventStreamEnable: {
-			type: 'boolean',
-			defaultValue: function() {return true}
+			defaultValue: false,
+			type: 'boolean'
 		},
 
 		createdDate: {
-			type: 'timestamp',
-			defaultValue: function() {return Date.now()}
+			defaultValue: function() {return Date.now()},
+			type: 'timestamp'
 		},
 
 		ownerId: {
 			type: 'string',
 			index: true,
-			validations: [
-				'notEmpty'
-			]
-		},
-
-		eventSetKey: {
-			type: 'string',
 			validations: [
 				'notEmpty'
 			]
@@ -81,7 +80,7 @@ const DeviceModel = nohm.model('DeviceModel', {
 
 		addEvent: function(event) {
 			const redisClient = nohm.client;
-			const key = this.p('eventSetKey');
+			const key = this.getEventSetKey();
 			const score = event.timestamp;
 			const member = JSON.stringify(event);
 
@@ -92,7 +91,7 @@ const DeviceModel = nohm.model('DeviceModel', {
 
 		getEvents: function(tFrom, tTo) {
 			const redisClient = nohm.client;
-			const key = this.p('eventSetKey');
+			const key = this.getEventSetKey();
 			const min = tFrom || '-inf';
 			const max = tTo || '+inf';
 
@@ -107,7 +106,24 @@ const DeviceModel = nohm.model('DeviceModel', {
 		getLinkedWorkspaces: function() {
 			const WorkspaceModel = nohm.getModels()['WorkspaceModel'];
 			return this.getAllLinks('WorkspaceModel', DeviceModel.RELATION_WORKSPACE_LINKED)
-				.then( ids => WorkspaceModel.propagateInstances(ids) )
+				.then( ids => WorkspaceModel.propagateInstance(ids) )
+		},
+
+		updateProfile: function(newValues) {
+			for (let key in newValues) {
+				const val = newValues[key];
+				if (val === '' || val === undefined || val === null) delete newValues[key];
+			}
+
+			this.p(newValues);
+
+			return isExist(this.allProperties())
+				.then( isExist => isExist ? Promise.reject(`Duplicated device profile.`) : this._pSave() );
+		},
+
+		getEventSetKey: function() {
+			if (this.id) return false;
+			else return `WXR:zset:${device.id}:EVENT`;
 		}
 
 	}
@@ -123,18 +139,24 @@ DeviceModel.RELATION_WORKSPACE_LINKED = 'trackerForeign';
  */
 DeviceModel.create = function (owner, deviceProfile) {
 	const device = nohm.factory('DeviceModel');
-	const deviceInfo = deviceProfile;
-	deviceInfo.ownerId = owner.id;
-	deviceInfo.eventSetKey = `WXR:zset:${deviceInfo.ownerId}@${deviceInfo.device}@${deviceInfo.name}:EVENT`;
+	deviceProfile.ownerId = owner.id;
 
-	device.p(deviceInfo);
+	device.p(deviceProfile);
 
-	return device._pSave();
+	return isExist(deviceProfile)    // search device profile duplication
+		.then( isExist => isExist ? Promise.reject(`Duplicated device profile.`) : device._pSave() );
 };
 
 DeviceModel.getAllDevicesOf = function(userInstance) {
 	return DeviceModel._pFindAndLoad({ownerId: userInstance.id});
 };
+
+
+function isExist(profile) {
+	return DeviceModel._pFindAndLoad({name: profile.name, device: profile.device, ownerId: profile.ownerId})
+		.then( instance => instance.length === 0 ? Promise.resolve(false) : Promise.resolve(true) );
+};
+
 
 
 

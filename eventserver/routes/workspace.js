@@ -14,32 +14,40 @@ function checkUserSession(req, res, next) {
 }
 
 
+// get list of all workspaces
+function getWorkspaceList(req, res) {
+
+	let index = req.query.id;
+	index = index || {
+		name: req.query.name,
+		ownerId: req.query.owner,
+	};
+
+	WorkspaceModel._pFindAndLoad(index)
+		.then( instances => {
+			instances = [].concat(instances);
+			instances = instances.map(refineWorkspaceInstanceProperties);
+			res.json( APIResponseMessage.OK(instances) );
+		})
+		.catch( reason => res.json( APIResponseMessage.ERROR(`Unavailable access: ${reason}`) ) );
+}
+
 // create new workspace
 function createNewWorkspace(req, res) {
 
 	const user = req.user;
-	const wsName = req.body.name || 'noname';
+	const wsInfo = {
+		name: req.body.name || 'noname',
+		description: req.body.description || 'An Webizing Workspace.'
+	};
 
-	user.createWorkspace(wsName)
+	user.createWorkspace(wsInfo)
+		.then( wsInstance => res.json( APIResponseMessage.OK(refineWorkspaceInstanceProperties(wsInstance)) ) )
+		.catch( reason => res.json( APIResponseMessage.ERROR(reason) ) );
+	// TODO: next commentialized code should be moved to url of /editor/workspace-id
 	// shift to enterWorkspace logic
-		.then( () => req.params.id = `${user.p('name')}@${wsName}` )
-		// .then( () => enterWorkspace(req,res) )
-		.then( () => res.redirect('/workspace/'+req.params.id) )
-		.catch( err => res.json(APIResponseMessage.ERROR(err)) );
-}
-
-
-// get list of all workspaces
-function getWorkspaceList(req, res) {
-	WorkspaceModel.getAllWorkspaces()
-		.then( instances => {
-			res.json( APIResponseMessage.OK(instances.allProperties()) );
-		})
-		.catch( reason => {
-			if (reason === 'not found') res.json( APIResponseMessage.OK([]) );
-			// TODO: response unavailable access message
-			else res.json( APIResponseMessage.ERROR('Unavailable access.') );
-		});
+	// 	.then( wsInstance => res.redirect('/workspace/'+wsInstance.id) )
+	// 	.catch( err => res.json(APIResponseMessage.ERROR(err)) );
 }
 
 
@@ -50,13 +58,13 @@ function enterWorkspace(req, res) {
 	const user = req.user;
 	const workspaceId = req.params.id;
 
-	WorkspaceModel.findAndLoadByName(workspaceId)
-		.then( workspaceInstance => workspaceInstance.getAllMembers() )
+	WorkspaceModel._pFindAndLoad(workspaceId)
+		.then( instance => instance.getAllMembers() )
 		.then( members => {
 			const isJoined = !!members.find( _u => _u.id === user.id );
 			if (isJoined) {
 				// start getting socketio stream data
-				res.json( APIResponseMessage.OK() );
+				res.render('view');
 			} else {
 				res.json( APIResponseMessage.ERROR('You are not joined in this workspace') );
 			}
@@ -175,29 +183,39 @@ function updateMemberProperties(req, res) {
 }
 
 
+
+
+function refineWorkspaceInstanceProperties(i) {
+	i = i.allProperties();
+	// delete i['ownerId'];
+	// delete i['eventSetKey'];
+	return i;
+}
+
+
+
+
+
 // Checking no session when getting the list
-router.route('/list')
+router.route('')
 	.get(getWorkspaceList);
 
 router.use(checkUserSession);
 
-router.route('/')
+router.route('')
 	.post(createNewWorkspace);
 
-router.route('/:id/exit')
-	.get(exitWorkspace);
-
-router.route('/:id/member/list')
-	.get(getAllMembers);
-
-router.route('/:id/member/invite')
-	.post(inviteMember);
-
-router.route('/:id/member/:memberId')
-	.put(updateMemberProperties);
-
-router.route('/:id')
-	.get(enterWorkspace);
+// router.route('/:id/exit')
+// 	.get(exitWorkspace);
+//
+// router.route('/:id/member/list')
+// 	.get(getAllMembers);
+//
+// router.route('/:id/member/invite')
+// 	.post(inviteMember);
+//
+// router.route('/:id/member/:memberId')
+// 	.put(updateMemberProperties);
 
 
 

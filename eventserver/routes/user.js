@@ -1,8 +1,18 @@
 const express = require('express');
 const router = express.Router();
 const passport = require('passport');
-const {UserModel} = require('../models/Models');
+const {UserModel, DeviceModel} = require('../models/Models');
 
+
+// check whether api caller is logged in
+function checkUserSession(req, res, next) {
+
+	if (!!req.user === true) {
+		next();
+	} else {
+		res.json( APIResponseMessage.ERROR('You are not logged in') );
+	}
+}
 
 
 // register new user
@@ -10,11 +20,12 @@ const {UserModel} = require('../models/Models');
 function registerNewUser(req, res) {
 
 	const userInfo = {
-		name: req.body.username,
+		email: req.body.email,
+		name: req.body.name,
 		password: req.body.password
 	};
 
-	console.log(`new register ${userInfo.name}, ${userInfo.password}`);
+	console.log(`new register ${userInfo.email}, ${userInfo.password}`);
 	UserModel.create(userInfo)
 		.then( user => {
 			req.login(user, err => {
@@ -34,8 +45,10 @@ function registerNewUser(req, res) {
 // default login process
 function localLogin(req, res) {
 	passport.authenticate('local', (err, user, info) => {
-		if (!!err === true || !!user === false) {
-			return res.json( APIResponseMessage.ERROR(`Internal error: ${err}`) );
+		if (!!err === true) {
+			return res.json(APIResponseMessage.ERROR(`Internal error: ${err}`));
+		} else if (!!user === false) {
+			return APIResponseMessage.ERROR('username or password is not valid.');
 		} else {
 			req.login(user, err => {
 				if (err) return APIResponseMessage.ERROR('username or password is not valid.');
@@ -55,10 +68,19 @@ function userLogout(req, res) {
 }
 
 
+// update user profile
+function updateUserProfile(req, res) {
+
+	const userInfo = {
+		name: req.params.name,
+		password: req.params.password
+	};
+
+	res.end('Unimplemented.');
+}
 
 
-
-router.route('/')
+router.route('')
 	.post(registerNewUser);
 
 router.route('/login/local')
@@ -66,6 +88,20 @@ router.route('/login/local')
 
 router.route('/logout')
 	.get(userLogout);
+
+
+// below goes processes needing session.
+router.use(checkUserSession);
+
+
+router.route('')
+	.put(updateUserProfile);
+
+// shortcut for /device?owner=user.id
+router.route('/me/device')
+	.get(function getMyDeviceProfiles(req, res) {
+		res.redirect(`/device?owner=${req.user.id}`);
+	});
 
 
 

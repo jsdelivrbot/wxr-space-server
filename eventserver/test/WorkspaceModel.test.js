@@ -8,7 +8,7 @@ const {UserModel, WorkspaceModel, DeviceModel} = require('../models/Models');
 
 
 
-let client;
+let client = null;
 describe(`WorkspaceModel.test.js`, function() {
 
 	const ownerInfo = {
@@ -55,6 +55,9 @@ describe(`WorkspaceModel.test.js`, function() {
 	describe('# Workspace Model tests', function() {
 
 		let owner;
+		const workspaceInfo = {
+			name: 'myWorkspace'
+		};
 
 		it(`Create base owner`, function(done) {
 			UserModel.create(ownerInfo)
@@ -65,7 +68,7 @@ describe(`WorkspaceModel.test.js`, function() {
 
 
 		it(`Test 'WorkspaceModel.create' method`, function(done) {
-			WorkspaceModel.create(owner, 'myWorkspace')
+			WorkspaceModel.create(owner, workspaceInfo)
 				.then( instance => assert.equal(instance.p('ownerId'), owner.id) )
 				.catch( reason => assert.fail(`${reason.err}, ${reason.info}`) )
 				.then( () => done() );
@@ -94,7 +97,7 @@ describe(`WorkspaceModel.test.js`, function() {
 				.then( instance => {user3 = instance} )
 
 				// Create ws of owner
-				.then( () => owner.createWorkspace('myWorkspace') )
+				.then( () => owner.createWorkspace({name: 'myWorkspace'}) )
 				.then( instance => {ws = instance} )
 
 				// Invite members to owner's workspace.
@@ -177,7 +180,7 @@ describe(`WorkspaceModel.test.js`, function() {
 				.then( instance => {owner = instance} )
 				.then( () => owner.registerDevice(deviceProfile) )
 				.then( instance => {device = instance} )
-				.then( () => owner.createWorkspace('wsTestDevice') )
+				.then( () => owner.createWorkspace({name: 'wsTestDevice'}) )
 				.then( instance => {ws = instance} )
 				.then( () => ws.attachDevice(device) )
 				.catch( reason => assert.fail(reason) )
@@ -199,6 +202,19 @@ describe(`WorkspaceModel.test.js`, function() {
 				.then( instances => assert.equal(instances.length, 0) )
 				.catch( reason => assert.fail(reason) )
 				.then( () => done() );
+		});
+
+	});
+
+
+
+	/*
+	 * test end
+	 */
+	describe(`# The test end - cleaning DB`, function() {
+
+		it(`flush db`, function() {
+			client.flushdb();
 		});
 
 	});

@@ -15,8 +15,15 @@ body {
 .wxr-divider {
   margin: 0px;
   border: 0px;
+  border-top: 2px solid #d8d8d8;
   width: 100%;
-  height: 2px;
+}
+
+.wxr-sm-divider {
+  margin: 0px;
+  border: 0px;
+  border-top: 1px solid #d8d8d8;
+  width: 100%;
 }
 
 .wxr-search {
@@ -46,6 +53,10 @@ body {
   background-color: #2d6cdf;
 }
 
+.wxr-border-blue {
+  border-color: #2d6cdf;
+}
+
 .wxr-blue {
   color: #2d6cdf;
 }
@@ -68,10 +79,65 @@ body {
 }
 
 .wxr-form-control:focus {
+  background: transparent;
   -webkit-box-shadow: none;
   box-shadow: none;
   border-color: #2d6cdf;
 }
+
+.wxr-form-control:disabled, .wxr-form-control[readonly] {
+  background-color: transparent;
+  cursor: not-allowed;
+}
+
+a.wxr-plain-link, a.wxr-plain-link:hover {
+  color: inherit;
+}
+
+.wxr-custom-file {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+  height: calc(2.25rem + 2px);
+  margin-bottom: 0;
+}
+
+.wxr-custom-file-input {
+  min-width: 14rem;
+  max-width: 100%;
+  height: 2.5rem;
+  margin: 0;
+  opacity: 0;
+}
+
+.wxr-custom-file-control {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 5;
+  height: 2.5rem;
+  padding: .5rem 1rem;
+  line-height: 1.5;
+  color: #495057;
+  pointer-events: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  background-color: #fff;
+  border: 1px solid rgba(0,0,0,.15);
+  border-radius: .25rem;
+}
+
+.wxr-no-top-border thead th {
+  border-top: 0px;
+}
+
+.wxr-footer {
+
+}
+
 
 
 
@@ -85,7 +151,7 @@ body {
 
 .flip {
   /*-webkit-perspective: 800;*/
-  perspective: 800;
+  perspective: 800px;
   position: relative;
   /*width: 24rem;*/
 }

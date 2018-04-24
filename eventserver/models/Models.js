@@ -15,7 +15,7 @@ const sm = [
 	_pFindAndLoad,
 	findAndLoadAll,
 	findAndLoadByName,
-	propagateInstances,
+	propagateInstance,
 ];
 
 // Overwrite basic methods of instance.
@@ -55,13 +55,33 @@ for ( const key in Models ) {
 
 function _pFindAndLoad(indexSet) {
 	const model = nohm.getModels()[this.prototype.modelName];
-	return new Promise( (resolve, reject) => {
-		model.findAndLoad(indexSet, (err, instances) => {
-			if (err === 'not found') instances = [];
-			else if (err) return reject(err);
-			resolve(instances);
+
+	if (typeof indexSet === 'string') {
+		// Find by id
+		const id = indexSet;
+		return new Promise( (resolve, reject) => {
+			let instance = nohm.factory(this.prototype.modelName, id, (err, prop) => {
+				if (err === 'not found') instance = undefined;
+				else if (err) return reject(err);
+				resolve(instance);
+			});
 		});
-	});
+	} else if (typeof indexSet === 'object' ) {
+		// delete empty property
+		for (let key in indexSet) {
+			const val = indexSet[key];
+			if (val === '' || val === undefined || val === null)
+				delete indexSet[key];
+		}
+		// Find by index
+		return new Promise( (resolve, reject) => {
+			model.findAndLoad(indexSet, (err, instances) => {
+				if (err === 'not found') instances = [];
+				else if (err) return reject(err);
+				resolve(instances);
+			});
+		});
+	}
 }
 
 
@@ -75,7 +95,8 @@ function findAndLoadByName(name) {
 }
 
 
-function propagateInstances (ids) {
+function propagateInstance (ids) {
+	ids = [].concat(ids);
 	const promisesArray = ids.map( id => {
 		return new Promise( (resolve, reject) => {
 			let instance = nohm.factory(this.prototype.modelName, id, (err, prop) => {

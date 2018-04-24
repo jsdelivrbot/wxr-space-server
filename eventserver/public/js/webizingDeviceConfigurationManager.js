@@ -2,8 +2,11 @@
 
 webizingDeviceConfigurationManager = new function() {
 
+	const SHOW_CONSOLE_LOG = false;
 	const SERVER_URL = 'http://localhost:6701';
 	const WEBIZING_DEVICE_MANAGER_URI = 'http://localhost:6712';
+	const profileUpdateListners = [];
+	const eventHandlers = [];
 	let DeviceProfiles = [];
 
 	// Socket.io set up
@@ -16,85 +19,87 @@ webizingDeviceConfigurationManager = new function() {
 	socket.on('WXRUpdateDeviceProfiles', function(profiles) {
 		Log(`Get DeviceProfiles: `, profiles);
 		DeviceProfiles = profiles;
+		profileUpdateListners.forEach( listener => listener(profiles) );
 	});
 
 	socket.on('error', function(err) {
 		Log(`error: `, err);
 	});
 
+	socket.on('WXREvent', function(event) {
+		eventHandlers.forEach( handler => handler(event) );
+	})
+
 
 	// Get DeviceProfiles from server
 	$.ajax(SERVER_URL + `/user/me/device`)
 		.done( data => {
 			if (data.status === 'ok') {
-				DeviceProfiles = data.message.profiles;
+				DeviceProfiles = data.message;
 				socket.emit('WXRUpdateDeviceProfiles', DeviceProfiles);
 			}
 		});
 
-
-	this.getDeviceProfiles = function SyncProfilesWithServer() {
-		Log(`getDeviceProfiles function.`);
-		return Object.assign([], DeviceProfiles);
+	this.addEventHandler = function(h) {
+		eventHandlers.push(h);
 	};
 
-	this.createProfile = function(device, name, callback) {
+	this.addUpdateListener = function (f) {
+		profileUpdateListners.push(f);
+	};
+
+	this.getDeviceProfiles = function() {
+		return [].concat(DeviceProfiles);
+	};
+
+	this.createProfile = function(profile, callback) {
 		callback = callback || new Function();
 		Log(`createProfile function.`);
 
 		// If there is profile matching with device and name...
-		let profile = null;
-		if ((!!device && !!name) === true && (profile = DeviceProfiles.find( p => p.device === device && p.name === name ))) {
+		if (findIndexInDeviceProfiles(profile) >= 0) {
 			Log(`POST profile`);
 			$.ajax({
 				type: 'POST',
-				url: SERVER_URL + `/user/me/device`,
+				url: SERVER_URL + `/device`,
 				data: profile,
 			})
 				.done( data => {
 					Log(`Receive POST profile response: `, data);
+
 					if (data.status === 'ok') {
-						const index = DeviceProfiles.findIndex( p => p.device === device && p.name === name );
-						DeviceProfiles[index] = data.message.profile;
-						socket.emit('WXRUpdateDeviceProfiles', DeviceProfiles);
+						const index = findIndexInDeviceProfiles(profile);
+						DeviceProfiles[index] = data.message;
 					}
+
+					socket.emit('WXRUpdateDeviceProfiles', DeviceProfiles);
 					callback(data);
 				});
 		}
 	};
 
-	this.updateProflie = function({id, device, name}, property, value, callback) {
+	this.updateProfile = function(id, profile, callback) {
 		callback = callback || new Function();
 		Log(`updateProfile function.`);
 
 		// Given with device id
 		if (!!id === true) {
 
-			Log(`PUT ${property}=${value}`);
+			Log(`PUT `, profile);
 			$.ajax({
 				type: 'PUT',
-				url: SERVER_URL + `/user/me/device/${id}`,
-				data: `property=value`,
+				url: SERVER_URL + `/device/${id}`,
+				data: profile,
 			})
-				.done( data => {
-					Log(`Receive PUT ${property}=${value} response: `, data);
+				.done(data => {
+					Log(`Receive PUT `, profile, `response: `, data);
 					if (data.status === 'ok') {
-						const index = DeviceProfiles.findIndex( p => p.id === id );
-						if (index !== -1) {
-							DeviceProfiles[index] = data.message.profile;
-							socket.emit('WXRUpdateDeviceProfiles', DeviceProfiles);
-						}
+						const index = DeviceProfiles.findIndex(p => p.id === profile.id);
+						DeviceProfiles[index] = data.message;
 					}
+					socket.emit('WXRUpdateDeviceProfiles', DeviceProfiles);
 					callback(data);
 				});
-
-		} else if ((!!device && !!name) === true && DeviceProfiles.find( p => p.device === device && p.name === name )) {
-			// Given with device model name and its name, that is unregistered.
-
-			Log(`Set unregistered device profile property.`);
-			const profile = DeviceProfiles.find( p => p.device === device && p.name === name );
-			profile[property] = value;
-			socket.emit('WXRUpdateDeviceProfiles', DeviceProfiles);
 		}
 	};
 
@@ -107,7 +112,7 @@ webizingDeviceConfigurationManager = new function() {
 			Log(`DELETE profile`);
 			$.ajax({
 				type: 'DELETE',
-				url: SERVER_URL + `/user/me/device/${id}`,
+				url: SERVER_URL + `/device/${id}`,
 			})
 				.done(data => {
 					Log(`Receive DELETE profile response: `, data);
@@ -123,7 +128,14 @@ webizingDeviceConfigurationManager = new function() {
 		}
 	};
 
-	function Log(...argv) {
-		console.log('webizingDeviceConfigurationManager: ', ...argv);
+
+	function Log(...args) {
+		if (!SHOW_CONSOLE_LOG) return;
+		console.trace('webizingDeviceConfigurationManager: ', ...args);
+	}
+
+	function findIndexInDeviceProfiles(profile) {
+		if (!profile.device || !profile.name) return -2;
+		return DeviceProfiles.findIndex( p => p.device === profile.device && p.name === profile.name );
 	}
 };

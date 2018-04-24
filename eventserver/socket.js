@@ -143,20 +143,20 @@ module.exports = function(passportAuthorize) {
 			 *     server_name: 'dummy_server' } }
 			 */
 
-	    const msg = {
-		    event: 'local_server_off',
-		    detail: {
-			    timestamp: Date.now(),
-			    server_name: socket.data.deviceInstance.p('name')
-		    }
-	    }
-
-	    if (!!socket.data.deviceInstance === false) {
-	    	handleError(`Device is not set up`);
-	    } else {
-		    console.log('user is disconnected');
-		    publishMessage(msg);
-	    }
+	    // const msg = {
+		   //  event: 'local_server_off',
+		   //  detail: {
+			 //    timestamp: Date.now(),
+			 //    server_name: socket.data.deviceInstance.p('name')
+		   //  }
+	    // }
+	    //
+	    // if (!!socket.data.deviceInstance === false) {
+	    // 	handleError(`Device is not set up`);
+	    // } else {
+		   //  console.log('user is disconnected');
+		   //  publishMessage(msg);
+	    // }
 
 
     });

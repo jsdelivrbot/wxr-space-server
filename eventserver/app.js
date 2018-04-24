@@ -16,6 +16,7 @@ var index = require('./routes/index');
 var lib = require('./routes/lib');
 var user = require('./routes/user');
 var workspace = require('./routes/workspace');
+var device = require('./routes/device');
 
 var app = express();
 
@@ -35,26 +36,22 @@ var {UserModel} = require('./models/Models');
 
 // configure passport
 passport.serializeUser(function(user, done) {
-	done(null, user.p('name'));
+	done(null, user.p('email'));
 });
 
-passport.deserializeUser(function(name, done) {
-	UserModel.findAndLoadByName(name)
+passport.deserializeUser(function(email, done) {
+	UserModel.findAndLoadByEmail(email)
 		.then( user => done(null, user) )
 		.catch( err => done(err, null) );
 });
 
-passport.use(new LocalStrategy(
-	function(username, password, done) {
-		UserModel.login(username, password)
+passport.use(new LocalStrategy({
+		usernameField: 'email',
+	},
+	function(email, password, done) {
+		UserModel.login(email, password)
 			.then( user => done(null, user) )
-			.catch( err => {
-				if (err === 'not found') {
-					done(null, false);
-					return;
-				}
-				done(err, false)
-			});
+			.catch( err => done(err, false) )
 	}
 ));
 
@@ -83,6 +80,7 @@ app.use('/', index);
 app.use('/lib', lib);
 app.use('/user', user);
 app.use('/workspace', workspace);
+app.use('/device', device);
 
 
 // catch 404 and forward to error handler

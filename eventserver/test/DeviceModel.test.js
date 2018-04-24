@@ -9,7 +9,8 @@ const {UserModel, WorkspaceModel, DeviceModel} = require('../models/Models');
 
 
 
-let client;
+let client = null;
+
 describe(`WorkspaceModel.test.js`, function() {
 
 	/*
@@ -103,6 +104,19 @@ describe(`WorkspaceModel.test.js`, function() {
 		// 		.catch( reason => assert.fail(reason) )
 		// 		.then( () => done() );
 		// });
+
+	});
+
+
+
+	/*
+	 * test end
+	 */
+	describe(`# The test end - cleaning DB`, function() {
+
+		it(`flush db`, function() {
+			client.flushdb();
+		});
 
 	});
 

@@ -13,14 +13,7 @@ const WorkspaceModel = nohm.model('WorkspaceModel', {
 			type: 'string',
 			index: true,
 			validations: [
-				'notEmpty',
-				/*
-				 * TODO: implement custom validation to check if owner_id is valid
-				 * refer this: https://maritz.github.io/nohm/#validators
-				 */
-				function checkIsValidOwner (value, options, callback) {
-					callback(true);
-				}
+				'notEmpty'
 			]
 		},
 		createdDate: {
@@ -31,9 +24,14 @@ const WorkspaceModel = nohm.model('WorkspaceModel', {
 		},
 		ownerId: {
 			type: 'string',
+			index: true,
 			validations: [
 				'notEmpty'
 			]
+		},
+		description: {
+			type: 'string',
+			defaultValue: 'An webizing workspace.'
 		}
 	},
 	methods: {
@@ -113,7 +111,7 @@ const WorkspaceModel = nohm.model('WorkspaceModel', {
 		getAttachedDevices: function () {
 			const DeviceModel = nohm.getModels()['DeviceModel'];
 			return this.getAllLinks('DeviceModel', WorkspaceModel.RELATION_DEVICE_TRACKER)
-				.then( ids => DeviceModel.propagateInstances(ids) );
+				.then( ids => DeviceModel.propagateInstance(ids) );
 		},
 
 		// Pub/Sub of redis has no relation to the key space. It was made to not interfere with it on any level, by including database numbers.
@@ -143,12 +141,10 @@ WorkspaceModel.RELATION_DEVICE_TRACKER = 'tracker';
 /*
  * Define static methods of WorkspaceModel
  */
-WorkspaceModel.create = function (owner, wsName) {
+WorkspaceModel.create = function (owner, workspaceInfo) {
 	const ws = nohm.factory('WorkspaceModel');
-	const workspaceInfo = {
-		name: wsName,
-		ownerId: owner.id
-	};
+	workspaceInfo.ownerId = owner.id;
+
 	const right = WorkspaceModel.RELATION_USER_OWNER;
 
 	ws.p(workspaceInfo);
@@ -167,7 +163,7 @@ WorkspaceModel.getAllWorkspaces = function () {
 function getMembersOfRights(RIGHTS) {
 	const UserModel = nohm.getModels()['UserModel'];
 	return this.getAllLinks('UserModel', RIGHTS)
-		.then( ids => UserModel.propagateInstances(ids) );
+		.then( ids => UserModel.propagateInstance(ids) );
 }
 
 module.exports = WorkspaceModel;

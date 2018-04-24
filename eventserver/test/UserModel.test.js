@@ -26,7 +26,7 @@ const userInfo_3 = {
 	password: 321321
 };
 
-
+let client = null;
 
 describe(`UserModel.test.js`, function() {
 
@@ -36,7 +36,7 @@ describe(`UserModel.test.js`, function() {
 	describe(`# Connection init`, function() {
 
 		it(`Connect redis server and set it as nohm client`, function(done) {
-			const client = redis.createClient({db: 1});
+			client = redis.createClient({db: 1});
 			client.on('connect', () => {
 				client.flushdb();
 				nohm.setClient(client);
@@ -101,6 +101,9 @@ describe(`UserModel.test.js`, function() {
 
 		let userHost, userClient;
 		let ws1, ws2, ws3;
+		const wsInfo_1 = { name: 'myWS_1' };
+		const wsInfo_2 = { name: 'myWS_2' };
+		const wsInfo_3 = { name: 'myWS_3' };
 
 		it(`Load a host user of workspace`, function(done) {
 			UserModel.findAndLoadByEmail(userInfo_1.email)
@@ -111,11 +114,11 @@ describe(`UserModel.test.js`, function() {
 
 
 		it(`Test 'createWorkspace' method`, function(done) {
-			userHost.createWorkspace('myWS_1')
+			userHost.createWorkspace(wsInfo_1)
 				.then( instance => {ws1 = instance} )
-				.then( () => userHost.createWorkspace('myWS_2') )
+				.then( () => userHost.createWorkspace(wsInfo_2) )
 				.then( instance => {ws2 = instance} )
-				.then( () => userHost.createWorkspace('myWS_3') )
+				.then( () => userHost.createWorkspace(wsInfo_3) )
 				.then( instance => {ws3 = instance} )
 				.catch( reason => assert.fail(reason) )
 				.then( () => done() );
@@ -240,7 +243,7 @@ describe(`UserModel.test.js`, function() {
 
 
 		it(`Test 'attachDeviceTo' method`, function(done) {
-			owner.createWorkspace('mywwww')
+			owner.createWorkspace({name: 'mywwww'})
 				.then( instance => {ws = instance} )
 				.then( () => owner.attachDeviceTo(ws, device) )
 				.then( wsInstance => device.getLinkedWorkspaces() )
@@ -258,6 +261,19 @@ describe(`UserModel.test.js`, function() {
 				.then( () => done() );
 		});
 
+
+	});
+
+
+
+	/*
+	 * test end
+	 */
+	describe(`# The test end - cleaning DB`, function() {
+
+		it(`flush db`, function() {
+			client.flushdb();
+		});
 
 	});
 

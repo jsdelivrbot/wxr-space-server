@@ -34,138 +34,20 @@
 	<link rel="icon" href="https://getbootstrap.com/favicon.ico">
 
 	<!-- Bootstrap core CSS -->
-	<link href="lib/bootstrap/bootstrap.min.css" rel="stylesheet">
+	<link href="/lib/bootstrap/bootstrap.min.css" rel="stylesheet">
 
 	<!-- Font awesome CSS -->
-	<link href="lib/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+	<link href="/lib/font-awesome/css/font-awesome.min.css" rel="stylesheet">
 
 	<!-- Custom styles for this template -->
-	<link href="stylesheets/style.css" rel="stylesheet">
+	<link href="/stylesheets/style.css" rel="stylesheet">
 </head>
 
 <body>
 
-	<!-- login Modal -->
-	<% if (user === undefined) { %>
-	<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-		<div class="modal-dialog modal-dialog-centered justify-content-center" role="document">
-			<div class="modal-content flip">
-				<div class="card">
-					<div class="card-body face front">
-						<form action="/user/login/local" method="post">
-							<br>
-							<h1 class="text-center">WXR Space</h1> <br>
-							<input class="form-control" placeholder="Username" name="username"/>
-							<input class="form-control" placeholder="Password" name="password"/>
-							<p class="text-right"><a href="#">Forgot Password</a></p>
-							<button class="btn btn-primary btn-block wxr-button">SIGN IN</button>
-							<hr>
-							<p>Sign in with</p>
-							<p><i class="fa fa-facebook-f fa-lg wxr-round-border"></i><i class="fa fa-twitter fa-lg wxr-round-border"></i></p>
-							<hr>
-							<p><a href="#" class="fliper-btn">Create new account?</a></p>
-						</form>
-					</div>
-					<div class="card-body face back">
-						<form action="/user" method="post">
-							<br>
-							<h1 class="text-center">WXR Space</h1> <br>
-							<label>Basic Information</label>
-							<input class="form-control" placeholder="Fullname" name="username"/>
-							<input class="form-control" placeholder="Email" name="useremail"/>
-							<label>Private Information</label>
-							<input class="form-control" placeholder="Password" name="password"/>
-							<input class="form-control" placeholder="Confirm Password"/>
-							<button class="btn btn-primary btn-block wxr-button">SIGN UP</button>
-							<p><a href="#" class="fliper-btn">Already have an account?</a></p>
-						</form>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<% } %>
 
-
-	<!-- New Workspace Modal -->
-	<div class="modal fade" id="newWorkspaceModal" tabindex="-1" role="dialog">
-		<div class="modal-dialog modal-dialog-centered justify-content-center" role="document">
-			<div class="modal-content">
-				<form action="/workspace" method="post">
-					<div class="modal-header">
-						<h5 class="modal-title">New Workspace</h5>
-						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-							<span aria-hidden="true">&times;</span>
-						</button>
-					</div>
-					<div class="modal-body">
-						<div class="form-group row">
-							<label for="workspaceTitle" class="col-sm-3 col-form-label">Title</label>
-							<div class="col-sm-9">
-								<input type="text" class="form-control wxr-form-control" id="workspaceTitle" placeholder="Noname" name="name">
-							</div>
-						</div>
-						<div class="form-group row">
-							<label for="workspaceDescription" class="col-sm-3 col-form-label">Description</label>
-							<div class="col-sm-9">
-								<textarea class="form-control wxr-form-control wxr-form-description" id="workspaceDescription" placeholder="Project description's here..." name="description"></textarea>
-							</div>
-						</div>
-					</div>
-					<div class="modal-footer">
-						<button type="button" class="btn btn-danger wxr-button" data-dismiss="modal">Close</button>
-						<button type="submit" class="btn btn-primary wxr-button">Create</button>
-					</div>
-				</form>
-			</div>
-		</div>
-	</div>
-	<% if (user === undefined) { %>
-	<% } %>
-
-
-	<header>
-		<nav class="navbar navbar-expand-lg bg-white">
-			<div class="container">
-				<a class="navbar-brand" href="/">WXR Space</a>
-				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
-					<i class="fa fa-bars wxr-blue"></i>
-				</button>
-
-				<div class="collapse navbar-collapse" id="navbarToggler">
-					<ul class="navbar-nav align-items-center ml-auto mt-2 mt-lg-0">
-						<li class="nav-item active">
-							<button class="btn btn-link nav-link" data-toggle="modal" data-target="#newWorkspaceModal">New Workspace<span class="sr-only">(current)</span></button>
-						</li>
-						<% if (user === undefined) { %>
-						<li class="nav-item">
-							<button class="btn btn-primary wxr-button wxr-bg-blue" data-toggle="modal" data-target="#loginModal">Sign in</button>
-						</li>
-						<% } else { %>
-						<li class="nav-item dropdown">
-							<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-								<% if (user.userthumbnail) { %>
-								<% } else { %>
-								<i class="fa fa-user fa-lg fa-2x wxr-round-border" style=""></i>
-								<% } %>
-								NAME
-							</a>
-							<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-								<a class="dropdown-item" href="#">Profile</a>
-								<a class="dropdown-item" href="#">Devices</a>
-								<a class="dropdown-item" href="#">My Workspaces</a>
-								<div class="dropdown-divider"></div>
-								<a class="dropdown-item" href="/user/logout">Log out</a>
-							</div>
-						</li>
-						<% } %>
-					</ul>
-				</div>
-			</div>
-		</nav>
-	</header>
-
-	<hr class="wxr-divider bg-primary"/>
+    <!-- Header -->
+    <%- include('header'); -%>
 
 	<main role="main">
 
@@ -178,14 +60,16 @@
 
 		<div class="container pb-5">
 			<div class="d-flex flex-row flex-nowrap wxr-overflow-x-scroll">
-				<% for (var i=0; i<3; ++i) { %>
-				<div class="card mr-5 bg-light">
-					<img class="card-img-top" src="images/project-1.jpg" alt="Card image cap">
-					<div class="card-body">
-						<h5 class="card-title">Card title</h5>
-						<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-					</div>
-				</div>
+				<% for (var workspace of recentWorkspace) { %>
+                    <div class="card mr-5 bg-light">
+                        <a class="wxr-plain-link" href="/view/<%= workspace.id %>">
+                        <img class="card-img-top" src="/images/img_thumnail_placeholder.png" alt="Card image cap">
+                        <div class="card-body">
+                            <h5 class="card-title"><%= workspace.p('name') %></h5>
+                            <p class="card-text"><%= workspace.p('description') %></p>
+                        </div>
+                        </a>
+                    </div>
 				<% } %>
 			</div>
 		</div>
@@ -198,7 +82,7 @@
 			<div class="row align-items-center h-100">
 				<div class="col-12 text-center">
 					<input type="search" value="" placeholder="type keyword(s) here" /> <br>
-					<button type="submit" class="btn btn-primary">Search</button>
+					<button type="submit" class="btn btn-primary wxr-button">Search</button>
 				</div>
 			</div>
 		</div>
@@ -217,15 +101,15 @@
 			<% for (var workspace of workspaceList) { %>
 			<div class="row">
 				<div class="col-md-7">
-					<a href="#">
-						<img class="img-fluid rounded mb-3 mb-md-0" src="http://placehold.it/700x300" alt="">
+					<a class="w-100" href="#">
+						<img class="img-fluid w-100 rounded mb-3 mb-md-0" style="width:700px; height:300px;" src="/images/img_thumnail_placeholder.png" alt="Workspace thumbnail">
 					</a>
 				</div>
 				<div class="col-md-5">
-					<h3><%= workspace.name %></h3>
-					<h6><%= workspace.owner %></h6>
-					<p><%= workspace.description %> description's here.</p>
-					<a class="btn btn-primary wxr-button wxr-bg-blue" href="#">View Project</a>
+					<h3><%= workspace.p('name') %></h3>
+					<h6><%= workspace.p('ownerId') %></h6>
+					<p><%= workspace.p('description') %></p>
+					<a class="btn btn-primary wxr-button wxr-bg-blue" href="/view/<%= workspace.id %>">View Project</a>
 				</div>
 			</div>
 			<hr>
@@ -263,32 +147,23 @@
 	</main>
 
 	<!-- Footer -->
-	<footer class="py-5 bg-light">
-		<div class="container">
-			<p class="m-0 text-center">
-				Powered by Bootstrap 4. <br>
-				&copy; 2018 Korea Institute of Science and Technology Webizing Researching Laboratory. All Rights Reserved.
-			</p>
-		</div>
-		<!-- /.container -->
-	</footer>
-	<!-- /.Footer -->
+    <%- include('footer'); -%>
 
 
 	<!-- jQuery -->
-	<script src="lib/jquery/jquery.min.js"></script>
+	<script src="/lib/jquery/jquery.min.js"></script>
 	<!-- autosize -->
-	<script src="lib/jquery/jquery.autosize.js"></script>
+	<script src="/lib/jquery/jquery.autosize.js"></script>
 	<!-- Waypoints -->
-	<script src="lib/jquery/jquery.waypoints.min.js"></script>
+	<script src="/lib/jquery/jquery.waypoints.min.js"></script>
 	<!-- jQuery UI -->
-	<script src="lib/jquery/ui/effect.js"></script>
+	<script src="/lib/jquery/ui/effect.js"></script>
 	<!-- Bootstrap -->
-	<script src="lib/bootstrap/bootstrap.min.js"></script>
+	<script src="/lib/bootstrap/bootstrap.min.js"></script>
 	<!-- Socket.io -->
-	<script src="lib/socket.io/socket.io.js"></script>
+	<script src="/lib/socket.io/socket.io.js"></script>
 	<!-- Webizing Device Configuration Manager -->
-	<script src="js/webizingDeviceConfigurationManager.js"></script>
+	<script src="/js/webizingDeviceConfigurationManager.js"></script>
 
 	<script>
 		$('.fliper-btn').click(function(){
