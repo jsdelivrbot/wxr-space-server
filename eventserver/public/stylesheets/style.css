@@ -1,5 +1,9 @@
-body {
+html {
+  position: relative;
+}
 
+body {
+  padding-bottom: 150px;
 }
 
 .wxr-button {
@@ -140,10 +144,12 @@ a.wxr-plain-link, a.wxr-plain-link:hover {
   height: 45px;
 }
 
-.wxr-footer {
-
+.footer {
+  position: absolute;
+  bottom: 0;
+  height: 150px;
+  width: 100%;
 }
-
 
 
 
