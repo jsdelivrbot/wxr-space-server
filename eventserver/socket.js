@@ -25,27 +25,36 @@ module.exports = function(passportAuthorize) {
 	  };
 
 
-
-	  // subscribe devices
+  	// setting client config for sub/pub by key name.
 	  const subClient = redis.createClient();
 	  subClient.config('set', 'notify-keyspace-events', 'AKE', function(err) {
 		  if (err) { return console.log(err); }
 	  });
-	  subClient.subscribe('__keyspace@1__:' + DeviceModel.resolveEventSetKey('fb333608-afd5-4b92-be43-a3c4d10b0602'));
 
-	  let lastestMessage = '';
-	  subClient.on('message', (channel, event) => {
-	  	console.log(channel, event);
-
-	  	if (event === 'zadd') {
-			  DeviceModel.getLastestEventOf('fb333608-afd5-4b92-be43-a3c4d10b0602', (err, ret) => {
-			  	if (err) return console.log(err);
-				  else if (lastestMessage === ret[0]) return;
-				  lastestMessage = ret[0];
-				  socket.emit('WXREvent', lastestMessage);
+	  // subscribe devices
+	  WorkspaceModel._pFindAndLoad(socket.data.workspaceId)
+		  .then( instance => instance.getAttachedDevices() )
+		  .then( wsAttached => {
+			  wsAttached = wsAttached.map( device => device.p('ownerId') !== socket.user.id );
+			  wsAttached.forEach( device => {
+				  subClient.subscribe('__keyspace@1__:' + device.getEventSetKey() );
 			  });
-		  }
-	  });
+
+			  let lastestMessage = '';
+			  subClient.on('message', (channel, event) => {
+
+			  	const deviceId = channel.split(':').slice(0, -1).pop();
+
+				  if (event === 'zadd') {
+					  DeviceModel.getLastestEventOf(deviceId, (err, ret) => {
+						  if (err) return console.log(err);
+						  else if (lastestMessage === ret[0]) return;
+						  lastestMessage = ret[0];
+						  socket.emit('WXREvent', lastestMessage);
+					  });
+				  }
+			  });
+		  });
 
 
 
@@ -76,12 +85,6 @@ module.exports = function(passportAuthorize) {
     });
 
 
-
-    // helper functions.
-    function publishMessage(msg) {
-	    socket.data.deviceInstance.addEvent(msg);
-	    socket.data.eventDataPublishingList.forEach( channelName => pubClient.publish(channelName, JSON.stringify(msg)) )
-    }
 
     function handleError(message) {
     	socket.emit('error', message);
