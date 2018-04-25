@@ -6,7 +6,7 @@
 		<div class="modal-content flip">
 			<div class="card">
 				<div class="card-body face front">
-					<form role="form" action="/user/login/local" method="post">
+					<form role="form" action="/users/login/local" method="post">
 						<br>
 						<h1 class="text-center">WXR Space</h1> <br>
 						<input class="form-control" type="email" placeholder="Email" name="email"/>
@@ -21,7 +21,7 @@
 					</form>
 				</div>
 				<div class="card-body face back">
-					<form role="form" action="/user" method="post">
+					<form role="form" action="/users" method="post">
 						<br>
 						<h1 class="text-center">WXR Space</h1> <br>
 						<label>Basic Information</label>
@@ -45,7 +45,7 @@
 <div class="modal fade" id="newWorkspaceModal" tabindex="-1" role="dialog">
 	<div class="modal-dialog modal-dialog-centered justify-content-center" role="document">
 		<div class="modal-content">
-			<form id="createNewWorkspaceForm" role="form" action="/workspace" method="post">
+			<form id="createNewWorkspaceForm" role="form" action="/workspaces" method="post">
 				<div class="modal-header">
 					<h5 class="modal-title">New Workspace</h5>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -98,18 +98,19 @@
 					<% } else { %>
 					<li class="nav-item dropdown">
 						<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-							<% if (user.userthumbnail) { %>
+							<% if (user.p('profileImage')) { %>
+							<img class="d-inline rounded-circle wxr-profile-image" src="/images/profile/<%= user.p('profileImage') %>" alt="Profile image">
 							<% } else { %>
-							<i class="fa fa-user fa-lg fa-2x wxr-round-border" style=""></i>
+							<img class="d-inline rounded-circle wxr-profile-image" src="/images/profile/profile-placeholder.jpg" alt="Profile image">
 							<% } %>
-							<span class="pl-1">Hello, <%= user.p('name') %></span>
+							<span class="pl-1 align-middle">Hello, <%= user.p('name') %></span>
 						</a>
 						<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
 							<a class="dropdown-item" href="/profile">Profile</a>
 							<a class="dropdown-item" href="/device_setting">Device settings</a>
 							<a class="dropdown-item" href="/workspace_manager">My Workspaces</a>
 							<div class="dropdown-divider"></div>
-							<a class="dropdown-item" href="/user/logout">Log out</a>
+							<a class="dropdown-item" href="/users/logout">Log out</a>
 						</div>
 					</li>
 					<% } %>
@@ -123,6 +124,17 @@
 
 <script>
 	window.addEventListener("load", function(event) {
+
+		$('.fliper-btn').click(function(){
+			$('.flip').find('.card').toggleClass('flipped');
+		});
+
+		$('textarea').autosize({append:''});
+
+		$('.modal').on('hidden.bs.modal', function () {
+			$(this).find('input,textarea,select').val('').end();
+		});
+
 		const $form = $('#createNewWorkspaceForm');
 		$form.on('submit', event => {
 			event.preventDefault();
