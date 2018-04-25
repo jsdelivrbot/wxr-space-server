@@ -36,8 +36,15 @@ const DEVICE_STREAM_ON = true;
 const DEVICE_STREAM_OFF = false;
 
 
+const BROWSER_NAMES = ['Firefox', 'Seamonkey', 'Chrome', 'Chromium', 'Safari', 'OPR', 'Opera', 'MSIE'];
 
 io.on('connection', function(socket) {
+
+	socket.data = socket.data || {};
+
+	const userAgent = socket.request.headers['user-agent'];
+	socket.data.isBrowser = BROWSER_NAMES.some( n => userAgent.includes(n) );
+	if (socket.data.isBrowser) socket.join('client');
 
 
 	/*
@@ -66,7 +73,6 @@ io.on('connection', function(socket) {
 		}
 
 		// Finally, search device profile in DeviceProfiles and save it at socket.data.profile
-		socket.data = socket.data || {};
 		socket.data.profile = DeviceProfiles.find( p => p.device === profile.device && p.name === profile.name )
 														|| profile;   // if there isn't, use default profile.
 		socket.data.profile.status = DEVICE_STATUS_ON;
@@ -101,7 +107,7 @@ io.on('connection', function(socket) {
 	socket.on('WXREvent', function(msg) {
 
 		// Check if client is on and if this device event stream is disabled.
-		if (!clientSocket || !socket.data || !socket.data.profile.eventStreamEnable) return;
+		if (!clientSocket || !socket.data.profile.eventStreamEnable) return;
 
 		// Check message structure is valid.
 		if (!msg || !msg.event || !msg.detail) {
@@ -113,7 +119,7 @@ io.on('connection', function(socket) {
 		msg.timestamp = msg.timestamp || Date.now();
 
 		// Send msg to client
-		clientSocket.emit('WXREvent', msg);
+		socket.to('client').emit('WXREvent', msg);
 	});
 
 
