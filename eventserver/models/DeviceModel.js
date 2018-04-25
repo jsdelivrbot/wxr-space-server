@@ -143,7 +143,7 @@ const DeviceModel = nohm.model('DeviceModel', {
 
 
 
-DeviceModel.RELATION_WORKSPACE_LINKED = 'trackerForeign';
+DeviceModel.RELATION_WORKSPACE_LINKED = 'attachedForeign';
 
 
 /*

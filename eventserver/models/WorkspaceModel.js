@@ -119,7 +119,7 @@ const WorkspaceModel = nohm.model('WorkspaceModel', {
 		 * Device control helpers
 		 */
 		attachDevice: function(device) {
-			this.link(device, WorkspaceModel.RELATION_DEVICE_TRACKER);
+			this.link(device, WorkspaceModel.RELATION_DEVICE_ATTACHED);
 
 			return this._pSave()
 			// For updating event data publishing list of device in socket instance, Calling refreshDeviceEventPublishListOf should be needed.
@@ -130,13 +130,13 @@ const WorkspaceModel = nohm.model('WorkspaceModel', {
 		},
 
 		detachDevice: function (device) {
-			this.unlink(device, WorkspaceModel.RELATION_DEVICE_TRACKER);
+			this.unlink(device, WorkspaceModel.RELATION_DEVICE_ATTACHED);
 			return this._pSave();
 		},
 
 		getAttachedDevices: function () {
 			const DeviceModel = nohm.getModels()['DeviceModel'];
-			return this.getAllLinks('DeviceModel', WorkspaceModel.RELATION_DEVICE_TRACKER)
+			return this.getAllLinks('DeviceModel', WorkspaceModel.RELATION_DEVICE_ATTACHED)
 				.then( ids => DeviceModel.propagateInstance(ids) );
 		},
 
@@ -163,7 +163,7 @@ WorkspaceModel.USER_RIGHTS = [
 	WorkspaceModel.RELATION_USER_VIEWER
 ];
 
-WorkspaceModel.RELATION_DEVICE_TRACKER = 'tracker';
+WorkspaceModel.RELATION_DEVICE_ATTACHED = 'attached';
 
 
 /*
