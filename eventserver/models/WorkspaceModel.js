@@ -187,6 +187,10 @@ WorkspaceModel.getAllWorkspaces = function () {
 	return this.findAndLoadAll();
 };
 
+WorkspaceModel.resolveChannelName = function(wsId) {
+	return `DATABASE${config.get('dbConfig.db')}:wsId`;
+};
+
 
 function getMembersOfRights(RIGHTS) {
 	const UserModel = nohm.getModels()['UserModel'];

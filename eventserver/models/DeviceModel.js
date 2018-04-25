@@ -163,6 +163,28 @@ DeviceModel.getAllDevicesOf = function(userInstance) {
 	return DeviceModel._pFindAndLoad({ownerId: userInstance.id});
 };
 
+DeviceModel.resolveEventSetKey = function(deviceId) {
+	return `WXR:zset:${deviceId}:EVENT`;
+};
+
+DeviceModel.addEventAt = function(deviceId, event) {
+	const redisClient = nohm.client;
+	const key = DeviceModel.resolveEventSetKey(deviceId);
+	const score = event.timestamp;
+	const member = JSON.stringify(event);
+
+	redisClient.zadd(key, score, member, (err, numOfSavedItems) => {
+		if (err) console.error(err);
+	});
+};
+
+DeviceModel.getLastestEventOf = function(id, callback) {
+	const redisClient = nohm.client;
+	const key = DeviceModel.resolveEventSetKey(id);
+
+	redisClient.zrevrange(key, 0, 0, (...args) => callback(...args) );
+};
+
 
 function isExist(device) {
 	return DeviceModel._pFindAndLoad({name: device.p('name'), device: device.p('device'), ownerId: device.p('ownerId')})

@@ -16,148 +16,62 @@ module.exports = function(passportAuthorize) {
 
   io.on('connection', function(socket){
 
-  	// Pub/Sub client
-	  let pubClient = redis.createClient();
-	  let subClient = redis.createClient();
 
-  	// namespace for saving event handling data.
+
+  	// save some data.
   	socket.data = {
-  		eventDataPublishingList: [],
-  		enteredWorkspaceName: '',
-		  isLocalPackagedEvents: false,
-		  remoteAddress: '',
-		  serverName: '',
-		  deviceName: '',
-		  deviceInstance: null
+  		referer: socket.request.headers.referer,
+		  workspaceId: socket.request.headers.referer.split('/').pop(),
 	  };
 
 
-    /*
-     * Routine for event data receiver
-     */
 
-    // This may can be done by passport session.
-	  socket.on('enter_workspace', function(workspaceName) {
+	  // subscribe devices
+	  const subClient = redis.createClient();
+	  subClient.config('set', 'notify-keyspace-events', 'AKE', function(err) {
+		  if (err) { return console.log(err); }
+	  });
+	  subClient.subscribe('__keyspace@1__:' + DeviceModel.resolveEventSetKey('fb333608-afd5-4b92-be43-a3c4d10b0602'));
 
-		  // Check the user session is live and save in session-socket table.
-		  if (!!socket.request.user === false) {
-			  // Do nothing with unauthorized session
-			  handleError(`you have no session.`);
-			  return;
+	  let lastestMessage = '';
+	  subClient.on('message', (channel, event) => {
+	  	console.log(channel, event);
+
+	  	if (event === 'zadd') {
+			  DeviceModel.getLastestEventOf('fb333608-afd5-4b92-be43-a3c4d10b0602', (err, ret) => {
+			  	if (err) return console.log(err);
+				  else if (lastestMessage === ret[0]) return;
+				  lastestMessage = ret[0];
+				  socket.emit('WXREvent', lastestMessage);
+			  });
 		  }
-
-		  socket.data.enteredWorkspaceName = workspaceName;
-
-		  WorkspaceModel.findAndLoadByName(workspaceName)
-			  .then( workspaceInstance => !!workspaceInstance === true ? Promise.resolve(workspaceInstance) : Promise.reject('Cannot find workspace') )
-			  .catch( reason => handleError(reason) )
-			  .then( workspaceInstance => {
-
-				  const channelName = workspaceInstance.getChannelName();
-				  subClient.subscribe(channelName);
-				  subClient.on('message', (channel, message) => {
-			  		socket.emit('vrpn_event', message);
-				  });
-
-			  	if (!!socket.data.deviceInstance === true)
-			  	  workspaceInstance.attachDevice(socket.data.deviceInstance);
-			  	else
-			  		console.log(socket.data.deviceInstance);
-
-				  socket.emit('enter_workspace_response', `ok: ${channelName}`);
-
-			  })
-
-	  })
+	  });
 
 
 
-
-
-	  /*
-	   * Routine for event data sender
-	   */
-
-    socket.on('vrpn_event', function (msg) {
+    socket.on('WXREvent', function (msg) {
 
 	    if (!!msg === false || !!msg.event === false || !!msg.detail === false) {
 		    handleError(`invalid msg!: ${JSON.stringify(msg)}`);
 		    return;
 	    }
 
-	    // Q: If timestamp is invalid, throw away it? Or create new one in event server?
 	    // A message that has invalid timestamp will be dropped.
-	    let timestamp = msg.detail.timestamp;
+	    let timestamp = msg.timestamp;
 	    if (!!timestamp === false) {
 		    handleError(`invalid timestamp!: ${JSON.stringify(msg)}`);
 		    return;
 	    }
 
-	    // Route the event data.
-	    switch (msg.event) {
-		    case 'optitrack_server_on':
 
-
-			    break;
-		    case 'local_server_on':
-
-			    socket.data.isLocalPackagedEvents = true;
-			    const remoteAddress = socket.data.remoteAddress = socket.request.connection.remoteAddress.split(':')[3];
-			    const serverName = socket.data.serverName = msg.detail.serverName || 'noname';
-			    const deviceName = socket.data.deviceName = DeviceModel.resolveDeviceName(remoteAddress, serverName);
-
-			    DevicenameToSocketTable[deviceName] = socket;
-
-			    DeviceModel.findAndLoadByName(deviceName)
-				    .then( device => !!device === false ? DeviceModel.create(remoteAddress, serverName) : Promise.resolve(device) )
-				    .then( device => socket.data.deviceInstance = device )
-				    .then( () => refreshDeviceEventPublishListOf(socket.data.deviceInstance) )
-				    .then( () => publishMessage(msg) )
-				    .catch( reason => handleError(reason) )
-
-
-			    break;
-		    case 'local_packaged_events':
-
-			    if (socket.data.isLocalPackagedEvents === true && !!socket.data.deviceInstance === true) {
-			    	publishMessage(msg)
-			    } else {
-			    	handleError(`message is dropped`);
-			    }
-
-
-			    break;
-	    }
+	    // Save the data
+	    // Be aware!! The device is should exist in database. The addEventAt method doesn't check key validation.
+	    // TODO: Checking save validation.
+	    DeviceModel.addEventAt(msg.id, msg);
 
     });
 
     socket.on('disconnect', function () {
-	    /*
-			 * save local_server_off event manually in event server
-			 * due to detecting websocket disconnected is only possible by event server
-			 *
-			 * < message structure >
-			 * { event: 'local_server_off',
-			 *   detail: {
-			 *     timestamp: timestamp,
-			 *     server_name: 'dummy_server' } }
-			 */
-
-	    // const msg = {
-		   //  event: 'local_server_off',
-		   //  detail: {
-			 //    timestamp: Date.now(),
-			 //    server_name: socket.data.deviceInstance.p('name')
-		   //  }
-	    // }
-	    //
-	    // if (!!socket.data.deviceInstance === false) {
-	    // 	handleError(`Device is not set up`);
-	    // } else {
-		   //  console.log('user is disconnected');
-		   //  publishMessage(msg);
-	    // }
-
 
     });
 
@@ -193,7 +107,7 @@ module.exports = function(passportAuthorize) {
 
 				console.log(socket.data.eventDataPublishingList);
 			})
-  }
+  };
 
   return io;
-}
+};
