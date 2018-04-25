@@ -1,6 +1,18 @@
 const express = require('express');
+const multer = require('multer');
+const path = require('path');
 const router = express.Router();
 const {UserModel, WorkspaceModel} = require('../models/Models');
+
+const storage = multer.diskStorage({
+	destination: function (req, file, cb) {
+		cb(null, path.join(__app_root, '/public/images/thumbnail'));
+	},
+	filename: function (req, file, cb) {
+		cb(null, file.fieldname + '-' + Date.now() + '-' + file.originalname);
+	}
+});
+const upload = multer({ storage: storage });
 
 
 // check whether api caller is logged in
@@ -26,9 +38,10 @@ function getWorkspaceList(req, res) {
 	WorkspaceModel._pFindAndLoad(index)
 		.then( instances => {
 			instances = [].concat(instances);
-			instances = instances.map(refineWorkspaceInstanceProperties);
-			res.json( APIResponseMessage.OK(instances) );
+			const promisesArray = instances.map( i => i.getRefinedProperty() );
+			return Promise.all(promisesArray);
 		})
+		.then( instances => res.json( APIResponseMessage.OK(instances) ) )
 		.catch( reason => res.json( APIResponseMessage.ERROR(`Unavailable access: ${reason}`) ) );
 }
 
@@ -38,18 +51,42 @@ function createNewWorkspace(req, res) {
 	const user = req.user;
 	const wsInfo = {
 		name: req.body.name || 'noname',
-		description: req.body.description || 'An Webizing Workspace.'
+		description: req.body.description || 'An Webizing Workspace.',
 	};
 
 	user.createWorkspace(wsInfo)
-		.then( wsInstance => res.json( APIResponseMessage.OK(refineWorkspaceInstanceProperties(wsInstance)) ) )
+		.then( wsInstance => wsInstance.getRefinedProperty() )
+		.then( property => res.json( APIResponseMessage.OK(property) ) )
 		.catch( reason => res.json( APIResponseMessage.ERROR(reason) ) );
-	// TODO: next commentialized code should be moved to url of /editor/workspace-id
-	// shift to enterWorkspace logic
-	// 	.then( wsInstance => res.redirect('/workspace/'+wsInstance.id) )
-	// 	.catch( err => res.json(APIResponseMessage.ERROR(err)) );
 }
 
+// update workspace info
+function updateWorkspaceInfo(req, res) {
+
+	const user = req.user;
+	const wsId = req.params.wsId;
+	const wsInfo = {
+		name: req.body.name,
+		description: req.body.description,
+		thumbnail: req.file && req.file.filename
+	};
+
+	WorkspaceModel._pFindAndLoad(wsId)
+		.then( instance => {
+			if (!instance) return Promise.reject(`None exist workspace.`);
+			else if (instance.p('ownerId') !== user.id) return Promise.reject(`That workspace is not yours.`);
+			else return instance.updateProfile(wsInfo);
+		})
+		.then( instance => instance.getRefinedProperty() )
+		.then( property => res.json( APIResponseMessage.OK(property) ) )
+		.catch( reason => res.json( APIResponseMessage.ERROR(reason)) );
+}
+
+
+// delete workspace
+function destroyWorkspace(req, res) {
+
+}
 
 // workspace entering logic
 // TODO: 사실 이 부분은 소켓로직에서 해아할 것들.
@@ -185,15 +222,6 @@ function updateMemberProperties(req, res) {
 
 
 
-function refineWorkspaceInstanceProperties(i) {
-	i = i.allProperties();
-	// delete i['ownerId'];
-	// delete i['eventSetKey'];
-	return i;
-}
-
-
-
 
 
 // Checking no session when getting the list
@@ -204,6 +232,10 @@ router.use(checkUserSession);
 
 router.route('')
 	.post(createNewWorkspace);
+
+router.route('/:wsId')
+	.put(upload.single('thumbnail') ,updateWorkspaceInfo);
+	// .delete(destroyWorkspace);
 
 // router.route('/:id/exit')
 // 	.get(exitWorkspace);

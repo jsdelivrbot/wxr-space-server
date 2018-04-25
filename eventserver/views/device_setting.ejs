@@ -34,10 +34,10 @@
 	<link rel="icon" href="https://getbootstrap.com/favicon.ico">
 
 	<!-- Bootstrap core CSS -->
-	<link href="/lib/bootstrap/bootstrap.min.css" rel="stylesheet">
+	<link href="/libs/bootstrap/bootstrap.min.css" rel="stylesheet">
 
 	<!-- Font awesome CSS -->
-	<link href="/lib/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+	<link href="/libs/font-awesome/css/font-awesome.min.css" rel="stylesheet">
 
 	<!-- Custom styles for this template -->
 	<link href="/stylesheets/style.css" rel="stylesheet">
@@ -46,14 +46,19 @@
 <body>
 
 	<!-- Header -->
-	<%- include('header'); -%>
+	<%- include('template/header'); -%>
 
 	<main role="main">
-		<div class="container">
-			<h1 class="pl-4 mt-5 mb-3">My Device</h1>
-			<hr class="wxr-sm-divider">
-			<div class="row m-5">
 
+		<!-- Page Header -->
+		<div class="container">
+			<h1 class="pl-4 mt-5 mb-3">My Devices</h1>
+			<hr class="wxr-sm-divider">
+		</div>
+
+
+		<div class="container">
+			<div class="row m-5">
 				<table id="device_list" class="table table-hover wxr-no-top-border">
 					<thead>
 					<tr>
@@ -64,7 +69,7 @@
 						<th scope="col">ConnectionType</th>
 						<th scope="col">Status</th>
 						<th scope="col">EventStreamEnable</th>
-						<th scope="col-1">Save</th>
+						<th scope="col-1">Delete</th>
 					</tr>
 					</thead>
 					<tbody>
@@ -76,34 +81,25 @@
 	</main>
 
 	<!-- Footer -->
-	<%- include('footer'); -%>
+	<%- include('template/footer'); -%>
 
 
 	<!-- jQuery -->
-	<script src="/lib/jquery/jquery.min.js"></script>
+	<script src="/libs/jquery/jquery.min.js"></script>
 	<!-- autosize -->
-	<script src="/lib/jquery/jquery.autosize.js"></script>
+	<script src="/libs/jquery/jquery.autosize.js"></script>
 	<!-- Waypoints -->
-	<script src="/lib/jquery/jquery.waypoints.min.js"></script>
+	<script src="/libs/jquery/jquery.waypoints.min.js"></script>
 	<!-- jQuery UI -->
-	<script src="/lib/jquery/ui/effect.js"></script>
+	<script src="/libs/jquery/ui/effect.js"></script>
 	<!-- Bootstrap -->
-	<script src="/lib/bootstrap/bootstrap.min.js"></script>
+	<script src="/libs/bootstrap/bootstrap.min.js"></script>
 	<!-- Socket.io -->
-	<script src="/lib/socket.io/socket.io.js"></script>
+	<script src="/libs/socket.io/socket.io.js"></script>
 	<!-- Webizing Device Configuration Manager -->
-	<script src="/js/webizingDeviceConfigurationManager.js"></script>
+	<script src="/javascripts/webizingDeviceConfigurationManager.js"></script>
 
 	<script>
-		$('.fliper-btn').click(function(){
-			$('.flip').find('.card').toggleClass('flipped');
-		});
-
-		$('textarea').autosize({append:''});
-
-		$('.modal').on('hidden.bs.modal', function () {
-			$(this).find('input,textarea,select').val('').end();
-		});
 
 		function refreshDeviceList(profiles) {
 			let $deviceList = $('#device_list');
@@ -119,7 +115,7 @@
 								<td role="connectionType"><input class="form-control wxr-form-control" type="text" value="${e.connectionType}" ${id ? '' : 'readonly'}></td>
 								<td role="status"><input class="form-control wxr-form-control" type="text" value="${e.status}" ${id ? '' : 'readonly'}></td>
 								<td role="eventStreamEnable"><input class="form-control wxr-form-control" type="text" value="${e.eventStreamEnable}" ${id ? '' : 'readonly'}></td>
-								<td><button class="btn btn-primary btn-sm wxr-button wxr-bg-blue" onclick="saveDeviceProfile(this)">Save</button></td>
+								<td><button class="btn btn-primary btn-sm wxr-button wxr-bg-blue" onclick="saveDeviceProfile(this)">Delete</button></td>
 							</tr>`);
 				$newTbody.append($row);
 			});

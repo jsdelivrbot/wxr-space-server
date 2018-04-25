@@ -32,7 +32,7 @@ webizingDeviceConfigurationManager = new function() {
 
 
 	// Get DeviceProfiles from server
-	$.ajax(SERVER_URL + `/user/me/device`)
+	$.ajax(SERVER_URL + `/users/me/devices`)
 		.done( data => {
 			if (data.status === 'ok') {
 				DeviceProfiles = data.message;
@@ -61,7 +61,7 @@ webizingDeviceConfigurationManager = new function() {
 			Log(`POST profile`);
 			$.ajax({
 				type: 'POST',
-				url: SERVER_URL + `/device`,
+				url: SERVER_URL + `/devices`,
 				data: profile,
 			})
 				.done( data => {
@@ -88,13 +88,13 @@ webizingDeviceConfigurationManager = new function() {
 			Log(`PUT `, profile);
 			$.ajax({
 				type: 'PUT',
-				url: SERVER_URL + `/device/${id}`,
+				url: SERVER_URL + `/devices/${id}`,
 				data: profile,
 			})
 				.done(data => {
 					Log(`Receive PUT `, profile, `response: `, data);
 					if (data.status === 'ok') {
-						const index = DeviceProfiles.findIndex(p => p.id === profile.id);
+						const index = DeviceProfiles.findIndex(p => p.id === id);
 						DeviceProfiles[index] = data.message;
 					}
 					socket.emit('WXRUpdateDeviceProfiles', DeviceProfiles);
@@ -112,7 +112,7 @@ webizingDeviceConfigurationManager = new function() {
 			Log(`DELETE profile`);
 			$.ajax({
 				type: 'DELETE',
-				url: SERVER_URL + `/device/${id}`,
+				url: SERVER_URL + `/devices/${id}`,
 			})
 				.done(data => {
 					Log(`Receive DELETE profile response: `, data);

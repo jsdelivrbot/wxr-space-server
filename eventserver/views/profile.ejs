@@ -34,10 +34,10 @@
 	<link rel="icon" href="https://getbootstrap.com/favicon.ico">
 
 	<!-- Bootstrap core CSS -->
-	<link href="/lib/bootstrap/bootstrap.min.css" rel="stylesheet">
+	<link href="/libs/bootstrap/bootstrap.min.css" rel="stylesheet">
 
 	<!-- Font awesome CSS -->
-	<link href="/lib/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+	<link href="/libs/font-awesome/css/font-awesome.min.css" rel="stylesheet">
 
 	<!-- Custom styles for this template -->
 	<link href="/stylesheets/style.css" rel="stylesheet">
@@ -46,52 +46,53 @@
 <body>
 
 	<!-- Header -->
-	<%- include('header'); -%>
+	<%- include('template/header'); -%>
 
 	<main role="main">
+
+		<!-- Page Header -->
 		<div class="container">
-			<h1 class="pl-4 mt-5 mb-3">User Profile</h1>
+			<h1 class="pl-4 mt-5 mb-3">My Devices</h1>
+			<hr class="wxr-sm-divider">
+		</div>
+
+
+		<div class="container">
+			<h1 class="pl-4 mt-5 mb-3">Profile</h1>
 			<hr class="wxr-sm-divider">
 			<div class="row my-5">
 				<div class="col-lg-4 order-lg-1 text-center">
-					<img id="avatar" src="//placehold.it/150" class="mx-auto img-fluid d-block" alt="avatar">
+					<img id="profileImage" src="/images/profile/<%= user.p('profileImage') ? user.p('profileImage') : 'profile-placeholder.jpg' %>" class="mx-auto img-fluid d-block" alt="avatar">
 					<h4 class="mt-2"><%= user.p('name') %></h4>
 					<label class="wxr-custom-file mt-2">
-						<input type="file" id="file" class="wxr-custom-file-input" accept="image/*" onchange="updateAvatarImage(this.files)">
+						<input type="file" id="userProfileImageUpload" class="wxr-custom-file-input" accept="image/*" name="profile" >
 						<span class="wxr-custom-file-control">Choose file</span>
 					</label>
 				</div>
 				<div class="col order-lg-2">
 					<div class="row container">
-						<form role="form" class="w-100">
+						<form role="form" id="userProfileUpdateForm" class="w-100" action="/users/me" method="PUT">
 							<div class="form-group row">
 								<label class="col-lg-4 col-form-label form-control-label">Email</label>
-								<div class="col-lg-6">
-									<input class="form-control-plaintext" type="email" value="<%= user.p('email') %>" readonly>
-								</div>
+								<input class="col-lg-6 form-control-plaintext" type="email" name="email" value="<%= user.p('email') %>" readonly>
+
 							</div>
 							<div class="form-group row">
 								<label class="col-lg-4 col-form-label form-control-label">Full Name</label>
-								<div class="col-lg-6">
-									<input class="form-control wxr-form-control" type="text" value="<%= user.p('name') %>">
-								</div>
+								<input class="col-lg-6 form-control wxr-form-control" type="text" name="name" value="<%= user.p('name') %>">
 							</div>
 							<div class="form-group row">
 								<label class="col-lg-4 col-form-label form-control-label">Password</label>
-								<div class="col-lg-6">
-									<input class="form-control wxr-form-control" type="password" placeholder="••••••••••">
-								</div>
+								<input class="col-lg-6 form-control wxr-form-control" type="password" name="password" placeholder="••••••••••">
 							</div>
 							<div class="form-group row">
 								<label class="col-lg-4 col-form-label form-control-label">Confirm password</label>
-								<div class="col-lg-6">
-									<input class="form-control wxr-form-control" type="password" placeholder="••••••••••">
-								</div>
+								<input class="col-lg-6 form-control wxr-form-control" type="password" name="passwordConfirm" placeholder="••••••••••">
 							</div>
 							<div class="form-group mt-4 row">
 								<label class="col-lg-4 col-form-label form-control-label"></label>
 								<div class="col-lg-6">
-									<button type="reset" class="btn btn-secondary wxr-button">Close</button>
+									<button type="reset" class="btn btn-secondary wxr-button">Cancel</button>
 									<button type="submit" class="btn btn-primary wxr-button">Save Changes</button>
 								</div>
 							</div>
@@ -104,45 +105,60 @@
 	</main>
 
 	<!-- Footer -->
-	<%- include('footer'); -%>
+	<%- include('template/footer'); -%>
 
 
 	<!-- jQuery -->
-	<script src="/lib/jquery/jquery.min.js"></script>
+	<script src="/libs/jquery/jquery.min.js"></script>
+	<!-- file uploader -->
+	<script src="/libs/jquery/vendor/jquery.ui.widget.js"></script>
+	<script src="/libs/jquery/jquery.iframe-transport.js"></script>
+	<script src="/libs/jquery/jquery.fileupload.js"></script>
 	<!-- autosize -->
-	<script src="/lib/jquery/jquery.autosize.js"></script>
+	<script src="/libs/jquery/jquery.autosize.js"></script>
 	<!-- Waypoints -->
-	<script src="/lib/jquery/jquery.waypoints.min.js"></script>
+	<script src="/libs/jquery/jquery.waypoints.min.js"></script>
 	<!-- jQuery UI -->
-	<script src="/lib/jquery/ui/effect.js"></script>
+	<script src="/libs/jquery/ui/effect.js"></script>
 	<!-- Bootstrap -->
-	<script src="/lib/bootstrap/bootstrap.min.js"></script>
+	<script src="/libs/bootstrap/bootstrap.min.js"></script>
 	<!-- Socket.io -->
-	<script src="/lib/socket.io/socket.io.js"></script>
+	<script src="/libs/socket.io/socket.io.js"></script>
 	<!-- Webizing Device Configuration Manager -->
-	<script src="/js/webizingDeviceConfigurationManager.js"></script>
+	<script src="/javascripts/webizingDeviceConfigurationManager.js"></script>
 
 	<script>
-		$('.fliper-btn').click(function(){
-			$('.flip').find('.card').toggleClass('flipped');
+
+		$('#userProfileImageUpload').fileupload({
+			dataType: 'json',
+		  	url: '/users/me',
+			method: 'PUT',
+		  	done: function(e, data) {
+				  if (data.result.status === 'ok') {
+					  return window.location.reload();
+				  } else {
+					  console.log(`error: `, data.result);
+				  }
+			}
+		})
+
+		$('#userProfileUpdateForm').on('submit', event => {
+			const $form = $('#userProfileUpdateForm');
+			event.preventDefault();
+
+			$.ajax({
+				type: 'PUT',
+				url: $form.attr('action'),
+				data: $form.serialize()
+			})
+				.done( data => {
+					if (data.status === 'ok') {
+						return window.location.reload();
+					} else {
+						console.log(`error: `, data);
+					}
+				});
 		});
-
-		$('textarea').autosize({append:''});
-
-		$('.modal').on('hidden.bs.modal', function () {
-			$(this).find('input,textarea,select').val('').end();
-		});
-
-		function updateAvatarImage(files) {
-			const file = files[0];
-			const avatar = $('#avatar')[0];
-
-			if (!file || !file.type.startsWith('image/')) return;
-
-			const reader = new FileReader();
-			reader.onload = function(e) { avatar.src = e.target.result; };
-			reader.readAsDataURL(file);
-		}
 	</script>
 
 </body>

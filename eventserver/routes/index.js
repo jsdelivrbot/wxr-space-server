@@ -7,6 +7,7 @@ const {UserModel, WorkspaceModel} = require('../models/Models');
 // index page
 function indexPage(req, res) {
 
+	console.log(req.user);
 	var options = {
 		title: 'XWR Space',
 		user: req.user,
@@ -15,11 +16,19 @@ function indexPage(req, res) {
 	};
 
 	WorkspaceModel.getAllWorkspaces()
-		.then( instances => {options.workspaceList = instances} )
-		.catch( reason => res.render('index', options) )
-		.then( () => {if (options.user) return options.user.getMyWorkspaces()} )
-		.then( recentWorkspace => {options.recentWorkspace = recentWorkspace} )
-		.then( () => res.render('index', options) );
+		.then( instances => {
+			const promisesArray = instances.map(i => i.getRefinedProperty());
+			return Promise.all(promisesArray);
+		})
+		.then( properties => {options.workspaceList = properties} )
+		.then( () => options.user.getMyWorkspaces() )
+		.then( instances => {
+			const promisesArray = instances.map(i => i.getRefinedProperty());
+			return Promise.all(promisesArray);
+		})
+		.then( properties => {options.recentWorkspace = properties} )
+		.then( () => res.render('index', options) )
+		.catch( reason => res.render('index', options) );
 
 }
 
@@ -67,12 +76,41 @@ function deviceSettingPage(req, res) {
 
 // workspace manager page
 function workspaceManagerPage(req, res) {
-	res.end('Unimplemented');
+
+	const user = req.user;
+	const options = {
+		user: user,
+		workspaceList: [],
+	};
+
+	if (!user) {
+		res.redirect('/');
+	} else {
+		user.getMyWorkspaces()
+			.then( instances => {
+				const promisesArray = instances.map(i => i.getRefinedProperty());
+				return Promise.all(promisesArray);
+			})
+			.then( properties => {
+				options.workspaceList = properties;
+				res.render('my_workspace', options);
+			})
+			.catch( reason => res.redirect('/') );
+	}
 }
 
 // search workspace page
 function searchWorkspacePage(req, res) {
-	res.end('Unimplemented');
+
+	const user = req.user;
+	const keyword = req.query.keyword;
+	const options = {
+		user: user,
+		keyword: keyword,
+		workspaceList: [],
+	};
+
+	res.render('search', options);
 }
 
 

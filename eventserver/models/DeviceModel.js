@@ -67,11 +67,39 @@ const DeviceModel = nohm.model('DeviceModel', {
 			validations: [
 				'notEmpty'
 			]
-		}
+		},
 
 	},
 
 	methods: {
+
+		getRefinedProperty: function() {
+			const p = this.allProperties();
+			delete p['eventSetKey'];
+			return Promise.resolve(p);
+		},
+
+		updateProfile: function(newValues) {
+			for (let key in newValues) {
+				const val = newValues[key];
+				if (val === '' || val === undefined || val === null) delete newValues[key];
+			}
+
+			this.p(newValues);
+
+			if (newValues.device || newValues.name) {
+				return isExist(this)
+					.then( isExist => isExist ? Promise.reject(`Duplicated device profile.`) : this._pSave() );
+			} else {
+				return this._pSave();
+			}
+		},
+
+		getEventSetKey: function() {
+			if (this.id) return false;
+			else return `WXR:zset:${device.id}:EVENT`;
+		},
+
 
 		// TODO: Unsupported method in nohm v0.9.8
 		// destroy: function() {
@@ -109,22 +137,6 @@ const DeviceModel = nohm.model('DeviceModel', {
 				.then( ids => WorkspaceModel.propagateInstance(ids) )
 		},
 
-		updateProfile: function(newValues) {
-			for (let key in newValues) {
-				const val = newValues[key];
-				if (val === '' || val === undefined || val === null) delete newValues[key];
-			}
-
-			this.p(newValues);
-
-			return isExist(this.allProperties())
-				.then( isExist => isExist ? Promise.reject(`Duplicated device profile.`) : this._pSave() );
-		},
-
-		getEventSetKey: function() {
-			if (this.id) return false;
-			else return `WXR:zset:${device.id}:EVENT`;
-		}
 
 	}
 });
@@ -143,7 +155,7 @@ DeviceModel.create = function (owner, deviceProfile) {
 
 	device.p(deviceProfile);
 
-	return isExist(deviceProfile)    // search device profile duplication
+	return isExist(device)    // search device profile duplication
 		.then( isExist => isExist ? Promise.reject(`Duplicated device profile.`) : device._pSave() );
 };
 
@@ -152,9 +164,9 @@ DeviceModel.getAllDevicesOf = function(userInstance) {
 };
 
 
-function isExist(profile) {
-	return DeviceModel._pFindAndLoad({name: profile.name, device: profile.device, ownerId: profile.ownerId})
-		.then( instance => instance.length === 0 ? Promise.resolve(false) : Promise.resolve(true) );
+function isExist(device) {
+	return DeviceModel._pFindAndLoad({name: device.p('name'), device: device.p('device'), ownerId: device.p('ownerId')})
+		.then( instances => (instances.length === 0 || instances[0].id === device.id) ? Promise.resolve(false) : Promise.resolve(true) );
 };
 
 

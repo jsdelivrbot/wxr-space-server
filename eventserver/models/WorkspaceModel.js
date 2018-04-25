@@ -32,9 +32,35 @@ const WorkspaceModel = nohm.model('WorkspaceModel', {
 		description: {
 			type: 'string',
 			defaultValue: 'An webizing workspace.'
+		},
+		thumbnail: {
+			type: 'string',
 		}
 	},
 	methods: {
+
+		getRefinedProperty: function () {
+			const UserModel = nohm.getModels()['UserModel'];
+			return UserModel._pFindAndLoad(this.p('ownerId'))
+				.then( instance => {
+					const p = this.allProperties();
+					p['ownerName'] = instance.p('name');
+					p['id'] = this.id;
+					return Promise.resolve(p);
+				});
+		},
+
+		updateProfile: function(newValues) {
+			for (let key in newValues) {
+				const val = newValues[key];
+				if (val === '' || val === undefined || val === null) delete newValues[key];
+			}
+
+			this.p(newValues);
+
+			return this._pSave();
+		},
+
 
 		// TODO: Unsupported method in nohm v0.9.8
 		// destroy: function() {
@@ -113,6 +139,8 @@ const WorkspaceModel = nohm.model('WorkspaceModel', {
 			return this.getAllLinks('DeviceModel', WorkspaceModel.RELATION_DEVICE_TRACKER)
 				.then( ids => DeviceModel.propagateInstance(ids) );
 		},
+
+
 
 		// Pub/Sub of redis has no relation to the key space. It was made to not interfere with it on any level, by including database numbers.
 		// Publishing on db 10, will be heard by a subscriber on db 1.

@@ -7,6 +7,7 @@ const path = require('path');
 router.use('/jquery', express.static(path.join(__dirname, '../node_modules/jquery/dist')));   // jQeury
 router.use('/jquery', express.static(path.join(__dirname, '../node_modules/jquery-autosize')));   // jQuery-autosize
 router.use('/jquery', express.static(path.join(__dirname, '../node_modules/waypoints/lib')));   // jQuery-waypoints
+router.use('/jquery', express.static(path.join(__dirname, '../node_modules/blueimp-file-upload/js')));   // jQuery-file-upload
 router.use('/jquery/ui', express.static(path.join(__dirname, '../node_modules/jquery-ui/build')));
 router.use('/jquery/ui', express.static(path.join(__dirname, '../node_modules/jquery-ui/ui')));
 

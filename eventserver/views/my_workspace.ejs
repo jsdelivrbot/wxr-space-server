@@ -45,51 +45,20 @@
 
 <body>
 
-
-    <!-- Header -->
-    <%- include('template/header'); -%>
+	<!-- Header -->
+	<%- include('template/header'); -%>
 
 	<main role="main">
 
-		<!--Recent workspaces-->
-		<% if (user) { %>
-		<div class="container pt-3 my-5 text-center">
-			<h1 class="my-3">Recent Worksapces</h1>
-			<p>Here are your histories you did.</p>
+		<!-- Page Header -->
+		<div class="container">
+			<h1 class="pl-4 mt-5 mb-3">My Workspaces</h1>
+			<hr class="wxr-sm-divider">
 		</div>
-
-		<div class="container pb-5">
-			<div class="d-flex flex-row flex-nowrap wxr-overflow-x-scroll">
-				<% for (var workspace of recentWorkspace) { %>
-                    <div class="card mr-5 bg-light">
-                        <a class="wxr-plain-link" href="/view/<%= workspace.id %>">
-                        <img class="card-img-top" src="/images/thumbnail/<%= workspace.thumbnail ? workspace.thumbnail : 'workspace-thumbnail-placeholder.jpg' %>" alt="Card image cap">
-                        <div class="card-body">
-                            <h5 class="card-title"><%= workspace.name %></h5>
-                            <p class="card-text"><%= workspace.description %></p>
-                        </div>
-                        </a>
-                    </div>
-				<% } %>
-			</div>
-		</div>
-		<% } %>
-		<!--Recent workspaces end-->
-
-
-		<!--Search panel-->
-		<%- include('template/search_panel'); -%>
 
 
 		<!--Workspace list-->
-		<div class="container mb-5">
-
-			<!-- Page Heading -->
-			<div class="container pt-3 my-5 text-center">
-				<h1 class="my-3">Workspaces</h1>
-				<p>Take a look around what's going on!</p>
-			</div>
-
+		<div class="container my-5">
 			<% for (var workspace of workspaceList) { %>
 			<div class="row">
 				<div class="col-md-7">
@@ -137,7 +106,7 @@
 	</main>
 
 	<!-- Footer -->
-    <%- include('template/footer'); -%>
+	<%- include('template/footer'); -%>
 
 
 	<!-- jQuery -->
@@ -156,6 +125,7 @@
 	<script src="/javascripts/webizingDeviceConfigurationManager.js"></script>
 
 	<script>
+
 
 	</script>
 

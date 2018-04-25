@@ -28,9 +28,10 @@ function getDeviceProfiles(req, res) {
 	DeviceModel._pFindAndLoad(index)
 		.then( instances => {
 			instances = [].concat(instances);
-			instances = instances.map(refineDeviceInstanceProperties);
-			res.json( APIResponseMessage.OK(instances) )
+			const promisesArray = instances.map(i => i.getRefinedProperty());
+			return Promise.all(promisesArray);
 		})
+		.then( properties => res.json( APIResponseMessage.OK(properties) ) )
 		.catch( reason => res.json( APIResponseMessage.ERROR(reason)) );
 }
 
@@ -48,8 +49,9 @@ function registerNewDeviceProfile(req, res) {
 	};
 
 	user.registerDevice(deviceProfile)
-		.then( deviceInstance => res.json( APIResponseMessage.OK(refineDeviceInstanceProperties(deviceInstance))) )
-		.catch( reason => res.json( APIResponseMessage.ERROR(reason)) );
+		.then( deviceInstance => deviceInstance.getRefinedProperty() )
+		.then( property => res.json( APIResponseMessage.OK(property) ) )
+		.catch( reason => res.json( APIResponseMessage.ERROR(reason) ) );
 }
 
 // delete device profiles
@@ -86,8 +88,9 @@ function getDeviceProfile(req, res) {
 		.then( deviceInstance => {
 			if (!deviceInstance) return res.json( APIResponseMessage.OK() );
 			else if (deviceInstance.p('ownerId') !== user.id) return res.json( APIResponseMessage.OK() );    // This is not your device!!!
-			else return res.json( APIResponseMessage.OK(refineDeviceInstanceProperties(deviceInstance)) );
+			else return deviceInstance.getRefinedProperty();
 		})
+		.then( property => res.json( APIResponseMessage.OK(property)) )
 		.catch( reason => res.json( APIResponseMessage.ERROR(`An internal has occurred: ${reason}`)) );
 }
 
@@ -109,7 +112,8 @@ function updateDeviceProfile(req, res) {
 			else if (instance.p('ownerId') !== user.id) return Promise.resolve();   // This is not your device!!!
 			else return instance.updateProfile(newValues);
 		})
-		.then( instance => res.json( APIResponseMessage.OK(refineDeviceInstanceProperties(instance)) ) )
+		.then( instance => instance.getRefinedProperty() )
+		.then( property => res.json( APIResponseMessage.OK(property) ) )
 		.catch( reason => res.json( APIResponseMessage.ERROR(reason) ) );
 }
 
@@ -129,15 +133,6 @@ function deleteDeviceProfile(req, res) {
 		.catch( reason => res.json( APIResponseMessage.ERROR(reason) ) );
 }
 
-
-
-
-function refineDeviceInstanceProperties(i) {
-	i = i.allProperties();
-	delete i['ownerId'];
-	delete i['eventSetKey'];
-	return i;
-}
 
 
 

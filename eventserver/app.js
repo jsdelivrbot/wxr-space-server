@@ -1,3 +1,5 @@
+global.__app_root = __dirname;
+
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
@@ -13,10 +15,10 @@ var config = require('config');
 
 
 var index = require('./routes/index');
-var lib = require('./routes/lib');
-var user = require('./routes/user');
-var workspace = require('./routes/workspace');
-var device = require('./routes/device');
+var libs = require('./routes/libs');
+var users = require('./routes/users');
+var workspaces = require('./routes/workspaces');
+var devices = require('./routes/devices');
 
 var app = express();
 
@@ -64,7 +66,7 @@ app.set('view engine', 'ejs');
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({
 		secret: 'this is a key for hashing',
@@ -77,10 +79,10 @@ app.use(passport.session());
 
 
 app.use('/', index);
-app.use('/lib', lib);
-app.use('/user', user);
-app.use('/workspace', workspace);
-app.use('/device', device);
+app.use('/libs', libs);
+app.use('/users', users);
+app.use('/workspaces', workspaces);
+app.use('/devices', devices);
 
 
 // catch 404 and forward to error handler

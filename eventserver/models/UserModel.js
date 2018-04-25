@@ -56,12 +56,33 @@ const UserModel = nohm.model('UserModel', {
 					min: PASSWORD_MINLENGTH
 				}]
 			]
+		},
+
+		profileImage: {
+			type: 'string',
 		}
 	},
 	methods: {
 
 		validPassword: function (password) {
 			return this.p('password') === password.toString().hash();
+		},
+
+		updateProperties: function (newValues) {
+			for (let key in newValues) {
+				const val = newValues[key];
+				if (val === '' || val === undefined || val === null) delete newValues[key];
+			}
+
+			this.p(newValues);
+
+			return this._pSave();
+		},
+
+		getRefinedProperty: function () {
+			const p = this.allProperties();
+			delete p['password'];
+			return Promise.resolve(p);
 		},
 
 
@@ -136,6 +157,7 @@ const UserModel = nohm.model('UserModel', {
 		// 	if (this.id !== device.p('ownerId')) return Promise.reject(new Error(`This device is not yours.`));
 		// 	return device.destroy();
 		// }
+
 
 	}
 });
