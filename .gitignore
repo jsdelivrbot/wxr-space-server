@@ -62,3 +62,5 @@ typings/
 redis/
 */dump.rdb
 eventserver/.idea/
+eventserver/public/images/thumbnail
+eventserver/public/images/profile
