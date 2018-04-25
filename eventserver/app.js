@@ -116,7 +116,7 @@ var io = require('./socket')(passportSocketio.authorize({
 	passport: passport,
 	cookieParser: cookieParser,
 	fail: function onAutohrizeFail(data, message, error, accept) {
-		// without session make following logic go.
+		// accept requests that haven't session.
 		accept(null, true);
 	}
 }));

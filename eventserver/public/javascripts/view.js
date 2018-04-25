@@ -2,8 +2,8 @@
 
 window.onload = function() {
 
-	console.log('connect');
-	webizingDeviceConfigurationManager.addEventHandler( msg => {
+
+	EventHandler.addHandler( msg => {
 		console.log(msg);
 		if (msg.event === 'trackerMoved') {
 			const [x, y, z] = msg.detail.pos;

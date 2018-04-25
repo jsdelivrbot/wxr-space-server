@@ -6,7 +6,6 @@ webizingDeviceConfigurationManager = new function() {
 	const SERVER_URL = 'http://localhost:6701';
 	const WEBIZING_DEVICE_MANAGER_URI = 'http://localhost:6712';
 	const profileUpdateListners = [];
-	const eventHandlers = [];
 	let DeviceProfiles = [];
 
 	// Socket.io set up
@@ -26,10 +25,6 @@ webizingDeviceConfigurationManager = new function() {
 		Log(`error: `, err);
 	});
 
-	socket.on('WXREvent', function(event) {
-		eventHandlers.forEach( handler => handler(event) );
-	})
-
 
 	// Get DeviceProfiles from server
 	$.ajax(SERVER_URL + `/users/me/devices`)
@@ -39,10 +34,6 @@ webizingDeviceConfigurationManager = new function() {
 				socket.emit('WXRUpdateDeviceProfiles', DeviceProfiles);
 			}
 		});
-
-	this.addEventHandler = function(h) {
-		eventHandlers.push(h);
-	};
 
 	this.addUpdateListener = function (f) {
 		profileUpdateListners.push(f);
@@ -138,4 +129,46 @@ webizingDeviceConfigurationManager = new function() {
 		if (!profile.device || !profile.name) return -2;
 		return DeviceProfiles.findIndex( p => p.device === profile.device && p.name === profile.name );
 	}
+};
+
+
+
+EventHandler = new function() {
+
+	const SERVER_EVENT_ROUTER_URI = 'http://localhost:6711';
+	const WEBIZING_DEVICE_MANAGER_URI = 'http://localhost:6712';
+
+	// eventRouterSocket
+	const eventRouterSocket = io(SERVER_EVENT_ROUTER_URI);
+	eventRouterSocket.on('connect', function() {
+		console.log('eventRouterSocket connection.');
+	});
+	eventRouterSocket.on('WXREvent', function(event) {
+
+		eventHandlers.forEach( handler => handler(event) );
+	});
+
+
+	// deviceManagerSocket
+	const eventHandlers = [];
+	const deviceManagerSocket = io(WEBIZING_DEVICE_MANAGER_URI);
+	deviceManagerSocket.on('connect', function() {
+		console.log('deviceManagerSocket connection.');
+	});
+	deviceManagerSocket.on('WXREvent', function(event) {
+		eventHandlers.forEach( handler => handler(event) );
+
+		if (event.id !== 'device no id') {
+			const deviceProfile = webizingDeviceConfigurationManager.getDeviceProfiles().find( p => p.id === event.id );
+			if (!deviceProfile.isNoBroadcast && eventRouterSocket) {
+				eventRouterSocket.emit('WXREvent', event);
+			}
+		}
+	});
+
+
+	this.addHandler = function(h) {
+		eventHandlers.push(h);
+	};
+
 };
