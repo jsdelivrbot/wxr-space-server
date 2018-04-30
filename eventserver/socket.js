@@ -25,6 +25,11 @@ module.exports = function(passportAuthorize) {
 	  };
 
 
+  	if (!socket.data.workspaceId) {
+  		return;
+	  }
+
+
   	// setting client config for sub/pub by key name.
 	  const subClient = redis.createClient();
 	  subClient.config('set', 'notify-keyspace-events', 'AKE', function(err) {
@@ -33,7 +38,7 @@ module.exports = function(passportAuthorize) {
 
 	  // subscribe devices
 	  WorkspaceModel._pFindAndLoad(socket.data.workspaceId)
-		  .then( instance => instance.getAttachedDevices() )
+		  .then( instance => instance ? Promise.resolve(instance.getAttachedDevices()) : Promise.reject(`Invalid Workspace ID.`) )
 		  .then( wsAttached => {
 			  wsAttached = wsAttached.map( device => device.p('ownerId') !== socket.user.id );
 			  wsAttached.forEach( device => {
@@ -54,6 +59,9 @@ module.exports = function(passportAuthorize) {
 					  });
 				  }
 			  });
+		  })
+		  .catch( reason => {
+		  	console.log(reason);
 		  });
 
 
