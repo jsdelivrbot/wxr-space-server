@@ -1,0 +1,48 @@
+<link rel="import" href="./polymerImport.html">
+
+<dom-module id="wxr-axes">
+	<template>
+		<style>
+			wxr-axes {
+				--wxr-transform: var(--wxr-transform);
+			}
+		</style>
+	</template>
+
+	<script>
+		'use strict';
+
+		class WXRAxes extends WXRGeometry {
+			constructor() {
+				super();
+			}
+
+			static get is() {
+				return "wxr-axes";
+			}
+
+			static get properties() {
+				return {
+					length: { type: Number, value: 10}
+				};
+			}
+
+			connectedCallback() {
+				super.connectedCallback();
+
+				if(this.parentElement.tagName.startsWith(WXR.PREFIX_WXR)) {
+					this.addEventListener(WXREvent.TARGET_ABAILABLE, this.onTargetAvailable);
+				}
+			}
+
+			onTargetAvailable (event) {
+				let axes = new THREE.AxesHelper(this.size);
+				this.addWebGLObject3D(axes);
+				this.addCSS3DObject3D(this.CSS3DObject3D);
+			}
+		}
+
+		customElements.define(WXRAxes.is, WXRAxes);
+
+	</script>
+</dom-module>

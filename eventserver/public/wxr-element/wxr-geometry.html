@@ -1,0 +1,24 @@
+<link rel="import" href="./polymerImport.html">
+
+<dom-module id="wxr-geometry">
+	<script>
+		'use strict';
+
+		class WXRGeometry extends WXRElement {
+			constructor() {
+				super();
+			}
+
+			static get is() {
+				return "wxr-geometry";
+			}
+
+			connectedCallback() {
+				super.connectedCallback();
+			}
+		}
+
+		customElements.define(WXRGeometry.is, WXRGeometry);
+
+	</script>
+</dom-module>

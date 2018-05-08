@@ -1,0 +1,227 @@
+<link rel="import" href="./polymerImport.html">
+<dom-module id="wxr-element">
+	<script>
+		'use strict';
+
+		class WXRElement extends Polymer.Element {
+			constructor() {
+				super();
+			}
+
+			static get is() {
+				return "wxr-element";
+			}
+
+			static get properties() {
+				return {
+					color: {type: Number, value: 0xffffff},
+					texture: {type: String},
+					type: {type: String, value: "basic"},
+					id: String,
+					webGLObject3D: THREE.Object3D,
+					CSS3DObject3D: THREE.Object3D
+				};
+			}
+
+			connectedCallback() {
+				super.connectedCallback();
+
+				this.webGLObject3D = new THREE.Group();
+				this.CSS3DObject3D = new THREE.Group();
+
+				let oldTransform = this.style.getPropertyValue('--wxr-transform');
+				let oldDisplay = this.style.getPropertyValue('display');
+
+				let observer = new MutationObserver(function (mutations) {
+					mutations.forEach(mutationRecord => {
+						let style = this.style;
+						let transform = style.getPropertyValue('--wxr-transform');
+						let display = style.getPropertyValue('display');
+
+						if (transform !== oldTransform) {
+							oldTransform = transform;
+							this.computeStyleTransform(transform);
+						}
+
+						if (display !== oldDisplay) {
+							oldDisplay = display;
+							this.changedDomStyleDisplay(display);
+						}
+					});
+				}.bind(this));
+
+				observer.observe(this, {attributes: true, attributeFilter: ['style']});
+			}
+
+			disconnectedCallback() {
+				super.disconnectedCallback();
+
+				removeObject()
+			}
+
+			removeObject() {
+				this.removeWebGLObject3D();
+				this.removeCSS3DObject3D();
+			}
+
+			addWebGLObject3D(object) {
+				this.webGLObject3D = object;
+				this.parentElement.webGLObject3D.add(object);
+				this.setAttribute("webgl_uuid", object.uuid);
+				this.applyCSSStyleToWebGLObject3D();
+			}
+
+			addCSS3DObject3D(object) {
+				this.CSS3DObject3D = object;
+				this.parentElement.CSS3DObject3D.add(object);
+				this.setAttribute("css3d_uuid", object.uuid);
+				this.applyCSSStyleToWebGLObject3D();
+			}
+
+			removeWebGLObject3D() {
+				this.parentElement.webGLObject3D.remove(this.webGLObject3D);
+				this.removeAttribute("webgl_uuid");
+				let webGLAugmentation = new THREE.Group();
+				this.addWebGLObject3D(webGLAugmentation);
+			}
+
+			removeCSS3DObject3D() {
+				this.parentElement.CSS3DObject3D.remove(this.CSS3DObject3D);
+				this.removeAttribute("css3d_uuid");
+				let css3DAugmentation = new THREE.Group();
+				this.addCSS3DObject3D(css3DAugmentation);
+			}
+
+			getCSSStyleProperty() {
+				let style = window.getComputedStyle(this);
+
+				return style;
+			}
+
+			applyCSSStyleToWebGLObject3D() {
+				if (this.tagName.toLocaleLowerCase() === WXRCamera.is && WXR.ContextManager.getWXRMode() === WXRDevice.AR) {
+					return;
+				}
+
+				let style = this.getCSSStyleProperty();
+				let css = style.getPropertyValue('--wxr-transform');
+
+				if (css === "") {
+					css = "translate3d(0,0,0) rotate3d(0,0,0) scale3d(1,1,1);";
+				}
+
+				this.computeStyleTransform(css);
+			}
+
+			computeStyleTransform(css) {
+				let transform = [];
+				let position = new THREE.Vector3(0, 0, 0);
+				let rotation = new THREE.Vector3(0, 0, 0);
+				let scale = new THREE.Vector3(1, 1, 1);
+
+				for(let leftBracketSplit of css.split("3d(")){
+
+					if(leftBracketSplit.indexOf(")") !== -1) {
+						for(let rightBracketSplit of leftBracketSplit.split(")")) {
+							transform.push(rightBracketSplit);
+						}
+					} else {
+						transform.push(leftBracketSplit);
+					}
+				}
+
+				if(transform.indexOf(';' !== -1)) {
+					transform.splice(transform.indexOf(';'), 1);
+				}
+
+				for(let i=0 ; i<transform.length ; i++) {
+					switch(transform[i].trim()) {
+						case "translate":
+							position.fromArray(transform[i + 1].split(","));
+							break;
+						case "rotate":
+							rotation.fromArray(transform[i + 1].split(","));
+							break;
+						case "scale":
+							scale.fromArray(transform[i + 1].split(","));
+							break;
+					}
+				}
+
+				if (this.webGLObject3D !== undefined) {
+					this.webGLObject3D.position.set(position.x, position.y, position.z);
+					this.webGLObject3D.rotation.set(rotation.x, rotation.y, rotation.z);
+					this.webGLObject3D.scale.set(scale.x, scale.y, scale.z);
+				}
+
+				if (this.CSS3DObject3D !== undefined) {
+					if(this.CSS3DObject3D.constructor === THREE.CSS3DObject) {
+						this.CSS3DObject3D.position.set(position.x, position.y, position.z);
+						this.CSS3DObject3D.rotation.set(rotation.x, rotation.y, rotation.z);
+						this.CSS3DObject3D.scale.set(scale.x, scale.y, scale.z);
+					}
+				}
+			}
+
+			changedDomStyleDisplay(display) {
+				if (display === "none") {
+					this.hideWebGLObject3D(this.webGLObject3D);
+					this.hideCSS3DObject3D(this.CSS3DObject3D);
+				} else if (display === "block") {
+					this.showWebGLObject3D(this.webGLObject3D);
+					this.showCSS3DObject3D(this.CSS3DObject3D);
+				}
+			}
+
+			hideWebGLObject3D(object) {
+				object.visible = false;
+
+				if (object.children.length > 0) {
+					for (let child of object.children) {
+						this.hideWebGLObject3D(child);
+					}
+				}
+			}
+
+			showWebGLObject3D(object) {
+				object.visible = true;
+
+				if (object.children.length > 0) {
+					for (let child of object.children) {
+						this.showWebGLObject3D(child);
+					}
+				}
+			}
+
+			hideCSS3DObject3D(object) {
+				if (object.constructor === THREE.Group) {
+					object.visible = false;
+				} else if (object.constructor === THREE.CSS3DObject) {
+					object.element.style.display = "none";
+				}
+
+				if (object.children.length > 0) {
+					for (let child of object.children) {
+						this.hideCSS3DObject3D(child);
+					}
+				}
+			}
+
+			showCSS3DObject3D(object) {
+				if (object.constructor === THREE.Group) {
+					object.visible = true;
+				} else if (object.constructor === THREE.CSS3DObject) {
+					object.element.style.display = "block";
+				}
+
+				if (object.children.length > 0) {
+					for (let child of object.children) {
+						this.showCSS3DObject3D(child);
+					}
+				}
+			}
+		}
+
+		customElements.define(WXRElement.is, WXRElement);
+	</script>
+</dom-module>

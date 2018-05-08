@@ -1,0 +1,7 @@
+#bowlSpoon{
+	--wxr-transform: rotate3d(1.57, 0, 0) scale3d(6,6,6);
+}
+
+wxr-camera {
+	--wxr-transform: translate3d(0, 0, 60);
+}

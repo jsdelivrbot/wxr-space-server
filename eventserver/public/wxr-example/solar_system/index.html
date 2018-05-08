@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta name="viewport" charset="UTF-8" content="width=device-width, user-scalable=no">
+	<script src="https://cdn.rawgit.com/webcomponents/webcomponentsjs/v1.1.0/webcomponents-lite.js"></script>
+	<link href="https://libs.webizing.org/wxr-0.5.html" rel="import">
+	<link href="./solar_system.css" rel="stylesheet">
+	<script src="./solar_system.js"></script>
+</head>
+<body>
+	<wxr-world ar-engine="vuforia" color="0x000000">
+		<wxr-camera fovy=61 near=0.1 far=5000></wxr-camera>
+		<wxr-space id="solarSystem" src="https://content.wxr.webizing.org/space/1" enable>
+
+			<wxr-target id="solar_system" src="//target.webizing.space/solar_system">
+
+				<wxr-sphere class="sun" radius=60 width-segments=48 height-segments=48
+							 texture="../../resources/images/solarSystem/sun.jpg">
+					<wxr-html id="sunAnnotation" >
+						<div class="annotation">
+							<div class="pin" style="text-align: right;"><img src="../../resources/images/unpin.png" width="12" height="12"></div>
+							<h3>Sun</h3>
+							Orbit Velocity: 0 km/h<br>
+							Equatorial Circumference: 4,370,005 km<br>
+							From Earth: 149,598,262 km<br>
+							<iframe width="200" height="113" src="https://www.youtube.com/embed/BC9zdI61ve0?rel=0&amp;showinfo=0&amp;t=21m59s" frameborder="0" allowfullscreen=""></iframe>
+						</div>
+					</wxr-html>
+					<wxr-animation type="rotation" to="0 360 0" duration="400000" repeat=Infinity easing="linear"></wxr-animation>
+				</wxr-sphere>
+
+				<wxr-ring color="0xa6a6a6" inner-radius=200 outer-radius=195 theta-segments=48></wxr-ring>
+
+				<wxr-sphere class="mercury" radius=30 width-segments=48 height-segments=48
+							 texture="../../resources/images/solarSystem/mercury.jpg" onclick="clickPlanet(event);">
+					<wxr-html id="mercuryAnnotation">
+						<div class="annotation">
+							<div class="pin" style="text-align: right;"><img src="../../resources/images/unpin.png" width="12" height="12"></div>
+							<h3>Mercury</h3>
+							Orbit Velocity: 170,503 km/h<br>
+							Equatorial Circumference: 15,329 km<br>
+							From Sun: 57,909,227 km<br>
+						</div>
+					</wxr-html>
+					<wxr-animation type="revolution" repeat=Infinity easing="linear" radian="0.01" radius="200"></wxr-animation>
+				</wxr-sphere>
+
+				<wxr-ring color="0xa6a6a6" inner-radius=250 outer-radius=245 theta-segments=48></wxr-ring>
+
+				<wxr-sphere class="venus" radius=45 width-segments=48 height-segments=48
+							 texture="../../resources/images/solarSystem/venus.jpg" onclick="">
+					<wxr-animation type="revolution" repeat=Infinity easing="linear" radian="0.006" radius="250"></wxr-animation>
+				</wxr-sphere>
+
+				<wxr-ring color="0xa6a6a6" inner-radius=300 outer-radius=295 theta-segments=48></wxr-ring>
+
+				<wxr-sphere class="earth" radius=20 width-segments=48 height-segments=48
+							 texture="../../resources/images/solarSystem/Earth.png" onclick="clickPlanet(event);">
+
+					<wxr-html id="earthAnnotation">
+						<div class="annotation">
+							<div class="pin" style="text-align: right;"><img src="../../resources/images/unpin.png" width="12" height="12"></div>
+							<h3>Earth</h3>
+							Orbit Velocity: 107,218 km/h<br>
+							Equatorial Circumference: 40,030 km<br>
+							From Sun: 149,598,262 km<br>
+							<iframe width="200" height="113" src="https://www.youtube.com/embed/thuViaxRd_w?rel=0&amp;showinfo=0&amp;t=0m42s" frameborder="0" allowfullscreen=""></iframe>
+						</div>
+					</wxr-html>
+					<wxr-animation type="revolution" repeat=Infinity easing="linear" radian="0.004" radius="300"></wxr-animation>
+				</wxr-sphere>
+
+				<wxr-ring color="0xa6a6a6" inner-radius=350 outer-radius=345 theta-segments=48></wxr-ring>
+
+				<wxr-sphere class="mars" radius=25 width-segments=48 height-segments=48
+							 texture="../../resources/images/solarSystem/Mars.png" onclick="">
+					<wxr-animation type="revolution" repeat=Infinity easing="linear" radian="0.003" radius=350"></wxr-animation>
+				</wxr-sphere>
+			</wxr-target>
+		</wxr-space>
+	</wxr-world>
+
+	<!-- The appBar -->
+	<wxr-appbar></wxr-appbar>
+
+	<!-- The layer -->
+	<wxr-layer></wxr-layer>
+
+	<!-- The Debug -->
+	<wxr-debug></wxr-debug>
+
+	<!-- The Slider -->
+	<wxr-slider></wxr-slider>
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta name="viewport" content="width=device-width, user-scalable=no">
+	<script src="https://cdn.rawgit.com/webcomponents/webcomponentsjs/v1.1.0/webcomponents-lite.js"></script>
+	<link href="https://libs.webizing.org/wxr-0.5.html" rel="import">
+	<link href="./kakaoCylinder.css" rel="stylesheet">
+	<script src="./kakaoCylinder.js"></script>
+</head>
+<body>
+	<wxr-world ar-engine="vuforia">
+		<wxr-camera fovy=61 near=0.1 far=10000></wxr-camera>
+		<wxr-space id="space1" enable>
+
+			<wxr-target id="kakaosCylinder" src="//target.webizing.space/kakaosCylinder">
+
+				<wxr-sphere id="revolution" class="soccer" radius=100 width-segments=48 height-segments=48 texture="../../resources/images/checkerboard_r.png"
+							 onclick="modelClicked()">
+					<wxr-animation type="revolution" repeat=Infinity easing="linear" radian="0.05" radius="300"></wxr-animation>
+				</wxr-sphere>
+
+				<wxr-sphere id="movement" class="soccer" radius=100 width-segments=48 height-segments=48 texture="../../resources/images/checkerboard_g.png"
+							onclick="modelClicked()">
+					<wxr-animation type="movement" to="100 100 0" duration="2000" repeat=Infinity easing="linear"></wxr-animation>
+				</wxr-sphere>
+
+				<wxr-sphere id="rotation" class="soccer" radius=100 width-segments=48 height-segments=48 texture="../../resources/images/checkerboard_b.png"
+							onclick="modelClicked()">
+					<wxr-animation type="rotation" to="0 360 0" duration="400000" repeat=Infinity easing="linear"></wxr-animation>
+				</wxr-sphere>
+			</wxr-target>
+		</wxr-space>
+	</wxr-world>
+
+	<!-- The appBar -->
+	<wxr-appbar></wxr-appbar>
+
+	<!-- The layer -->
+	<wxr-layer></wxr-layer>
+
+	<!-- The Debug -->
+	<wxr-debug></wxr-debug>
+
+	<!-- The Slider -->
+	<wxr-slider></wxr-slider>
+</body>
+</html>

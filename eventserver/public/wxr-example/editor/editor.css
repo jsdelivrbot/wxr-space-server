@@ -1,0 +1,15 @@
+wxr-sphere {
+	--wxr-transform: translate3d(45, 0, 0);
+}
+
+wxr-box {
+	--wxr-transform: translate3d(-45, 0, 0) rotate3d(0, -0.2, 0);
+}
+
+wxr-cylinder {
+	--wxr-transform: translate3d(0, -15, 50);
+}
+
+wxr-camera {
+	--wxr-transform: translate3d(0, 100, 300);
+}

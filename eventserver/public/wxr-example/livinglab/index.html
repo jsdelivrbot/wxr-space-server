@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta name="viewport" content="width=device-width, user-scalable=no">
+	<script src="https://cdn.rawgit.com/webcomponents/webcomponentsjs/v1.1.0/webcomponents-lite.js"></script>
+	<link href="https://libs.webizing.org/wxr-0.5.html" rel="import">
+	<link href="./livinglab.css" rel="stylesheet">
+	<script src="./livinglab.js"></script>
+</head>
+<body>
+	<div id="title" style="position: absolute; width: 100%; height: 10%; color: #FFFFFF;; background-color: #57c17b; text-align: center;">
+		<p style="margin-left: auto; position: absolute; font-size: 35px; height: -webkit-fill-available; font-weight: bold; margin-bottom: auto; left: 0; right: 0; top: 20px; bottom: 0; margin-top: 0;">Living Lab</p>
+	</div>
+	<wxr-world ar-engine="vuforia">
+		<wxr-camera fovy=61 near=0.1 far=5000></wxr-camera>
+		<wxr-space src="https://livinglab.webizing.space" enable>  <!--livingLab-->
+
+			<wxr-target id="foobot01" src="//livinglab.webizing.space/foobot01">
+				<wxr-html id="annotation1" class="frame">
+					<div class="annotation">
+						<iframe style="background-color:#ffffff;" width=800 height=700 src="https://livinglab.webizing.space/foobot01/"></iframe>
+					</div>
+				</wxr-html>
+			</wxr-target>
+
+			<wxr-target id="foobot02" src="//livinglab.webizing.space/foobot02">
+				<wxr-html id="annotation2" class="frame">
+					<div class="annotation">
+						<iframe style="background-color:#ffffff;" width=800 height=700 src="https://livinglab.webizing.space/foobot02/"></iframe>
+					</div>
+				</wxr-html>
+			</wxr-target>
+
+			<wxr-target id="foobot03" src="//livinglab.webizing.space/foobot03">
+				<wxr-html id="annotation3" class="frame">
+					<div class="annotation">
+						<iframe style="background-color:#ffffff;" width=800 height=700 src="https://livinglab.webizing.space/foobot03/"></iframe>
+					</div>
+				</wxr-html>
+			</wxr-target>
+
+			<wxr-target id="foobot04" src="//livinglab.webizing.space/foobot04">
+				<wxr-html id="annotation4" class="frame">
+					<div class="annotation">
+						<iframe style="background-color:#ffffff;" width=800 height=700 src="https://livinglab.webizing.space/foobot04/"></iframe>
+					</div>
+				</wxr-html>
+			</wxr-target>
+
+			<!--<wxr-target id="cushion01" src="//livinglab.webizing.space/cushion01">-->
+				<!--<wxr-html id="annotation5" class="frame">-->
+					<!--<div class="annotation">-->
+						<!--<iframe style="background-color:#ffffff;" width=800 height=700 src="https://livinglab.webizing.space/cushion01/"></iframe>-->
+					<!--</div>-->
+				<!--</wxr-html>-->
+			<!--</wxr-target>-->
+
+			<!--<wxr-target id="cushion02" src="//livinglab.webizing.space/cushion02">-->
+				<!--<wxr-html id="annotation6" class="frame">-->
+					<!--<div class="annotation">-->
+						<!--<iframe style="background-color:#ffffff;" width=800 height=700 src="https://livinglab.webizing.space/cushion02/"></iframe>-->
+					<!--</div>-->
+				<!--</wxr-html>-->
+			<!--</wxr-target>-->
+
+			<!--<wxr-target id="cushion03" src="//livinglab.webizing.space/cushion03">-->
+				<!--<wxr-html id="annotation7" class="frame">-->
+					<!--<div class="annotation">-->
+						<!--<iframe style="background-color:#ffffff;" width=800 height=700 src="https://livinglab.webizing.space/cushion03/"></iframe>-->
+					<!--</div>-->
+				<!--</wxr-html>-->
+			<!--</wxr-target>-->
+
+			<!--<wxr-target id="cushion04" src="//livinglab.webizing.space/cushion04">-->
+				<!--<wxr-html id="annotation8" class="frame">-->
+					<!--<div class="annotation">-->
+						<!--<iframe style="background-color:#ffffff;" width=800 height=700 src="https://livinglab.webizing.space/cushion04/"></iframe>-->
+					<!--</div>-->
+				<!--</wxr-html>-->
+			<!--</wxr-target>-->
+
+			<!--<wxr-target id="cushion05" src="//livinglab.webizing.space/cushion05">-->
+				<!--<wxr-html id="annotation9" class="frame">-->
+					<!--<div class="annotation">-->
+						<!--<iframe style="background-color:#ffffff;" width=800 height=700 src="https://livinglab.webizing.space/cushion05/"></iframe>-->
+					<!--</div>-->
+				<!--</wxr-html>-->
+			<!--</wxr-target>-->
+
+			<!--<wxr-target id="cushion06" src="//livinglab.webizing.space/cushion06">-->
+				<!--<wxr-html id="annotation10" class="frame">-->
+					<!--<div class="annotation">-->
+						<!--<iframe style="background-color:#ffffff;" width=800 height=700 src="https://livinglab.webizing.space/cushion06/"></iframe>-->
+					<!--</div>-->
+				<!--</wxr-html>-->
+			<!--</wxr-target>-->
+
+		</wxr-space>
+	</wxr-world>
+</body>
+</html>

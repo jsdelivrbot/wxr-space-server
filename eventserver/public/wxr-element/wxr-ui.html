@@ -1,0 +1,24 @@
+<link rel="import" href="./polymerImport.html">
+
+<dom-module id="wxr-ui">
+	<script>
+		'use strict';
+
+		class WXRUI extends Polymer.Element {
+			constructor() {
+				super();
+			}
+
+			static get is() {
+				return "wxr-ui";
+			}
+
+			connectedCallback() {
+				super.connectedCallback();
+			}
+		}
+
+		customElements.define(WXRUI.is, WXRUI);
+
+	</script>
+</dom-module>

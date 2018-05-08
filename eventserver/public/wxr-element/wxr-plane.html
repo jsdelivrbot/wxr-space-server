@@ -1,0 +1,68 @@
+<link rel="import" href="./polymerImport.html">
+
+<dom-module id="wxr-plane">
+	<template>
+		<style>
+			wxr-sphere {
+				--wxr-transform: var(--wxr-transform);
+			}
+		</style>
+	</template>
+
+	<script>
+		'use strict';
+
+		class WXRPlane extends WXRGeometry {
+			constructor() {
+				super();
+			}
+
+			static get is() {
+				return "wxr-plane";
+			}
+
+			static get properties() {
+				return {
+					width: {type: Number, value: 1},
+					height: {type: Number, value: 1},
+					widthSegments: {type: Number, value: 1},
+					heightSegments: {type: Number, value: 1},
+				};
+			}
+
+			static get observers() {
+				return;
+			}
+
+			connectedCallback() {
+				super.connectedCallback();
+
+				if(this.parentElement.tagName.startsWith(WXR.PREFIX_WXR)) {
+					this.addEventListener(WXREvent.TARGET_ABAILABLE, this.onTargetAvailable);
+				}
+			}
+
+			onTargetAvailable (event) {
+				let geometry = new THREE.PlaneGeometry(this.width, this.height, this.widthSegments, this.heightSegments);
+				let material = new THREE.MeshBasicMaterial({
+					color: this.color,
+					side: THREE.DoubleSide,
+					transparent: true,
+					depthTest: true
+				});
+
+				if (this.texture !== undefined) {
+					material.map = new THREE.TextureLoader().load(this.texture);
+				}
+
+				let mesh = new THREE.Mesh(geometry, material);
+
+				this.addWebGLObject3D(mesh);
+				this.addCSS3DObject3D(this.CSS3DObject3D);
+			}
+		}
+
+		customElements.define(WXRPlane.is, WXRPlane);
+
+	</script>
+</dom-module>

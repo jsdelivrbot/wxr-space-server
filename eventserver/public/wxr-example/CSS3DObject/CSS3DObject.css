@@ -1,0 +1,37 @@
+#annotation1 {
+	--wxr-transform: translate3d(250, 180, 0);
+}
+
+#annotation2 {
+	--wxr-transform: translate3d(-250, 180, 0);
+}
+
+#annotation3 {
+	--wxr-transform: translate3d(250, -180, 0);
+}
+
+#annotation5 {
+	--wxr-transform: translate3d(-250, -180, 0);
+}
+
+.annotation {
+	width: 200px;
+	background-color: rgba(255, 0, 0, 0);
+	font-size: 8px;
+	background-color: white;
+	padding: 0.4em 0.4em 0.4em 0.4em;
+	border-radius: 5px;
+	border-style: solid;
+	border-color: #231F20;
+	border-width: 1px;
+}
+
+.pin {
+	position: absolute;
+	top: 10px;
+	right: 10px;
+}
+
+wxr-camera {
+	--wxr-transform: translate3d(0, 0, 600);
+}

@@ -1,0 +1,52 @@
+<link rel="import" href="./polymerImport.html">
+
+<dom-module id="wxr-boundary">
+	<template>
+		<style>
+			wxr-boundary {
+				--wxr-transform: var(--wxr-transform);
+			}
+		</style>
+	</template>
+
+	<script>
+		'use strict';
+
+		class WXRBoundary extends WXRGeometry {
+			constructor() {
+				super();
+			}
+
+			static get is() {
+				return "wxr-boundary";
+			}
+
+			static get properties() {
+				return {};
+			}
+
+			connectedCallback() {
+				super.connectedCallback();
+
+				if(this.parentElement.tagName.startsWith(WXR.PREFIX_WXR)) {
+					let squareGeo = new THREE.Geometry();
+					squareGeo.vertices.push(new THREE.Vector3(-0.1, 0.1, 0.0));
+					squareGeo.vertices.push(new THREE.Vector3(0.1, 0.1, 0.0));
+					squareGeo.vertices.push(new THREE.Vector3(0.1, -0.1, 0.0));
+					squareGeo.vertices.push(new THREE.Vector3(-0.1, -0.1, 0.0));
+					squareGeo.vertices.push(new THREE.Vector3(-0.1, 0.1, 0.0));
+
+					let squareMat = new THREE.MeshBasicMaterial({color: 0xffff00});
+
+					let square = new THREE.Line(squareGeo, squareMat);
+
+					this.addWebGLObject3D(square);
+					this.addCSS3DObject3D(this.CSS3DObject3D);
+				}
+			}
+		}
+
+		customElements.define(WXRBoundary.is, WXRBoundary);
+
+	</script>
+</dom-module>

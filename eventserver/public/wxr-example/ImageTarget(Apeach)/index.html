@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta name="viewport" charset="UTF-8" content="width=device-width, user-scalable=no">
+	<script src="//cdn.rawgit.com/webcomponents/webcomponentsjs/v1.1.0/webcomponents-lite.js"></script>
+	<link href="//libs.webizing.org/wxr-0.5.html" rel="import">
+	<link href="./apeach.css" rel="stylesheet">
+	<script src="./apeach.js"></script>
+	<script>
+		$("#button")[0].addEventListener('click', function(e) {
+			console.log('click');
+		});
+	</script>
+</head>
+<body>
+	<wxr-world ar-engine="vuforia">
+		<wxr-camera fovy=61 near=0.1 far=5000></wxr-camera>
+		<wxr-space src="https://content.wxr.webizing.org/space/1" enable>
+
+			<wxr-target id="apeach" src="//target.webizing.space/apeach">
+				<wxr-cylinder radius-top=0.1 radius-bottom=50 height=75 radius-segments=32 height-segments=1 texture="../../resources/images/checkerboard_r.png">
+					<wxr-html id="annotation1">
+						<div  class="annotation">
+							<p>A <font color="red">sphere</font> is a perfectly round geometrical object (here in green).
+								Like a <font color="blue">circle</font> in two dimensions, a perfect sphere is completely symmetrical around its center,
+								with all points on the surface laying the same distance from the center point.
+								This distance is known as the <font color="blue">radius</font> of the sphere.
+								The maximum straight distance through the sphere is known as the <font color="blue">diameter</font> of the sphere.</p>
+								<a id="button"></a>
+								<iframe src="test.html"></iframe>
+						</div>
+					</wxr-html>
+				</wxr-cylinder>
+
+				<wxr-box width=75 height=75 depth=75 texture="../../resources/images/checkerboard_b.png">
+					<wxr-html id="annotation2">
+						<div  class="annotation">
+							<p>The <font color="red">cube</font> (here in blue) is a three-dimensional solid object bounded by six square faces,
+								facets or sides, with three meeting at each <font color="blue">vertex</font>.</p>
+						</div>
+					</wxr-html>
+				</wxr-box>
+
+				<wxr-sphere radius=50 width-segments=48 height-segments=48 texture="../../resources/images/checkerboard_g.png">
+					<wxr-html id="annotation3">
+						<div class="annotation">
+							<p>A <font color="red">pyramid</font> is a polyhedron formed by connecting a polygonal base and a point,
+								called the <font color="blue">apex</font>.
+								Each base edge and apex form a triangle.</p>
+						</div>
+					</wxr-html>
+				</wxr-sphere>
+
+			</wxr-target>
+		</wxr-space>
+	</wxr-world>
+
+	<!-- The appBar -->
+	<wxr-appbar></wxr-appbar>
+
+	<!-- The layer -->
+	<wxr-layer></wxr-layer>
+
+	<!-- The Debug -->
+	<wxr-debug></wxr-debug>
+
+	<!-- The Slider -->
+	<wxr-slider></wxr-slider>
+</body>
+</html>

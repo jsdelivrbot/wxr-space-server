@@ -1,0 +1,63 @@
+<link rel="import" href="./polymerImport.html">
+
+<dom-module id="wxr-box">
+	<template>
+		<style>
+			wxr-box {
+				--wxr-transform: var(--wxr-transform);
+			}
+		</style>
+	</template>
+
+	<script>
+		'use strict';
+
+		class WXRBox extends WXRGeometry {
+			constructor() {
+				super();
+			}
+
+			static get is() {
+				return "wxr-box";
+			}
+
+			static get properties() {
+				return {
+					width: Number,
+					height: Number,
+					depth: Number,
+					widthSegments: {type: Number, value: 1},
+					heightSegments: {type: Number, value: 1},
+					depthSegments: {type: Number, value: 1}
+				};
+			}
+
+			connectedCallback() {
+				super.connectedCallback();
+
+				if(this.parentElement.tagName.startsWith(WXR.PREFIX_WXR)) {
+					this.addEventListener(WXREvent.TARGET_ABAILABLE, this.onTargetAvailable);
+				}
+			}
+
+			onTargetAvailable (event) {
+				let geometry = new THREE.BoxGeometry(this.width, this.height, this.depth, this.widthSegments, this.heightSegments, this.depthSegments);
+				let material = new THREE.MeshLambertMaterial({
+					color: this.color,
+					wireframe: false
+				});
+
+				if (this.texture !== undefined) {
+					material.map = new THREE.TextureLoader().load(this.texture);
+				}
+
+				let mesh = new THREE.Mesh(geometry, material);
+				this.addWebGLObject3D(mesh);
+				this.addCSS3DObject3D(this.CSS3DObject3D);
+			}
+		}
+
+		customElements.define(WXRBox.is, WXRBox);
+
+	</script>
+</dom-module>

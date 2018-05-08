@@ -1,0 +1,33 @@
+<link rel="import" href="./polymerImport.html">
+
+<dom-module id="wxr-light">
+	<script>
+		'use strict';
+
+		class WXRLightAmbient extends WXRLight {
+			constructor() {
+				super();
+			}
+
+			static get is() {
+				return "wxr-light-ambient";
+			}
+
+			connectedCallback() {
+				super.connectedCallback();
+
+				if(this.parentElement.tagName.startsWith(WXR.PREFIX_WXR)) {
+					this.addEventListener(WXREvent.TARGET_ABAILABLE, this.onTargetAvailable);
+				}
+			}
+
+			onTargetAvailable (event) {
+				this.addWebGLObject3D(new THREE.AmbientLight(this.color, this.intensity));
+				this.addCSS3DObject3D(this.CSS3DObject3D);
+			}
+		}
+
+		customElements.define(WXRLightAmbient.is, WXRLightAmbient);
+
+	</script>
+</dom-module>

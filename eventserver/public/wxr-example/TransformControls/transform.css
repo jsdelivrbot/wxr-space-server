@@ -1,0 +1,7 @@
+.teapotTest {
+	--wxr-transform: rotate3d(0, 0, -0.57);
+}
+
+wxr-camera {
+	--wxr-transform: translate3d(0, 0, 600);
+}

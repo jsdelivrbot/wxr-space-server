@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta name="viewport" content="width=device-width, user-scalable=no">
+	<script src="https://cdn.rawgit.com/webcomponents/webcomponentsjs/v1.1.0/webcomponents-lite.js"></script>
+	<link href="https://libs.webizing.org/wxr-0.5.html" rel="import">
+	<link href="./QRCode.css" rel="stylesheet">
+	<script src="./QRCode.js"></script>
+</head>
+<body>
+	<wxr-world ar-engine="vuforia">
+		<wxr-camera fovy=61 near=0.1 far=1000></wxr-camera>
+		<wxr-space src="http://content.wxr.webizing.org/space/1" enable>
+
+			<wxr-target id="Foobot1" src="//livinglab.webizing.space/foobot01">
+				<wxr-cylinder radius-top=1 radius-bottom=100 height=150 radius-segments=32 height-segments=1 texture="../../resources/images/checkerboard_r.png">
+				</wxr-cylinder>
+			</wxr-target>
+
+			<wxr-target id="Foobot2" src="//livinglab.webizing.space/foobot02">
+				<wxr-box width=150 height=150 depth=150 texture="../../resources/images/checkerboard_b.png">
+				</wxr-box>
+			</wxr-target>
+		</wxr-space>
+	</wxr-world>
+
+	<!-- The appBar -->
+	<wxr-appbar></wxr-appbar>
+
+	<!-- The layer -->
+	<wxr-layer></wxr-layer>
+
+	<!-- The Debug -->
+	<wxr-debug></wxr-debug>
+
+	<!-- The Slider -->
+	<wxr-slider></wxr-slider>
+</body>
+</html>

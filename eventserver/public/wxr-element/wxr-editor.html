@@ -1,0 +1,650 @@
+<link rel="import" href="./polymerImport.html">
+
+<dom-module id="wxr-editor">
+	<template>
+		<style>
+			#WXREditor {
+				margin: 0px;
+				padding: 0px;
+				height: 6vmin;
+				color: #FFFFFF;
+				background-color: #2196F3;
+				z-index: 1000;
+			}
+
+			#userButton, #menuButton, #modeButton{
+				position: absolute;
+				width: 5vmin !important;
+				height: 50px !important;
+				padding: 0px;
+				color: black;
+				z-index: 1001;
+			}
+
+			#menuButton {
+				top: 0;
+				left: 0;
+			}
+
+			#userButton{
+				top: 10px;
+				right: 5vw;
+				--layout-inline_-_display: inline;
+			}
+
+			#modeButton {
+				right: 0;
+				top: 0;
+			}
+
+			#menuIcon, #modeIcon {
+				color: #FFFFFF;
+				width: 5vmin;
+				height: 5vmin;
+			}
+
+			#userIcon {
+				color: #FFFFFF;
+				margin-top: 10px;
+				width: 5vmin;
+				height: 5vmin;
+			}
+
+			#WXREditorCenterText {
+				position: absolute;
+				top: 5px;
+				left: 10vmin;
+				width: 80vw;
+				height: 40px;
+				border: 0px;
+				border-radius: 5px;
+				color: white;
+				margin-top: 5px;
+				pointer-events: all;
+				z-index: 1001;
+			}
+
+			#sidebar {
+				float: right;
+				margin-top: 10px;
+				margin-right: 10px;
+				width: 5vw;
+				height: 5vw;
+				background-color: #2196F3;
+				color: white;
+				border-radius: 5px;
+			}
+
+			#WXRLeftSidebar, #WXRRightSidebar {
+				position: absolute;
+				top: 15vh;
+				width: 30vmin;
+				height: 84vh;
+				margin: 0px;
+				background-color: #FCFCFC;
+				z-index: 1001;
+			}
+
+			#WXRLeftSidebar {
+				left: 0;
+			}
+
+			#WXRRightSidebar {
+				right: 0;
+			}
+
+			.WXRSidebarValueInput {
+				width: 8vw;
+			}
+
+			.WXRMenu {
+				height: 50px;
+				border-bottom: 1px solid #8C8C8C;
+				margin-top: 0px;
+			}
+
+			.WXRTransformButton {
+				color: #2196F3;
+				width: 7vw;
+				height: 7vw;
+			}
+
+			#modal {
+				width: 70vw;
+				height: 80vh;
+			}
+
+			.deviceIcon {
+				width: 40px;
+				height: 40px;
+			}
+
+			#WXRModeModalList {
+				padding: 0px;
+				margin: 0px;
+			}
+
+			.ModeList {
+				border-bottom: 1px solid #EAEAEA;
+			}
+
+			.ModeList > input {
+				margin-right: 10px;
+			}
+
+			#WXRAboutModal > img {
+				width: 100px;
+				height: 100px;
+				padding: 0px;
+				border-radius: 50%;
+				margin-left: 50px;
+				margin-bottom: 10px;
+				border: 8px solid #2196F3;
+			}
+
+			.WXRAboutCon {
+				width: 150px;
+				margin: 8px 25px;
+				padding: 0 10px;
+				text-align: center;
+				font-weight: bold;
+				border-bottom: 1px solid #8C8C8C;
+			}
+
+
+
+			#WXRMenuList {
+				padding: 0px;
+				margin: 0px;
+				background-color: #FCFCFC;
+			}
+
+
+
+			.WXRMenu > iron-icon {
+				width: 15%;
+				margin-right: 15px;
+				color: #2196F3;
+			}
+
+			.WXRMenu > paper-dropdown-menu {
+				width: 85%;
+			}
+
+			#WXRLeftSidebarClose {
+				width: 10%;
+				min-height: 35px;
+				padding-left: 85%;
+				padding-right: 5%;
+				background-color: #EAEAEA;
+			}
+
+			#WXREVModal > paper-item {
+				width: 20px;
+				height: 50px;
+				padding: 0px 15px;
+				margin: 20px 20px;
+				border-radius: 50%;
+				font-size: 30px;
+				font-weight: bold;
+				text-align: center;
+				color: #FFFFFF;
+				float: left;
+			}
+
+			#urlBtn {
+				position: absolute;
+				right: 10vw;
+				top: 0px;
+				width: 10vw;
+				height: 50px;
+				padding: 5px;
+				color: #8C8C8C;
+				z-index: 1001;
+			}
+
+			#WXREditorDrop > paper-item {
+				color: #000000;
+			}
+
+			#modeBox {
+				position: absolute;
+				bottom: 5px;
+				left: 5px;
+			}
+
+			#modeDiv{
+				width: 60px;
+				height: 47px;
+				padding-top: 13px;
+				font-weight: 500;
+				color: #FFF;
+				background-color: #2196F3;
+				border-radius: 15px;
+				line-height: 36px;
+				font-size: 20px;
+				text-align:center;
+			}
+
+			#EVmodeBox {
+				position: absolute;
+				bottom: 5px;
+				right: 5px;
+				display: none;
+			}
+
+			#EVmodeBox > div {
+				margin-left: 5px;
+				float: left;
+			}
+
+			#EVmodeBox > div > div{
+				width: 80px;
+				height: 25px;
+				margin: 5px 0px;
+				text-align: center;
+				padding-top: 7px;
+				color: #FFF;
+				background-color: #FFCD12;
+				border-radius: 10px;
+			}
+
+			#VBtn {
+				background-color: #FFCD12;
+			}
+
+			#EBtn {
+				background-color: #8C8C8C;
+			}
+
+
+		</style>
+		<!-- app bar -->
+		<app-toolbar id="WXREditor"></app-toolbar>
+		<paper-menu-button id="menuButton" horizontal-align="left"
+						   vertical-align="top"
+						   vertical-offset="50">
+			<paper-icon-button id="menuIcon" slot="dropdown-trigger" icon="menu"></paper-icon-button>
+			<div slot="dropdown-content" id="WXRMenuDrop">
+				<paper-item on-click="manageWorkspace">Workspace 관리</paper-item>
+				<paper-item on-click="openModeDialog" id="codeEditor">source code</paper-item>
+				<paper-item on-click="openAboutDialog" id="htmlExport">HTML Export</paper-item>
+				<paper-item on-click="openEVDialog" id="saveCMS">Save</paper-item>
+				<paper-item on-click="openEVDialog" id="exit">나가기</paper-item>
+			</div>
+		</paper-menu-button>
+		<span slot="top" class="title" id="WXREditorCenterText" >Title</span>
+
+		<paper-menu-button id="userButton" horizontal-align="right"
+						   vertical-align="top"
+						   vertical-offset="50">
+			<paper-button slot="dropdown-trigger" id="userIcon" raised>
+				<span>User</span>
+			</paper-button>
+			<div slot="dropdown-content" id="WXRUserDrop">
+				<paper-item on-click="showUserProfile" id="profile">Profile</paper-item>
+				<paper-item on-click="showUserDevices" id="device">Devices</paper-item>
+				<paper-item on-click="showUserWorkspace" id="myWorkspace">My WorkSpace</paper-item>
+				<paper-item on-click="logout" id="logout">Logout</paper-item>
+			</div>
+		</paper-menu-button>
+
+		<paper-menu-button id="modeButton" horizontal-align="right"
+						   vertical-align="top"
+						   vertical-offset="50">
+			<paper-icon-button id="modeIcon" slot="dropdown-trigger" icon="more-vert"></paper-icon-button>
+			<div slot="dropdown-content" id="WXRModeDrop">
+				<paper-item on-click="setMode3D" id="3d">3D View</paper-item>
+				<paper-item on-click="setModeVR" id="vr">VR View</paper-item>
+				<paper-item on-click="setModeAR" id="ar">AR View</paper-item>
+			</div>
+		</paper-menu-button>
+
+		<paper-icon-button id="sidebar" icon="swap-horiz" horizontal-align="right" on-click="toggleSidebar"></paper-icon-button>
+
+		<!-- 왼쪽 버튼 - menu -->
+		<paper-dialog id="WXRLeftSidebar">
+			<paper-item class="WXRMenu">
+				<h2>Node</h2>
+			</paper-item>
+			<csak-tree branchiconopen="vaadin:minus-square-o" branchicon="vaadin:plus-square-o"
+					   data='{
+						  "children ": [
+								{
+								  "name": "Branch",
+								  "children": [
+									{
+									  "name": "Branch",
+									  "children": [
+									  {
+										"name": "Leaf"
+									  },
+									  {
+										"name": "Leaf"
+									  }
+									]
+									}   ,
+									{
+									  "name": "Branch",
+									  "children": [
+									  {
+										"name": "Leaf"
+									  },
+									  {
+										"name": "Leaf"
+									  }
+									]
+									}
+								  ]
+								}
+							  ]
+							}'
+		    expanded>
+			</csak-tree>
+			<paper-item class="WXRMenu">
+				<h2>Transform</h2>
+			</paper-item>
+			<paper-item class="WXRMenu">
+				<paper-icon-button class="WXRTransformButton" id="cameraIcon" icon="camera-enhance"></paper-icon-button>
+				<paper-icon-button class="WXRTransformButton" id="translateIcon" icon="open-with"></paper-icon-button>
+				<paper-icon-button class="WXRTransformButton" id="rotateIcon" icon="3d-rotation"></paper-icon-button>
+				<paper-icon-button class="WXRTransformButton" id="scaleIcon" icon="launch"></paper-icon-button>
+			</paper-item>
+		</paper-dialog>
+
+		<paper-dialog id="WXRRightSidebar">
+			<paper-item class="WXRMenu">
+				<h2>Information</h2>
+			</paper-item>
+			<paper-item class="WXRMenu">
+				<span>type</span>wxr-camera
+			</paper-item>
+			<paper-item class="WXRMenu">
+				<span>Name</span>main_camera
+			</paper-item>
+			<paper-collapse-item header="<b>Position</b>">
+				<table>
+					<tr>
+						<td>
+							<paper-input class="WXRSidebarValueInput" label="x" value="0" type="number">
+							</paper-input>
+						</td>
+						<td>
+							<paper-input class="WXRSidebarValueInput" label="y" value="0" type="number">
+							</paper-input>
+						</td>
+						<td>
+							<paper-input class="WXRSidebarValueInput" label="z" value="0" type="number">
+							</paper-input>
+						</td>
+					</tr>
+				</table>
+			</paper-collapse-item>
+			<paper-collapse-item header="<b>Rotation</b>">
+				<table>
+					<tr>
+						<td>
+							<paper-input class="WXRSidebarValueInput" label="x" value="0" type="number">
+							</paper-input>
+						</td>
+						<td>
+							<paper-input class="WXRSidebarValueInput" label="y" value="0" type="number">
+							</paper-input>
+						</td>
+						<td>
+							<paper-input class="WXRSidebarValueInput" label="z" value="0" type="number">
+							</paper-input>
+						</td>
+					</tr>
+				</table>
+			</paper-collapse-item>
+			<paper-collapse-item header="<b>Scale</b>">
+				<table>
+					<tr>
+						<td>
+							<paper-input class="WXRSidebarValueInput" label="x" value="0" type="number">
+							</paper-input>
+						</td>
+						<td>
+							<paper-input class="WXRSidebarValueInput" label="y" value="0" type="number">
+							</paper-input>
+						</td>
+						<td>
+							<paper-input class="WXRSidebarValueInput" label="z" value="0" type="number">
+							</paper-input>
+						</td>
+					</tr>
+				</table>
+			</paper-collapse-item>
+			<paper-collapse-item header="<b>Attribute</b>">
+				Lots of very interesting content.
+			</paper-collapse-item>
+			<paper-collapse-item header="<b>Color</b>">
+				<paper-input value="#ffffff" type="text input">
+				</paper-input>
+			</paper-collapse-item>
+			<paper-collapse-item header="<b>Texture</b>">
+				<paper-input value="filename" type="text input">
+				</paper-input>
+			</paper-collapse-item>
+		</paper-dialog>
+
+		<paper-dialog id="modal" modal>
+			<b><h2>Workspace 관리</h2></b>
+
+			<paper-dialog-scrollable>
+				<paper-input label="Title" type="text input" placeholder="Workspace name"></paper-input>
+				<paper-input label="Thumbnail" type="text input" placeholder="Thumbnail"></paper-input>
+				<paper-textarea label="Context" rows="5" placeholder="context"></paper-textarea>
+
+				<h2>Interaction Device requirements</h2>
+				<table width="100%" style="text-align:center;">
+					<tr>
+						<td style="background-color: #2196F3;"><img class="deviceIcon" src="//example.wxr.webizing.org/resources/editor/oculus.png"></td>
+						<td style="background-color: #2196F3;"><img class="deviceIcon" src="//example.wxr.webizing.org/resources/editor/vive.png"></td>
+						<td style="background-color: #2196F3;"><img class="deviceIcon" src="//example.wxr.webizing.org/resources/editor/window.png"></td>
+						<td style="background-color: #2196F3;"><img class="deviceIcon" src="//example.wxr.webizing.org/resources/editor/leap.png"></td>
+					</tr>
+					<tr>
+						<td>Oculus touch</td>
+						<td>Vive Controller</td>
+						<td>MixedReality</td>
+						<td>Leapmotion</td>
+					</tr>
+					<tr>
+						<td><paper-toggle-button id="oculusRadioButton" checked></paper-toggle-button></td>
+						<td><paper-toggle-button id="viveRadioButton" checked></paper-toggle-button></td>
+						<td><paper-toggle-button id="windowsRadioButton" checked></paper-toggle-button></td>
+						<td><paper-toggle-button id="leapRadioButton" checked></paper-toggle-button></td>
+					</tr>
+				</table>
+
+				<h2>User List</h2>
+				<table width="100%" height="60px" style="text-align:center;">
+					<tr>
+						<td>아이디</td>
+						<td>이름</td>
+						<td>권한</td>
+					</tr>
+					<tr>
+						<td>user 1</td>
+						<td>이용재</td>
+						<td>
+							<paper-dropdown-menu label="Owner">
+								<paper-listbox slot="dropdown-content" class="dropdown-content">
+									<paper-item>Owner</paper-item>
+									<paper-item>Editor</paper-item>
+									<paper-item>Viewer</paper-item>
+								</paper-listbox>
+							</paper-dropdown-menu>
+						</td>
+					</tr>
+					<tr>
+						<td>user 2</td>
+						<td>이종호</td>
+						<td>
+							<paper-dropdown-menu label="Editor">
+								<paper-listbox slot="dropdown-content" class="dropdown-content">
+									<paper-item>Owner</paper-item>
+									<paper-item>Editor</paper-item>
+									<paper-item>Viewer</paper-item>
+								</paper-listbox>
+							</paper-dropdown-menu>
+						</td>
+					</tr>
+					<tr>
+						<td>user 3</td>
+						<td>임완호</td>
+						<td>
+							<paper-dropdown-menu label="Viewer">
+								<paper-listbox slot="dropdown-content" class="dropdown-content">
+									<paper-item>Owner</paper-item>
+									<paper-item>Editor</paper-item>
+									<paper-item>Viewer</paper-item>
+								</paper-listbox>
+							</paper-dropdown-menu>
+						</td>
+					</tr>
+				</table>
+
+				<paper-input label="URI" type="text input" placeholder="Workspace name"></paper-input>
+			</paper-dialog-scrollable>
+			<div class="buttons">
+				<paper-button dialog-confirm autofocus>확인</paper-button>
+			</div>
+		</paper-dialog>
+	</template>
+
+	<script>
+
+		class WXREditorUI extends WXRUI {
+			constructor() {
+				super();
+			}
+
+			static get is() {
+				return "wxr-editor";
+			}
+
+			connectedCallback() {
+				super.connectedCallback();
+
+				// this.$.modeDiv.innerHTML = 'Mode';
+			}
+			//
+			toggleSidebar() {
+				if(this.$.WXRLeftSidebar.style.display === "none" && this.$.WXRRightSidebar.style.display === "none") {
+					this.$.WXRLeftSidebar.open();
+					this.$.WXRRightSidebar.open();
+				} else {
+					this.$.WXRLeftSidebar.close();
+					this.$.WXRRightSidebar.close();
+				}
+
+			}
+
+			manageWorkspace() {
+				this.$.modal.open();
+				this.$.menuButton.close();
+			}
+			//
+			// closeMenuDialog() {
+			// 	this.$.WXRLeftSidebar.close();
+			// }
+			//
+			// openModeDialog() {
+			// 	this.$.userIcon.close();
+			// 	this.$.WXRModeModal.open();
+			// 	this.checkARMode();
+			// }
+			//
+			// openAboutDialog() {
+			// 	this.$.userIcon.close();
+			// 	this.$.WXRAboutModal.open();
+			// }
+			//
+			// openEVDialog() {
+			// 	this.$.userIcon.close();
+			// 	this.$.WXREVModal.open();
+			// }
+			//
+			// moveToUrl() {
+			// 	let url = this.$.WXREditorCenterText.value;
+			//
+			// 	if(url !== undefined) {
+			// 		if(url.indexOf("//") === -1) {
+			// 			url = WXREditorUI.PROTOCOL_PATH + url;
+			// 		}
+			// 		window.location.href = url;
+			// 	}
+			// }
+			//
+			// checkARMode() {
+			// 	let type = WXR.ContextManager.getWXRDeviceType();
+			//
+			// 	if (type === WXRDevice.DESKTOP) {
+			// 		let elementAR = this.$.ModeAR;
+			// 		elementAR.parentNode.removeChild(elementAR);
+			// 	}
+			// }
+			//
+			// setMode3D() {
+			// 	this.$.WXRModeModal.close();
+			// 	this.$.modeDiv.innerHTML = "3D";
+			// 	WXR.ContextManager.setWXRMode(WXRDevice.MODE3D);
+			// }
+			//
+			// setModeVR() {
+			// 	this.$.WXRModeModal.close();
+			// 	this.$.modeDiv.innerHTML = "VR";
+			// 	WXR.ContextManager.setWXRMode(WXRDevice.VR);
+			// }
+			//
+			// setModeAR() {
+			// 	this.$.WXRModeModal.close();
+			// 	this.$.modeDiv.innerHTML = "AR";
+			// 	WXR.ContextManager.setWXRMode(WXRDevice.AR);
+			// }
+			//
+			// setEMode() {
+			// 	this.$.WXREVModal.close();
+			// 	this.$.EVmodeBox.style.display = 'block';
+			// 	this.$.EBtn.style.backgroundColor = '#FFCD12';
+			// 	this.$.VBtn.style.backgroundColor = '#8C8C8C';
+			// }
+			//
+			// setVMode() {
+			// 	this.$.WXREVModal.close();
+			// 	this.$.EVmodeBox.style.display = 'none';
+			// 	this.$.VBtn.style.backgroundColor = '#FFCD12';
+			// 	this.$.EBtn.style.backgroundColor = '#8C8C8C';
+			// }
+			//
+			// showSetting() {
+			// 	WXRSetting.callSettingActivity();
+			// }
+			//
+			// // TO-DO: 수정 필요
+			// onChangeHtml(e) {
+			// 	let type = WXR.ContextManager.getWXRDeviceType();
+			//
+			// 	if(type === WXRDevice.MOBILE) {
+			// 		switch(platform.os.family) {
+			// 			case WXR.Platform.Android:
+			// 				WXR.SpaceManager.changeHtml(e.currentTarget.getAttribute('href'));
+			// 				break;
+			// 			case WXR.Platform.iOS:
+			// 				window.location.href = e.currentTarget.getAttribute('href');
+			// 				break;
+			// 		}
+			// 	} else if(type === WXRDevice.DESKTOP) {
+			// 		window.location.href = e.currentTarget.getAttribute('href');
+			// 	}
+			// }
+		}
+
+		customElements.define(WXREditorUI.is, WXREditorUI);
+
+		WXREditorUI.PROTOCOL_PATH = "//";
+	</script>
+</dom-module>

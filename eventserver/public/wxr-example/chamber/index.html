@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta name="viewport" content="width=device-width, user-scalable=no">
+	<script src="https://cdn.rawgit.com/webcomponents/webcomponentsjs/v1.1.0/webcomponents-lite.js"></script>
+	<link href="https://libs.webizing.org/wxr.html" rel="import">
+	<link href="./onClick.css" rel="stylesheet">
+	<script src="./onClick.js"></script>
+</head>
+<body>
+	<wxr-world ar-engine="vuforia">
+		<wxr-camera fovy=61 near=0.1 far=2000 wasd-controls look-controls></wxr-camera>
+		<wxr-space src="http://content.wxr.webizing.org/space/1" enable >
+
+			<wxr-target id="demo" src="//target.webizing.space/chamber">
+				<wxr-light-ambient color="0xf0f0f0" intensity="0.5"></wxr-light-ambient>
+
+				<!-- <wxr-obj id="chamber-top" mtl="model_mesh.obj.mtl" obj="model_mesh.obj" base-url="../resources/models/chamber-top" onclick="modelClicked(event);"></wxr-obj> -->
+				<!-- <wxr-obj id="chamber-bottom" mtl="model_mesh.obj.mtl" obj="model_mesh.obj" base-url="../resources/models/chamber-bottom" onclick="modelClicked(event);"></wxr-obj> -->
+				
+				<wxr-plane id="annotation1" texture="./chamber.png"></wxr-plane>
+				<wxr-html id="annotation2">
+					<iframe id="video" src="./chamber.mp4"></iframe>
+				</wxr-html>
+
+			</wxr-target>
+		</wxr-space>
+	</wxr-world>
+
+</body>
+</html>

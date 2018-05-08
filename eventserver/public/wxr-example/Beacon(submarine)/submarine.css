@@ -1,0 +1,27 @@
+wxr-camera {
+	--wxr-transform: translate3d(0, 0, 300);
+}
+
+.annotation {
+	width: 200px;
+	background-color: rgba(255, 0, 0, 0);
+	font-size: 8px;
+	background-color: white;
+	padding: 0.4em 0.4em 0.4em 0.4em;
+	border-radius: 5px;
+	border-style: solid;
+	border-color: #231F20;
+	border-width: 1px;
+}
+
+.plan {
+	--wxr-transform: translate3d(-150, 0, 0);
+}
+
+.real {
+	--wxr-transform: translate3d(0, -100, 0);
+}
+
+.context {
+	--wxr-transform: translate3d(0, 100, 0) scale3d(1, 1, 1);
+}
