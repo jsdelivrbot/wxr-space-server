@@ -3,15 +3,18 @@
 window.onload = function() {
 
 
-	EventHandler.addHandler( msg => {
-		console.log(msg);
-		if (msg.event === 'trackerMoved') {
-			const [x, y, z] = msg.detail.pos;
-			sphere.position.set(x, y, z);
-		}
-	});
+	// EventHandler.addHandler( msg => {
+	// 	console.log(msg);
+	// 	if (msg.event === 'trackerMoved') {
+	// 		const [x, y, z] = msg.detail.pos;
+	// 		sphere.position.set(x, y, z);
+	// 	}
+	// });
 
 
+	WXR.WebizingDeviceConfigManager.webizingDeviceManagerEnable = true;
+	WXR.InteractionListener.interactionEventServerEnable = true;
+	WXR.InteractionListener.webizingDeviceManagerEnable = true;
 
   var camera, tick = 0,
     scene, renderer, clock = new THREE.Clock(),

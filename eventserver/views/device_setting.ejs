@@ -41,6 +41,10 @@
 
 	<!-- Custom styles for this template -->
 	<link href="/stylesheets/style.css" rel="stylesheet">
+
+	<script src="https://cdn.rawgit.com/webcomponents/webcomponentsjs/v1.1.0/webcomponents-lite.js"></script>
+	<link href="/wxr.html" rel="import">
+
 </head>
 
 <body>
@@ -97,7 +101,7 @@
 	<!-- Socket.io -->
 	<script src="/libs/socket.io/socket.io.js"></script>
 	<!-- Webizing Device Configuration Manager -->
-	<script src="/javascripts/webizingDeviceConfigurationManager.js"></script>
+	<!--<script src="/javascripts/webizingDeviceConfigurationManager.js"></script>-->
 
 	<script>
 
@@ -115,7 +119,7 @@
 								<td role="connectionType"><input class="form-control wxr-form-control" type="text" value="${e.connectionType}" ${id ? '' : 'readonly'}></td>
 								<td role="status"><input class="form-control wxr-form-control" type="text" value="${e.status}" ${id ? '' : 'readonly'}></td>
 								<td role="eventStreamEnable"><input class="form-control wxr-form-control" type="text" value="${e.eventStreamEnable}" ${id ? '' : 'readonly'}></td>
-								<td><button class="btn btn-primary btn-sm wxr-button wxr-bg-blue" onclick="saveDeviceProfile(this)">Delete</button></td>
+								<td><button class="btn btn-primary btn-sm wxr-button wxr-bg-blue" onclick="saveDeviceProfile(this)">Save</button></td>
 							</tr>`);
 				$newTbody.append($row);
 			});
@@ -123,7 +127,7 @@
 			$('tbody', $deviceList).remove();
 			$deviceList.append($newTbody);
 		}
-		webizingDeviceConfigurationManager.addUpdateListener(refreshDeviceList);
+		WXR.WebizingDeviceConfigManager.addUpdateListener(refreshDeviceList);
 
 
 		// this function should be moved to WebizingDeviceConfigurationManager.js
@@ -139,13 +143,19 @@
 				eventStreamEnable: $('[role="eventStreamEnable"] input', $profileRoot).val()
 			};
 		  	if (deviceId) {
-				webizingDeviceConfigurationManager.updateProfile(deviceId, profile);
-				// webizingDeviceConfigurationManager.updateProfile(deviceId, profile, data => console.log('Update device profile is done: ', data));
+				WXR.WebizingDeviceConfigManager.updateProfile(deviceId, profile);
+				// WXR.WebizingDeviceConfigManager.updateProfile(deviceId, profile, data => console.log('Update device profile is done: ', data));
 			} else {
-				webizingDeviceConfigurationManager.createProfile(profile);
-				// webizingDeviceConfigurationManager.createProfile(profile, data => console.log('Create device profile is done: ', data));
+				WXR.WebizingDeviceConfigManager.registerProfile(profile);
+				// WXR.WebizingDeviceConfigManager.createProfile(profile, data => console.log('Create device profile is done: ', data));
 			}
 		}
+
+		window.onload = function () {
+
+					WXR.WebizingDeviceConfigManager.webizingDeviceManagerEnable = true;
+				}
+
 
 	</script>
 
