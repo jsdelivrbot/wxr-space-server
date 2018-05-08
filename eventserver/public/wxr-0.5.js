@@ -251,7 +251,7 @@ var WXRInteractionListener = function () {
 
 WXRInteractionListener.TAG = "WXRInteractionListener";
 
-WXRInteractionListener.INTERACTION_EVENT_SERVER_URI = window.location.hostname;
+WXRInteractionListener.INTERACTION_EVENT_SERVER_URI = window.location.hostname + ':6711';
 WXRInteractionListener.WEBIZING_DEVICE_MANAGER_URI = 'http://localhost:6712';
 
 module.exports = WXRInteractionListener;
