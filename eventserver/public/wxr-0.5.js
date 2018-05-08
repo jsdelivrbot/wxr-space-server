@@ -229,7 +229,7 @@ var WXRInteractionListener = function () {
 					WXREventDevice.dispatchEvent(event);
 
 					if (event.id !== 'device no id') {
-						var deviceProfile = WXRWebizingDeviceConfigManager.getDeviceProfiles().find(function (p) {
+						var deviceProfile = WXR.WebizingDeviceConfigManager.getDeviceProfiles().find(function (p) {
 							return p.id === event.id;
 						});
 						if (!deviceProfile.isNoBroadcast && _this._isInteractionEventServerEnabled) {
@@ -251,7 +251,7 @@ var WXRInteractionListener = function () {
 
 WXRInteractionListener.TAG = "WXRInteractionListener";
 
-WXRInteractionListener.INTERACTION_EVENT_SERVER_URI = window.location.hostname + ':6711';
+WXRInteractionListener.INTERACTION_EVENT_SERVER_URI = window.location.hostname;
 WXRInteractionListener.WEBIZING_DEVICE_MANAGER_URI = 'http://localhost:6712';
 
 module.exports = WXRInteractionListener;
@@ -299,7 +299,7 @@ var WXRWebizingDeviceConfigManager = function () {
 			if (this.findIndexInDeviceProfiles(profile) >= 0) {
 				$.ajax({
 					type: 'POST',
-					url: WXRWebizingDeviceConfigManager.HOST_URL + '/devices',
+					url: '//' + WXRWebizingDeviceConfigManager.HOST_URL + '/devices',
 					data: profile
 				}).done(function (data) {
 
@@ -325,7 +325,7 @@ var WXRWebizingDeviceConfigManager = function () {
 
 				$.ajax({
 					type: 'PUT',
-					url: WXRWebizingDeviceConfigManager.HOST_URL + ('/devices/' + id),
+					url: '//' + WXRWebizingDeviceConfigManager.HOST_URL + ('/devices/' + id),
 					data: profile
 				}).done(function (data) {
 					if (data.status === 'ok') {
@@ -353,7 +353,7 @@ var WXRWebizingDeviceConfigManager = function () {
 			if (!!id === true) {
 				$.ajax({
 					type: 'DELETE',
-					url: WXRWebizingDeviceConfigManager.HOST_URL + ('/devices/' + id)
+					url: '//' + WXRWebizingDeviceConfigManager.HOST_URL + ('/devices/' + id)
 				}).done(function (data) {
 					if (data.status === 'ok') {
 						var index = _this3._deviceProfiles.findIndex(function (p) {
@@ -408,7 +408,7 @@ var WXRWebizingDeviceConfigManager = function () {
 				this._webizingDeviceManagerSocket.on('error', function (err) {});
 
 				// Get DeviceProfiles from server
-				$.ajax(WXRWebizingDeviceConfigManager.HOST_URL + '/users/me/devices').done(function (data) {
+				$.ajax('//' + WXRWebizingDeviceConfigManager.HOST_URL + '/users/me/devices').done(function (data) {
 					if (data.status === 'ok') {
 						_this4._deviceProfiles = data.message;
 						_this4._webizingDeviceManagerSocket.emit('WXRUpdateDeviceProfiles', _this4._deviceProfiles);
@@ -961,6 +961,7 @@ var WXREvent = function () {
 				case WXREvent.CAMERA_READY:
 					customEvent = new CustomEvent(WXREvent.CAMERA_READY, { detail: event.camera });
 
+					$(WXRCamera.is);
 					var _iteratorNormalCompletion = true;
 					var _didIteratorError = false;
 					var _iteratorError = undefined;
@@ -1608,33 +1609,29 @@ var WXREventDevice = function () {
     */
 			switch (event.type) {
 				case WXREventDevice.HANDGESTURE_DETECTED:
-					// customEvent = new CustomEvent(WXREvent.CAMERA_READY, {detail: event.camera});
-					//
-					// for (let cameraDOMElement of $(WXRCamera.is)) {
-					// 	cameraDOMElement.dispatchEvent(customEvent);
-					// }
+					customEvent = new CustomEvent(WXREventDevice.HANDGESTURE_DETECTED, { detail: event.detail });
+
+					if ($('#' + event.id)) {
+						$('#' + event.id).dispatchEvent(customEvent);
+					}
 
 					break;
 
 				case WXREventDevice.HANDGESTURE_MOVED:
-					// customEvent = new CustomEvent(WXREvent.AR_TARGET_DETECTED, {detail: event});
-					//
-					// for (let targetDOMElement of $(WXRTarget.is)) {
-					// 	if( this.getRemoveProtocolPath(targetDOMElement.src) === this.getRemoveProtocolPath(event.target) ) {
-					// 		targetDOMElement.dispatchEvent(customEvent);
-					// 	}
-					// }
+					customEvent = new CustomEvent(WXREventDevice.HANDGESTURE_MOVED, { detail: event.detail });
+
+					if ($('#' + event.id)) {
+						$('#' + event.id).dispatchEvent(customEvent);
+					}
 
 					break;
 
 				case WXREventDevice.HANDGESTURE_MISSED:
-					// customEvent = new CustomEvent(WXREvent.AR_TARGET_MOVED, {detail: event});
-					//
-					// for (let targetDOMElement of $(WXRTarget.is)) {
-					// 	if( this.getRemoveProtocolPath(targetDOMElement.src) === this.getRemoveProtocolPath(event.target) ) {
-					// 		targetDOMElement.dispatchEvent(customEvent);
-					// 	}
-					// }
+					customEvent = new CustomEvent(WXREventDevice.HANDGESTURE_MISSED, { detail: event.detail });
+
+					if ($('#' + event.id)) {
+						$('#' + event.id).dispatchEvent(customEvent);
+					}
 
 					break;
 
