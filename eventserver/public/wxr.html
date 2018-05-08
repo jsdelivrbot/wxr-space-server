@@ -1,0 +1,63 @@
+<!-- CSS -->
+<link href="//fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link href="//libs.webizing.org/wxr.css" rel="stylesheet">
+
+<!-- JavaScript -->
+<script src="//code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="//cdn.jsdelivr.net/npm/webvr-polyfill@0.9.40/build/webvr-polyfill.js"></script>
+<script src="//threejs.org/build/three.js"></script>
+<script src="//threejs.org/examples/js/vr/WebVR.js"></script>
+<script src="//threejs.org/examples/js/renderers/CSS3DRenderer.js"></script>
+<script src="//threejs.org/examples/js/loaders/ColladaLoader.js"></script>
+<script src="//threejs.org/examples/js/geometries/TeapotBufferGeometry.js"></script>
+<script src="//threejs.org/examples/js/controls/TrackballControls.js"></script>
+<script src="//threejs.org/examples/js/controls/TransformControls.js"></script>
+<script src="//threejs.org/examples/js/loaders/DDSLoader.js"></script>
+<script src="//threejs.org/examples/js/loaders/MTLLoader.js"></script>
+<script src="//threejs.org/examples/js/loaders/OBJLoader.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/tween.js/17.1.1/Tween.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/platform/1.3.5/platform.min.js"></script>
+
+<link rel="import" href="//cdn.rawgit.com/wrlab/polymer-elements/2.2.0/neon-animation/web-animations.html">
+<link rel="import" href="//cdn.rawgit.com/wrlab/polymer-elements/2.2.0/font-roboto/roboto.html">
+<link rel="import" href="//cdn.rawgit.com/wrlab/polymer-elements/2.2.0/iron-icons/iron-icons.html">
+<link rel="import" href="//cdn.rawgit.com/wrlab/polymer-elements/2.2.0/iron-range-behavior/iron-range-behavior.html">
+<link rel="import" href="//cdn.rawgit.com/wrlab/polymer-elements/2.2.0/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="//cdn.rawgit.com/wrlab/polymer-elements/2.2.0/paper-menu-button/paper-menu-button.html">
+<link rel="import" href="//cdn.rawgit.com/wrlab/polymer-elements/2.2.0/paper-item/paper-item.html">
+<link rel="import" href="//cdn.rawgit.com/wrlab/polymer-elements/2.2.0/paper-listbox/paper-listbox.html">
+<link rel="import" href="//cdn.rawgit.com/wrlab/polymer-elements/2.2.0/paper-input/paper-input.html">
+<link rel="import" href="//cdn.rawgit.com/wrlab/polymer-elements/2.2.0/app-toolbar/app-toolbar.html">
+<link rel="import" href="//cdn.rawgit.com/wrlab/polymer-elements/2.2.0/paper-dialog/paper-dialog.html">
+<link rel="import" href="//cdn.rawgit.com/wrlab/polymer-elements/2.2.0/paper-dropdown-menu/paper-dropdown-menu.html">
+<link rel="import" href="//cdn.rawgit.com/wrlab/polymer-elements/2.2.0/paper-dropdown-menu/paper-dropdown-menu-light.html">
+<link rel="import" href="//cdn.rawgit.com/wrlab/polymer-elements/2.2.0/paper-progress/paper-progress.html">
+<link rel="import" href="//cdn.rawgit.com/wrlab/polymer-elements/2.2.0/paper-slider/paper-slider.html">
+
+<script src="/wxr-0.5.js"></script>
+
+<link rel="import" href="/wxr-element/wxr-element.html">
+<link rel="import" href="/wxr-element/wxr-camera.html">
+<link rel="import" href="/wxr-element/wxr-world.html">
+<link rel="import" href="/wxr-element/wxr-space.html">
+<link rel="import" href="/wxr-element/wxr-target.html">
+<link rel="import" href="/wxr-element/wxr-geometry.html">
+<link rel="import" href="/wxr-element/wxr-box.html">
+<link rel="import" href="/wxr-element/wxr-cylinder.html">
+<link rel="import" href="/wxr-element/wxr-sphere.html">
+<link rel="import" href="/wxr-element/wxr-teapot.html">
+<link rel="import" href="/wxr-element/wxr-collada.html">
+<link rel="import" href="/wxr-element/wxr-obj.html">
+<link rel="import" href="/wxr-element/wxr-plane.html">
+<link rel="import" href="/wxr-element/wxr-circle.html">
+<link rel="import" href="/wxr-element/wxr-ring.html">
+<link rel="import" href="/wxr-element/wxr-html.html">
+<link rel="import" href="/wxr-element/wxr-light.html">
+<link rel="import" href="/wxr-element/wxr-light-ambient.html">
+<link rel="import" href="/wxr-element/wxr-light-directional.html">
+<link rel="import" href="/wxr-element/wxr-animation.html">
+<link rel="import" href="/wxr-element/wxr-ui.html">
+<link rel="import" href="/wxr-element/wxr-appbar.html">
+<link rel="import" href="/wxr-element/wxr-layer.html">
+<link rel="import" href="/wxr-element/wxr-debug.html">
+<link rel="import" href="/wxr-element/wxr-slider.html">
