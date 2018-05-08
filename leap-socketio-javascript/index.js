@@ -30,26 +30,33 @@ leapClient.onclose = function() {
 leapClient.onmessage = function(e) {
 	var frame = JSON.parse(e.data);
 	
-	if (is_first_message == true) {
-		is_first_message = false;
+	
+	if (frame.hands && frame.hands.length > 0) {
+		if (is_first_message == true) {
+			is_first_message = false;
 		
+			const msg = {
+				event: 'trackerDetected',
+				timestamp: Date.now(),
+				detail: { }
+			}
+			socketio.emit('WXREvent', msg);
+		}
+	
 		const msg = {
-			event: 'trackerDetected',
+			event: 'trackerMoved',
 			timestamp: Date.now(),
-			detail: { }
+			detail: {
+				pos: frame.t,
+				quat: [],	// frame.r
+				frame: frame
+			}
 		}
 		socketio.emit('WXREvent', msg);
+		
+	} else if (is_first_message == false) {
+		tracking_end();
 	}
-	
-	const msg = {
-		event: 'trackerMoved',
-		timestamp: Date.now(),
-		detail: {
-			pos: frame.t,
-			quat: []	// frame.r
-		}
-	}
-	socketio.emit('WXREvent', msg);
 };
  
  
@@ -76,7 +83,7 @@ function tracking_end() {
 		timestamp: Date.now(),
 		detail: { }
 	}
-	socket.emit('WXREvent', msg);
+	socketio.emit('WXREvent', msg);
 	is_first_message = true;
 }
  
