@@ -223,6 +223,29 @@ function inviteMember(req, res) {
 }
 
 
+// join the workspace
+// equals for accepting invitation.
+function joinWorkspace(req, res) {
+
+	const user = req.user;
+	const wsId = req.params.wsId;
+
+
+	let workspaceInstance;
+
+	WorkspaceModel._pFindAndLoad(wsId)
+		.then( instance => workspaceInstance = instance )
+		.then( () => workspaceInstance.getInvitedUsers() )
+		.then( invitedUsers => Promise.resolve(invitedUsers.find( _u => _u.id === user.id)) )
+		.then( _user => {
+			if (!_user) return Promise.reject(`Invalid access.`);
+			return workspaceInstance.resetInvite(user);
+		})
+		.then( () => res.redirect(`/view/` + workspaceInstance.id) )
+		.catch( reason => res.json(APIResponseMessage.ERROR(reason)) );
+}
+
+
 // get all attached devices
 function getAttachedDevice(req, res) {
 
@@ -324,27 +347,6 @@ function destroyWorkspace(req, res) {
 
 }
 
-// workspace entering logic
-// TODO: 사실 이 부분은 소켓로직에서 해아할 것들.
-function enterWorkspace(req, res) {
-
-	const user = req.user;
-	const workspaceId = req.params.id;
-
-	WorkspaceModel._pFindAndLoad(workspaceId)
-		.then( instance => instance.getAllMembers() )
-		.then( members => {
-			const isJoined = !!members.find( _u => _u.id === user.id );
-			if (isJoined) {
-				// start getting socketio stream data
-				res.render('view');
-			} else {
-				res.json( APIResponseMessage.ERROR('You are not joined in this workspace') );
-			}
-		});
-}
-
-
 
 
 
@@ -373,6 +375,9 @@ router.route('/:wsId/members/:userId')
 
 router.route('/:wsId/members/invite')
 	.post(inviteMember);
+
+router.route('/:wsId/members/join')
+	.get(joinWorkspace);
 
 router.route('/:wsId/devices')
 	.get(getAttachedDevice);
