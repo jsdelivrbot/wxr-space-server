@@ -355,12 +355,12 @@ router.route('/:wsId/members')
 	.get(getAllMembers);
 
 router.route('/:wsId/devices')
-	.get(getAllAttachedDevice);
+	.get(getAttachedDevice);
 
-router.route('/:wsId/attachDevice')
+router.route('/:wsId/devices/attach')
 	.post(attachDeviceToWorkspace);
 
-router.route('/:wsId/detachDevice')
+router.route('/:wsId/devices/detach')
 	.post(detachDeviceFromWorkspace);
 
 
