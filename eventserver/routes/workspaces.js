@@ -154,6 +154,42 @@ function exitWorkspace(req, res) {
 }
 
 
+// change authority of a member
+// In the present only can handle with authority of member
+function updateMemberProperties(req, res) {
+
+	const user = req.user;
+	const wsId = req.params.wsId;
+	const userId = req.params.userId;
+	const authority = req.body.authority;
+
+
+	let workspaceInstance, memberInstance;
+
+	// parse ids to instances
+	Promise.all([
+		WorkspaceModel._pFindAndLoad(wsId),
+		UserModel._pFindAndLoad(userId)
+	])
+		.then( instances => [workspaceInstance, memberInstance] = instances )
+
+		// check if caller has owner authority
+		.then( () => user.getMyRightIn(workspaceInstance) )
+		.then( authorities => authorities.includes(WorkspaceModel.RELATION_USER_OWNER) ? Promise.resolve() : Promise.reject(`You are not owner`) )
+
+		// check member is joined that workspace
+		.then( () => workspaceInstance.isMember(memberInstance) )
+		.then( isMember => isMember ? Promise.resolve() : Promise.reject(`The member is not joined this workspace yet`) )
+
+		// check if authority variable is correct
+		.then( () => WorkspaceModel.USER_RIGHTS.includes(authority) ? Promise.resolve() : Promise.reject(`You cannot set authority of ${authority}`) )
+
+		// change authority
+		// 	.then( () => workspaceInstance.resetRightsOf(memberInstance, WorkspaceModel.USER_RIGHTS) )
+		.then( () => user.giveRight(workspaceInstance, memberInstance, authority) )
+		.then( owner => res.json(APIResponseMessage.OK()) )
+		.catch( reason => res.json(APIResponseMessage.ERROR(reason)) );
+}
 
 
 // get all attached devices
@@ -306,43 +342,6 @@ function inviteMember(req, res) {
 }
 
 
-// change authority of a member
-// In the present only can handle with authority of member
-function updateMemberProperties(req, res) {
-
-	const user = req.user;
-	const workspaceId = req.params.id;
-	const memberId = req.params.memberId;
-	const authority = req.body.authority;
-
-	let workspaceInstance, memberInstance;
-	let isMember;
-
-	// parse ids to instances
-	Promise.all([
-		WorkspaceModel.findAndLoadByName(workspaceId),
-		UserModel.findAndLoadByName(memberId)
-	])
-		.then( instances => [workspaceInstance, memberInstance] = instances )
-
-	// check if caller has owner authority
-		.then( () => user.getMyRightsIn(workspaceInstance) )
-		.then( authorities => authorities.includes(WorkspaceModel.RELATION_USER_OWNER) ? Promise.resolve() : Promise.reject(`You are not owner`) )
-
-	// check member is joined that workspace
-		.then( () => workspaceInstance.getAllMembers() )
-		.then( members => (isMember = !!members.find( _u => _u.id === memberInstance.id )) === true ? Promise.resolve() : Promise.reject(`The member is not joined this workspace yet`) )
-
-	// check if authority variable is correct
-		.then( () => WorkspaceModel.USER_RIGHTS.includes(authority) ? Promise.resolve() : Promise.reject(`You cannot set authority of ${authority}`) )
-
-	// change authority
-	// 	.then( () => workspaceInstance.resetRightsOf(memberInstance, WorkspaceModel.USER_RIGHTS) )
-		.then( () => workspaceInstance.setRightOf(memberInstance, authority) )
-		.then( () => res.json(APIResponseMessage.OK()) )
-		.catch( reason => res.json(APIResponseMessage.ERROR(reason)) );
-}
-
 
 
 
@@ -366,6 +365,7 @@ router.route('/:wsId/members')
 	.get(getAllMembers);
 
 router.route('/:wsId/members/:userId')
+	.put(updateMemberProperties)
 	.delete(exitWorkspace);
 
 router.route('/:wsId/devices')
@@ -380,9 +380,6 @@ router.route('/:wsId/devices/detach')
 
 // router.route('/:id/member/invite')
 // 	.post(inviteMember);
-//
-// router.route('/:id/member/:memberId')
-// 	.put(updateMemberProperties);
 
 
 
