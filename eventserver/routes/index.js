@@ -7,7 +7,6 @@ const {UserModel, WorkspaceModel} = require('../models/Models');
 // index page
 function indexPage(req, res) {
 
-	console.log(req.user);
 	var options = {
 		title: 'XWR Space',
 		user: req.user,
