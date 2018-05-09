@@ -72,6 +72,11 @@ const WorkspaceModel = nohm.model('WorkspaceModel', {
 			return this._pSave();
 		},
 
+		isMember: function(user) {
+			return this.getAllMembers()
+				.then( members => Promise.resolve(!!members.find( _u => _u.id === user.id )) );
+		},
+
 		// TODO: if there are no participant, should it destroyed?
 		removeMember: function (user) {
 			WorkspaceModel.USER_RIGHTS.forEach( RIGHT => this.unlink(user, RIGHT) );

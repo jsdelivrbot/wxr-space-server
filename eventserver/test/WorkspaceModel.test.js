@@ -145,6 +145,14 @@ describe(`WorkspaceModel.test.js`, function() {
 		});
 
 
+		it(`Test 'isMember' method`, function (done) {
+			ws.isMember(owner)
+				.then( isMember => assert.equal(isMember, true) )
+				.catch(reason => assert.fail(reason))
+				.then(() => done());
+		});
+
+
 		// it(`Test 'destroy' method`, function(done) {
 		// 	WorkspaceModel.findAndLoadAll()
 		// 		.then( wsInstances => {
