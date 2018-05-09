@@ -124,7 +124,7 @@ const WorkspaceModel = nohm.model('WorkspaceModel', {
 		},
 
 		resetInvite: function (user) {
-			this.unink(user, WorkspaceModel.STATUS_USER_INVITE);
+			this.unlink(user, WorkspaceModel.STATUS_USER_INVITE);
 			return this._pSave();
 		},
 

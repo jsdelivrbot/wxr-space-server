@@ -153,6 +153,30 @@ describe(`WorkspaceModel.test.js`, function() {
 		});
 
 
+		it(`Test 'setInvite' method`, function (done) {
+			ws.setInvite(user1)
+				.catch( reason => assert.fail(reason) )
+				.then( workspaceInstance => done());
+		});
+
+
+		it(`Test 'getInvitedUsers' method`, function (done) {
+			ws.getInvitedUsers()
+				.then( users => assert.equal(users.length, 1) )
+				.catch( reason => assert.fail(reason) )
+				.then( () => done());
+		});
+
+
+		it(`Test 'resetInvite' method`, function (done) {
+			ws.resetInvite(user1)
+				.then( workspaceInstance => ws.getInvitedUsers() )
+				.then( users => assert.equal(users.length, 0) )
+				.catch( reason => assert.fail(reason) )
+				.then( () => done());
+		});
+
+
 		// it(`Test 'destroy' method`, function(done) {
 		// 	WorkspaceModel.findAndLoadAll()
 		// 		.then( wsInstances => {
