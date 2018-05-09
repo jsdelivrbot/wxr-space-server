@@ -1,4 +1,5 @@
 const express = require('express');
+const mailer = require('../mailer');
 const multer = require('multer');
 const path = require('path');
 const router = express.Router();
@@ -192,6 +193,36 @@ function updateMemberProperties(req, res) {
 }
 
 
+// invite a user to this workspace
+// This only can be executed by host
+function inviteMember(req, res) {
+
+	const user = req.user;
+	const wsId = req.params.wsId;
+	const userId = req.body.userId;
+
+
+	let workspaceInstance, memberInstance;
+
+	// parse ids to instances
+	Promise.all([
+		WorkspaceModel._pFindAndLoad(wsId),
+		UserModel._pFindAndLoad(userId)
+	])
+		.then( instances => [workspaceInstance, memberInstance] = instances )
+
+		// check if caller has owner authority
+		.then( () => user.getMyRightIn(workspaceInstance) )
+		.then( authorities => authorities.includes(WorkspaceModel.RELATION_USER_OWNER) ? Promise.resolve() : Promise.reject(`You are not owner`) )
+
+		// add member
+		.then( () => !!memberInstance ? workspaceInstance.setInvite(memberInstance) : Promise.reject(`The user doesn't exist.`) )
+		.then( () => mailer.sendInvitationMail(memberInstance.p('email'), `http://es.webizing.org/workspaces/` + workspaceInstance.id + `/members/join`) )
+		.then( () => res.json(APIResponseMessage.OK()) )
+		.catch( reason => res.json(APIResponseMessage.ERROR(reason)) );
+}
+
+
 // get all attached devices
 function getAttachedDevice(req, res) {
 
@@ -314,40 +345,12 @@ function enterWorkspace(req, res) {
 }
 
 
-// invite a user to this workspace
-function inviteMember(req, res) {
-
-	const user = req.user;
-	const workspaceId = req.params.id;
-	const memberId = req.body.name;
-
-	let workspaceInstance, memberInstance;
-
-	// parse ids to instances
-	Promise.all([
-		WorkspaceModel.findAndLoadByName(workspaceId),
-		UserModel.findAndLoadByName(memberId)
-	])
-		.then( instances => [workspaceInstance, memberInstance] = instances )
-
-	// check if caller has owner authority
-		.then( () => user.getMyRightsIn(workspaceInstance) )
-		.then( authorities => authorities.includes(WorkspaceModel.RELATION_USER_OWNER) ? Promise.resolve() : Promise.reject(`You are not owner`) )
-
-	// add member
-		.then( () => workspaceInstance.addMember(memberInstance) )
-		.then( () => res.json(APIResponseMessage.OK()) )
-		.catch( reason => res.json(APIResponseMessage.ERROR(reason)) );
-
-}
 
 
 
 
 
-
-
-// Checking no session when getting the list
+// Checking no session when getting the list of workspace
 router.route('')
 	.get(getWorkspaceList);
 
@@ -368,6 +371,9 @@ router.route('/:wsId/members/:userId')
 	.put(updateMemberProperties)
 	.delete(exitWorkspace);
 
+router.route('/:wsId/members/invite')
+	.post(inviteMember);
+
 router.route('/:wsId/devices')
 	.get(getAttachedDevice);
 
@@ -377,9 +383,6 @@ router.route('/:wsId/devices/attach')
 router.route('/:wsId/devices/detach')
 	.post(detachDeviceFromWorkspace);
 
-
-// router.route('/:id/member/invite')
-// 	.post(inviteMember);
 
 
 

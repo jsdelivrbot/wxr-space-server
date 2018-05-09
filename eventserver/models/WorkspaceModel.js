@@ -118,6 +118,21 @@ const WorkspaceModel = nohm.model('WorkspaceModel', {
 			return this._pSave();
 		},
 
+		setInvite: function (user) {
+			this.link(user, WorkspaceModel.STATUS_USER_INVITE);
+			return this._pSave();
+		},
+
+		resetInvite: function (user) {
+			this.unink(user, WorkspaceModel.STATUS_USER_INVITE);
+			return this._pSave();
+		},
+
+		getInvitedUsers: function () {
+			const UserModel = nohm.getModels()['UserModel'];
+			return this.getAllLinks('UserModel', WorkspaceModel.STATUS_USER_INVITE)
+				.then( ids => UserModel.propagateInstance(ids) );
+		},
 
 
 		/*
@@ -157,6 +172,8 @@ const WorkspaceModel = nohm.model('WorkspaceModel', {
 	}
 });
 
+
+WorkspaceModel.STATUS_USER_INVITE = 'invite';
 
 WorkspaceModel.RELATION_USER_OWNER = 'owner';
 WorkspaceModel.RELATION_USER_EDITOR = 'editor';
