@@ -101,17 +101,24 @@ function updateWorkspaceInfo(req, res) {
 
 
 // get all attached devices
-function getAllAttachedDevice(req, res) {
+function getAttachedDevice(req, res) {
 
 	const user = req.user;
 	const wsId = req.params.wsId;
+	let index = {
+		ownerId: req.query.owner,
+	};
 
 	WorkspaceModel._pFindAndLoad(wsId)
 		.then( instance => {
 			if (!instance) return Promise.reject(`None exist workspace.`);
 			return instance.getAttachedDevices();
 		})
-		.then( devices => Promise.all(devices.map( device => device.getRefinedProperty() )) )
+		.then( devices => {
+			// Filtering with index.ownerId
+			if (!!index.owner) devices = devices.filter( device => device.p('ownerId') === index.ownerId );
+			return Promise.all(devices.map( device => device.getRefinedProperty() ))
+		})
 		.then( refinedProperties => res.json( APIResponseMessage.OK(refinedProperties) ) )
 		.catch( reason => res.json( APIResponseMessage.ERROR(reason)) );
 }
