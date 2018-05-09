@@ -2,7 +2,7 @@ const express = require('express');
 const multer = require('multer');
 const path = require('path');
 const router = express.Router();
-const {UserModel, WorkspaceModel} = require('../models/Models');
+const {UserModel, WorkspaceModel, DeviceModel} = require('../models/Models');
 
 const storage = multer.diskStorage({
 	destination: function (req, file, cb) {
@@ -95,6 +95,78 @@ function updateWorkspaceInfo(req, res) {
 		})
 		.then( instance => instance.getRefinedProperty() )
 		.then( property => res.json( APIResponseMessage.OK(property) ) )
+		.catch( reason => res.json( APIResponseMessage.ERROR(reason)) );
+}
+
+
+// attach device
+function attachDeviceToWorkspace(req, res) {
+
+	const user = req.user;
+	const wsId = req.params.wsId;
+	const deviceId = req.body.deviceId;
+
+
+	let workspaceInstance, deviceInstance;
+
+	// parse ids to instances
+	Promise.all([
+		WorkspaceModel._pFindAndLoad(wsId),
+		DeviceModel._pFindAndLoad(deviceId),
+	])
+		.then( instances => {
+			[workspaceInstance, deviceInstance] = instances;
+
+			// Check instances are exist.
+			if (!workspaceInstance) return Promise.reject(`None exist workspace.`);
+			if (!deviceInstance) return Promise.reject(`None exist device.`);
+
+			return workspaceInstance.isMember(user);
+		})
+		.then( isMember => {
+			// Check user relations for workspace and device are valid.
+			if (!isMember) return Promise.reject(`You are not member.`);
+			if (deviceInstance.p('ownerId') !== user.id) return Promise.reject(`The device is not yours.`);
+
+			return workspaceInstance.attachDevice(deviceInstance);
+		})
+		.then( workspaceInstance => res.json( APIResponseMessage.OK() ) )
+		.catch( reason => res.json( APIResponseMessage.ERROR(reason)) );
+}
+
+
+// detach device
+function detachDeviceFromWorkspace(req, res) {
+
+	const user = req.user;
+	const wsId = req.params.wsId;
+	const deviceId = req.body.deviceId;
+
+
+	let workspaceInstance, deviceInstance;
+
+	// parse ids to instances
+	Promise.all([
+		WorkspaceModel._pFindAndLoad(wsId),
+		DeviceModel._pFindAndLoad(deviceId),
+	])
+		.then( instances => {
+			[workspaceInstance, deviceInstance] = instances;
+
+			// Check instances are exist.
+			if (!workspaceInstance) return Promise.reject(`None exist workspace.`);
+			if (!deviceInstance) return Promise.reject(`None exist device.`);
+
+			return workspaceInstance.isMember(user);
+		})
+		.then( isMember => {
+			// Check user relations for workspace and device are valid.
+			if (!isMember) return Promise.reject(`You are not member.`);
+			if (deviceInstance.p('ownerId') !== user.id) return Promise.reject(`The device is not yours.`);
+
+			return workspaceInstance.detachDevice(deviceInstance);
+		})
+		.then( workspaceInstance => res.json( APIResponseMessage.OK() ) )
 		.catch( reason => res.json( APIResponseMessage.ERROR(reason)) );
 }
 
@@ -253,6 +325,13 @@ router.route('/:wsId')
 	.get(getWorkspaceInfo)
 	.put(upload.single('thumbnail') ,updateWorkspaceInfo);
 	// .delete(destroyWorkspace);
+
+router.route('/:wsId/attachDevice')
+	.post(attachDeviceToWorkspace);
+
+router.route('/:wsId/detachDevice')
+	.post(detachDeviceFromWorkspace);
+
 
 // router.route('/:id/exit')
 // 	.get(exitWorkspace);
