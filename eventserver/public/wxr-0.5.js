@@ -179,6 +179,184 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
+var WXRWebizingDeviceConfigManager = function () {
+	function WXRWebizingDeviceConfigManager() {
+		_classCallCheck(this, WXRWebizingDeviceConfigManager);
+
+		this._profileUpdateListeners = [];
+		this._deviceProfiles = [];
+
+		this._webizingDeviceManagerSocket = undefined;
+		this._isWebizingDeviceManagerEnabled = false;
+	}
+
+	_createClass(WXRWebizingDeviceConfigManager, [{
+		key: 'addUpdateListener',
+		value: function addUpdateListener(listener) {
+			this._profileUpdateListeners.push(listener);
+		}
+	}, {
+		key: 'getDeviceProfiles',
+		value: function getDeviceProfiles() {
+			return [].concat(this._deviceProfiles);
+		}
+	}, {
+		key: 'registerProfile',
+		value: function registerProfile(profile, callback) {
+			var _this = this;
+
+			callback = callback || new Function();
+
+			// If there is profile matching with device and name...
+			if (this.findIndexInDeviceProfiles(profile) >= 0) {
+				$.ajax({
+					type: 'POST',
+					url: WXRWebizingDeviceConfigManager.HOST_URL + '/devices',
+					data: profile
+				}).done(function (data) {
+
+					if (data.status === 'ok') {
+						var index = _this.findIndexInDeviceProfiles(profile);
+						_this._deviceProfiles[index] = data.message;
+					}
+
+					_this._webizingDeviceManagerSocket.emit('WXRUpdateDeviceProfiles', _this._deviceProfiles);
+					callback(data);
+				});
+			}
+		}
+	}, {
+		key: 'updateProfile',
+		value: function updateProfile(id, profile, callback) {
+			var _this2 = this;
+
+			callback = callback || new Function();
+
+			// Given with device id
+			if (!!id === true) {
+
+				$.ajax({
+					type: 'PUT',
+					url: WXRWebizingDeviceConfigManager.HOST_URL + ('/devices/' + id),
+					data: profile
+				}).done(function (data) {
+					if (data.status === 'ok') {
+						var index = _this2._deviceProfiles.findIndex(function (p) {
+							return p.id === id;
+						});
+						_this2._deviceProfiles[index] = data.message;
+					}
+
+					if (_this2._webizingDeviceManagerSocket) {
+						_this2._webizingDeviceManagerSocket.emit('WXRUpdateDeviceProfiles', _this2._deviceProfiles);
+					}
+					callback(data);
+				});
+			}
+		}
+	}, {
+		key: 'deleteProfile',
+		value: function deleteProfile(id, callback) {
+			var _this3 = this;
+
+			callback = callback || new Function();
+
+			// If there is profile matching with device and name...
+			if (!!id === true) {
+				$.ajax({
+					type: 'DELETE',
+					url: WXRWebizingDeviceConfigManager.HOST_URL + ('/devices/' + id)
+				}).done(function (data) {
+					if (data.status === 'ok') {
+						var index = _this3._deviceProfiles.findIndex(function (p) {
+							return p.id === id;
+						});
+						if (index !== -1) {
+							_this3._deviceProfiles.splice(index, 1);
+							if (_this3._webizingDeviceManagerSocket) {
+								_this3._webizingDeviceManagerSocket.emit('WXRUpdateDeviceProfiles', _this3._deviceProfiles);
+							}
+						}
+					}
+					callback(data);
+				});
+			}
+		}
+	}, {
+		key: 'findIndexInDeviceProfiles',
+		value: function findIndexInDeviceProfiles(profile) {
+			if (!profile.device || !profile.name) return -2;
+			return this._deviceProfiles.findIndex(function (p) {
+				return p.device === profile.device && p.name === profile.name;
+			});
+		}
+	}, {
+		key: 'webizingDeviceManagerEnable',
+		get: function get() {
+			return this._isWebizingDeviceManagerEnabled;
+		},
+		set: function set(boolean) {
+			var _this4 = this;
+
+			// Normalize as boolean.
+			boolean = !!boolean;
+
+			this._isWebizingDeviceManagerEnabled = boolean;
+
+			if (boolean === true) {
+				this._webizingDeviceManagerSocket = io(WXRWebizingDeviceConfigManager.WEBIZING_DEVICE_MANAGER_URI);
+
+				this._webizingDeviceManagerSocket.on('connect', function () {
+					_this4._webizingDeviceManagerSocket.emit('WXRUpdateDeviceProfiles', _this4._deviceProfiles);
+				});
+
+				this._webizingDeviceManagerSocket.on('WXRUpdateDeviceProfiles', function (profiles) {
+					_this4._deviceProfiles = profiles;
+					_this4._profileUpdateListeners.forEach(function (listener) {
+						return listener(profiles);
+					});
+				});
+
+				this._webizingDeviceManagerSocket.on('error', function (err) {});
+
+				// Get DeviceProfiles from server
+				$.ajax(WXRWebizingDeviceConfigManager.HOST_URL + '/users/me/devices').done(function (data) {
+					if (data.status === 'ok') {
+						_this4._deviceProfiles = data.message;
+						_this4._webizingDeviceManagerSocket.emit('WXRUpdateDeviceProfiles', _this4._deviceProfiles);
+					}
+					_this4.onInit && _this4.onInit();
+				});
+			} else if (boolean === false) {
+				// If webizingDeviceManagerSocket exist, close it.
+				this._webizingDeviceManagerSocket && this._webizingDeviceManagerSocket.close && this._webizingDeviceManagerSocket.close();
+
+				delete this._webizingDeviceManagerSocket;
+			}
+		}
+	}]);
+
+	return WXRWebizingDeviceConfigManager;
+}();
+
+WXRWebizingDeviceConfigManager.TAG = "WXRWebizingDeviceConfigManager";
+
+WXRWebizingDeviceConfigManager.HOST_URL = '//' + window.location.host;
+WXRWebizingDeviceConfigManager.WEBIZING_DEVICE_MANAGER_URI = 'http://localhost:6712';
+
+module.exports = WXRWebizingDeviceConfigManager;
+
+/***/ }),
+/* 3 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
 var WXRInteractionListener = function () {
 	function WXRInteractionListener() {
 		_classCallCheck(this, WXRInteractionListener);
@@ -251,187 +429,10 @@ var WXRInteractionListener = function () {
 
 WXRInteractionListener.TAG = "WXRInteractionListener";
 
-WXRInteractionListener.INTERACTION_EVENT_SERVER_URI = window.location.hostname + ':6711';
+WXRInteractionListener.INTERACTION_EVENT_SERVER_URI = '//' + window.location.hostname + ':6711';
 WXRInteractionListener.WEBIZING_DEVICE_MANAGER_URI = 'http://localhost:6712';
 
 module.exports = WXRInteractionListener;
-
-/***/ }),
-/* 3 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var WXRWebizingDeviceConfigManager = function () {
-	function WXRWebizingDeviceConfigManager() {
-		_classCallCheck(this, WXRWebizingDeviceConfigManager);
-
-		this._profileUpdateListeners = [];
-		this._deviceProfiles = [];
-
-		this._webizingDeviceManagerSocket = undefined;
-		this._isWebizingDeviceManagerEnabled = false;
-	}
-
-	_createClass(WXRWebizingDeviceConfigManager, [{
-		key: 'addUpdateListener',
-		value: function addUpdateListener(listener) {
-			this._profileUpdateListeners.push(listener);
-		}
-	}, {
-		key: 'getDeviceProfiles',
-		value: function getDeviceProfiles() {
-			return [].concat(this._deviceProfiles);
-		}
-	}, {
-		key: 'registerProfile',
-		value: function registerProfile(profile, callback) {
-			var _this = this;
-
-			callback = callback || new Function();
-
-			// If there is profile matching with device and name...
-			if (this.findIndexInDeviceProfiles(profile) >= 0) {
-				$.ajax({
-					type: 'POST',
-					url: '//' + WXRWebizingDeviceConfigManager.HOST_URL + '/devices',
-					data: profile
-				}).done(function (data) {
-
-					if (data.status === 'ok') {
-						var index = _this.findIndexInDeviceProfiles(profile);
-						_this._deviceProfiles[index] = data.message;
-					}
-
-					_this._webizingDeviceManagerSocket.emit('WXRUpdateDeviceProfiles', _this._deviceProfiles);
-					callback(data);
-				});
-			}
-		}
-	}, {
-		key: 'updateProfile',
-		value: function updateProfile(id, profile, callback) {
-			var _this2 = this;
-
-			callback = callback || new Function();
-
-			// Given with device id
-			if (!!id === true) {
-
-				$.ajax({
-					type: 'PUT',
-					url: '//' + WXRWebizingDeviceConfigManager.HOST_URL + ('/devices/' + id),
-					data: profile
-				}).done(function (data) {
-					if (data.status === 'ok') {
-						var index = _this2._deviceProfiles.findIndex(function (p) {
-							return p.id === id;
-						});
-						_this2._deviceProfiles[index] = data.message;
-					}
-
-					if (_this2._webizingDeviceManagerSocket) {
-						_this2._webizingDeviceManagerSocket.emit('WXRUpdateDeviceProfiles', _this2._deviceProfiles);
-					}
-					callback(data);
-				});
-			}
-		}
-	}, {
-		key: 'deleteProfile',
-		value: function deleteProfile(id, callback) {
-			var _this3 = this;
-
-			callback = callback || new Function();
-
-			// If there is profile matching with device and name...
-			if (!!id === true) {
-				$.ajax({
-					type: 'DELETE',
-					url: '//' + WXRWebizingDeviceConfigManager.HOST_URL + ('/devices/' + id)
-				}).done(function (data) {
-					if (data.status === 'ok') {
-						var index = _this3._deviceProfiles.findIndex(function (p) {
-							return p.id === id;
-						});
-						if (index !== -1) {
-							_this3._deviceProfiles.splice(index, 1);
-							if (_this3._webizingDeviceManagerSocket) {
-								_this3._webizingDeviceManagerSocket.emit('WXRUpdateDeviceProfiles', _this3._deviceProfiles);
-							}
-						}
-					}
-					callback(data);
-				});
-			}
-		}
-	}, {
-		key: 'findIndexInDeviceProfiles',
-		value: function findIndexInDeviceProfiles(profile) {
-			if (!profile.device || !profile.name) return -2;
-			return this._deviceProfiles.findIndex(function (p) {
-				return p.device === profile.device && p.name === profile.name;
-			});
-		}
-	}, {
-		key: 'webizingDeviceManagerEnable',
-		get: function get() {
-			return this._isWebizingDeviceManagerEnabled;
-		},
-		set: function set(boolean) {
-			var _this4 = this;
-
-			// Normalize as boolean.
-			boolean = !!boolean;
-
-			this._isWebizingDeviceManagerEnabled = boolean;
-
-			if (boolean === true) {
-				this._webizingDeviceManagerSocket = io(WXRWebizingDeviceConfigManager.WEBIZING_DEVICE_MANAGER_URI);
-
-				this._webizingDeviceManagerSocket.on('connect', function () {
-					_this4._webizingDeviceManagerSocket.emit('WXRUpdateDeviceProfiles', _this4._deviceProfiles);
-				});
-
-				this._webizingDeviceManagerSocket.on('WXRUpdateDeviceProfiles', function (profiles) {
-					_this4._deviceProfiles = profiles;
-					_this4._profileUpdateListeners.forEach(function (listener) {
-						return listener(profiles);
-					});
-				});
-
-				this._webizingDeviceManagerSocket.on('error', function (err) {});
-
-				// Get DeviceProfiles from server
-				$.ajax('//' + WXRWebizingDeviceConfigManager.HOST_URL + '/users/me/devices').done(function (data) {
-					if (data.status === 'ok') {
-						_this4._deviceProfiles = data.message;
-						_this4._webizingDeviceManagerSocket.emit('WXRUpdateDeviceProfiles', _this4._deviceProfiles);
-					}
-				});
-			} else if (boolean === false) {
-				// If webizingDeviceManagerSocket exist, close it.
-				this._webizingDeviceManagerSocket && this._webizingDeviceManagerSocket.close && this._webizingDeviceManagerSocket.close();
-
-				delete this._webizingDeviceManagerSocket;
-			}
-		}
-	}]);
-
-	return WXRWebizingDeviceConfigManager;
-}();
-
-WXRWebizingDeviceConfigManager.TAG = "WXRWebizingDeviceConfigManager";
-
-WXRWebizingDeviceConfigManager.HOST_URL = window.location.host;
-WXRWebizingDeviceConfigManager.WEBIZING_DEVICE_MANAGER_URI = 'http://localhost:6712';
-
-module.exports = WXRWebizingDeviceConfigManager;
 
 /***/ }),
 /* 4 */
@@ -961,7 +962,6 @@ var WXREvent = function () {
 				case WXREvent.CAMERA_READY:
 					customEvent = new CustomEvent(WXREvent.CAMERA_READY, { detail: event.camera });
 
-					$(WXRCamera.is);
 					var _iteratorNormalCompletion = true;
 					var _didIteratorError = false;
 					var _iteratorError = undefined;
@@ -1889,220 +1889,228 @@ module.exports = WXRSpaceManager;
 
 /***/ }),
 /* 14 */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
-THREE.LookControls = function(camera, domElement) {
+"use strict";
 
-	let scope = this;
-	let isFront = false;
 
-	this.domElement = (domElement !== undefined) ? domElement : document;
+THREE.LookControls = function (camera, domElement) {
+
+	var scope = this;
+	var isFront = false;
+
+	this.domElement = domElement !== undefined ? domElement : document;
 	this.enabled = true;
 
-	let verticalLimit = true;
+	var verticalLimit = true;
 
-	camera.rotation.set( 0, 0, 0 );
+	camera.rotation.set(0, 0, 0);
 
-	let PI_2 = Math.PI / 2;
+	var PI_2 = Math.PI / 2;
 
-	let onMouseDown = function ( event ) {
+	var onMouseDown = function onMouseDown(event) {
 		scope.isMouseDown = true;
-	}
+	};
 
-	let onMouseUp = function ( event ) {
+	var onMouseUp = function onMouseUp(event) {
 		scope.isMouseDown = false;
-	}
+	};
 
-	let onMouseMove = function ( event ) {
+	var onMouseMove = function onMouseMove(event) {
 
-		if ( scope.enabled === false ) return;
-		if ( !scope.isMouseDown ) return;
+		if (scope.enabled === false) return;
+		if (!scope.isMouseDown) return;
 
-		let movementX = event.movementX;
-		let movementY = event.movementY;
+		var movementX = event.movementX;
+		var movementY = event.movementY;
 
-		let y = camera.rotation.y;
+		var y = camera.rotation.y;
 
-		if(y > 6.28 ) camera.rotation.y -= 6.28;
-		if(y < -6.28) camera.rotation.y += 6.28;
+		if (y > 6.28) camera.rotation.y -= 6.28;
+		if (y < -6.28) camera.rotation.y += 6.28;
 
-		if(y>-1.57 && y<1.57) isFront = true;
-		else if(y>1.57 && y<4.71) isFront = false;
-		else if(y<-1.57 && y>-4.71) isFront = false;
-		else if(y>4.71) isFront = true;
-		else if(y<-4.71) isFront = true;
+		if (y > -1.57 && y < 1.57) isFront = true;else if (y > 1.57 && y < 4.71) isFront = false;else if (y < -1.57 && y > -4.71) isFront = false;else if (y > 4.71) isFront = true;else if (y < -4.71) isFront = true;
 
 		camera.rotation.y -= movementX * 0.002;
 
-		if(!verticalLimit) {
-			if(isFront) {
+		if (!verticalLimit) {
+			if (isFront) {
 				camera.rotation.x -= movementY * 0.002;
 			} else {
 				camera.rotation.x -= movementY * 0.002 * -1;
 			}
 		}
 
-		camera.rotation.x = Math.max( - PI_2, Math.min( PI_2, camera.rotation.x ) );
+		camera.rotation.x = Math.max(-PI_2, Math.min(PI_2, camera.rotation.x));
 	};
 
-	this.dispose = function() {
+	this.dispose = function () {
 
-		this.domElement.removeEventListener( 'mousemove', onMouseMove, false );
-		this.domElement.removeEventListener( 'mousedown', onMouseDown, false );
-		this.domElement.removeEventListener( 'mouseup', onMouseUp, false );
-
+		this.domElement.removeEventListener('mousemove', onMouseMove, false);
+		this.domElement.removeEventListener('mousedown', onMouseDown, false);
+		this.domElement.removeEventListener('mouseup', onMouseUp, false);
 	};
 
-	this.domElement.addEventListener( 'mousemove', onMouseMove, false );
-	this.domElement.addEventListener( 'mousedown', onMouseDown, false );
-	this.domElement.addEventListener( 'mouseup', onMouseUp, false );
-}
+	this.domElement.addEventListener('mousemove', onMouseMove, false);
+	this.domElement.addEventListener('mousedown', onMouseDown, false);
+	this.domElement.addEventListener('mouseup', onMouseUp, false);
+};
 
 module.exports = THREE.LookControls;
 
-
 /***/ }),
 /* 15 */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
-THREE.KeyboardControls = function(camera) {
-	let scope = this;
+"use strict";
 
-	let moveForward = false;
-	let moveBackward = false;
-	let moveLeft = false;
-	let moveRight = false;
 
-	let prevTime = performance.now();
-	let velocity = new THREE.Vector3();
-	let direction = new THREE.Vector3();
+THREE.KeyboardControls = function (camera) {
+	var scope = this;
+
+	var moveForward = false;
+	var moveBackward = false;
+	var moveLeft = false;
+	var moveRight = false;
+
+	var prevTime = performance.now();
+	var velocity = new THREE.Vector3();
+	var direction = new THREE.Vector3();
 
 	scope.yLimit = camera.position.y;
 	scope.controlsEnabled = true;
 
-	let onKeyDown = function ( event ) {
+	var onKeyDown = function onKeyDown(event) {
 
-		switch ( event.keyCode ) {
+		switch (event.keyCode) {
 
 			case 38: // up
-			case 87: // w
+			case 87:
+				// w
 				moveForward = true;
 				break;
 
 			case 37: // left
-			case 65: // a
-				moveLeft = true; break;
+			case 65:
+				// a
+				moveLeft = true;break;
 
 			case 40: // down
-			case 83: // s
+			case 83:
+				// s
 				moveBackward = true;
 				break;
 
 			case 39: // right
-			case 68: // d
+			case 68:
+				// d
 				moveRight = true;
 				break;
 
 		}
-
 	};
 
-	let onKeyUp = function ( event ) {
+	var onKeyUp = function onKeyUp(event) {
 
-		switch( event.keyCode ) {
+		switch (event.keyCode) {
 
 			case 38: // up
-			case 87: // w
+			case 87:
+				// w
 				moveForward = false;
 				break;
 
 			case 37: // left
-			case 65: // a
+			case 65:
+				// a
 				moveLeft = false;
 				break;
 
 			case 40: // down
-			case 83: // s
+			case 83:
+				// s
 				moveBackward = false;
 				break;
 
 			case 39: // right
-			case 68: // d
+			case 68:
+				// d
 				moveRight = false;
 				break;
 
 		}
-
 	};
-	document.addEventListener( 'keydown', onKeyDown, false );
-	document.addEventListener( 'keyup', onKeyUp, false );
+	document.addEventListener('keydown', onKeyDown, false);
+	document.addEventListener('keyup', onKeyUp, false);
 
-	let raycaster = new THREE.Raycaster( new THREE.Vector3(), new THREE.Vector3( 0, - 1, 0 ), 0, 10 );
+	var raycaster = new THREE.Raycaster(new THREE.Vector3(), new THREE.Vector3(0, -1, 0), 0, 10);
 
-	this.update = function() {
-		if ( scope.controlsEnabled === true ) {
+	this.update = function () {
+		if (scope.controlsEnabled === true) {
 
-			raycaster.ray.origin.copy( camera.position );
+			raycaster.ray.origin.copy(camera.position);
 			raycaster.ray.origin.y -= 10;
 
 			var time = performance.now();
-			var delta = ( time - prevTime ) / 1000;
+			var delta = (time - prevTime) / 1000;
 
 			velocity.x -= velocity.x * 30.0 * delta;
 			velocity.z -= velocity.z * 30.0 * delta;
 
-			direction.z = Number( moveForward ) - Number( moveBackward );
-			direction.x = Number( moveLeft ) - Number( moveRight );
+			direction.z = Number(moveForward) - Number(moveBackward);
+			direction.x = Number(moveLeft) - Number(moveRight);
 			direction.normalize(); // this ensures consistent movements in all directions
 
-			if ( moveForward || moveBackward ) velocity.z -= direction.z * 400.0 * delta;
-			if ( moveLeft || moveRight ) velocity.x -= direction.x * 400.0 * delta;
+			if (moveForward || moveBackward) velocity.z -= direction.z * 400.0 * delta;
+			if (moveLeft || moveRight) velocity.x -= direction.x * 400.0 * delta;
 
-			camera.translateX( velocity.x * delta );
-			camera.translateZ( velocity.z * delta );
+			camera.translateX(velocity.x * delta);
+			camera.translateZ(velocity.z * delta);
 			camera.position.y = scope.yLimit;
 
 			prevTime = time;
 		}
-	}
-}
+	};
+};
 
 module.exports = THREE.KeyboardControls;
 
-
 /***/ }),
 /* 16 */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
 
 THREE.WXRRenderer = function (opts) {
 	console.log('THREE.WXRRenderer', WXR.REVISION);
-	
+
 	this.type = 'WXRRenderer';
-	
+
 	var autoUpdateObjects = true;
 	var glCamera = null;
 	var cssCamera = null;
-	
+
 	var glScene = new THREE.Scene();
 	var cssScene = new THREE.Scene();
 	var cssFactor = 1000;
-	
-	var glRenderer = new THREE.WebGLRenderer({alpha: true, antialias: true});
-	
+
+	var glRenderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+
 	if (opts !== undefined) {
-		glRenderer.setClearColor((opts.clearColor !== undefined ) ? opts.clearColor : 0x000000);
+		glRenderer.setClearColor(opts.clearColor !== undefined ? opts.clearColor : 0x000000);
 	} else {
 		glRenderer.setClearColor(0x000000, 0);
 	}
-	
+
 	glRenderer.setSize(window.innerWidth, window.innerHeight);
 	glRenderer.domElement.style.pointerEvents = 'none';
 	glRenderer.domElement.style.position = 'absolute';
 	glRenderer.domElement.style.top = '0px';
 	glRenderer.domElement.style.width = '100%';
 	glRenderer.domElement.style.height = '100%';
-	glRenderer.domElement.style.zIndex= -3;
-	
+	glRenderer.domElement.style.zIndex = -3;
+
 	var cssRenderer = new THREE.CSS3DRenderer();
 	cssRenderer.setSize(window.innerWidth, window.innerHeight);
 	cssRenderer.domElement.style.position = 'absolute';
@@ -2111,26 +2119,25 @@ THREE.WXRRenderer = function (opts) {
 	cssRenderer.domElement.style.height = '100%';
 	cssRenderer.domElement.style.zIndex = -2;
 	document.body.appendChild(cssRenderer.domElement);
-	
+
 	cssRenderer.domElement.appendChild(glRenderer.domElement);
 
 	/////////////////////////////////////////////////////////////
 
-	let webVRButton = WEBVR.createButton( glRenderer );
-	let triggerEvent = document.createEvent('MouseEvents');
+	var webVRButton = WEBVR.createButton(glRenderer);
+	var triggerEvent = document.createEvent('MouseEvents');
 	triggerEvent.initMouseEvent('click');
 
 	/////////////////////////////////////////////////////////////
 
 	this.setCamera = function (camera) {
 		glCamera = camera;
-		
-		cssCamera = new THREE.PerspectiveCamera(camera.fov, camera.aspect,
-			camera.near, camera.far);
+
+		cssCamera = new THREE.PerspectiveCamera(camera.fov, camera.aspect, camera.near, camera.far);
 
 		camera.aspect = window.innerWidth / window.innerHeight;
 		camera.updateProjectionMatrix();
-		
+
 		window.addEventListener('resize', this.onWindowResize, false);
 	};
 
@@ -2139,107 +2146,127 @@ THREE.WXRRenderer = function (opts) {
 		glCamera.updateProjectionMatrix();
 
 		glRenderer.setSize(window.innerWidth, window.innerHeight);
-	}
+	};
 
 	this.render = function () {
 		glRenderer.animate(this.update.bind(this));
-	}
-	
+	};
+
 	this.update = function () {
 		if (glCamera !== null) {
 			cssCamera.quaternion.copy(glCamera.quaternion);
 			cssCamera.position.copy(glCamera.position);
-			
+
 			if (autoUpdateObjects !== true) {
 				return;
 			}
-			
+
 			cssScene.traverse(function (cssObject) {
 				if (cssObject instanceof THREE.Scene === true) {
 					return;
 				}
-				
+
 				/*
-				var vrobject = cssObject.userData.VRobject;
-
-				if (vrobject === undefined) {
-					return;
-				}
-
-				vrobject.update();
-				*/
+    var vrobject = cssObject.userData.VRobject;
+    	if (vrobject === undefined) {
+    	return;
+    }
+    	vrobject.update();
+    */
 			});
-			
+
 			cssRenderer.render(cssScene, cssCamera);
 			glRenderer.render(glScene, glCamera);
 			TWEEN.update();
 		}
 	};
-	
+
 	this.getWebGLRenderer = function () {
 		return glRenderer;
 	};
-	
+
 	this.getCSS3DRenderer = function () {
 		return cssRenderer;
 	};
-	
+
 	this.getWebGLScene = function () {
 		return glScene;
 	};
-	
+
 	this.getCSS3DScene = function () {
 		return cssScene;
 	};
-	
+
 	this.getCSSFactor = function () {
 		return cssFactor;
 	};
-	
+
 	this.getWebGLCamera = function () {
 		return glCamera;
-	}
-	
+	};
+
 	this.getCSS3DCamera = function () {
 		return cssCamera;
-	}
-	
+	};
+
 	this.getTargetWebGLObjects = function () {
-		let targetWebGLObjects = [];
-		
-		for (let child of glScene.children) {
-			if (child.constructor !== THREE.TransformControls && child.visible === true) {
-				child.traverse(object => {
-					targetWebGLObjects.push(object);
-				});
+		var targetWebGLObjects = [];
+
+		var _iteratorNormalCompletion = true;
+		var _didIteratorError = false;
+		var _iteratorError = undefined;
+
+		try {
+			for (var _iterator = glScene.children[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+				var child = _step.value;
+
+				if (child.constructor !== THREE.TransformControls && child.visible === true) {
+					child.traverse(function (object) {
+						targetWebGLObjects.push(object);
+					});
+				}
+			}
+		} catch (err) {
+			_didIteratorError = true;
+			_iteratorError = err;
+		} finally {
+			try {
+				if (!_iteratorNormalCompletion && _iterator.return) {
+					_iterator.return();
+				}
+			} finally {
+				if (_didIteratorError) {
+					throw _iteratorError;
+				}
 			}
 		}
-		
-		return targetWebGLObjects;
-	}
 
-	this.enterVR = function() {
-		if(webVRButton.innerHTML === "ENTER VR") {
+		return targetWebGLObjects;
+	};
+
+	this.enterVR = function () {
+		if (webVRButton.innerHTML === "ENTER VR") {
 			glRenderer.vr.enabled = true;
 			webVRButton.dispatchEvent(triggerEvent);
 		}
-	}
+	};
 
-	this.exitVR = function() {
-		if(webVRButton.innerHTML === "EXIT VR") {
+	this.exitVR = function () {
+		if (webVRButton.innerHTML === "EXIT VR") {
 			glRenderer.vr.enabled = false;
 			webVRButton.dispatchEvent(triggerEvent);
 		}
-	}
-
-}
+	};
+};
 
 module.exports = THREE.WXRRenderer;
-
 
 /***/ }),
 /* 17 */
 /***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
 
 THREE.WXRRenderer = __webpack_require__(16);
 THREE.wasdControls = __webpack_require__(15);
@@ -2255,8 +2282,8 @@ window.WXRLocationManager = __webpack_require__(7);
 window.WXRDevice = __webpack_require__(6);
 window.WXRContextManager = __webpack_require__(5);
 window.WXRARTrackerListener = __webpack_require__(4);
-window.WXRWebizingDeviceConfigManager = __webpack_require__(3);
-window.WXRInteractionListener = __webpack_require__(2);
+window.WXRInteractionListener = __webpack_require__(3);
+window.WXRWebizingDeviceConfigManager = __webpack_require__(2);
 window.WXR = __webpack_require__(0).WXR;
 window.WXRClass = __webpack_require__(0).WXRClass;
 
