@@ -64,6 +64,3 @@ redis/
 eventserver/.idea/
 eventserver/public/images/thumbnail
 eventserver/public/images/profile
-eventserver/public/wxr-element
-eventserver/public/wxr-example
-eventserver/public/wxr.js
