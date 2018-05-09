@@ -99,6 +99,45 @@ function updateWorkspaceInfo(req, res) {
 }
 
 
+// get list of all members joined in this workspace
+function getAllMembers (req,res) {
+
+	const user = req.user;
+	const wsId = req.params.wsId;
+
+
+	let workspaceInstance;
+
+	// parse ids to instances
+	Promise.all([
+		WorkspaceModel._pFindAndLoad(wsId),
+	])
+		.then( instances => [workspaceInstance] = instances )
+
+		// get list of members
+		.then( () => workspaceInstance.getAllMembers() )
+		.then( members => {
+			const promisesArray = [];
+			for (let i=0; i<members.length; ++i) {
+				promisesArray[i * 2    ] = members[i].getRefinedProperty();
+				promisesArray[i * 2 + 1] = members[i].getMyRightIn(workspaceInstance);
+			}
+			return Promise.all(promisesArray);
+		})
+		.then( propertiesAndAuthorities => {
+			const props = [];
+			for (let i=0; i<propertiesAndAuthorities.length; i=i+2) {
+				propertiesAndAuthorities[i].authority = propertiesAndAuthorities[i+1];
+				props.push(propertiesAndAuthorities[i]);
+			}
+			return Promise.resolve(props);
+		})
+		.then( props => res.json( APIResponseMessage.OK(props) ) )
+		.catch( reason => res.json(APIResponseMessage.ERROR(reason)) );
+
+}
+
+
 
 // get all attached devices
 function getAttachedDevice(req, res) {
@@ -229,44 +268,6 @@ function exitWorkspace(req, res) {
 }
 
 
-// get list of all members joined in this workspace
-function getAllMembers (req,res) {
-
-	const user = req.user;
-	const workspaceId = req.params.id;
-
-	let workspaceInstance;
-
-	// parse ids to instances
-	Promise.all([
-		WorkspaceModel.findAndLoadByName(workspaceId),
-	])
-		.then( instances => [workspaceInstance] = instances )
-
-	// get list of members
-		.then( () => workspaceInstance.getAllMembers() )
-		.then( members => {
-			const promisesArray = [];
-			for (let i=0; i<members.length; ++i) {
-				promisesArray[i * 2    ] = members[i].allProperties();
-				promisesArray[i * 2 + 1] = members[i].getMyRightsIn(workspaceInstance);
-			}
-			return Promise.all(promisesArray);
-		})
-		.then( propertiesAndAuthorities => {
-			const props = [];
-			for (let i=0; i<propertiesAndAuthorities.length; i=i+2) {
-				propertiesAndAuthorities[i].authority = propertiesAndAuthorities[i+1];
-				delete propertiesAndAuthorities[i].password;
-				props.push(propertiesAndAuthorities[i]);
-			}
-			res.json( APIResponseMessage.OK(props) );
-		})
-		.catch( reason => res.json(APIResponseMessage.ERROR(reason)) );
-
-}
-
-
 // invite a user to this workspace
 function inviteMember(req, res) {
 
@@ -366,9 +367,6 @@ router.route('/:wsId/devices/detach')
 
 // router.route('/:id/exit')
 // 	.get(exitWorkspace);
-//
-// router.route('/:id/member/list')
-// 	.get(getAllMembers);
 //
 // router.route('/:id/member/invite')
 // 	.post(inviteMember);
