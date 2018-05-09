@@ -14,18 +14,18 @@ module.exports = function(passportAuthorize) {
   // To get session of passport in socket logic, use passport.socketio middleware.
   io.use(passportAuthorize);
 
+
   io.on('connection', function(socket){
-
-
 
   	// save some data.
   	socket.data = {
+  		user: socket.request.user,
   		referer: socket.request.headers.referer,
 		  workspaceId: socket.request.headers.referer.split('/').pop(),
 	  };
 
 
-  	if (!socket.data.workspaceId) {
+  	if (!socket.data.workspaceId || !socket.data.user.logged_in) {
   		return;
 	  }
 
@@ -37,33 +37,7 @@ module.exports = function(passportAuthorize) {
 	  });
 
 	  // subscribe devices
-	  WorkspaceModel._pFindAndLoad(socket.data.workspaceId)
-		  .then( instance => instance ? Promise.resolve(instance.getAttachedDevices()) : Promise.reject(`Invalid Workspace ID.`) )
-		  .then( wsAttached => {
-			  wsAttached = wsAttached.map( device => device.p('ownerId') !== socket.user.id );
-			  wsAttached.forEach( device => {
-				  subClient.subscribe('__keyspace@1__:' + device.getEventSetKey() );
-			  });
-
-			  let lastestMessage = '';
-			  subClient.on('message', (channel, event) => {
-
-			  	const deviceId = channel.split(':').slice(0, -1).pop();
-
-				  if (event === 'zadd') {
-					  DeviceModel.getLastestEventOf(deviceId, (err, ret) => {
-						  if (err) return console.log(err);
-						  else if (lastestMessage === ret[0]) return;
-						  lastestMessage = ret[0];
-						  socket.emit('WXREvent', lastestMessage);
-					  });
-				  }
-			  });
-		  })
-		  .catch( reason => {
-		  	console.log(reason);
-		  });
-
+	  UpdateWorkspaceSubscription(socket.data.workspaceId);
 
 
     socket.on('WXREvent', function (msg) {
@@ -83,7 +57,6 @@ module.exports = function(passportAuthorize) {
 
 	    // Save the data
 	    // Be aware!! The device is should exist in database. The addEventAt method doesn't check key validation.
-	    // TODO: Checking save validation.
 	    DeviceModel.addEventAt(msg.id, msg);
 
     });
@@ -99,26 +72,61 @@ module.exports = function(passportAuthorize) {
     	console.log(message);
     }
 
+	  function UpdateWorkspaceSubscription(wsId) {
+
+		  WorkspaceModel._pFindAndLoad(wsId)
+			  .then( instance => instance ? instance.getAttachedDevices() : Promise.reject(`Invalid Workspace ID.`) )
+			  .then( wsAttached => {
+
+			  	// Reset all subscription
+				  const allChannel = `__keyspace@` + config.get('dbConfig.db') + `__:*`;
+				  subClient.punsubscribe(allChannel);
+
+			  	// Subscribe event data stream of attached device
+				  const wsAttachedWithoutMine = wsAttached.filter( device => device.p('ownerId') !== socket.data.user.id );
+				  wsAttachedWithoutMine.forEach( device => {
+				  	const deviceEventAdditionChannel = `__keyspace@` + config.get('dbConfig.db') + `__:` + device.getEventSetKey();
+					  subClient.subscribe(deviceEventAdditionChannel);
+				  });
+
+				  // Subscribe workspace-device relation update
+				  const workspaceDeviceRelationUpdateChannel = `__keyspace@` + config.get('dbConfig.db') + `__:nohm:relations:WorkspaceModel:attached:DeviceModel:` + wsId;
+				  subClient.subscribe(workspaceDeviceRelationUpdateChannel);
+
+				  let lastestMessage = '';
+				  subClient.on('message', (channel, event) => {
+
+				  	console.log(channel, event);
+
+					  switch (event) {
+						  case 'zadd':
+							  const deviceId = channel.split(':').slice(0, -1).pop();
+							  DeviceModel.getLastestEventOf(deviceId, (err, ret) => {
+								  if (err) return console.log(err);
+								  else if (lastestMessage === ret[0]) return;
+								  lastestMessage = ret[0];
+								  socket.emit('WXREvent', lastestMessage);
+							  });
+
+						    break;
+
+						  case 'sadd':
+						  case 'srem':
+							  UpdateWorkspaceSubscription(wsId);
+
+						  	break;
+
+						  default:
+						  	break;
+					  }
+				  });
+			  })
+			  .catch( reason => {
+				  console.log(reason);
+			  });
+	  };
+
   });
-
-
-  // for update the list of publishing device event data, just call this.
-	// if there are some change of Workspace-Device linkage, this should have to be called once.
-  global.refreshDeviceEventPublishListOf = function(device) {
-		const socket = DevicenameToSocketTable[device.p('name')];
-
-		if (!!socket === false) {
-			return Promise.reject(`This device is not connected`);
-		}
-
-		return device.getLinkedWorkspaces()
-			.then( workspaces => {
-				socket.data.eventDataPublishingList = [];
-				workspaces.forEach( e => socket.data.eventDataPublishingList.push(e.getChannelName()) );
-
-				console.log(socket.data.eventDataPublishingList);
-			})
-  };
 
   return io;
 };

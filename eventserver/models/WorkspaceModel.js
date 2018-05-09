@@ -140,13 +140,7 @@ const WorkspaceModel = nohm.model('WorkspaceModel', {
 		 */
 		attachDevice: function(device) {
 			this.link(device, WorkspaceModel.RELATION_DEVICE_ATTACHED);
-
-			return this._pSave()
-			// For updating event data publishing list of device in socket instance, Calling refreshDeviceEventPublishListOf should be needed.
-				.then( workspace => {
-					// refreshDeviceEventPublishListOf(device);
-					return Promise.resolve(workspace);
-				});
+			return this._pSave();
 		},
 
 		detachDevice: function (device) {
