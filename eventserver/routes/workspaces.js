@@ -137,6 +137,23 @@ function getAllMembers (req,res) {
 
 }
 
+// exit workspace
+function exitWorkspace(req, res) {
+
+	const user = req.user;
+	const wsId = req.params.wsId;
+	const userId = req.params.userId;
+
+	WorkspaceModel._pFindAndLoad(wsId)
+		.then( instance => {
+			if (user.id !== userId) return Promise.resolve();
+			return user.exitWorkspace(instance);
+		})
+		.then( workspaceInstance => res.json( APIResponseMessage.OK() ) )
+		.catch( reason => res.json( APIResponseMessage.ERROR(reason)) );
+}
+
+
 
 
 // get all attached devices
@@ -261,13 +278,6 @@ function enterWorkspace(req, res) {
 }
 
 
-// exit workspace
-// end getting socketio stream data
-function exitWorkspace(req, res) {
-
-}
-
-
 // invite a user to this workspace
 function inviteMember(req, res) {
 
@@ -355,6 +365,9 @@ router.route('/:wsId')
 router.route('/:wsId/members')
 	.get(getAllMembers);
 
+router.route('/:wsId/members/:userId')
+	.delete(exitWorkspace);
+
 router.route('/:wsId/devices')
 	.get(getAttachedDevice);
 
@@ -365,9 +378,6 @@ router.route('/:wsId/devices/detach')
 	.post(detachDeviceFromWorkspace);
 
 
-// router.route('/:id/exit')
-// 	.get(exitWorkspace);
-//
 // router.route('/:id/member/invite')
 // 	.post(inviteMember);
 //

@@ -112,7 +112,13 @@ router.use(checkUserSession);
 router.route('/:userId')
 	.put(upload.single('profile'), updateUserProfile);
 
-// shortcut for /device?owner=user.id
+// shortcut for /workspaces/:wsId/members/:userId
+router.route('/me/exit/workspace/:wsId')
+	.delete(function exitWorkspace(req, res) {
+		res.redirect(`/workspaces/` + req.params.wsId + `/members/` + req.user.id);
+	});
+
+// shortcut for /devices?owner=user.id
 router.route('/me/devices')
 	.get(function getMyDeviceProfiles(req, res) {
 		res.redirect(`/devices?owner=${req.user.id}`);
