@@ -348,7 +348,7 @@ router.route('')
 
 router.route('/:wsId')
 	.get(getWorkspaceInfo)
-	.put(upload.single('thumbnail') ,updateWorkspaceInfo);
+	.put(upload.single('thumbnail'), updateWorkspaceInfo);
 	// .delete(destroyWorkspace);
 
 router.route('/:wsId/members')
