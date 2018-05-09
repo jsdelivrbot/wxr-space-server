@@ -1,0 +1,79 @@
+
+
+	<wxr-world ar-engine="vuforia">
+		<wxr-camera fovy=61 near=0.1 far=1000></wxr-camera>
+		<wxr-space src="http://content.wxr.webizing.org/space/1" enable>
+
+			<wxr-target id="STEP01" src="https://ar3dp.webizing.org/demo/ar/01">
+				<wxr-light-ambient color="0xf0f0f0" intensity="0.3"></wxr-light-ambient>
+				<wxr-obj id="model01_powder" mtl="model01_powder.mtl" obj="model01_powder.obj" base-url="https://wrl.nyc3.digitaloceanspaces.com/ar3dp/resources/models/powder_ar">
+					<wxr-animation type="movement" to="-0.2 0.1 -0.1" duration="2000" repeat=Infinity easing="linear"></wxr-animation>
+				</wxr-obj>
+				<wxr-obj id="model01_rightclip" mtl="model01_rightclip.mtl" obj="model01_rightclip.obj" base-url="https://wrl.nyc3.digitaloceanspaces.com/ar3dp/resources/models/powder_ar">
+				</wxr-obj>
+				<wxr-obj id="model01_leftclip" mtl="model01_leftclip.mtl" obj="model01_leftclip.obj" base-url="https://wrl.nyc3.digitaloceanspaces.com/ar3dp/resources/models/powder_ar">
+				</wxr-obj>
+				<wxr-obj id="model01_rightarrow" mtl="model01_rightarrow.mtl" obj="model01_rightarrow.obj" base-url="https://wrl.nyc3.digitaloceanspaces.com/ar3dp/resources/models/powder_ar"></wxr-obj>
+				<wxr-obj id="model01_leftarrow" mtl="model01_leftarrow.mtl" obj="model01_leftarrow.obj" base-url="https://wrl.nyc3.digitaloceanspaces.com/ar3dp/resources/models/powder_ar"></wxr-obj>
+				<wxr-plane id="annotation01" texture="https://wrl.nyc3.digitaloceanspaces.com/ar3dp/resources/dialog/powder_ar/step01.jpg"></wxr-plane>
+			</wxr-target>
+
+
+			<wxr-target id="STEP02" src="https://ar3dp.webizing.org/demo/ar/02">
+				<wxr-light-ambient color="0xf0f0f0" intensity="0.3"></wxr-light-ambient>
+				<wxr-obj id="model02_plateassy" mtl="model02_plateassy.mtl" obj="model02_plateassy.obj" base-url="https://wrl.nyc3.digitaloceanspaces.com/ar3dp/resources/models/powder_ar">
+					<wxr-animation type="movement" to="0 0 200" duration="4000" repeat=Infinity easing="linear"></wxr-animation>
+				</wxr-obj>
+				<wxr-obj id="model02_screw" mtl="model02_screw.mtl" obj="model02_screw.obj" base-url="https://wrl.nyc3.digitaloceanspaces.com/ar3dp/resources/models/powder_ar">
+					<wxr-animation type="movement" to="0 -50 250" duration="4000" repeat=Infinity easing="linear"></wxr-animation>
+				</wxr-obj>
+				<wxr-plane id="annotation02" texture="https://wrl.nyc3.digitaloceanspaces.com/ar3dp/resources/dialog/powder_ar/step02.jpg"></wxr-plane>
+			</wxr-target>
+
+
+			<wxr-target id="STEP03" src="https://ar3dp.webizing.org/demo/ar/03">
+				<wxr-light-ambient color="0xf0f0f0" intensity="0.3"></wxr-light-ambient>
+				<wxr-obj id="model03_1_coupling" mtl="model03_1_coupling.mtl" obj="model03_1_coupling.obj" base-url="https://wrl.nyc3.digitaloceanspaces.com/ar3dp/resources/models/powder_ar"></wxr-obj>
+				<wxr-obj id="model03_couplingarrow" mtl="model03_couplingarrow.mtl" obj="model03_couplingarrow.obj" base-url="https://wrl.nyc3.digitaloceanspaces.com/ar3dp/resources/models/powder_ar"></wxr-obj>
+				<wxr-obj id="model03_1_screw" mtl="model03_1_screw.mtl" obj="model03_1_screw.obj" base-url="https://wrl.nyc3.digitaloceanspaces.com/ar3dp/resources/models/powder_ar">
+					<wxr-animation type="movement" to="30 500 -280" duration="2000" repeat=Infinity easing="linear"></wxr-animation>
+				</wxr-obj>
+				<wxr-obj id="model03_1_arrow" mtl="model03_1_arrow.mtl" obj="model03_1_arrow.obj" base-url="https://wrl.nyc3.digitaloceanspaces.com/ar3dp/resources/models/powder_ar"></wxr-obj>
+				<wxr-obj id="model03_2_screw" mtl="model03_2_screw.mtl" obj="model03_2_screw.obj" base-url="https://wrl.nyc3.digitaloceanspaces.com/ar3dp/resources/models/powder_ar">
+					<wxr-animation type="movement" to="-20 60 -260" duration="2000" repeat=Infinity easing="linear"></wxr-animation>
+				</wxr-obj>
+				<wxr-obj id="model04_bush" mtl="model04_bush.mtl" obj="model04_bush.obj" base-url="https://wrl.nyc3.digitaloceanspaces.com/ar3dp/resources/models/powder_ar">
+					<wxr-animation type="movement" to="-20 100 -260" duration="2000" repeat=Infinity easing="linear"></wxr-animation>
+				</wxr-obj>
+				<wxr-obj id="model04_shaft" mtl="model04_shaft.mtl" obj="model04_shaft.obj" base-url="https://wrl.nyc3.digitaloceanspaces.com/ar3dp/resources/models/powder_ar">
+					<wxr-animation type="movement" to="-20 100 -260" duration="2000" repeat=Infinity easing="linear"></wxr-animation>
+				</wxr-obj>
+				<wxr-obj id="model03_2_arrow" mtl="model03_2_arrow.mtl" obj="model03_2_arrow.obj" base-url="https://wrl.nyc3.digitaloceanspaces.com/ar3dp/resources/models/powder_ar">
+					<wxr-animation type="movement" to="-20 -10 -260" duration="2000" repeat=Infinity easing="linear"></wxr-animation>
+				</wxr-obj>
+				<wxr-plane id="annotation03" texture="https://wrl.nyc3.digitaloceanspaces.com/ar3dp/resources/dialog/powder_ar/step03.jpg"></wxr-plane>
+			</wxr-target>
+
+
+
+			<wxr-target id="STEP04" src="https://ar3dp.webizing.org/demo/ar/04">
+				<wxr-light-ambient color="0xf0f0f0" intensity="0.5"></wxr-light-ambient>
+				<wxr-obj id="model05_bush" mtl="model05_bush.mtl" obj="model05_bush.obj" base-url="https://wrl.nyc3.digitaloceanspaces.com/ar3dp/resources/models/powder_ar">
+					<wxr-animation type="movement" to="45 0 0" duration="2000" repeat=Infinity easing="linear"></wxr-animation>
+				</wxr-obj>
+				<wxr-obj id="model05_shaft" mtl="model05_shaft.mtl" obj="model05_shaft.obj" base-url="https://wrl.nyc3.digitaloceanspaces.com/ar3dp/resources/models/powder_ar">
+					<wxr-animation type="movement" to="10 0 0" duration="2000" repeat=Infinity easing="linear"></wxr-animation>
+				</wxr-obj>
+				<wxr-obj id="model05_busharrow" mtl="model05_busharrow.mtl" obj="model05_busharrow.obj" base-url="https://wrl.nyc3.digitaloceanspaces.com/ar3dp/resources/models/powder_ar">
+					<wxr-animation type="movement" to="70 0 0" duration="2000" repeat=Infinity easing="linear"></wxr-animation>
+				</wxr-obj>
+				<wxr-obj id="model05_shaftarrow" mtl="model05_shaftarrow.mtl" obj="model05_shaftarrow.obj" base-url="https://wrl.nyc3.digitaloceanspaces.com/ar3dp/resources/models/powder_ar">
+					<wxr-animation type="movement" to="-80 0 0" duration="2000" repeat=Infinity easing="linear"></wxr-animation>
+				</wxr-obj>
+				<wxr-plane id="annotation05" texture="https://wrl.nyc3.digitaloceanspaces.com/ar3dp/resources/dialog/powder_ar/step04.jpg"></wxr-plane>
+			</wxr-target>
+
+
+		</wxr-space>
+	</wxr-world>
+
