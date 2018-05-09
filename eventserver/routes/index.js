@@ -34,12 +34,22 @@ function indexPage(req, res) {
 // view page
 function viewPage(req, res) {
 
+	const user = req.user;
 	const wsId = req.params.wsId;
-	const options = {
-		user: req.user
-	}
 
-	res.render('view', options);
+
+	WorkspaceModel._pFindAndLoad(wsId)
+		.then( instance => instance.isMember(user) )
+		.then( isMember => {
+			if (isMember) {
+				const options = {
+					user: user
+				};
+				res.render('view', options);
+			} else {
+				res.redirect('/');
+			}
+		});
 }
 
 
