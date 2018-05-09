@@ -60,6 +60,22 @@ function createNewWorkspace(req, res) {
 		.catch( reason => res.json( APIResponseMessage.ERROR(reason) ) );
 }
 
+
+// get workspace
+function getWorkspaceInfo(req, res) {
+
+	const wsId = req.params.wsId;
+
+	WorkspaceModel._pFindAndLoad(wsId)
+		.then( instance => {
+			if (!instance) return Promise.resolve({});    // if invalid wsId, return empty object.
+			else return Promise.resolve(instance.getRefinedProperty());
+		})
+		.then( property => res.json( APIResponseMessage.OK(property) ) )
+		.catch( reason => res.json( APIResponseMessage.ERROR(reason)) );
+};
+
+
 // update workspace info
 function updateWorkspaceInfo(req, res) {
 
@@ -234,6 +250,7 @@ router.route('')
 	.post(createNewWorkspace);
 
 router.route('/:wsId')
+	.get(getWorkspaceInfo)
 	.put(upload.single('thumbnail') ,updateWorkspaceInfo);
 	// .delete(destroyWorkspace);
 
