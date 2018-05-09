@@ -37,13 +37,17 @@ function viewPage(req, res) {
 	const user = req.user;
 	const wsId = req.params.wsId;
 
+	
+	let workspaceInstance;
 
 	WorkspaceModel._pFindAndLoad(wsId)
-		.then( instance => instance.isMember(user) )
+		.then( instance => workspaceInstance = instance )
+		.then( () => workspaceInstance.isMember(user) )
 		.then( isMember => {
 			if (isMember) {
 				const options = {
-					user: user
+					user: user,
+					workspace: workspaceInstance,
 				};
 				res.render('view', options);
 			} else {
