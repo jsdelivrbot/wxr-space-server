@@ -99,6 +99,24 @@ function updateWorkspaceInfo(req, res) {
 }
 
 
+
+// get all attached devices
+function getAllAttachedDevice(req, res) {
+
+	const user = req.user;
+	const wsId = req.params.wsId;
+
+	WorkspaceModel._pFindAndLoad(wsId)
+		.then( instance => {
+			if (!instance) return Promise.reject(`None exist workspace.`);
+			return instance.getAttachedDevices();
+		})
+		.then( devices => Promise.all(devices.map( device => device.getRefinedProperty() )) )
+		.then( refinedProperties => res.json( APIResponseMessage.OK(refinedProperties) ) )
+		.catch( reason => res.json( APIResponseMessage.ERROR(reason)) );
+}
+
+
 // attach device
 function attachDeviceToWorkspace(req, res) {
 
@@ -325,6 +343,9 @@ router.route('/:wsId')
 	.get(getWorkspaceInfo)
 	.put(upload.single('thumbnail') ,updateWorkspaceInfo);
 	// .delete(destroyWorkspace);
+
+router.route('/:wsId/devices')
+	.get(getAllAttachedDevice);
 
 router.route('/:wsId/attachDevice')
 	.post(attachDeviceToWorkspace);
