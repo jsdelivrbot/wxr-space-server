@@ -241,6 +241,7 @@ function joinWorkspace(req, res) {
 			if (!_user) return Promise.reject(`Invalid access.`);
 			return workspaceInstance.resetInvite(user);
 		})
+		.then( workspaceInstance => workspaceInstance.addMember(user) )
 		.then( () => res.redirect(`/view/` + workspaceInstance.id) )
 		.catch( reason => res.json(APIResponseMessage.ERROR(reason)) );
 }
