@@ -3,7 +3,7 @@ const multer = require('multer');
 const path = require('path');
 const router = express.Router();
 const passport = require('passport');
-const {UserModel, WorkspaceModel, DeviceModel} = require('../models/Models');
+const {UserModel, DeviceModel} = require('../models/Models');
 
 
 const storage = multer.diskStorage({
@@ -80,7 +80,7 @@ function userLogout(req, res) {
 function getAllUserList(req, res) {
 	
 	const user = req.user;
-	WorkspaceModel.findAndLoadAll()
+	UserModel.findAndLoadAll()
 		.then( users => Promise.all(users.map( _u => _u.getRefinedProperty())) )
 		.then( refinedProperties => res.json( APIResponseMessage.OK(refinedProperties)) )
 		.catch( reason => res.json( APIResponseMessage.ERROR(reason)) );
