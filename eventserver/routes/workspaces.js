@@ -344,6 +344,9 @@ router.route('/:wsId')
 	.put(upload.single('thumbnail') ,updateWorkspaceInfo);
 	// .delete(destroyWorkspace);
 
+router.route('/:wsId/members')
+	.get(getAllMembers);
+
 router.route('/:wsId/devices')
 	.get(getAllAttachedDevice);
 
