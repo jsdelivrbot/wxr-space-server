@@ -199,7 +199,7 @@ function inviteMember(req, res) {
 
 	const user = req.user;
 	const wsId = req.params.wsId;
-	const userId = req.body.userId;
+	const email = req.body.email;
 
 
 	let workspaceInstance, memberInstance;
@@ -207,7 +207,7 @@ function inviteMember(req, res) {
 	// parse ids to instances
 	Promise.all([
 		WorkspaceModel._pFindAndLoad(wsId),
-		UserModel._pFindAndLoad(userId)
+		UserModel.findAndLoadByEmail(email)
 	])
 		.then( instances => [workspaceInstance, memberInstance] = instances )
 
@@ -217,7 +217,7 @@ function inviteMember(req, res) {
 
 		// add member
 		.then( () => !!memberInstance ? workspaceInstance.setInvite(memberInstance) : Promise.reject(`The user doesn't exist.`) )
-		.then( () => mailer.sendInvitationMail(memberInstance.p('email'), memberInstance.p('name'), `http://es.webizing.org/workspaces/` + workspaceInstance.id + `/members/join`) )
+		.then( () => mailer.sendInvitationMail(email, memberInstance.p('name'), `http://es.webizing.org/workspaces/` + workspaceInstance.id + `/members/join`) )
 		.then( () => res.json(APIResponseMessage.OK()) )
 		.catch( reason => res.json(APIResponseMessage.ERROR(reason)) );
 }
