@@ -71,7 +71,7 @@ describe(`WorkspaceModel.test.js`, function() {
 		it(`Test 'addEvent' method (add 10 event object sequently)`, function() {
 			for (let i=0; i<10; ++i) {
 				const eventObj = {
-					event: 'dump_event',
+					type: 'dump_event',
 					timestamp: Date.now(),
 					detail: {
 						order: i

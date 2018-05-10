@@ -92,7 +92,7 @@ io.on('connection', function(socket) {
 			if (socket.data.profile.eventStreamEnable) {
 				const DeviceStartOnMessage = {
 					id: socket.data.profile.id,
-					event: 'WXRDeviceOn',
+					type: 'WXRDeviceOn',
 					timestamp: Date.now(),
 					detail: { }
 				};
@@ -110,7 +110,7 @@ io.on('connection', function(socket) {
 		if (!clientSocket || !socket.data.profile.eventStreamEnable) return;
 
 		// Check message structure is valid.
-		if (!msg || !msg.event || !msg.detail) {
+		if (!msg || !msg.type || !msg.detail) {
 			HandleError(`invalid msg!: ${msg}`);
 			return ;
 		}
@@ -133,7 +133,7 @@ io.on('connection', function(socket) {
 			if (socket.data.profile.eventStreamEnable) {
 				const DeviceIsShutOffMessage = {
 					id: socket.data.profile.id,
-					event: 'WXRDeviceOff',
+					type: 'WXRDeviceOff',
 					timestamp: Date.now(),
 					detail: { }
 				};

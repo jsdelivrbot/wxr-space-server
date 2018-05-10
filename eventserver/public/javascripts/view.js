@@ -5,7 +5,7 @@ window.onload = function() {
 
 	// EventHandler.addHandler( msg => {
 	// 	console.log(msg);
-	// 	if (msg.event === 'trackerMoved') {
+	// 	if (msg.type === 'trackerMoved') {
 	// 		const [x, y, z] = msg.detail.pos;
 	// 		sphere.position.set(x, y, z);
 	// 	}

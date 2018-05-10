@@ -11,7 +11,7 @@ socket.on('connect', function(){
 		 * "optitrack_server_on" event
 		 * 
 		 * {
-		 *     "event": "optitrack_server_on",
+		 *     "type": "optitrack_server_on",
 		 *     "detail": {
 		 *         "timestamp": time
 		 *         "server_name": server_name
@@ -48,7 +48,7 @@ function send_dof(i) {
 		is_first_message = false;
 		
 		const msg = {
-			event: 'trackerDetected',
+			type: 'trackerDetected',
 			timestamp: Date.now(),
 			detail: { }
 		}
@@ -56,7 +56,7 @@ function send_dof(i) {
 	}
 	
 	const msg = {
-		event: 'trackerMoved',
+		type: 'trackerMoved',
 		timestamp: Date.now(),
 		detail: {
 			pos: [0.1*i, 0.2, 0.3],
@@ -69,7 +69,7 @@ function send_dof(i) {
 function tracking_end() {
 
 	const msg = {
-		event: 'trackerMissed',
+		type: 'trackerMissed',
 		timestamp: Date.now(),
 		detail: { }
 	}

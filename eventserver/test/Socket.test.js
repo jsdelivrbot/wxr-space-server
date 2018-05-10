@@ -141,7 +141,7 @@ describe(`Socket.test.js`, function() {
 
 			// send 'local_server_on' event
 			const serverOnMessage = {
-				event: 'local_server_on',
+				type: 'local_server_on',
 				detail: {
 					serverName: serverName,
 					timestamp: Date.now()
@@ -152,7 +152,7 @@ describe(`Socket.test.js`, function() {
 
 			// send 'packagedMessage' event periodically in every 1 seconds.
 			const packagedMessage = {
-				event: 'local_packaged_events',
+				type: 'local_packaged_events',
 				detail: {
 					timestamp: Date.now(),
 					messages: [serverOnMessage, serverOnMessage]

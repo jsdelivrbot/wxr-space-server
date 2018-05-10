@@ -42,7 +42,7 @@ module.exports = function(passportAuthorize) {
 
     socket.on('WXREvent', function (msg) {
 
-	    if (!!msg === false || !!msg.event === false || !!msg.detail === false) {
+	    if (!!msg === false || !!msg.type === false || !!msg.detail === false) {
 		    handleError(`invalid msg!: ${JSON.stringify(msg)}`);
 		    return;
 	    }
