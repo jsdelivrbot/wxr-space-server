@@ -1,7 +1,0 @@
-.frame {
-	--wxr-transform: scale3d(0.001, 0.001, 0.001);
-}
-
-wxr-camera {
-	--wxr-transform: translate3d(0, 200, 600);
-}
