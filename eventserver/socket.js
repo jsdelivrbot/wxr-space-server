@@ -96,9 +96,7 @@ module.exports = function(passportAuthorize) {
 				  let lastestMessage = '';
 				  subClient.on('message', (channel, event) => {
 
-				  	console.log(channel, event);
-
-					  switch (event) {
+				  	switch (event) {
 						  case 'zadd':
 							  const deviceId = channel.split(':').slice(0, -1).pop();
 							  DeviceModel.getLastestEventOf(deviceId, (err, ret) => {
