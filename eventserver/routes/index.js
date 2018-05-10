@@ -8,7 +8,7 @@ const {UserModel, WorkspaceModel} = require('../models/Models');
 function indexPage(req, res) {
 
 	var options = {
-		title: 'XWR Space',
+		title: 'WXR Space',
 		user: req.user,
 		workspaceList: [],
 		recentWorkspace: null,
