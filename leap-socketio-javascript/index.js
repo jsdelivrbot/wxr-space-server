@@ -36,7 +36,7 @@ leapClient.onmessage = function(e) {
 			is_first_message = false;
 		
 			const msg = {
-				event: 'trackerDetected',
+				event: 'HandGestureDetected',
 				timestamp: Date.now(),
 				detail: { }
 			}
@@ -44,7 +44,7 @@ leapClient.onmessage = function(e) {
 		}
 	
 		const msg = {
-			event: 'trackerMoved',
+			event: 'HandGestureMoved',
 			timestamp: Date.now(),
 			detail: {
 				pos: frame.t,
@@ -79,7 +79,7 @@ socketio.on('error', function(err) {
 function tracking_end() {
 
 	const msg = {
-		event: 'trackerMissed',
+		event: 'HandGestureMissed',
 		timestamp: Date.now(),
 		detail: { }
 	}
