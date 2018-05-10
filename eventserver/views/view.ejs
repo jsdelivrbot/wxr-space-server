@@ -2,6 +2,7 @@
 <html>
 <head>
 	<meta name="viewport" content="width=device-width, user-scalable=no">
+	<script src="/libs/socket.io/socket.io.js"></script>
 	<script src="https://cdn.rawgit.com/webcomponents/webcomponentsjs/v1.1.0/webcomponents-lite.js"></script>
 	<link href="https://libs.webizing.org/wxr-0.5.html" rel="import">
 	
@@ -17,5 +18,11 @@
 	
 	
 	<%- include(`../cms/` + workspace.id + `/js`); -%>
+
+	<script>
+		WXR.WebizingDeviceConfigManager.webizingDeviceManagerEnable = true;
+		WXR.InteractionListener.webizingDeviceManagerEnable = true;
+		WXR.InteractionListener.interactionEventServerEnable = true;
+	</script>
 </body>
 </html>
