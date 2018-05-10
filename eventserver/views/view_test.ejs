@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>WXR Space</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no">
+	<link rel="icon" href="https://getbootstrap.com/favicon.ico">
+	<script src="/libs/socket.io/socket.io.js"></script>
+</head>
+<body>
+	<%- include(`../cms_test/` + workspace.id + `/body`); -%>
+
+	<wxr-editor>
+	</wxr-editor>
+
+	<script>
+		WXR.WebizingDeviceConfigManager.webizingDeviceManagerEnable = true;
+		WXR.InteractionListener.webizingDeviceManagerEnable = true;
+		WXR.InteractionListener.interactionEventServerEnable = true;
+	</script>
+</body>
+</html>
