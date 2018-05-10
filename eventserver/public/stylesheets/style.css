@@ -68,7 +68,7 @@ body {
 }
 
 .wxr-overflow-x-scroll {
-  overflow-x: scroll;
+  overflow-x: auto;
 }
 
 .wxr-round-border {
