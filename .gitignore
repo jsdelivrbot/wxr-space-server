@@ -64,3 +64,4 @@ redis/
 eventserver/.idea/
 eventserver/public/images/thumbnail
 eventserver/public/images/profile
+.idea/
