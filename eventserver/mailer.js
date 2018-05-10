@@ -13,7 +13,7 @@ const transporter = nodemailer.createTransport({
 
 
 module.exports = {
-	sendInvitationMail: function(address, link) {
+	sendInvitationMail: function(address, name, link) {
 
 		const mailOptions = {
 			from: 'dev@wrl.onl',
@@ -21,9 +21,12 @@ module.exports = {
 			subject: 'Invitation for you to WXR workspace',
 			text: '',
 			html: `
-Hello, You've got a invitation for the WXR workspace!!! <br>
-Please click the following link: <a href="${link}">Getting involved</a>
-
+Hello, ${name} <br>
+<br>
+You've got a invitation for the WXR workspace!!! <br>
+Please click the following link: <br>
+		<a href="${link}">Getting involved</a> <br>
+<br>
 Thanks!
 			`
 		};
