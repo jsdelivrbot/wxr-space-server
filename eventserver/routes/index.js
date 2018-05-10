@@ -56,31 +56,6 @@ function viewPage(req, res) {
 		});
 }
 
-// view page
-function viewTestingPage(req, res) {
-
-	const user = req.user;
-	const wsId = req.params.wsId;
-
-	
-	let workspaceInstance;
-
-	WorkspaceModel._pFindAndLoad(wsId)
-		.then( instance => workspaceInstance = instance )
-		.then( () => workspaceInstance.isMember(user) )
-		.then( isMember => {
-			if (isMember) {
-				const options = {
-					user: user,
-					workspace: workspaceInstance,
-				};
-				res.render('view_test', options);
-			} else {
-				res.redirect('/');
-			}
-		});
-}
-
 
 // profile page
 function profilePage(req, res) {
@@ -159,9 +134,6 @@ router.route('/')
 
 router.route('/view/:wsId')
 	.get(viewPage);
-
-router.route('/view2/:wsId')
-	.get(viewTestingPage);
 
 router.route('/profile')
 	.get(profilePage);
