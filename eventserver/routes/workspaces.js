@@ -84,15 +84,20 @@ function saveContents(req, res) {
 
 	const user = req.user;
 	const wsId = req.params.wsId;
-	const body = req.body;
-	const wsCMSPath = `../cms/` + wsId;
+	const wsCMSPath = path.join(__app_root, '/cms', wsId);
 
-	// TODO: checking if requester is valid user.
-	mkdirp(wsCMSPath, err => {
-		if (err) res.json( APIResponseMessage.ERROR(err) );
-		else fs.writeFile(wsCMSPath + `body.ejs`, body);
-		res.json( APIResponseMessage.OK() );
-	});
+	contentsData = '';
+	req.on('data', function(chunk) {
+		contentsData += chunk;
+	})
+	req.on('end', function() {
+		// TODO: checking if requester is valid user.
+		mkdirp(wsCMSPath, err => {
+			if (err) res.json( APIResponseMessage.ERROR(err) );
+			else fs.writeFile(wsCMSPath + `/body.ejs`, contentsData);
+			res.json( APIResponseMessage.OK() );
+		});
+	})
 }
 
 
