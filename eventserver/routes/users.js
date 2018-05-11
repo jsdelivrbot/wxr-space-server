@@ -87,6 +87,17 @@ function getAllUserList(req, res) {
 }
 
 
+// get user info
+function getUserInfo (req, res) {
+	
+	const user = req.user;
+	UserModel._pFindAndLoad(user.id)
+		.then( user => user.getRefinedProperty() )
+		.then( refinedProperty => res.json( APIResponseMessage.OK(refinedProperty)) )
+		.catch( reason => res.json( APIResponseMessage.ERROR(reason)) );
+}
+
+
 // update user profile
 function updateUserProfile(req, res) {
 
@@ -124,6 +135,7 @@ router.route('')
 	.get(getAllUserList);
 
 router.route('/:userId')
+	.get(getUserInfo)
 	.put(upload.single('profile'), updateUserProfile);
 
 // shortcut for /workspaces/:wsId/members/:userId
@@ -138,6 +150,9 @@ router.route('/me/devices')
 		res.redirect(`/devices?owner=${req.user.id}`);
 	});
 router.route('/me')
+	.get(function gettingMyInfo(req,res) {
+		res.redirect(`/users/${req.user.id}`);
+	})
 	.put(function updateMyProfile(req, res) {
 		res.redirect(`/users/${req.user.id}`);
 	});
