@@ -193,8 +193,19 @@ describe(`WorkspaceModel.test.js`, function() {
 
 
 		it(`Test '_pFindAndLoad' with snippit of workspace name`, function(done) {
-			WorkspaceModel._pFindAndLoad({name: 'insstek'})
-				.then( instances => console.log(instances.map( e => e.getRefinedProperty() )) )
+			Promise.all([
+				owner.createWorkspace({name: 'insstek 1'}),
+				owner.createWorkspace({name: 'insstek 2'}),
+				owner.createWorkspace({name: 'insstek 3'}),
+				owner.createWorkspace({name: 'insstak 4'}),
+				owner.createWorkspace({name: 'insstak 5'}),
+				owner.createWorkspace({name: 'insstak 6'}),
+				owner.createWorkspace({name: 'insstak 7'}),
+			])
+				.then( instances => WorkspaceModel._pFindAndLoad({name: 'insstek'}) )
+				.then( instances => console.log(`index: 'insstek'`, instances.map( e => e.getRefinedProperty() )) )
+				.then( instances => WorkspaceModel._pFindAndLoad({name: 'inss'} ) )
+				.then( instances => console.log(`index: 'inss'`, instances.map( e => e.getRefinedProperty() )) )
 				.catch( reason => assert.fail() )
 				.then( () => done() );
 		});
