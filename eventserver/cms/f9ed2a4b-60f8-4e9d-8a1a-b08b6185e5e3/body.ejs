@@ -1,0 +1,18 @@
+
+	<script src="https://cdn.rawgit.com/webcomponents/webcomponentsjs/v1.1.0/webcomponents-lite.js"></script>
+<link href="https://libs.webizing.org/wxr-lastest.html" rel="import">
+<style>
+</style>
+
+<wxr-world>
+</wxr-world>
+	
+
+	<script>
+		window.addEventListener('WebComponentsReady', function() {
+			WXR.WebizingDeviceConfigManager.webizingDeviceManagerEnable = true;
+			WXR.InteractionListener.webizingDeviceManagerEnable = true;
+			WXR.InteractionListener.interactionEventServerEnable = true;
+		});
+	</script><div style="overflow: hidden; width: 100%; height: 100%; position: absolute; top: 0px; z-index: -2;"><div style="transform-style: preserve-3d; width: 1440px; height: 778px;"></div><canvas width="1440" height="778" style="width: 100%; height: 100%; pointer-events: none; position: absolute; top: 0px; z-index: -3;"></canvas></div><iron-a11y-announcer></iron-a11y-announcer>
+

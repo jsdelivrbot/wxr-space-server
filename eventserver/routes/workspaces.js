@@ -49,6 +49,8 @@ function getWorkspaceList(req, res) {
 }
 
 // create new workspace
+const CMSRoot = path.join(__app_root, 'cms');
+const CMSBodyTemplate = path.join(CMSRoot, 'body_template.ejs');
 function createNewWorkspace(req, res) {
 
 	const user = req.user;
@@ -59,15 +61,15 @@ function createNewWorkspace(req, res) {
 
 
 	let workspaceInstance;
-	let wsCMSPath;
+	let CMSInstanceDirectory;
 
 	user.createWorkspace(wsInfo)
 		.then( instance => {
 			workspaceInstance = instance;
-			wsCMSPath = path.join(__app_root, 'cms', workspaceInstance.id);
-			return mkdirp(wsCMSPath);
+			CMSInstanceDirectory = path.join(CMSRoot, workspaceInstance.id);
+			return mkdirp(CMSInstanceDirectory);
 		})
-		.then( _path => fs.openSync(path.join(wsCMSPath, 'body.ejs'), 'w') )
+		.then( _path => fs.copyFileSync(CMSBodyTemplate, path.join(CMSInstanceDirectory, 'body.ejs')) )
 		.then( () => workspaceInstance.getRefinedProperty() )
 		.then( property => res.json( APIResponseMessage.OK(property) ) )
 		.catch( reason => res.json( APIResponseMessage.ERROR(reason) ) );
