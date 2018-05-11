@@ -2,6 +2,8 @@ const express = require('express');
 const mailer = require('../mailer');
 const multer = require('multer');
 const path = require('path');
+const fs = require('fs');
+const mkdirp = require('mkdirp');
 const router = express.Router();
 const {UserModel, WorkspaceModel, DeviceModel} = require('../models/Models');
 
@@ -75,6 +77,23 @@ function getWorkspaceInfo(req, res) {
 		.then( property => res.json( APIResponseMessage.OK(property) ) )
 		.catch( reason => res.json( APIResponseMessage.ERROR(reason)) );
 };
+
+
+// save contents
+function saveContents(req, res) {
+
+	const user = req.user;
+	const wsId = req.params.wsId;
+	const body = req.body;
+	const wsCMSPath = `../cms/` + wsId;
+
+	// TODO: checking if requester is valid user.
+	mkdirp(wsCMSPath, err => {
+		if (err) res.json( APIResponseMessage.ERROR(err) );
+		else fs.writeFile(wsCMSPath + `body.ejs`, body);
+		res.json( APIResponseMessage.OK() );
+	});
+}
 
 
 // update workspace info
@@ -366,6 +385,9 @@ router.route('/:wsId')
 	.get(getWorkspaceInfo)
 	.put(upload.single('thumbnail'), updateWorkspaceInfo);
 	// .delete(destroyWorkspace);
+
+router.route('/:wsId/save')
+	.post(saveContents);
 
 router.route('/:wsId/members')
 	.get(getAllMembers);
