@@ -133,8 +133,13 @@
 	<wxr-description
 			title="insstek AR" img="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/thumb/ar-thumb.png"
 			desc="insstek 3D printer maintenance using WXR AR browser"></wxr-description>
-	<wxr-mode default="3D" current="3D" modes='["3D", "AR"]'></wxr-mode>
+	<wxr-view default="3D" current="3D" modes='["3D", "AR"]'></wxr-view>
 	<wxr-ar engine="vuforia"></wxr-ar>
+
+	<wxr-requirement devices='["leap-motion"]'></wxr-requirement>
+
+	<wxr-user user-id="yongjae.lee@wrl.onl" authority="owner"></wxr-user>
+	<wxr-user user-id="jongho.lee@wrl.onl" authority="viewer"></wxr-user>
 
 	<wxr-camera fovy=61 near=0.1 far=1000></wxr-camera>
 	<wxr-space src="http://content.wxr.webizing.org/space/1" enable>

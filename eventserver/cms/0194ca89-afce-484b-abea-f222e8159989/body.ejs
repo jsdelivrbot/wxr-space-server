@@ -169,8 +169,12 @@
 	<wxr-description
 			title="insstek VR" img="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/thumb/vr-thumb.png"
 			desc="insstek 3D printer maintenance training using WXR VR browser"></wxr-description>
-	<wxr-mode default="3D" current="3D" modes='["3D", "VR"]'></wxr-mode>
-	<wxr-interaction required='[]' optional='[]'></wxr-interaction>
+	<wxr-view default="3D" current="3D" modes='["3D", "VR"]'></wxr-view>
+
+	<wxr-requirement devices='["leap-motion"]'></wxr-requirement>
+
+	<wxr-user user-id="yongjae.lee@wrl.onl" authority="owner"></wxr-user>
+	<wxr-user user-id="jongho.lee@wrl.onl" authority="viewer"></wxr-user>
 
 	<wxr-camera fovy=61 near=0.1 far=1000></wxr-camera>
 	<wxr-space src="http://content.wxr.webizing.org/space/step01" enable>
