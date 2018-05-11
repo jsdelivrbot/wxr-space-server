@@ -191,6 +191,14 @@ describe(`WorkspaceModel.test.js`, function() {
 		// 		.then( () => done() );
 		// });
 
+
+		it(`Test '_pFindAndLoad' with snippit of workspace name`, function(done) {
+			WorkspaceModel._pFindAndLoad({name: 'insstek'})
+				.then( instances => console.log(instances.map( e => e.getRefinedProperty() )) )
+				.catch( reason => assert.fail() )
+				.then( () => done() );
+		});
+
 	});
 
 
