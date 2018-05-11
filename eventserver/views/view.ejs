@@ -6,13 +6,6 @@
 	<meta name="viewport" content="width=device-width, user-scalable=no">
 	<link rel="icon" href="https://getbootstrap.com/favicon.ico">
 	<script src="/libs/socket.io/socket.io.js"></script>
-</head>
-<body>
-	<%- include(`../cms/` + workspace.id + `/body`); -%>
-
-	<wxr-editor>
-	</wxr-editor>
-
 	<script>
 		window.addEventListener('WebComponentsReady', function() {
 			WXR.WebizingDeviceConfigManager.webizingDeviceManagerEnable = true;
@@ -20,5 +13,12 @@
 			WXR.InteractionListener.interactionEventServerEnable = true;
 		});
 	</script>
+
+</head>
+<body>
+	<%- include(`../cms/` + workspace.id + `/body`); -%>
+
+	<wxr-editor>
+	</wxr-editor>
 </body>
 </html>
