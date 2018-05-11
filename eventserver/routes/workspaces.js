@@ -3,7 +3,7 @@ const mailer = require('../mailer');
 const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
-const mkdirp = require('mkdirp');
+const mkdirp = require('mkdirp-promise')
 const router = express.Router();
 const {UserModel, WorkspaceModel, DeviceModel} = require('../models/Models');
 
@@ -57,8 +57,18 @@ function createNewWorkspace(req, res) {
 		description: req.body.description || 'An Webizing Workspace.',
 	};
 
+
+	let workspaceInstance;
+	let wsCMSPath;
+
 	user.createWorkspace(wsInfo)
-		.then( wsInstance => wsInstance.getRefinedProperty() )
+		.then( instance => {
+			workspaceInstance = instance;
+			wsCMSPath = path.join(__app_root, 'cms', workspaceInstance.id);
+			return mkdirp(wsCMSPath);
+		})
+		.then( _path => fs.openSync(path.join(wsCMSPath, 'body.ejs'), 'w') )
+		.then( () => workspaceInstance.getRefinedProperty() )
 		.then( property => res.json( APIResponseMessage.OK(property) ) )
 		.catch( reason => res.json( APIResponseMessage.ERROR(reason) ) );
 }
@@ -89,15 +99,12 @@ function saveContents(req, res) {
 	contentsData = '';
 	req.on('data', function(chunk) {
 		contentsData += chunk;
-	})
+	});
 	req.on('end', function() {
 		// TODO: checking if requester is valid user.
-		mkdirp(wsCMSPath, err => {
-			if (err) res.json( APIResponseMessage.ERROR(err) );
-			else fs.writeFile(wsCMSPath + `/body.ejs`, contentsData);
-			res.json( APIResponseMessage.OK() );
-		});
-	})
+		fs.writeFile(wsCMSPath + `/body.ejs`, contentsData);
+		res.json( APIResponseMessage.OK() );
+	});
 }
 
 
