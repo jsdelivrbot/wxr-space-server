@@ -60,6 +60,11 @@ const UserModel = nohm.model('UserModel', {
 
 		profileImage: {
 			type: 'string',
+		},
+		
+		recentWorkspaces: {
+			type: 'json',
+			defaultValue: [],
 		}
 	},
 	methods: {
@@ -118,6 +123,14 @@ const UserModel = nohm.model('UserModel', {
 		giveRight: function (ws, member, right) {
 			return ws.setRightOf(member, right)
 				.then( workspaceInstnace => Promise.resolve(this) );
+		},
+		
+		touchRecentWorkspace: function(ws) {
+			let recent = this.p('recentWorkspaces');
+			recent = [ws.id].concat(recent);
+			recent = [...(new Set(recent))];
+			this.p('recentWorkspaces', recent);
+			return this._pSave();
 		},
 
 		// TODO: Unsupported method in nohm v0.9.8

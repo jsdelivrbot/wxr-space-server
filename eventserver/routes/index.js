@@ -7,9 +7,10 @@ const {UserModel, WorkspaceModel} = require('../models/Models');
 // index page
 function indexPage(req, res) {
 
+	const user = req.user;
 	var options = {
 		title: 'WXR Space',
-		user: req.user,
+		user: user,
 		workspaceList: [],
 		recentWorkspace: null,
 	};
@@ -20,7 +21,7 @@ function indexPage(req, res) {
 			return Promise.all(promisesArray);
 		})
 		.then( properties => {options.workspaceList = properties} )
-		.then( () => options.user.getMyWorkspaces() )
+		.then( () => WorkspaceModel.propagateInstance(user.p('recentWorkspaces')) )
 		.then( instances => {
 			const promisesArray = instances.map(i => i.getRefinedProperty());
 			return Promise.all(promisesArray);
@@ -49,6 +50,7 @@ function viewPage(req, res) {
 					user: user,
 					workspace: workspaceInstance,
 				};
+				user.touchRecentWorkspace(workspaceInstance);
 				res.render('view', options);
 			} else {
 				res.redirect('/');
