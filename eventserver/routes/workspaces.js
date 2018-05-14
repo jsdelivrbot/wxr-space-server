@@ -12,7 +12,8 @@ const storage = multer.diskStorage({
 		cb(null, path.join(__app_root, '/public/images/thumbnail'));
 	},
 	filename: function (req, file, cb) {
-		cb(null, file.fieldname + '-' + Date.now() + '-' + file.originalname);
+		const filename = file.fieldname + '_' + Date.now() + '_' + file.originalname;
+		cb(null, path.join('/images/thumbnail', filename));
 	}
 });
 const upload = multer({ storage: storage });
@@ -118,7 +119,7 @@ function updateWorkspaceInfo(req, res) {
 	const wsInfo = {
 		name: req.body.name,
 		description: req.body.description,
-		thumbnail: req.file && req.file.filename
+		thumbnail: req.body.thumbnail || req.file && req.file.filename
 	};
 
 	WorkspaceModel._pFindAndLoad(wsId)

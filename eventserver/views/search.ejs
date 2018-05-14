@@ -67,7 +67,7 @@
 			<% for (var workspace of workspaceList) { %>
 			<div class="row">
 				<div class="col-md-7">
-					<img class="img-fluid w-100 rounded mb-3 mb-md-0" style="width:700px; height:300px;" src="/images/thumbnail/<%= workspace.thumbnail ? workspace.thumbnail : 'workspace-thumbnail-placeholder.jpg' %>" alt="Workspace thumbnail">
+					<img class="img-fluid w-100 rounded mb-3 mb-md-0" style="width:700px; height:300px;" src="<%= workspace.thumbnail ? workspace.thumbnail : '/images/thumbnail/workspace-thumbnail-placeholder.jpg' %>" alt="Workspace thumbnail">
 				</div>
 				<div class="col-md-5">
 					<h3><%= workspace.name %></h3>
