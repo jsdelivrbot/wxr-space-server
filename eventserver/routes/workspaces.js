@@ -3,7 +3,7 @@ const mailer = require('../mailer');
 const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
-const mkdirp = require('mkdirp-promise')
+const mkdirp = require('mkdirp-promise');
 const router = express.Router();
 const {UserModel, WorkspaceModel, DeviceModel} = require('../models/Models');
 
