@@ -103,7 +103,7 @@ module.exports = function(passportAuthorize) {
 								  if (err) return console.log(err);
 								  else if (lastestMessage === ret[0]) return;
 								  lastestMessage = ret[0];
-								  socket.emit('WXREvent', lastestMessage);
+								  socket.emit('WXREvent', JSON.parse(lastestMessage));
 							  });
 
 						    break;
