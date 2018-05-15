@@ -96,8 +96,8 @@ const DeviceModel = nohm.model('DeviceModel', {
 		},
 
 		getEventSetKey: function() {
-			if (this.id) return false;
-			else return `WXR:zset:${device.id}:EVENT`;
+			if (!this.id) return false;
+			else return `WXR:zset:${this.id}:EVENT`;
 		},
 
 
