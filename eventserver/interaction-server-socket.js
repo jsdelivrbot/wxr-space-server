@@ -4,7 +4,7 @@
 module.exports = function(passportAuthorize) {
 
   var config = require('config');
-  var io = require('socket.io')(config.get('SocketIO.port'));
+  var io = require('socket.io')(config.get('InteractionServer.port'));
   var redis = require('redis');
   var {WorkspaceModel, DeviceModel} = require('./models/Models');
 

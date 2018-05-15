@@ -3,7 +3,7 @@
   "dbConfig": {
     "db": 1
   },
-  "SocketIO": {
+  "InteractionServer": {
     "port": 6711
   }
 }

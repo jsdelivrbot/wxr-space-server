@@ -106,10 +106,10 @@ app.use(function(err, req, res, next) {
 
 
 /**
- * Create Socket.io server
+ * Create Interaction Server Socket
  */
 
-var io = require('./socket')(passportSocketio.authorize({
+var io = require('./interaction-server-socket')(passportSocketio.authorize({
 	key: 'connect.sid',
 	secret: scretKey,
 	store: sessionStore,
