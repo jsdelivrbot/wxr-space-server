@@ -1,4 +1,5 @@
-<script src="https://cdn.rawgit.com/webcomponents/webcomponentsjs/v1.1.0/webcomponents-lite.js"></script>
+
+	<script src="https://cdn.rawgit.com/webcomponents/webcomponentsjs/v1.1.0/webcomponents-lite.js"></script>
 <link href="https://libs.webizing.org/wxr-lastest.html" rel="import">
 <style>
 	wxr-camera {
@@ -197,120 +198,120 @@
 	}
 </script>
 
-<button id=prevBtn style="position:absolute; top:70px; right:120px;" onclick="onPreviousButtonClick();">Previous</button>
-<button id=nexBtn style="position:absolute; top:70px; right:20px;" onclick="onNextButtonClick();">Next</button>
+<button id="prevBtn" style="position:absolute; top:70px; right:120px;" onclick="onPreviousButtonClick();">Previous</button>
+<button id="nexBtn" style="position:absolute; top:70px; right:20px;" onclick="onNextButtonClick();">Next</button>
 
 <wxr-world>
-	<wxr-description
-			title="insstek 3D" img="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/thumb/3d-thumb.png"
-			desc="insstek 3D printer maintenance on the 3D web"></wxr-description>
-	<wxr-view default="3D" current="3D" modes='["3D"]'></wxr-view>
+	<wxr-description title="insstek 3D" img="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/thumb/3d-thumb.png" desc="insstek 3D printer maintenance on the 3D web"></wxr-description>
+	<wxr-view default="3D" current="3D" modes="[&quot;3D&quot;]"></wxr-view>
 
-	<wxr-requirement devices='["leap-motion"]'></wxr-requirement>
+	<wxr-requirement devices="[&quot;leap-motion&quot;]"></wxr-requirement>
 
 	<wxr-user user-id="yongjae.lee@wrl.onl" authority="owner"></wxr-user>
 	<wxr-user user-id="jongho.lee@wrl.onl" authority="viewer"></wxr-user>
 
-	<wxr-camera fovy=61 near=0.1 far=1000></wxr-camera>
+	<wxr-camera fovy="61" near="0.1" far="1000" webgl_uuid="B5677161-9769-491E-802E-D79C48DAC093" fov="60" aspect="1.002290076335878"></wxr-camera>
 
-	<wxr-space src="http://content.wxr.webizing.org/space/step01" enable>
-		<wxr-target id="STEP01" src="https://jungminha.webizing.org/04/01">
-			<wxr-light-ambient color="0xf0f0f0" intensity="0.4"></wxr-light-ambient>
-			<wxr-light-directional color="0xf0f0f0" intensity="0.4"></wxr-light-directional>
-			<wxr-obj id="model01_powder" mtl="model01_powder.mtl" obj="model01_powder.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/powder_vr">
-				<wxr-animation type="movement" to="-0.2 -0.17 -0.1" duration="6000" repeat=Infinity easing="linear"></wxr-animation>
+	<wxr-space src="http://content.wxr.webizing.org/space/step01" enable="" disabled="" webgl_uuid="08C33182-6224-424F-9A85-2E9E0A5E802F" css3d_uuid="CB4D484B-C2A9-4AB6-A2EC-F5C0E0F5D21D">
+		<wxr-target id="STEP01" src="https://jungminha.webizing.org/04/01" webgl_uuid="E5DD0B0A-2C2C-4F98-A6E1-C562D24575FF" css3d_uuid="426F56F2-CCE5-4648-BA0A-68B20FBA1263">
+			<wxr-light-ambient color="0xf0f0f0" intensity="0.4" webgl_uuid="6EF86256-2EF0-47A5-A2E8-E6C5110EFB28" css3d_uuid="1F408651-E921-472F-BA1E-03BFDB929BA0"></wxr-light-ambient>
+			<wxr-light-directional color="0xf0f0f0" intensity="0.4" webgl_uuid="708FCDA7-5D16-4D56-ABA0-CF8686905FF2" css3d_uuid="2DD31703-3BFB-4A6E-818F-650CE88DCACE"></wxr-light-directional>
+			<wxr-obj id="model01_powder" mtl="model01_powder.mtl" obj="model01_powder.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/powder_vr" webgl_uuid="F2B527BB-63DD-40BE-A993-3078E380BF2C" css3d_uuid="798A99F5-6DE7-480F-B87F-B3FAEB1952F5">
+				<wxr-animation type="movement" to="-0.2 -0.17 -0.1" duration="6000" repeat="Infinity" easing="linear"></wxr-animation>
 			</wxr-obj>
-			<wxr-obj id="model02_baseassy" mtl="model02_baseassy.mtl" obj="model02_baseassy.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/powder_vr"></wxr-obj>
-			<wxr-obj id="model02_plateclip" mtl="model02_plateclip.mtl" obj="model02_plateclip.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/powder_vr"></wxr-obj>
-			<wxr-obj id="model01_rightclip" mtl="model01_rightclip.mtl" obj="model01_rightclip.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/powder_vr">
-				<wxr-animation type="rotation" to="0 0 -1" duration="6000" repeat=Infinity easing="linear"></wxr-animation>
+			<wxr-obj id="model02_baseassy" mtl="model02_baseassy.mtl" obj="model02_baseassy.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/powder_vr" webgl_uuid="0CFB697E-97CC-4C38-BB4C-1AFE3CCD2AE5" css3d_uuid="33BA3490-DDEC-4E1B-82A6-06A7BF163EEB"></wxr-obj>
+			<wxr-obj id="model02_plateclip" mtl="model02_plateclip.mtl" obj="model02_plateclip.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/powder_vr" webgl_uuid="36C17C51-42E9-4E1D-82A6-19D1107A73AB" css3d_uuid="43C85A39-B357-4EAB-89CF-61B62840C718"></wxr-obj>
+			<wxr-obj id="model01_rightclip" mtl="model01_rightclip.mtl" obj="model01_rightclip.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/powder_vr" webgl_uuid="68DBD19E-DE65-469C-9B15-7BE535E68A32" css3d_uuid="89565787-7597-4493-BD94-C6C939918215">
+				<wxr-animation type="rotation" to="0 0 -1" duration="6000" repeat="Infinity" easing="linear"></wxr-animation>
 			</wxr-obj>
-			<wxr-obj id="model01_leftclip" mtl="model01_leftclip.mtl" obj="model01_leftclip.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/powder_vr">
-				<wxr-animation type="rotation" to="0 0 1" duration="6000" repeat=Infinity easing="linear"></wxr-animation>
+			<wxr-obj id="model01_leftclip" mtl="model01_leftclip.mtl" obj="model01_leftclip.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/powder_vr" webgl_uuid="7F911D8A-14FF-4BFD-B6B4-1333A4D6935C" css3d_uuid="1753479A-7454-4B7B-B4C5-D23A158A9DA9">
+				<wxr-animation type="rotation" to="0 0 1" duration="6000" repeat="Infinity" easing="linear"></wxr-animation>
 			</wxr-obj>
-			<wxr-obj id="model01_rightclip_bottom" mtl="model01_rightclip_bottom.mtl" obj="model01_rightclip_bottom.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/powder_vr">
-				<wxr-animation type="rotation" to="0 0 1" duration="6000" repeat=Infinity easing="linear"></wxr-animation>
+			<wxr-obj id="model01_rightclip_bottom" mtl="model01_rightclip_bottom.mtl" obj="model01_rightclip_bottom.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/powder_vr" webgl_uuid="00681F6C-83ED-44FF-A784-6254E54403CD" css3d_uuid="6E2C42C0-8798-4A2D-8071-908EC33AC6D5">
+				<wxr-animation type="rotation" to="0 0 1" duration="6000" repeat="Infinity" easing="linear"></wxr-animation>
 			</wxr-obj>
-			<wxr-obj id="model01_leftclip_bottom" mtl="model01_leftclip_bottom.mtl" obj="model01_leftclip_bottom.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/powder_vr">
-				<wxr-animation type="rotation" to="0 0 -1" duration="6000" repeat=Infinity easing="linear"></wxr-animation>
+			<wxr-obj id="model01_leftclip_bottom" mtl="model01_leftclip_bottom.mtl" obj="model01_leftclip_bottom.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/powder_vr" webgl_uuid="EC1801BF-0571-4B6C-BF22-718C9CBB6B6F" css3d_uuid="8D51129D-6FE8-45FB-AED4-0A56BCBF7879">
+				<wxr-animation type="rotation" to="0 0 -1" duration="6000" repeat="Infinity" easing="linear"></wxr-animation>
 			</wxr-obj>
-			<wxr-obj id="model01_rightarrow" mtl="model01_rightarrow.mtl" obj="model01_rightarrow.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/powder_vr"></wxr-obj>
-			<wxr-obj id="model01_leftarrow" mtl="model01_leftarrow.mtl" obj="model01_leftarrow.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/powder_vr"></wxr-obj>
-			<wxr-plane id="annotation01" texture="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/dialog/powder_vr/step01.jpg"></wxr-plane>
+			<wxr-obj id="model01_rightarrow" mtl="model01_rightarrow.mtl" obj="model01_rightarrow.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/powder_vr" webgl_uuid="F8773F25-84A8-4975-8F1A-283599873087" css3d_uuid="5C9F53BC-C8FC-4C8F-AD84-55BD8326A165"></wxr-obj>
+			<wxr-obj id="model01_leftarrow" mtl="model01_leftarrow.mtl" obj="model01_leftarrow.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/powder_vr" webgl_uuid="60763D5A-7E38-49B1-9794-5C7AECCEB54F" css3d_uuid="3D80CFF2-19BA-487B-9FD4-3D5EE5059FDA"></wxr-obj>
+			<wxr-plane id="annotation01" texture="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/dialog/powder_vr/step01.jpg" webgl_uuid="B1BB9E55-282E-4B0A-A3E3-3E45452B815A" css3d_uuid="41EB1934-C6AE-4632-B7B1-FA241D29C226"></wxr-plane>
 		</wxr-target>
 	</wxr-space>
 
 
-	<wxr-space  src="http://content.wxr.webizing.org/space/step02" disabled>
-		<wxr-target id="STEP02" src="https://jungminha.webizing.org/04/02">
-			<wxr-light-ambient color="0xf0f0f0" intensity="0.4"></wxr-light-ambient>
-			<wxr-light-directional color="0xf0f0f0" intensity="0.4"></wxr-light-directional>
-			<wxr-obj id="model02_baseassy" mtl="model02_baseassy.mtl" obj="model02_baseassy.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/powder_vr"></wxr-obj>
-			<wxr-obj id="model02_plateassy" mtl="model02_plateassy.mtl" obj="model02_plateassy.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/powder_vr">
-				<wxr-animation type="movement" to="-0.2 -0.15 -0.1" duration="15000" repeat=Infinity easing="linear"></wxr-animation>
+	<wxr-space src="http://content.wxr.webizing.org/space/step02" disabled="" webgl_uuid="DDD03EB9-C9F7-422A-A55D-4E412F2CE8FC" css3d_uuid="9990546B-5147-48A3-ADB3-B6270AFF2F05">
+		<wxr-target id="STEP02" src="https://jungminha.webizing.org/04/02" webgl_uuid="74405B68-D477-4549-8012-A5E7B7178AB0" css3d_uuid="CD10C664-0854-43B7-9037-B0D546717702">
+			<wxr-light-ambient color="0xf0f0f0" intensity="0.4" webgl_uuid="768A02A8-2FC6-4674-9AFD-77FA7A54F443" css3d_uuid="6632547E-B614-41D4-B876-D4D231319898"></wxr-light-ambient>
+			<wxr-light-directional color="0xf0f0f0" intensity="0.4" webgl_uuid="AAE2DA91-6AB8-44E5-8824-5E7931A24169" css3d_uuid="189BA07F-A292-4DC1-AE06-5727229A6775"></wxr-light-directional>
+			<wxr-obj id="model02_baseassy" mtl="model02_baseassy.mtl" obj="model02_baseassy.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/powder_vr" webgl_uuid="173B5899-8994-49B3-BDF2-9460B10B3B11" css3d_uuid="D9BC8C22-0699-4695-8174-2F523F8221DB"></wxr-obj>
+			<wxr-obj id="model02_plateassy" mtl="model02_plateassy.mtl" obj="model02_plateassy.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/powder_vr" webgl_uuid="C2788DEA-8421-48D0-B448-F34F6E2449E9" css3d_uuid="96413A6A-3511-401D-8768-A9A96BF36F76">
+				<wxr-animation type="movement" to="-0.2 -0.15 -0.1" duration="15000" repeat="Infinity" easing="linear"></wxr-animation>
 			</wxr-obj>
-			<wxr-obj id="model02_screw" mtl="model02_screw.mtl" obj="model02_screw.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/powder_vr">
-				<wxr-animation type="movement" to="-0.2 -0.15 -0.1" duration="15000" repeat=Infinity easing="linear"></wxr-animation>
+			<wxr-obj id="model02_screw" mtl="model02_screw.mtl" obj="model02_screw.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/powder_vr" webgl_uuid="EC8D77E1-DB3E-45BC-BA19-869F303DA87A" css3d_uuid="C0142F7E-692E-47CC-B7E3-D86EE676810A">
+				<wxr-animation type="movement" to="-0.2 -0.15 -0.1" duration="15000" repeat="Infinity" easing="linear"></wxr-animation>
 			</wxr-obj>
-			<wxr-plane id="annotation02" texture="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/dialog/powder_vr/step02.jpg"></wxr-plane>
+			<wxr-plane id="annotation02" texture="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/dialog/powder_vr/step02.jpg" webgl_uuid="85C12FDD-BAAF-4F36-B65E-DA99A7684EB6" css3d_uuid="141FF4A7-F0AB-45C9-A598-8B59EF087D08"></wxr-plane>
 		</wxr-target>
 	</wxr-space>
 
 
-	<wxr-space  src="http://content.wxr.webizing.org/space/step03" disabled>
-		<wxr-target id="STEP03_1" src="https://jungminha.webizing.org/04/03">
-			<wxr-light-ambient color="0xf0f0f0" intensity="0.4"></wxr-light-ambient>
-			<wxr-light-directional color="0xf0f0f0" intensity="0.4"></wxr-light-directional>
-			<wxr-obj id="model03_baseassy" mtl="model03_baseassy.mtl" obj="model03_baseassy.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/powder_vr"></wxr-obj>
-			<wxr-obj id="model03_1_screw" mtl="model03_1_screw.mtl" obj="model03_1_screw.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/powder_vr">
-				<wxr-animation type="movement" to="0 0 -0.05" duration="5000" repeat=Infinity easing="linear"></wxr-animation>
+	<wxr-space src="http://content.wxr.webizing.org/space/step03" webgl_uuid="D8C2C54F-5D7B-4493-909A-23FC3C79A302" css3d_uuid="526AADDF-F6EA-4C5F-B811-2F3D679776A4">
+		<wxr-target id="STEP03_1" src="https://jungminha.webizing.org/04/03" webgl_uuid="A07C0EC7-CE39-4760-9504-BF272C1658E0" css3d_uuid="BC7C281C-343A-475C-8BAF-8AEA1DE838A3">
+			<wxr-light-ambient color="0xf0f0f0" intensity="0.4" webgl_uuid="0D0D2A7D-F74E-4DAE-B438-737D1BB852D1" css3d_uuid="85A152A1-0D01-4C43-BE72-6AE31DB29DCE"></wxr-light-ambient>
+			<wxr-light-directional color="0xf0f0f0" intensity="0.4" webgl_uuid="96B6D70A-F8D7-4326-9815-7F9F3CC21114" css3d_uuid="BE74CDBB-380E-4C19-A319-07EE1920A1E4"></wxr-light-directional>
+			<wxr-obj id="model04_base" mtl="model04_base.mtl" obj="model04_base.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/powder_vr" webgl_uuid="F7F42D88-ECA0-4CB4-B1D1-A2080343E4DA" css3d_uuid="131D91D0-9E20-4C32-A0E6-1596A17823B5"></wxr-obj>
+			<wxr-obj id="model03_1_screw" mtl="model03_1_screw.mtl" obj="model03_1_screw.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/powder_vr" webgl_uuid="41FB55DE-7C4F-4E81-8C88-A456A9EA8B8E" css3d_uuid="FA96EA06-DF9D-4696-9575-B1D77A2977F9">
+				<wxr-animation type="movement" to="0 0 -0.05" duration="5000" repeat="Infinity" easing="linear"></wxr-animation>
 			</wxr-obj>
-			<wxr-obj id="model03_1_arrow" mtl="model03_1_arrow.mtl" obj="model03_1_arrow.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/powder_vr"></wxr-obj>
-			<wxr-obj id="model03_2_screw" mtl="model03_2_screw.mtl" obj="model03_2_screw.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/powder_vr">
-				<wxr-animation type="movement" to="-0.2 -0.2 0.1" duration="20000" repeat=Infinity easing="linear"></wxr-animation>
+			<wxr-obj id="model03_1_arrow" mtl="model03_1_arrow.mtl" obj="model03_1_arrow.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/powder_vr" webgl_uuid="6B276DC5-F03C-442C-9CD1-685947C25519" css3d_uuid="796ABD53-029B-47A8-9743-01C891AE0D6D"></wxr-obj>
+			<wxr-obj id="model03_2_screw" mtl="model03_2_screw.mtl" obj="model03_2_screw.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/powder_vr" webgl_uuid="1E06BB49-5FBC-4326-A05E-D0332436D013" css3d_uuid="C2B40B8C-8184-472A-9BE7-CB4D7F20BD62">
+				<wxr-animation type="movement" to="-0.2 -0.2 0.1" duration="20000" repeat="Infinity" easing="linear"></wxr-animation>
 			</wxr-obj>
-			<wxr-plane id="annotation03" texture="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/dialog/powder_vr/step03.jpg"></wxr-plane>
+			<wxr-plane id="annotation03" texture="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/dialog/powder_vr/step03.jpg" webgl_uuid="D15C95F2-DD8D-4172-8E97-CFB514DD610D" css3d_uuid="0BF82D40-2F10-473D-BD7C-3E4096A04A39"></wxr-plane>
 		</wxr-target>
 	</wxr-space>
 
 
 
-	<wxr-space  src="http://content.wxr.webizing.org/space/step04" disabled>
-		<wxr-target id="STEP04" src="https://jungminha.webizing.org/04/04">
-			<wxr-light-ambient color="0xf0f0f0" intensity="0.4"></wxr-light-ambient>
-			<wxr-light-directional color="0xf0f0f0" intensity="0.4"></wxr-light-directional>
-			<wxr-obj id="model04_base" mtl="model04_base.mtl" obj="model04_base.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/powder_vr"></wxr-obj>
-			<wxr-obj id="model04_bush" mtl="model04_bush.mtl" obj="model04_bush.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/powder_vr">
-				<wxr-animation type="movement" to="-0.2 -0.2 0.1" duration="20000" repeat=Infinity easing="linear"></wxr-animation>
+	<wxr-space src="http://content.wxr.webizing.org/space/step04" disabled="" webgl_uuid="4B9CE895-7BC9-45D3-A034-9AD14395EB19" css3d_uuid="D3C22DB2-86DC-47D9-A30F-66F49FE8596F">
+		<wxr-target id="STEP04" src="https://jungminha.webizing.org/04/04" webgl_uuid="19E430DB-6B2B-4B51-9205-644ED29ADF61" css3d_uuid="233F308A-DD7B-4937-891C-A3F13B7F841B">
+			<wxr-light-ambient color="0xf0f0f0" intensity="0.4" webgl_uuid="A50CBC3E-8112-4EBA-91E9-2E60B7F0C1D0" css3d_uuid="CB9AE3C8-9293-4EC6-914B-E0CF058465FF"></wxr-light-ambient>
+			<wxr-light-directional color="0xf0f0f0" intensity="0.4" webgl_uuid="F3EED1BA-B8E8-44F3-BEAA-D1FB425BA969" css3d_uuid="9A0B5534-C681-4731-B771-2B01142C68C5"></wxr-light-directional>
+			<wxr-obj id="model04_base" mtl="model04_base.mtl" obj="model04_base.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/powder_vr" webgl_uuid="06E068C7-D94C-4F27-81E5-184D2E96A556" css3d_uuid="8EA3B175-EC30-4F97-B56D-5D61FA1B11CC"></wxr-obj>
+			<wxr-obj id="model04_bush" mtl="model04_bush.mtl" obj="model04_bush.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/powder_vr" webgl_uuid="60518D3A-17BC-4F79-826C-BDFC0BFFE2FA" css3d_uuid="1004EFF9-6AD2-44B1-B739-FA77B91A466D">
+				<wxr-animation type="movement" to="-0.2 -0.2 0.1" duration="20000" repeat="Infinity" easing="linear"></wxr-animation>
 			</wxr-obj>
-			<wxr-obj id="model04_shaft" mtl="model04_shaft.mtl" obj="model04_shaft.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/powder_vr">
-				<wxr-animation type="movement" to="-0.2 -0.2 0.1" duration="20000" repeat=Infinity easing="linear"></wxr-animation>
+			<wxr-obj id="model04_shaft" mtl="model04_shaft.mtl" obj="model04_shaft.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/powder_vr" webgl_uuid="8CBFF8BA-5365-4617-B2A1-545799138B68" css3d_uuid="7AE7D14A-457A-4702-ADF7-D520B78DDA02">
+				<wxr-animation type="movement" to="-0.2 -0.2 0.1" duration="20000" repeat="Infinity" easing="linear"></wxr-animation>
 			</wxr-obj>
-			<wxr-obj id="model05_busharrow" mtl="model05_busharrow.mtl" obj="model05_busharrow.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/powder_vr">
-				<wxr-animation type="movement" to="-0.2 -0.2 0.1" duration="20000" repeat=Infinity easing="linear"></wxr-animation>
+			<wxr-obj id="model05_busharrow" mtl="model05_busharrow.mtl" obj="model05_busharrow.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/powder_vr" webgl_uuid="39B629C5-3C69-4822-974C-B8F1C4786725" css3d_uuid="759FADF5-4D38-4395-BEF3-89BDC93B2B42">
+				<wxr-animation type="movement" to="-0.2 -0.2 0.1" duration="20000" repeat="Infinity" easing="linear"></wxr-animation>
 			</wxr-obj>
-			<wxr-plane id="annotation04" texture="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/dialog/powder_vr/step04.jpg"></wxr-plane>
+			<wxr-plane id="annotation04" texture="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/dialog/powder_vr/step04.jpg" webgl_uuid="22C70974-B43E-4899-B491-4A7B31D2BDCC" css3d_uuid="121D6CE4-AC0D-44C1-977E-62808C5DCC07"></wxr-plane>
 		</wxr-target>
 	</wxr-space>
 
 
-	<wxr-space  src="http://content.wxr.webizing.org/space/step05" disabled>
-		<wxr-target id="STEP05" src="https://jungminha.webizing.org/04/05">
+	<wxr-space src="http://content.wxr.webizing.org/space/step05" disabled="" webgl_uuid="DFDB956C-DBB1-4258-8331-DB2FF6347840" css3d_uuid="E8690820-6E1C-47AD-9277-C0D9DFDF3823">
+		<wxr-target id="STEP05" src="https://jungminha.webizing.org/04/05" webgl_uuid="9E73D278-C972-4DB4-82E8-59598CC587F2" css3d_uuid="F3E2D005-4822-4FF1-9E8B-325D98CFE99B">
 			<wxr-light-ambient color="0xf0f0f0" intensity="0.4"></wxr-light-ambient>
 			<wxr-light-directional color="0xf0f0f0" intensity="0.4"></wxr-light-directional>
 			<wxr-obj id="model05_bush" mtl="model05_bush.mtl" obj="model05_bush.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/powder_vr">
-				<wxr-animation type="movement" to="-0.2 -0.2 0.1" duration="20000" repeat=Infinity easing="linear"></wxr-animation>
+				<wxr-animation type="movement" to="-0.2 -0.2 0.1" duration="20000" repeat="Infinity" easing="linear"></wxr-animation>
 			</wxr-obj>
 			<wxr-obj id="model04_shaft" mtl="model04_shaft.mtl" obj="model04_shaft.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/powder_vr">
-				<wxr-animation type="movement" to="-0.2 -0.2 -0.3" duration="20000" repeat=Infinity easing="linear"></wxr-animation>
+				<wxr-animation type="movement" to="-0.2 -0.2 -0.3" duration="20000" repeat="Infinity" easing="linear"></wxr-animation>
 			</wxr-obj>
 			<wxr-obj id="model05_busharrow" mtl="model05_busharrow.mtl" obj="model05_busharrow.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/powder_vr">
-				<wxr-animation type="movement" to="-0.2 -0.2 0.1" duration="20000" repeat=Infinity easing="linear"></wxr-animation>
+				<wxr-animation type="movement" to="-0.2 -0.2 0.1" duration="20000" repeat="Infinity" easing="linear"></wxr-animation>
 			</wxr-obj>
 			<wxr-obj id="model05_shaftarrow" mtl="model05_shaftarrow.mtl" obj="model05_shaftarrow.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/powder_vr">
-				<wxr-animation type="movement" to="-0.2 -0.2 -0.3" duration="20000" repeat=Infinity easing="linear"></wxr-animation>
+				<wxr-animation type="movement" to="-0.2 -0.2 -0.3" duration="20000" repeat="Infinity" easing="linear"></wxr-animation>
 			</wxr-obj>
 			<wxr-plane id="annotation05" texture="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/dialog/powder_vr/step05.jpg"></wxr-plane>
 		</wxr-target>
 	</wxr-space>
 </wxr-world>
+	
+

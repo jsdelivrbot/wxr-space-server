@@ -35,6 +35,10 @@ const WorkspaceModel = nohm.model('WorkspaceModel', {
 		},
 		thumbnail: {
 			type: 'string',
+		},
+		requirements: {
+			type: 'json',
+			defaultValue: [],
 		}
 	},
 	methods: {

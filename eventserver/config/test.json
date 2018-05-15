@@ -3,6 +3,9 @@
   "dbConfig": {
     "db": 1
   },
+  "RealtimeDatasyncServer": {
+  	"port": 6710
+  },
   "InteractionServer": {
     "port": 6711
   }

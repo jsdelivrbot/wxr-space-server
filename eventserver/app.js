@@ -123,4 +123,24 @@ var io = require('./interaction-server-socket')(passportSocketio.authorize({
 
 
 
+/**
+ * Create Real-time datasync socket
+ */
+
+var io = require('./realtime-datasync-socket')(passportSocketio.authorize({
+	key: 'connect.sid',
+	secret: scretKey,
+	store: sessionStore,
+	passport: passport,
+	cookieParser: cookieParser,
+	fail: function onAutohrizeFail(data, message, error, accept) {
+		// accept requests that haven't session.
+		//accept(null, true);
+		// reject request
+		accept(false);
+	}
+}));
+
+
+
 module.exports = app;
