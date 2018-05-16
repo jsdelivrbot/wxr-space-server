@@ -1,5 +1,6 @@
 
 	
+	
 	<script src="https://cdn.rawgit.com/webcomponents/webcomponentsjs/v1.1.0/webcomponents-lite.js"></script>
 <link href="https://libs.webizing.org/wxr-0.5.html" rel="import">
 <style>
@@ -168,52 +169,185 @@
 </style>
 
 <wxr-world>
-	<wxr-description title="insstek VR" img="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/thumb/vr-thumb.png" desc="insstek 3D printer maintenance training using WXR VR browser"></wxr-description>
-	<wxr-view default="3D" current="3D" modes="[&quot;3D&quot;, &quot;VR&quot;]"></wxr-view>
+<script src="https://cdn.rawgit.com/webcomponents/webcomponentsjs/v1.1.0/webcomponents-lite.js"></script>
+<link href="https://libs.webizing.org/wxr-0.5.html" rel="import">
+<style>
+    wxr-camera {
+        --wxr-transform: translate3d(0, 0.5, 1) rotate3d(0, 0, 0);
+    }
 
-	<wxr-requirement devices="[&quot;wxr-hand-leapmotion&quot;]"></wxr-requirement>
 
-	<wxr-user user-id="yongjae.lee@wrl.onl" authority="owner"></wxr-user>
-	<wxr-user user-id="jongho.lee@wrl.onl" authority="viewer" me=""></wxr-user>
+    wxr-light-ambient {
+        --wxr-transform: translate3d(0, 0.5, 0);
+    }
 
-	<wxr-camera fovy="61" near="0.1" far="1000" webgl_uuid="26F1F724-D2AD-4DDC-8218-08BC48048E85" fov="60" aspect="2.467866323907455"></wxr-camera>
-	<wxr-space src="http://content.wxr.webizing.org/space/step01" enable="" webgl_uuid="D385230E-9FA1-4849-8721-92E32C31CA41" css3d_uuid="3AFCAC46-32EC-4CE0-B0A6-65C2C675D482">
-		<wxr-light-ambient color="0xf0f0f0" intensity="0.4" webgl_uuid="E940CD00-6B26-49D2-AE03-FBCE37E1E762" css3d_uuid="A9854C3C-0A31-444D-A910-A13DE642A280"></wxr-light-ambient>
-		<wxr-light-directional color="0xf0f0f0" intensity="0.4" webgl_uuid="CF1F66A7-4F2D-490E-8D52-041CDA7AF89D" css3d_uuid="51DE15A4-D9D0-47CF-AEF4-95D041BDAF24"></wxr-light-directional>
-		<wxr-obj id="model01_powder" mtl="model01_powder.mtl" obj="model01_powder.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/powder_vr" webgl_uuid="4798BC4B-7831-4D40-9FB2-B41F0189DA5B" css3d_uuid="DB202547-21C6-4D28-95AA-7A0C592E02CB"></wxr-obj>
-		<wxr-obj id="model02_plateclip" mtl="model02_plateclip.mtl" obj="model02_plateclip.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/powder_vr" webgl_uuid="1FDC3C23-46B8-4F0C-8E2B-587518E6D177" css3d_uuid="F5B20DB6-3531-4B4B-8E7E-7EDE51EAD1A9"></wxr-obj>
-		<wxr-obj id="model01_rightclip" mtl="model01_rightclip.mtl" obj="model01_rightclip.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/powder_vr" webgl_uuid="E3EDF6D7-288F-46BE-BB9F-9FF19B5404E4" css3d_uuid="DF46A6BE-997D-4715-9D8F-260208295866"></wxr-obj>
-		<wxr-obj id="model01_leftclip" mtl="model01_leftclip.mtl" obj="model01_leftclip.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/powder_vr" webgl_uuid="376F235F-3DA0-402A-A68C-98A398C4F06B" css3d_uuid="362416C5-A21B-4E37-A7CA-30AFBDDB5957"></wxr-obj>
-		<wxr-obj id="model01_rightclip_bottom" mtl="model01_rightclip_bottom.mtl" obj="model01_rightclip_bottom.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/powder_vr" webgl_uuid="BD28D464-7CAA-43EF-9F09-36D936164909" css3d_uuid="7A090C43-E8C6-485E-ABA8-F9428494F417"></wxr-obj>
-		<wxr-obj id="model01_leftclip_bottom" mtl="model01_leftclip_bottom.mtl" obj="model01_leftclip_bottom.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/powder_vr" webgl_uuid="9B371164-13AF-4D4E-A28F-427D93E76E70" css3d_uuid="98CFD23D-F3E0-4AB5-8624-6D7605D52B41"></wxr-obj>
-		<wxr-obj id="model02_screw" mtl="model02_screw.mtl" obj="model02_screw.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/powder_vr" webgl_uuid="1DCB85D2-F479-4B1E-9033-D0F7F7692FD8" css3d_uuid="78367FAE-094B-469B-A52C-0F801462DAD7"></wxr-obj>
-		<wxr-obj id="model03_1_screw" mtl="model03_1_screw.mtl" obj="model03_1_screw.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/powder_vr" webgl_uuid="67F0A392-3404-4A5F-9057-09881E0EE216" css3d_uuid="94D240C8-9D00-4A41-80AF-AA97D9D264A4"></wxr-obj>
-		<wxr-obj id="model03_2_screw" mtl="model03_2_screw.mtl" obj="model03_2_screw.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/powder_vr" webgl_uuid="E7EB5656-F704-4B05-BE77-18AF7D78286E" css3d_uuid="DE0FBCB5-B3A0-4B7A-AD53-6E428AD64B03"></wxr-obj>
-		<wxr-obj id="model04_base" mtl="model04_base.mtl" obj="model04_base.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/powder_vr" webgl_uuid="2037B3B2-5FDF-46D1-AC6D-75BF19CAA2DA" css3d_uuid="3D2AAF0F-A260-4953-B8C4-20E10DD7B602"></wxr-obj>
-		<wxr-obj id="model04_shaft" mtl="model04_shaft.mtl" obj="model04_shaft.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/powder_vr" webgl_uuid="75F3B884-C503-4B88-9BC7-71565CCB3A7D" css3d_uuid="3D3BBB2E-B2A6-45C9-A760-B430F9752C6B"></wxr-obj>
-		<wxr-obj id="model04_bush" mtl="model04_bush.mtl" obj="model04_bush.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/powder_vr" webgl_uuid="6F3C7DC1-2581-4175-849C-DC7210FE0311" css3d_uuid="EA1365DD-0DC9-4DF3-BC3B-6FB5FBC9FEC2"></wxr-obj>
+    wxr-light-directional {
+        --wxr-transform: translate3d(0, 100, 10);
+    }
 
-		<wxr-target id="STEP01" src="https://jungminha.webizing.org/04/01" disabled="" webgl_uuid="A6E93F6F-4D2B-468E-864A-251B71E3BBD6" css3d_uuid="47BA34D6-8FD0-4724-BB59-ED10E775D1DD" style="display: none;">
-			<wxr-plane id="annotation01" texture="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/dialog/powder_vr/step01.jpg"></wxr-plane>
-		</wxr-target>
-		<wxr-target id="STEP02" src="https://jungminha.webizing.org/04/02" disabled="" webgl_uuid="96A055B2-363F-4F5C-9186-15759FA4F665" css3d_uuid="40D872BB-906C-4D87-B437-A40AA4277899" style="display: none;">
-			<wxr-plane id="annotation02" texture="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/dialog/powder_vr/step02.jpg"></wxr-plane>
-		</wxr-target>
-		<wxr-target id="STEP03_1" src="https://jungminha.webizing.org/04/03" disabled="" webgl_uuid="B01B0CD6-2444-4C57-AAD0-C7F75B0548EC" css3d_uuid="1D152589-E607-42A6-B6CB-45F1AD288025" style="display: none;">
-			<wxr-plane id="annotation03" texture="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/dialog/powder_vr/step03.jpg"></wxr-plane>
-		</wxr-target>
-		<wxr-target id="STEP04" src="https://jungminha.webizing.org/04/04" disabled="" webgl_uuid="7986AC99-74AD-46E8-8A9C-F022BCCDB314" css3d_uuid="8B922BB7-73B8-4763-B19D-CD72F6E50A18" style="display: none;">
-			<wxr-plane id="annotation04" texture="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/dialog/powder_vr/step04.jpg"></wxr-plane>
-		</wxr-target>
-		<wxr-target id="STEP05" src="https://jungminha.webizing.org/04/05" disabled="" webgl_uuid="DDD9DDEA-FF5D-46CF-B48F-281F7273668C" css3d_uuid="8913EEB8-2DFC-4746-9BE0-0F7F4BCE1013" style="display: none;">
-			<wxr-plane id="annotation05" texture="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/dialog/powder_vr/step05.jpg"></wxr-plane>
-		</wxr-target>
 
-		<wxr-hand-leapmotion id="e9f35138-4410-400c-ad38-eb693a16f7ec"></wxr-hand-leapmotion>
-		<wxr-hand-leapmotion id="062f113a-a67c-4699-9c01-61eeeef9f5a9"></wxr-hand-leapmotion>
-		<wxr-hand-leapmotion id="7a3cb539-1dae-4d96-b3e5-e27597c00396"></wxr-hand-leapmotion>
-	</wxr-space>
+    #showStep{
+        width: 100px;
+        height: 50px;
+        border: 3px solid black;
+    }
+
+    #prevBtn {
+        width: 100px;
+        height: 50px;
+        border: 3px solid black;
+        font-size : 20px;
+    }
+
+    #nexBtn {
+        width: 80px;
+        height: 50px;
+        border: 3px solid black;
+        font-size : 20px;
+
+    }
+
+
+
+
+    #model01_powder {
+        --wxr-transform: translate3d(-0.2, 0.1, -0.1) rotate3d(0, 0.1, 0) scale3d(1.5, 1.5, 1.5);
+    }
+
+    #model01_baseback{
+        --wxr-transform: translate3d(-0.18, 0.1, -0.1) rotate3d(0, 0, 0) scale3d(1.5, 1.5, 1.5);
+    }
+
+    #model01_basebottom{
+        --wxr-transform: translate3d(-0.18, 0.1, -0.1) rotate3d(0, 0, 0) scale3d(1.5, 1.5, 1.5);
+    }
+
+    #model01_basefront{
+        --wxr-transform: translate3d(-0.18, 0.1, -0.1) rotate3d(0, 0, 0) scale3d(1.5, 1.5, 1.5);
+    }
+
+    #model01_rightclip {
+        --wxr-transform: translate3d(-0.135, 0.23, 0.125) rotate3d(0, 0.1, 0) scale3d(1.5, 1.5, 1.5);
+    }
+
+    #model01_leftclip {
+        --wxr-transform: translate3d(-0.305, 0.23, 0.14) rotate3d(0, 0.1, 0) scale3d(1.5, 1.5, 1.5);
+    }
+
+    #model01_rightclip_bottom {
+        --wxr-transform: translate3d(-0.135, 0.23, 0.125) rotate3d(0, 0.1, 0) scale3d(1.5, 1.5, 1.5);
+    }
+
+    #model01_leftclip_bottom {
+        --wxr-transform: translate3d(-0.305, 0.23, 0.14) rotate3d(0, 0.1, 0) scale3d(1.5, 1.5, 1.5);
+    }
+
+
+
+
+    #model02_plateclip {
+        --wxr-transform: translate3d(-0.2, 0.1, -0.1) rotate3d(0, 0.1, 0) scale3d(1.5, 1.5, 1.5);
+    }
+
+
+    #model02_screw {
+        --wxr-transform: translate3d(-0.19, -0.05, -0.08) rotate3d(0, 0.1, 0) scale3d(1.5, 1.5, 1.5);
+    }
+
+
+
+    #model03_1_screw {
+        --wxr-transform: translate3d(-0.2, 0.1, -0.1) rotate3d(0, 0.1, 0) scale3d(1.5, 1.5, 1.5);
+    }
+
+
+    #model03_2_screw {
+        --wxr-transform: translate3d(-0.2, 0.1, -0.1) rotate3d(0, 0.1, 0) scale3d(1.5, 1.5, 1.5);
+    }
+
+
+
+    #model04_base {
+        --wxr-transform: translate3d(-0.2, 0.1, -0.1) rotate3d(0, 0.1, 0) scale3d(1.5, 1.5, 1.5);
+    }
+
+    #model04_bush {
+        --wxr-transform: translate3d(-0.2, 0.1, -0.1) rotate3d(0, 0.1, 0) scale3d(1.5, 1.5, 1.5);
+    }
+
+    #model04_shaft {
+        --wxr-transform: translate3d(-0.2, 0.1, -0.1) rotate3d(0, 0.1, 0) scale3d(1.5, 1.5, 1.5);
+    }
+
+
+
+</style>
+
+<wxr-world>
+    <wxr-description title="insstek VR" img="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/thumb/vr-thumb.png" desc="insstek 3D printer maintenance training using WXR VR browser"></wxr-description>
+    <wxr-view default="3D" current="3D" modes="[&quot;3D&quot;, &quot;VR&quot;]"></wxr-view>
+
+    <wxr-requirement devices="[&quot;leap-motion&quot;]"></wxr-requirement>
+
+    <wxr-user user-id="yongjae.lee@wrl.onl" authority="owner" me=""></wxr-user>
+    <wxr-user user-id="jongho.lee@wrl.onl" authority="viewer" me=""></wxr-user>
+
+
+
+    <wxr-camera fovy="61" near="0.1" far="1000" webgl_uuid="A7C83645-E419-4744-B413-8FB9AAEB3423" fov="60" aspect="2.048811013767209"></wxr-camera>
+
+    <wxr-space src="http://content.wxr.webizing.org/space/step01" enable="" webgl_uuid="A8187B7B-52EF-41E9-9CF9-2E1A6F9D6566" css3d_uuid="25A0E989-1784-4D15-B546-8B5336D6AE28">
+        <wxr-light-ambient color="0xf0f0f0" intensity="0.4" webgl_uuid="FACB15CC-7F1B-444C-8747-1CFB7CB1D7F4" css3d_uuid="B88924BB-A53D-4C55-9D4E-0027584DD780"></wxr-light-ambient>
+        <wxr-light-directional color="0xf0f0f0" intensity="0.4" webgl_uuid="F3C08570-A6AC-4823-A672-181B598AFDA5" css3d_uuid="7E5FC3F5-B573-44C7-B740-46EE0C3A7222"></wxr-light-directional>
+
+        <wxr-obj id="model01_baseback" mtl="model01_baseback.mtl" obj="model01_baseback.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/powder_vr" webgl_uuid="C087C5B3-2E55-47DF-847D-D85FF5C6D7FC" css3d_uuid="6A9E9552-2DC2-499C-9D2C-4CD99FDCDAAB"></wxr-obj>
+        <wxr-obj id="model01_basebottom" mtl="model01_basebottom.mtl" obj="model01_basebottom.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/powder_vr" webgl_uuid="F25DBA03-8F58-4B11-AE67-0C694C4DF1FE" css3d_uuid="2C114B58-1280-41AE-B293-172225DC5460"></wxr-obj>
+        <wxr-obj id="model01_basefront" mtl="model01_basefront.mtl" obj="model01_basefront.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/powder_vr" webgl_uuid="437EE9F9-ECBA-490D-9675-164CC84E5ADE" css3d_uuid="66EF3883-3CFD-461B-A029-BB7FE0456D6E"></wxr-obj>
+        <!--
+            <wxr-obj id="model01_box_baseback" mtl="model01_box_baseback.mtl" obj="model01_box_baseback.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/powder_vr" webgl_uuid="25A51E49-751B-4D24-95BF-8CC81D372073" css3d_uuid="CB3456BC-DA71-4512-BD64-24922BFCEBA7"></wxr-obj>
+          <wxr-obj id="model01_box_basebottom" mtl="model01_box_basebottom.mtl" obj="model01_box_basebottom.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/powder_vr" webgl_uuid="8C7E59E4-6945-4E01-AF2F-4666A0348097" css3d_uuid="3FF16724-1DC3-4B13-A070-3483170CDA67"></wxr-obj>
+          <wxr-obj id="model01_box_basefront" mtl="model01_box_basefront.mtl" obj="model01_box_basefront.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/powder_vr" webgl_uuid="5F8782C8-3A8D-4CB7-BD72-8E4D7B28E0D9" css3d_uuid="FBC3D1C8-662A-440A-9F68-2F310071C4A8"></wxr-obj>
+        -->
+        <wxr-obj id="model01_powder" mtl="model01_powder.mtl" obj="model01_powder.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/powder_vr" webgl_uuid="2F6CA427-C816-4838-A111-659F113520E1" css3d_uuid="69475F7F-1556-4B13-A867-2BF1FA6DB3DC"></wxr-obj>
+        <wxr-obj id="model02_plateclip" mtl="model02_plateclip.mtl" obj="model02_plateclip.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/powder_vr" webgl_uuid="DEFBB8D3-AFD3-4509-96F7-B97CA6370AA5" css3d_uuid="B9B5F1B3-55BE-4DB9-BFA9-9FC2B40686A0"></wxr-obj>
+        <wxr-obj id="model01_rightclip" mtl="model01_rightclip.mtl" obj="model01_rightclip.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/powder_vr" webgl_uuid="5BDD8F2E-F7BB-4E47-B0BA-C74E17555A96" css3d_uuid="208DE519-AE8D-4473-8B66-7D2F309C3F0B"></wxr-obj>
+        <wxr-obj id="model01_leftclip" mtl="model01_leftclip.mtl" obj="model01_leftclip.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/powder_vr" webgl_uuid="7A29F188-D218-48B3-B63E-BB6225DD701A" css3d_uuid="C974409E-1B8D-4521-8D25-FF1A5808C122"></wxr-obj>
+        <wxr-obj id="model01_rightclip_bottom" mtl="model01_rightclip_bottom.mtl" obj="model01_rightclip_bottom.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/powder_vr" webgl_uuid="84488104-52C4-4663-A2EB-110D69BB90D5" css3d_uuid="B670C6FB-5B61-4171-8194-831398D0354A"></wxr-obj>
+        <wxr-obj id="model01_leftclip_bottom" mtl="model01_leftclip_bottom.mtl" obj="model01_leftclip_bottom.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/powder_vr" webgl_uuid="C2ED5D2D-C959-4C4B-B73C-2441265F4F5D" css3d_uuid="D8E88DBB-E209-451A-BFC5-C85FC4508B9F"></wxr-obj>
+        <wxr-obj id="model02_screw" mtl="model02_screw.mtl" obj="model02_screw.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/powder_vr" webgl_uuid="75F774C1-ADE3-4793-9063-329989BC163A" css3d_uuid="A9F4A8D1-0AAE-4766-90EC-017E19A8A709"></wxr-obj>
+        <wxr-obj id="model03_1_screw" mtl="model03_1_screw.mtl" obj="model03_1_screw.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/powder_vr" webgl_uuid="68057012-D665-4B5C-9069-FD2CF9CC6F5E" css3d_uuid="7A7F9E02-DDFB-4D4F-BBE3-29749F65ECF1"></wxr-obj>
+        <wxr-obj id="model03_2_screw" mtl="model03_2_screw.mtl" obj="model03_2_screw.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/powder_vr" webgl_uuid="34754A88-0082-497B-B41C-FB0BC49CA02E" css3d_uuid="ACE52562-7008-4564-8536-B7261CAEBDB1"></wxr-obj>
+        <wxr-obj id="model04_shaft" mtl="model04_shaft.mtl" obj="model04_shaft.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/powder_vr" webgl_uuid="8C8BE9BD-A485-42BB-9B9F-4B2C4565139A" css3d_uuid="ADEDBE09-9069-4623-8163-CE988194B136"></wxr-obj>
+        <wxr-obj id="model04_bush" mtl="model04_bush.mtl" obj="model04_bush.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/powder_vr" webgl_uuid="534975B7-2EFE-4385-A1A7-AB2FF4FD32B0" css3d_uuid="0216058E-78FE-4C43-A3DB-AE1176F49E8B"></wxr-obj>
+
+        <wxr-target id="STEP01" src="https://jungminha.webizing.org/04/01" disabled="" webgl_uuid="23E1FD0D-C0AC-484D-8E51-A377899AE5EE" css3d_uuid="57E7F122-B987-4096-93E3-EBFA4BF1CACD" style="display: none;">
+            <wxr-plane id="annotation01" texture="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/dialog/powder_vr/step01.jpg"></wxr-plane>
+        </wxr-target>
+        <wxr-target id="STEP02" src="https://jungminha.webizing.org/04/02" disabled="" webgl_uuid="8A703BDE-58A2-4E93-86FD-74D606F9ABC2" css3d_uuid="6B69D1AE-EC70-4976-98D4-706D3815235F" style="display: none;">
+            <wxr-plane id="annotation02" texture="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/dialog/powder_vr/step02.jpg"></wxr-plane>
+        </wxr-target>
+        <wxr-target id="STEP03_1" src="https://jungminha.webizing.org/04/03" disabled="" webgl_uuid="9302AF53-7617-4865-8C4E-91B0A884B95B" css3d_uuid="D0B0E50F-CE87-4EAA-9CA9-F0EEF055D726" style="display: none;">
+            <wxr-plane id="annotation03" texture="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/dialog/powder_vr/step03.jpg"></wxr-plane>
+        </wxr-target>
+        <wxr-target id="STEP04" src="https://jungminha.webizing.org/04/04" disabled="" webgl_uuid="9EFEA8C5-D3F0-4041-8C07-9517A15F3986" css3d_uuid="CD6636D2-7411-4F81-86E9-D3CF7346702E" style="display: none;">
+            <wxr-plane id="annotation04" texture="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/dialog/powder_vr/step04.jpg"></wxr-plane>
+        </wxr-target>
+        <wxr-target id="STEP05" src="https://jungminha.webizing.org/04/05" disabled="" webgl_uuid="A0F0FFA9-0E3F-4702-B029-C26B15A4F45F" css3d_uuid="36D5CE5C-4D13-4227-B8B0-AF0A7AD289A6" style="display: none;">
+            <wxr-plane id="annotation05" texture="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/dialog/powder_vr/step05.jpg"></wxr-plane>
+        </wxr-target>
+
+        <wxr-hand-leapmotion id="e9f35138-4410-400c-ad38-eb693a16f7ec"></wxr-hand-leapmotion>
+        <wxr-hand-leapmotion id="062f113a-a67c-4699-9c01-61eeeef9f5a9"></wxr-hand-leapmotion>
+        <wxr-hand-leapmotion id="7a3cb539-1dae-4d96-b3e5-e27597c00396" webgl_uuid="ADE10F8D-B330-4345-8C37-131F2668C601"></wxr-hand-leapmotion>
+        <wxr-hand-leapmotion id="7a3cb539-1dae-4d96-b3e5-e27597c00396"></wxr-hand-leapmotion>
+        <wxr-hand-leapmotion id="062f113a-a67c-4699-9c01-61eeeef9f5a9" webgl_uuid="B3B8772A-5DFC-4A90-A36A-70DB1369D4D2"></wxr-hand-leapmotion>
+    </wxr-space>
 </wxr-world>
+
+</wxr-world>
+	
+
+
 	
 
 
