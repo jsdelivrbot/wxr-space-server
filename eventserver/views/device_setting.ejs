@@ -100,7 +100,6 @@
 			$('tbody', $deviceList).remove();
 			$deviceList.append($newTbody);
 		}
-		WXR.WebizingDeviceConfigManager.addUpdateListener(refreshDeviceList);
 
 
 		// this function should be moved to WebizingDeviceConfigurationManager.js
@@ -124,10 +123,12 @@
 			}
 		}
 
-		window.onload = function () {
 
-					WXR.WebizingDeviceConfigManager.webizingDeviceManagerEnable = true;
-				}
+		window.addEventListener('WebComponentsReady', function() {
+	
+			WXR.WebizingDeviceConfigManager.addUpdateListener(refreshDeviceList);
+			WXR.WebizingDeviceConfigManager.webizingDeviceManagerEnable = true;
+		});
 
 
 	</script>
