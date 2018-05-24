@@ -53,6 +53,7 @@ module.exports = function(passportAuthorize) {
 		    handleError(`invalid timestamp!: ${JSON.stringify(msg)}`);
 		    return;
 	    }
+		
 
 
 	    // Save the data
@@ -64,6 +65,12 @@ module.exports = function(passportAuthorize) {
     socket.on('disconnect', function () {
 
     });
+	
+	
+		// this code will be used temporary
+		socket.on('WXRObjectMove', function(data) {
+			io.emit('WXRObjectMove', data);
+		});
 
 
 
