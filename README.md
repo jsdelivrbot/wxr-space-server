@@ -15,5 +15,5 @@ Currently, This use Redis as database.
 2. Move downloaded redis folder under repository root. Then the path looks like `./wxr-space-server/redis`.
 
 ### Run ###
-1. Install dependent node modules `npm run install`.
+1. Install dependent node modules `npm install`.
 2. Start Server `npm start`.
