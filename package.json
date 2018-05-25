@@ -1,12 +1,20 @@
 {
-  "name": "eventserver",
-  "version": "0.0.0",
-  "private": true,
+  "name": "wxr-space-server",
+  "version": "0.0.1",
+  "description": "",
+  "main": "./bin/www",
   "scripts": {
     "start": "node ./bin/www",
     "test": "mocha",
     "dbsetup": "mocha test/DefaultDBSetup.js"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/wrlab/wxr-space-server"
+  },
+  "keywords": [
+    "wxr", "event"
+  ],
   "dependencies": {
     "blueimp-file-upload": "^9.21.0",
     "body-parser": "~1.18.2",
@@ -43,5 +51,7 @@
     "mocha": "^5.0.0",
     "request": "^2.83.0",
     "request-promise-native": "^1.0.5"
-  }
+  },,
+  "author": "WRL <wxr@wrl.onl> (http://www.wrl.onl)",
+  "license": "ISC"
 }

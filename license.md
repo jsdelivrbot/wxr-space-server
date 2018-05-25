@@ -1,0 +1,1 @@
+The enclosed software and documentation includes copyrighted works of Korea Institute of Science and Technology. For as long as you comply with the following limitations, you are hereby authorized to (i) use, reproduce, and modify the software and documentation, and to (ii) distribute the software and documentation, including modifications, for non-commercial purposes only.
