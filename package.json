@@ -4,7 +4,7 @@
   "description": "",
   "main": "./bin/www",
   "scripts": {
-    "start": "node ./bin/www",
+    "start": "nodemon ./bin/www",
     "test": "mocha",
     "dbsetup": "mocha test/DefaultDBSetup.js"
   },
@@ -13,7 +13,8 @@
     "url": "https://github.com/wrlab/wxr-space-server"
   },
   "keywords": [
-    "wxr", "event"
+    "wxr",
+    "event"
   ],
   "dependencies": {
     "blueimp-file-upload": "^9.21.0",
@@ -34,6 +35,7 @@
     "morgan": "~1.9.0",
     "multer": "^1.3.0",
     "nodemailer": "^4.6.4",
+    "nodemon": "^1.17.5",
     "nohm": "^0.9.8",
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
@@ -51,7 +53,7 @@
     "mocha": "^5.0.0",
     "request": "^2.83.0",
     "request-promise-native": "^1.0.5"
-  },,
+  },
   "author": "WRL <wxr@wrl.onl> (http://www.wrl.onl)",
   "license": "ISC"
 }
