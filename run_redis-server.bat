@@ -1,5 +1,5 @@
 : # for bash
-:; ../redis/src/redis-server; exit $?
+:; ./redis/src/redis-server; exit $?
 
 : # for windows
-start ../redis/redis-server.exe
+start ./redis/redis-server.exe
