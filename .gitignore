@@ -59,9 +59,10 @@ typings/
 
 # next.js build output
 .next
+
+
 redis/
-*/dump.rdb
-eventserver/.idea/
-eventserver/public/images/thumbnail
-eventserver/public/images/profile
+*.rdb
+public/images/thumbnail
+public/images/profile
 .idea/
