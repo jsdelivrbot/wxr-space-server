@@ -17,3 +17,6 @@ Currently, This use Redis as database.
 ### Run ###
 1. Install dependent node modules `npm install`.
 2. Start Server `npm start`.
+3. Run redis-server using script.
+    * Unix/Linux: Execute command `~$ bash run_redis-server.bat`
+    * Windwos(x64): Execute `run_redis-server.bat` batch file.
