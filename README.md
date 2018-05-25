@@ -1,30 +1,19 @@
-# README #
+# WXR Space Server #
 
-Event server with socket.io
+The Webized X Reality Space Web Service
 
 
-### What is this repository for? ###
+## Features ##
 
-* Quick summary
-* Version
-* [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
+## Quickstart ##
 
-### How do I get set up? ###
+### Install Redis ###
+Currently, This use Redis as database.
+1. Get the Redis
+    * Unix/Linux: https://redis.io/download
+    * Windows(x64): https://github.com/MicrosoftArchive/redis/releases (ported by Microsoft Open Tech Group)
+2. Move downloaded redis folder under repository root. Then the path looks like `./wxr-space-server/redis`.
 
-* Summary of set up
-* Configuration
-* Dependencies
-* Database configuration
-* How to run tests
-* Deployment instructions
-
-### Contribution guidelines ###
-
-* Writing tests
-* Code review
-* Other guidelines
-
-### Who do I talk to? ###
-
-* Repo owner or admin
-* Other community or team contact
+### Run ###
+1. Install dependent node modules `npm run install`.
+2. Start Server `npm start`.
