@@ -105,7 +105,9 @@ function saveContents(req, res) {
 	});
 	req.on('end', function() {
 		// TODO: checking if requester is valid user.
-		fs.writeFile(wsCMSPath + `/body.ejs`, contentsData);
+		fs.writeFile(wsCMSPath + `/body.ejs`, contentsData, (err) => {
+			console.log(err);
+		});
 		res.json( APIResponseMessage.OK() );
 	});
 }
