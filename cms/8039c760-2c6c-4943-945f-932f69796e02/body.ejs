@@ -1,0 +1,191 @@
+
+	
+	
+	
+	
+	
+	
+	<wxr-world><script src="https://cdn.rawgit.com/webcomponents/webcomponentsjs/v1.1.0/webcomponents-lite.js"></script>
+<link href="https://libs.webizing.org/wxr-0.7.html" rel="import">
+
+
+    <wxr-description title="insstek VR" img="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/thumb/vr-thumb.png" desc="insstek 3D printer maintenance training using WXR VR browser"></wxr-description>
+    <wxr-view default="3D" current="3D" modes="[&quot;3D&quot;, &quot;VR&quot;]"></wxr-view>
+
+    <wxr-requirement devices="[&quot;leap-motion&quot;]"></wxr-requirement>
+
+    <wxr-user user-id="yongjae.lee@wrl.onl" authority="owner" me=""></wxr-user>
+    <wxr-user user-id="jongho.lee@wrl.onl" authority="viewer" me=""></wxr-user>
+
+    <style>
+    wxr-camera {
+        --wxr-transform: translate3d(0, 0.5, 1) rotate3d(0, 0, 0);
+    }
+
+
+    wxr-light-ambient {
+        --wxr-transform: translate3d(0, 0.5, 0);
+    }
+
+    wxr-light-directional {
+        --wxr-transform: translate3d(0, 100, 10);
+    }
+
+
+    #showStep{
+        width: 100px;
+        height: 50px;
+        border: 3px solid black;
+    }
+
+    #prevBtn {
+        width: 100px;
+        height: 50px;
+        border: 3px solid black;
+        font-size : 20px;
+    }
+
+    #nexBtn {
+        width: 80px;
+        height: 50px;
+        border: 3px solid black;
+        font-size : 20px;
+
+    }
+
+
+    #box01{
+        --wxr-transform: translate3d(0, 0, 0) rotate3d(0, 0.1, 0) scale3d(1.5, 1.5, 1.5);
+      }
+
+    #model01_powder {
+        --wxr-transform: translate3d(-0.2, 0.1, -0.1) rotate3d(0, 0.1, 0) scale3d(1.5, 1.5, 1.5);
+      }
+    }
+
+    #model01_baseback{
+        --wxr-transform: translate3d(-0.18, 0.1, -0.1) rotate3d(0, 0, 0) scale3d(1.5, 1.5, 1.5);
+    }
+
+    #model01_basebottom{
+        --wxr-transform: translate3d(-0.18, 0.1, -0.1) rotate3d(0, 0, 0) scale3d(1.5, 1.5, 1.5);
+    }
+
+    #model01_basefront{
+        --wxr-transform: translate3d(-0.18, 0.1, -0.1) rotate3d(0, 0, 0) scale3d(1.5, 1.5, 1.5);
+    }
+
+    #model01_rightclip {
+        --wxr-transform: translate3d(-0.135, 0.23, 0.124) rotate3d(0, 0.1, 0) scale3d(1.5, 1.5, 1.5);
+    }
+
+    #model01_leftclip {
+        --wxr-transform: translate3d(-0.305, 0.23, 0.139) rotate3d(0, 0.1, 0) scale3d(1.5, 1.5, 1.5);
+    }
+
+    #model01_rightclip_bottom {
+        --wxr-transform: translate3d(-0.135, 0.23, 0.125) rotate3d(0, 0.1, 0) scale3d(1.5, 1.5, 1.5);
+    }
+
+    #model01_leftclip_bottom {
+        --wxr-transform: translate3d(-0.305, 0.23, 0.14) rotate3d(0, 0.1, 0) scale3d(1.5, 1.5, 1.5);
+    }
+
+
+
+
+    #model02_plateclip {
+        --wxr-transform: translate3d(-0.2, 0.1, -0.1) rotate3d(0, 0.1, 0) scale3d(1.5, 1.5, 1.5);
+    }
+
+
+    #model02_screw {
+        --wxr-transform: translate3d(-0.19, -0.05, -0.08) rotate3d(0, 0.1, 0) scale3d(1.5, 1.5, 1.5);
+    }
+
+
+
+    #model03_1_screw {
+        --wxr-transform: translate3d(-0.2, 0.1, -0.1) rotate3d(0, 0.1, 0) scale3d(1.5, 1.5, 1.5);
+    }
+
+
+    #model03_2_screw {
+        --wxr-transform: translate3d(-0.2, 0.1, -0.1) rotate3d(0, 0.1, 0) scale3d(1.5, 1.5, 1.5);
+    }
+
+
+
+    #model04_base {
+        --wxr-transform: translate3d(-0.2, 0.1, -0.1) rotate3d(0, 0.1, 0) scale3d(1.5, 1.5, 1.5);
+    }
+
+    #model04_bush {
+        --wxr-transform: translate3d(-0.2, 0.1, -0.1) rotate3d(0, 0.1, 0) scale3d(1.5, 1.5, 1.5);
+    }
+
+    #model04_shaft {
+        --wxr-transform: translate3d(-0.2, 0.1, -0.1) rotate3d(0, 0.1, 0) scale3d(1.5, 1.5, 1.5);
+    }
+
+
+
+</style>
+<script>
+  function call(e){
+    console.log(e, 'trigger called');
+  }
+</script>
+
+    <wxr-camera fovy="61" near="0.1" far="1000" webgl_uuid="4A77B847-C0B8-48AA-9A0E-2B716EDF9570" fov="60" aspect="1.1977099236641222"></wxr-camera>
+
+    <wxr-space src="http://content.wxr.webizing.org/space/step01" enable="" webgl_uuid="2B682083-A477-4C13-A815-7D1FC6284E6D" css3d_uuid="80C24011-C6C0-4B44-AB81-DB9FDAE482F9">
+        <wxr-light-ambient color="0xf0f0f0" intensity="0.4" webgl_uuid="B1622BDE-9D05-4F8C-BEC3-D30CC36B86A0" css3d_uuid="243FDA8D-F132-4067-9E06-7C674D512C23"></wxr-light-ambient>
+        <wxr-light-directional color="0xf0f0f0" intensity="0.4" webgl_uuid="5A7C695E-7833-45BB-B50F-AAFFF2118A4D" css3d_uuid="A1AD03B4-DFBC-4B20-BAB7-DB4F2BF8CE3B"></wxr-light-directional>
+  		<wxr-box id="box01" width="1" height="1" depth="1" color="0xff0000" transparent="true" opacity="0.3" webgl_uuid="4865026A-7099-4EA6-92EC-F35DA11F53E2" css3d_uuid="C610E152-BF0A-4556-9DC3-DB8D61674EE3" style="--wxr-transform:tranlate3d( 0, 0.141272, 0.10889), rotate3d(0, 0.1, 0), scale3d(1.5, 1.5, 1.5);"></wxr-box>   
+          <wxr-trigger radius="0.001" targets="['box01']" ontrigger="call()"></wxr-trigger>
+        <wxr-obj id="model01_baseback" mtl="model01_baseback.mtl" obj="model01_baseback.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/powder_vr" transparent="true" opacity="0.3" webgl_uuid="A8B5ABAD-7162-420E-9556-7B0B374B5F5E" css3d_uuid="6BF068BD-D998-4F80-901D-B7DD6FED5326" style="--wxr-transform:tranlate3d( 0, 0, -0.797116), rotate3d(0, 0, 0), scale3d(1, 1, 1);"></wxr-obj>
+        <wxr-obj id="model01_basebottom" mtl="model01_basebottom.mtl" obj="model01_basebottom.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/powder_vr" webgl_uuid="2F9A1B26-4C34-4A19-8D5E-26CC1D3423FD" css3d_uuid="E90E7C20-153A-4239-8C6A-E2BF7D66F7B4"></wxr-obj>
+        <wxr-obj id="model01_basefront" mtl="model01_basefront.mtl" obj="model01_basefront.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/powder_vr" webgl_uuid="19CC918E-F154-469D-8E0A-7502ED900C5D" css3d_uuid="435005A4-69C4-4A3F-986F-1B4F169C791D"></wxr-obj>
+        <wxr-obj id="model01_powder" mtl="model01_powder.mtl" obj="model01_powder.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/powder_vr" webgl_uuid="43E1CC8A-DDCD-470E-997B-2DAD9BD114B0" css3d_uuid="0C5CECFA-EC2A-4936-B8CE-715498BA59F2" style="--wxr-transform:tranlate3d( -0.2, 14.5271, 0.251359), rotate3d(0, 0.1, 0), scale3d(1.5, 1.5, 1.5);"></wxr-obj>
+        <wxr-trigger radius="1" targets="['model01_powder']" ontrigger="call()"></wxr-trigger>
+        <wxr-obj id="model02_plateclip" mtl="model02_plateclip.mtl" obj="model02_plateclip.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/powder_vr" webgl_uuid="147F5864-FA94-4947-8F61-E25B0F4240E2" css3d_uuid="55C7F603-037A-4FAA-9CF2-5F51BE08A809"></wxr-obj>
+        <wxr-trigger radius="1" targets="['model02_plateclip']" ontrigger="call()"></wxr-trigger>
+        <wxr-obj id="model01_rightclip" mtl="model01_rightclip.mtl" obj="model01_rightclip.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/powder_vr" transparent="true" opacity="0.7" webgl_uuid="49BD8D73-03CA-4885-A952-83EA9481CF27" css3d_uuid="0A5EACA5-BEA8-4824-A051-D6D39B0895FE"></wxr-obj>
+        <wxr-trigger radius="1" targets="['model01_rightclip']" ontrigger="call()"></wxr-trigger>
+        <wxr-obj id="model01_leftclip" mtl="model01_leftclip.mtl" obj="model01_leftclip.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/powder_vr" transparent="true" opacity="0.5" webgl_uuid="655729F4-D456-4669-A91C-B82E26EC3AD9" css3d_uuid="E6020A14-461E-4BE9-9D00-48AB1C8EF3B2"></wxr-obj>
+        <wxr-obj id="model01_rightclip_bottom" mtl="model01_rightclip_bottom.mtl" obj="model01_rightclip_bottom.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/powder_vr" webgl_uuid="D9FEFF95-2354-40A7-8478-49757FAC3A8B" css3d_uuid="1921D5BA-AD3E-42E9-8DC5-31BCA8B04520"></wxr-obj>
+        <wxr-obj id="model01_leftclip_bottom" mtl="model01_leftclip_bottom.mtl" obj="model01_leftclip_bottom.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/powder_vr" webgl_uuid="AD65FC96-0DAC-4920-899B-03607D9A88FE" css3d_uuid="6467E545-50BF-4054-861D-0CA2AE75AC76"></wxr-obj>
+        <wxr-obj id="model02_screw" mtl="model02_screw.mtl" obj="model02_screw.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/powder_vr" webgl_uuid="5416CF14-51EA-45E1-A378-B1B8E58EE063" css3d_uuid="B054F79B-8EAA-4C71-88D3-9E5ED6EF4AFB"></wxr-obj>
+        <wxr-obj id="model03_1_screw" mtl="model03_1_screw.mtl" obj="model03_1_screw.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/powder_vr" webgl_uuid="4A0DCF70-F11A-4938-B673-D5BF27D49672" css3d_uuid="18CB6BD9-E35E-401E-999A-9C585FD267E9"></wxr-obj>
+        <wxr-obj id="model03_2_screw" mtl="model03_2_screw.mtl" obj="model03_2_screw.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/powder_vr" webgl_uuid="E1D0E497-036E-4D6E-9590-8F2DFA7751C1" css3d_uuid="5174B0F8-FD02-4975-B8B8-F3215A7766B8"></wxr-obj>
+        <wxr-trigger radius="0.001" targets="['model03_2_screw']" ontrigger="call()"></wxr-trigger>
+        <wxr-obj id="model04_shaft" mtl="model04_shaft.mtl" obj="model04_shaft.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/powder_vr" webgl_uuid="9D01E2BF-DD90-4F8D-9EAB-35BE2A83A020" css3d_uuid="8C24F706-7927-43CD-A02D-AA11352541DD"></wxr-obj>
+        <wxr-trigger radius="1" targets="['model04_shaft']" ontrigger="call()"></wxr-trigger>
+        <wxr-obj id="model04_bush" mtl="model04_bush.mtl" obj="model04_bush.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/powder_vr" webgl_uuid="14390843-726C-495F-837C-BCF2F5DBCF8C" css3d_uuid="A2BAA04B-E944-4FBA-9EBF-15FFF59D764C"></wxr-obj>
+        <wxr-trigger radius="1" targets="['model04_bush']" ontrigger="call()"></wxr-trigger>
+
+
+    </wxr-space>
+
+</wxr-world>
+	
+
+
+	
+
+
+	
+
+
+	
+
+
+	
+
+
+	
+
+
+	
+

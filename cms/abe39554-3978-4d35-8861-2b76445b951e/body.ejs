@@ -1,0 +1,163 @@
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<wxr-world><script src="https://cdn.rawgit.com/webcomponents/webcomponentsjs/v1.1.0/webcomponents-lite.js"></script>
+<link href="https://libs.webizing.org/wxr-0.7.html" rel="import">
+
+    <wxr-user user-id="yongjae.lee@wrl.onl" authority="owner" me=""></wxr-user>
+    <wxr-user user-id="jongho.lee@wrl.onl" authority="viewer" me=""></wxr-user>
+
+<style>
+  
+  	wxr-camera {
+		--wxr-transform: translate3d(0, 0.1, 0.6) rotate3d(0, 0, 0);
+	}
+
+	wxr-light-ambient {
+		--wxr-transform: translate3d(0, 0.5, 0);
+	}
+
+	wxr-light-directional {
+		--wxr-transform: translate3d(0, 100, 10);
+	}
+  
+    wxr-trigger {
+        --wxr-transform: translate3d(0, 0, 0) rotate3d(0, 0, 0);
+    }
+
+  #box1{
+    --wxr-transform: translate3d(0, 0, 0) rotate3d(0, 0, 0) scale3d(1, 1, 1);
+</style>
+
+<script>
+  function call(element, target){
+    console.log( 'TRIGGER called');
+  }
+  
+        function triggerCondition(trigger, target) {
+        const distanceToTarget = trigger.webGLObject3D.position.distanceTo(target.webGLObject3D.position);
+        if (distanceToTarget > 1) {
+          return true;
+        }
+        return false;
+      }
+</script>
+
+<wxr-view default="3D" current="3D" modes="[&quot;3D&quot;, &quot;VR&quot;]"></wxr-view>
+<wxr-camera fovy="61" near="0.1" far="1000" webgl_uuid="9D97A416-28EE-4809-88A4-48B026AC4AF7" fov="60" aspect="1.9541984732824427"></wxr-camera>
+<wxr-space src="http://content.wxr.webizing.org/space/step01" enable="" webgl_uuid="C4AB337D-712C-4FA8-97FC-7D92FE1FE5EA" css3d_uuid="CC156F2C-85B5-4F80-817C-BAF283CEBA2B">
+	
+		<wxr-light-ambient color="0xf0f0f0" intensity="0.4" webgl_uuid="1EA01080-6E43-4F44-81EB-9B84E992CCC6" css3d_uuid="DECCCBC9-0A0F-422A-9B76-76D62E4A7AB2"></wxr-light-ambient>
+		<wxr-light-directional color="0xf0f0f0" intensity="0.4" webgl_uuid="2C742E6B-370A-4C08-AEA6-E9B2303B6D32" css3d_uuid="F1CEF46D-8AB4-48CF-A410-A64A642523B3"></wxr-light-directional>
+  		<wxr-box id="box01" width="1" height="1" depth="1" color="0xff0000" transparent="true" opacity="0.3" webgl_uuid="40B6C9FB-3209-482B-A9D1-1F8209570DD2" css3d_uuid="B1FAC65A-3189-4337-B837-74C35605D767" style="--wxr-transform:tranlate3d( 0.00723052, 0, 0), rotate3d(0, 0, 0), scale3d(1, 1, 1);"></wxr-box>   
+        <wxr-trigger targets="[&quot;box01&quot;]" condition="triggerCondition(this, target)" ontrigger="call(this,target)" webgl_uuid="59FE15F7-B850-4543-A75C-39CEB7E75828" css3d_uuid="842DCBED-AFF9-4AFC-B1CE-3BA8E4807E3E"></wxr-trigger>
+         <wxr-obj id="model02_plateclip" mtl="model02_plateclip.mtl" obj="model02_plateclip.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/powder_vr"></wxr-obj>
+  
+  </wxr-space>
+
+
+</wxr-world>
+	
+
+
+	
+
+
+	
+
+
+	
+
+
+	
+
+
+	
+
+
+	
+
+
+	
+
+
+	
+
+
+	
+
+
+	
+
+
+	
+
+
+	
+
+
+	
+
+
+	
+
+
+	
+
+
+	
+
+
+	
+
+
+	
+
+
+	
+
+
+	
+
+
+	
+
+
+	
+
+
+	
+
+
+	
+
+
+	
+
+
+	
+
