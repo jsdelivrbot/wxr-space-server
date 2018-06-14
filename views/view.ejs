@@ -11,6 +11,44 @@
 			WXR.WebizingDeviceConfigManager.webizingDeviceManagerEnable = true;
 			WXR.InteractionListener.webizingDeviceManagerEnable = true;
 			WXR.InteractionListener.interactionEventServerEnable = true;
+
+			function getMyDeviceProfiles() {
+				return new Promise( (resolve, reject) => {
+					$.ajax(WXRWebizingDeviceConfigManager.HOST_URL + `/users/me/devices`)
+						.done( data => {
+							if (data.status === 'ok') {
+								resolve( data.message );
+							}
+						});
+				});
+			}
+
+			function getAttachedDevices() {
+				return new Promise( (resolve, reject) => {
+					$.ajax(WXRWebizingDeviceConfigManager.HOST_URL + `/workspaces/` + window.location.pathname.split('/')[2] + `/devices`)
+						.done( data => {
+							if (data.status === 'ok') {
+								resolve( data.message );
+							}
+						});
+				});
+			}
+
+			Promise.all([getMyDeviceProfiles(), getAttachedDevices()])
+				.then( ([myDevices, attachedDevices]) => {
+					const unAttachedMyDevices = myDevices.filter( _myd => {
+						return !attachedDevices.find( _d => _d.id === _myd.id );
+					});
+					
+					unAttachedMyDevices.forEach( _d => {
+						$.ajax({
+							type: 'POST',
+							url: WXRWebizingDeviceConfigManager.HOST_URL + `/workspaces/` + window.location.pathname.split('/')[2] + `/devices/attach`,
+							data: {'deviceId': _d.id},
+						});
+					});
+				});
+
 		});
 	</script>
 
