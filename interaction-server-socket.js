@@ -68,9 +68,10 @@ module.exports = function(passportAuthorize) {
 	
 	
 		// this code will be used temporary
-		socket.on('WXRObjectMove', function(data) {
-			io.emit('WXRObjectMove', data);
-		});
+	socket.join(socket.data.workspaceId);
+	socket.on('WXRObjectMove', function(data) {
+		socket.to(socket.data.workspaceId).emit('WXRObjectMove', data);
+	});
 
 
 
