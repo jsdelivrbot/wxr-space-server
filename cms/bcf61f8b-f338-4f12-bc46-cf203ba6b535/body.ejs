@@ -24,6 +24,17 @@
 	
 	
 	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	<wxr-world>
 <script src="https://cdn.rawgit.com/webcomponents/webcomponentsjs/v1.1.0/webcomponents-lite.js"></script>
 <link href="https://libs.webizing.org/wxr-0.8.html" rel="import">
@@ -43,7 +54,7 @@
 	
 	
 	#sunAnnotation {
-		--wxr-transform: translate3d(0, 0, -10) scale3d(1, 1, 1);
+		--wxr-transform: translate3d(0, 0, -1) scale3d(1.1, 1.1, 1.1);
 	}
 
   	#sun{
@@ -67,17 +78,55 @@
 	<wxr-user user-id="yongjae.lee@wrl.onl" authority="owner"></wxr-user>
 	<wxr-user user-id="jongho.lee@wrl.onl" authority="viewer"></wxr-user>
 
-	<wxr-camera fovy="61" near="0.1" far="500" webgl_uuid="D900AC1B-7A44-458C-8A77-A2AB9594D9D3" fov="60" aspect="1.2462271644162033"></wxr-camera>
+	<wxr-camera fovy="61" near="0.1" far="500" fov="60" aspect="1.2462271644162033"></wxr-camera>
 
-	<wxr-space src="http://content.wxr.webizing.org/space/step01" enable="" webgl_uuid="5E13FDE0-DFBA-42BD-90E2-2834AA8AE8B2" css3d_uuid="A867A045-5EC8-48DF-BF44-91DB624EEA50">
-		<wxr-target id="stones" src="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/target/test/stones" webgl_uuid="C8C8973B-8093-4820-9906-BD169A474E05" css3d_uuid="DB443084-DCA7-4994-B7E9-4470E122C7C9" style="display: block;">       	
-         <wxr-box id="box01" color="0x000fff" webgl_uuid="E81E9201-45C8-43B0-B90B-B1687789F5F0" css3d_uuid="968AD6BC-3118-45B1-849D-686D9A1ACB4A"></wxr-box> 
-
+	<wxr-space src="http://content.wxr.webizing.org/space/step01" enable="">
+		<wxr-target id="stones" src="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/target/test/stones">       	
+  
+			<wxr-html id="sunAnnotation">
+				<div class="annotation">
+					<h3>Sun</h3>
+					<iframe width="1100" height="1300" src="http://192.168.86.173:8321" frameborder="0" allowfullscreen=""></iframe>
+				</div>
+			</wxr-html>
        </wxr-target>
 
 	</wxr-space>
 
 </wxr-world>
+	
+
+
+	
+
+
+	
+
+
+	
+
+
+	
+
+
+	
+
+
+	
+
+
+	
+
+
+	
+
+
+	
+
+
+	
+
+
 	
 
 

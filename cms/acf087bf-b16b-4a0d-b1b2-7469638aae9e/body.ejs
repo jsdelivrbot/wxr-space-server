@@ -1,0 +1,248 @@
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<wxr-world><script src="https://cdn.rawgit.com/webcomponents/webcomponentsjs/v1.1.0/webcomponents-lite.js"></script>
+<link href="https://libs.webizing.org/wxr-0.8.html" rel="import">
+<style>
+    wxr-camera {
+        --wxr-transform: translate3d(0, 0.1, 0.6) rotate3d(0, 0, 0);
+    }
+
+    wxr-light-ambient {
+        --wxr-transform: translate3d(0, 0.5, 0);
+    }
+
+
+    #annotation01 {
+        --wxr-transform: translate3d(0.11, 0.05, 0.009) rotate3d(-0.7, 0, 0) scale3d(0.1, 0.1, 0.1);
+    }
+
+    #annotation02 {
+        --wxr-transform: translate3d(0.13, 0, 0) rotate3d(-0.7, 0, 0) scale3d(0.1, 0.1, 0.1);
+    }
+
+    #annotation03 {
+        --wxr-transform: translate3d(0.14, 0.05, -0.05) rotate3d(0.7, 0, 0) scale3d(0.1, 0.1, 0.1);
+    }
+
+    #annotation04 {
+        --wxr-transform: translate3d(0.08, 0.08, 0) rotate3d(0, 0, 0) scale3d(0.1, 0.1, 0.1);
+    }
+
+    #annotation05 {
+        --wxr-transform: translate3d(0.06, 0.06, 0) rotate3d(0, 0, 0) scale3d(0.06, 0.06, 0.06);
+    }
+
+
+
+
+    #coupling{
+        --wxr-transform: translate3d(0, 0.0436, -0.026) rotate3d(1.5708, 0, 0) scale3d(1, 1, 1);
+    }
+
+    #arrow_coupling{
+        --wxr-transform: translate3d(0, 0.06, -0.026) rotate3d(1.2, 0, 0) scale3d(0.7, 0.7, 0.7);
+    }
+  
+    #coupling_screw{
+        --wxr-transform: translate3d(0, 0.0436, -0.026) rotate3d(1.5708, 0, 0) scale3d(1, 1, 1);
+    }
+  
+    #arrow_coupling2{
+        --wxr-transform: translate3d(0.05, 0.04, -0.02) rotate3d(1.5708, 0, 0) scale3d(0.5, 0.5, 0.5);
+    }
+
+    #bush_screw{
+        --wxr-transform: translate3d(0, -0.024, -0.026) rotate3d(1.5708, 0, 0) scale3d(1, 1, 1);
+    }
+
+    #bush{
+        --wxr-transform: translate3d(0, -0.024, -0.026) rotate3d(1.5708, 0, 0) scale3d(1, 1, 1);
+    }
+  
+    #shaft{
+        --wxr-transform: translate3d(0, -0.024, -0.026) rotate3d(1.5708, 0, 0) scale3d(1, 1, 1);
+    }
+
+
+
+
+
+
+    #STEP01 {
+        --wxr-transform: translate3d(0, 0, 0) rotate3d(0, 0, 0) scale3d(1, 1, 1);
+    }
+
+    #STEP02 {
+        --wxr-transform: translate3d(0, -0.105, 0) rotate3d(0, 0, 0) scale3d(1, 1, 1);
+    }
+
+    #STEP03 {
+        --wxr-transform: translate3d(0, -0.115, 0) rotate3d(0, 0, 0) scale3d(1, 1, 1);
+    }
+  
+    #STEP04 {
+        --wxr-transform: translate3d(0, -0.115, 0) rotate3d(0, 0, 0) scale3d(1, 1, 1);
+    }
+
+
+
+
+</style>
+
+<wxr-user user-id="jungmin.ha@wrl.onl" authority="owner" me=""></wxr-user>
+
+<wxr-description title="insstek AR" img="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/thumb/ar-thumb.png" desc="insstek 3D printer maintenance using WXR AR browser"></wxr-description>
+<wxr-view default="AR" current="AR" modes="[&quot;3D&quot;, &quot;AR&quot;]"></wxr-view>
+<wxr-ar engine="vuforia"></wxr-ar>
+
+<wxr-camera fovy="61" near="0.05000024999875001" far="10000.099999934488" fov="63.5824998097939" aspect="1.7053669222343921"></wxr-camera>
+<wxr-space src="http://content.wxr.webizing.org/space/1" augbase="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/target/test/stones">
+
+    <wxr-light-ambient color="0xf0f0f0" intensity="0.4"></wxr-light-ambient>
+    <wxr-light-directional color="0xf0f0f0" intensity="0.5"></wxr-light-directional>
+
+    <wxr-target id="STEP03" src="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/target/insstek/03">
+        <wxr-obj id="coupling" mtl="coupling.mtl" obj="coupling.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/powder"></wxr-obj>
+        <wxr-obj id="arrow_coupling" mtl="arrow_coupling.mtl" obj="arrow_coupling.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/powder"></wxr-obj>
+        <wxr-obj id="coupling_screw" mtl="coupling_screw.mtl" obj="coupling_screw.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/powder">
+        </wxr-obj>
+        <wxr-obj id="bush_screw" mtl="bush_screw.mtl" obj="bush_screw.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/powder">
+        </wxr-obj>
+        <wxr-obj id="bush" mtl="bush.mtl" obj="bush.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/powder">
+        </wxr-obj>
+        <wxr-obj id="shaft" mtl="shaft.mtl" obj="shaft.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/powder">
+        </wxr-obj>
+        <wxr-obj id="arrow_coupling2" mtl="arrow_blue.mtl" obj="arrow_blue.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/powder">
+        </wxr-obj>
+        <wxr-plane id="annotation03" texture="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/dialog/powder_ar/step03.jpg"></wxr-plane>
+    </wxr-target>
+
+    <wxr-hand-steamvrcontroller id="80450fd8-6509-4496-96ac-0d71c9233f41"></wxr-hand-steamvrcontroller>
+
+</wxr-space>
+<wxr-requirement></wxr-requirement></wxr-world>
+	
+
+
+	
+
+
+	
+
+
+	
+
+
+	
+
+
+	
+
+
+	
+
+
+	
+
+
+	
+
+
+	
+
+
+	
+
+
+	
+
+
+	
+
+
+	
+
+
+	
+
+
+	
+
+
+	
+
+
+	
+
+
+	
+
+
+	
+
+
+	
+
+
+	
+
+
+	
+
+
+	
+
+
+	
+
+
+	
+
+
+	
+
+
+	
+
+
+	
+
+
+	
+
+
+	
+
+
+	
+
