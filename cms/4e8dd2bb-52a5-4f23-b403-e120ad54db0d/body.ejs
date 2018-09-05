@@ -25,6 +25,42 @@
 	
 	
 	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	<wxr-world>
 <script src="https://cdn.rawgit.com/webcomponents/webcomponentsjs/v1.1.0/webcomponents-lite.js"></script>
 <link href="https://libs.webizing.org/wxr-0.8.html" rel="import">
@@ -49,6 +85,9 @@
 	}
 
 	#prevBtn {
+        position: absolute;
+        top: 60px;
+        right: 160px;
 		width: 100px;
 		height: 50px;
 		border: 3px solid black;
@@ -56,14 +95,21 @@
 	}
 
 	#nexBtn {
+        position: absolute;
+        top: 60px;
+        right: 60px;
 		width: 80px;
 		height: 50px;
 		border: 3px solid black;
 		font-size : 20px;
 	}
+  
+  	#annotation00 {
+		--wxr-transform: translate3d(-0.3, 0, 0) rotate3d(-1.5708, 0, 0) scale3d(0.3, 0.3, 0.3);
+	}
 
 	#annotation01 {
-		--wxr-transform: translate3d(-0.3, 0, 0) rotate3d(0, 0, 0) scale3d(0.3, 0.3, 0.3);
+		--wxr-transform: translate3d(-0.3, 0, 0) rotate3d(-1.5708, 0, 0) scale3d(0.3, 0.3, 0.3);
 	}
 
 	#annotation02 {
@@ -87,41 +133,91 @@
 		--wxr-transform: translate3d(0, 0, 0) rotate3d(0, 0, 0) scale3d(1, 1, 1);
 	}
 
-	#00_handle{
-		--wxr-transform: translate3d(100, 0, 0) rotate3d(0, 0, 0) scale3d(1, 1, 1);
+	#handle{
+		--wxr-transform: translate3d(0, 0, 0) rotate3d(0, 0, 0) scale3d(1, 1, 1);
+	}
+  
+  	#handle2{
+		--wxr-transform: translate3d(0, 0, 0) rotate3d(0, 1.5708, 0) scale3d(1, 1, 1);
 	}
 
-	#00_arrow {
-		--wxr-transform: translate3d(1, 3.14, 0) rotate3d(0, 0, 0) scale3d(1, 1, 1);
-	}
-
-
-	#01_screw {
+	#arrow {
 		--wxr-transform: translate3d(0, 0, 0) rotate3d(0, 0, 0) scale3d(1, 1, 1);
 	}
 
-	#02_cover {
+
+	#screw_body1 {
+		--wxr-transform: translate3d(0.05, -0.05944, -0.0335) rotate3d(0, 0, 0) scale3d(1, 1, 1);
+	}
+  	#screw_body2 {
+		--wxr-transform: translate3d(0.05, -0.05944, 0.0335) rotate3d(0, 0, 0) scale3d(1, 1, 1);
+	}
+  	#screw_body3 {
+		--wxr-transform: translate3d(0.05, -0.11746, -0.067) rotate3d(0, 0, 0) scale3d(1, 1, 1);
+	}
+  	#screw_body4 {
+		--wxr-transform: translate3d(0.05, -0.11746, 0.067) rotate3d(0, 0, 0) scale3d(1, 1, 1);
+	}
+  	#screw_body5 {
+		--wxr-transform: translate3d(0.05, -0.17548, -0.0335) rotate3d(0, 0, 0) scale3d(1, 1, 1);
+	}
+  	#screw_body6 {
+		--wxr-transform: translate3d(0.05, -0.17548, 0.0335) rotate3d(0, 0, 0) scale3d(1, 1, 1);
+	}
+  
+  	#nut_body1 {
+		--wxr-transform: translate3d(0.05, -0.05944, -0.0335) rotate3d(0, 0, 0) scale3d(1, 1, 1);
+	}
+  	#nut_body2 {
+		--wxr-transform: translate3d(0.05, -0.05944, 0.0335) rotate3d(0, 0, 0) scale3d(1, 1, 1);
+	}
+    #nut_body3 {
+		--wxr-transform: translate3d(0.05, -0.11746, -0.067) rotate3d(0, 0, 0) scale3d(1, 1, 1);
+	}
+    #nut_body4 {
+		--wxr-transform: translate3d(0.05, -0.11746, 0.067) rotate3d(0, 0, 0) scale3d(1, 1, 1);
+	}
+    #nut_body5 {
+		--wxr-transform: translate3d(0.05, -0.17548, -0.0335) rotate3d(0, 0, 0) scale3d(1, 1, 1);
+	}
+    #nut_body6 {
+		--wxr-transform: translate3d(0.05, -0.17548, 0.0335) rotate3d(0, 0, 0) scale3d(1, 1, 1);
+	}
+  
+  
+  
+  
+  
+
+	#cover {
 		--wxr-transform: translate3d(0, 0, 0) rotate3d(0, 0, 0) scale3d(1, 1, 1);
 	}
 
-	#03_seal {
+	#seat {
 		--wxr-transform: translate3d(0, 0, 0) rotate3d(0, 0, 0) scale3d(1, 1, 1);
 	}
 
-	#04_ball {
+	#ball {
 		--wxr-transform: translate3d(0, 0, 0) rotate3d(0, 0, 0) scale3d(1, 1, 1);
 	}
 
-	#05_holder {
-		--wxr-transform: translate3d(0, 0, 0) rotate3d(0, 0, 0) scale3d(1, 1, 1);
+	#holder {
+		--wxr-transform: translate3d(0, -0.013, 0) rotate3d(0, 0.2, 0) scale3d(1, 1, 1);
 	}
 
-	#05_nut {
-		--wxr-transform: translate3d(0, 0, 0) rotate3d(0, 0, 0) scale3d(1, 1, 1);
+	#nut {
+		--wxr-transform: translate3d(0, -0.005, -0.025) rotate3d(0, 0, 0) scale3d(1, 1, 1);
 	}
 
-	#05_bolt {
-		--wxr-transform: translate3d(0, 0, 0) rotate3d(0, 0, 0) scale3d(1, 1, 1);
+	#bolt {
+		--wxr-transform: translate3d(0, -0.025, -0.025) rotate3d(0, 0, 0) scale3d(1, 1, 1);
+	}
+	#nut1 {
+		--wxr-transform: translate3d(0, -0.005, 0.025) rotate3d(0, 0, 0) scale3d(1, 1, 1);
+	}
+
+	#bolt1 {
+		--wxr-transform: translate3d(0, -0.025, 0.025) rotate3d(0, 0, 0) scale3d(1, 1, 1);
 	}
 
 
@@ -135,7 +231,7 @@
 
     function onNextButtonClick() {
         console.log(arguments);
-        if(step===6){
+        if(step===7){
             return;
         }
 
@@ -168,12 +264,12 @@
     }
 </script>
 
-<button id="prevBtn" style="position:absolute; top:70px; right:120px;" onclick="onPreviousButtonClick();">Previous</button>
-<button id="nexBtn" style="position:absolute; top:70px; right:20px;" onclick="onNextButtonClick(this);">Next</button>
+<button id="prevBtn" onclick="onPreviousButtonClick();">Previous</button>
+<button id="nexBtn" onclick="onNextButtonClick(this);">Next</button>
 
 
 
-<wxr-description title="Ball Valve 3D" img="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/thumb/3d-thumb.png" desc="insstek 3D printer maintenance on the 3D web"></wxr-description>
+<wxr-description title="Ball Valve 3D" img="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/thumb/3d-thumb.png" desc="Ball Valve 3D manual "></wxr-description>
 <wxr-view default="3D" current="3D" modes="[&quot;3D&quot;, &quot;VR&quot;]"></wxr-view>
 
 
@@ -184,76 +280,153 @@
 <wxr-camera fovy="61" near="0.1" far="1000" webgl_uuid="2AB12CA1-F602-447C-9CC0-4D9008445F2B" fov="60" aspect="1.7433414043583535"></wxr-camera>
 
 
-<wxr-space src="http://content.wxr.webizing.org/space/step01" enable="" webgl_uuid="31AACB3B-75CE-4B13-845F-C29A83D402C3" css3d_uuid="450B0A89-6496-4F97-AF0D-DF08CBEC1418">
-	<wxr-light-ambient color="0xf0f0f0" intensity="0.4" webgl_uuid="1A8F5BB8-08B4-48D8-A21E-C62C7C2A5A9D" css3d_uuid="D6E18FE3-25CD-40D9-86C1-4B15DB6A15C3" id="" style="display: block;"></wxr-light-ambient>
-	<wxr-light-directional color="0xf0f0f0" intensity="0.4" webgl_uuid="FB0FDCC5-57DF-41C4-AE31-DD418A3B7A3B" css3d_uuid="8F03902F-E358-4AC7-99C7-C12A9924A8B4" id="" style="display: block;"></wxr-light-directional>
-	<wxr-obj id="base" mtl="base.mtl" obj="base.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d" webgl_uuid="2693B5DE-7266-43E7-AB37-2B9B325068DF" css3d_uuid="DD41E740-5D42-4B35-AE41-4AEF4A6EE7EF" style="display: block;"></wxr-obj>
-	<wxr-obj id="00_handle" mtl="00_handle.mtl" obj="00_handle.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d" webgl_uuid="01D9E2F2-5EF5-47F4-A217-71754328C047" css3d_uuid="2A7E8F6B-5506-4878-8258-140A95C6EF52" style="display: block; --wxr-transform:tranlate3d( 0.480355, 0, 0), rotate3d(0, 0, 0), scale3d(1, 1, 1);"></wxr-obj>
-	<wxr-obj id="01_screw" mtl="01_screw.mtl" obj="01_screw.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d" webgl_uuid="E2337D15-2049-4051-A48F-C72896E5ED26" css3d_uuid="E761AC50-4720-4B7B-9E71-A5D98540BFAC" style="display: block;"></wxr-obj>
-	<wxr-obj id="02_cover" mtl="02_cover.mtl" obj="02_cover.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d" style="--wxr-transform:tranlate3d( 0.332908, 0, 0), rotate3d(0, 0, 0), scale3d(1, 1, 1); display: block;" webgl_uuid="8FBC923C-F1AE-4605-A813-ACF2C2D4EF8C" css3d_uuid="A3DCD7A9-3C58-4185-B8BA-E99FA9ED9E02"></wxr-obj>
-	<wxr-obj id="03_seal" mtl="03_seal.mtl" obj="03_seal.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d" webgl_uuid="E0ED4C90-1FC7-44F3-9302-829683FF3DE2" css3d_uuid="80D6CF63-19EC-463D-9917-818F7CE7F492" style="display: block;"></wxr-obj>
-	<wxr-obj id="04_ball" mtl="04_ball.mtl" obj="04_ball.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d" webgl_uuid="D98CC4C9-8BD7-46EA-B9F1-03C6A938B371" css3d_uuid="5256BB06-92BB-44C1-9DE1-49CBC0C1D4A5" style="display: block;"></wxr-obj>
-	<wxr-obj id="05_holder" mtl="05_holder.mtl" obj="05_holder.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d" webgl_uuid="4E5A5612-0C82-4B86-8CFC-99BEA72554E2" css3d_uuid="317C25A2-9565-4725-8777-B9EAC86C6082" style="display: block;"></wxr-obj>
-	<wxr-obj id="05_nut" mtl="05_nut.mtl" obj="05_nut.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d" webgl_uuid="5190C39D-58BE-4DEE-8051-AD690636807B" css3d_uuid="A608E28E-657D-486C-AFEF-44C475C34452" style="display: block;"></wxr-obj>
-	<wxr-obj id="05_bolt" mtl="05_bolt.mtl" obj="05_bolt.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d" webgl_uuid="DE00B124-9E3D-4E43-9ACF-FCAEC840CDC8" css3d_uuid="2058E569-F542-4FA9-BE5B-7C9F6AC7B737" style="display: block;"></wxr-obj>
+<wxr-space src="http://content.wxr.webizing.org/space/step01" enable="" webgl_uuid="31AACB3B-75CE-4B13-845F-C29A83D402C3" css3d_uuid="450B0A89-6496-4F97-AF0D-DF08CBEC1418" disabled="">
+	<wxr-light-ambient color="0xf0f0f0" intensity="0.4" webgl_uuid="1A8F5BB8-08B4-48D8-A21E-C62C7C2A5A9D" css3d_uuid="D6E18FE3-25CD-40D9-86C1-4B15DB6A15C3" id=""></wxr-light-ambient>
+	<wxr-light-directional color="0xf0f0f0" intensity="0.4" webgl_uuid="FB0FDCC5-57DF-41C4-AE31-DD418A3B7A3B" css3d_uuid="8F03902F-E358-4AC7-99C7-C12A9924A8B4" id=""></wxr-light-directional>
+	<wxr-obj id="base" mtl="base.mtl" obj="base.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d" webgl_uuid="2693B5DE-7266-43E7-AB37-2B9B325068DF" css3d_uuid="DD41E740-5D42-4B35-AE41-4AEF4A6EE7EF"></wxr-obj>
+	<wxr-obj id="handle" mtl="00_handle.mtl" obj="00_handle.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d" webgl_uuid="01D9E2F2-5EF5-47F4-A217-71754328C047" css3d_uuid="2A7E8F6B-5506-4878-8258-140A95C6EF52"></wxr-obj>
+  	<wxr-obj id="screw_body1" mtl="screw_body.mtl" obj="screw_body.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d" webgl_uuid="01D9E2F2-5EF5-47F4-A217-71754328C047" css3d_uuid="2A7E8F6B-5506-4878-8258-140A95C6EF52">
+   		<wxr-animation type="movement" to=" 0.05 0.1 -0.0335" duration="4000" repeat="Infinity" easing="linear"></wxr-animation> 
+  </wxr-obj>
+    <wxr-obj id="screw_body2" mtl="screw_body.mtl" obj="screw_body.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d" webgl_uuid="01D9E2F2-5EF5-47F4-A217-71754328C047" css3d_uuid="2A7E8F6B-5506-4878-8258-140A95C6EF52"></wxr-obj>
+    <wxr-obj id="screw_body3" mtl="screw_body.mtl" obj="screw_body.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d" webgl_uuid="01D9E2F2-5EF5-47F4-A217-71754328C047" css3d_uuid="2A7E8F6B-5506-4878-8258-140A95C6EF52"></wxr-obj>
+    <wxr-obj id="screw_body4" mtl="screw_body.mtl" obj="screw_body.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d" webgl_uuid="01D9E2F2-5EF5-47F4-A217-71754328C047" css3d_uuid="2A7E8F6B-5506-4878-8258-140A95C6EF52"></wxr-obj>
+    <wxr-obj id="screw_body5" mtl="screw_body.mtl" obj="screw_body.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d" webgl_uuid="01D9E2F2-5EF5-47F4-A217-71754328C047" css3d_uuid="2A7E8F6B-5506-4878-8258-140A95C6EF52"></wxr-obj>
+    <wxr-obj id="screw_body6" mtl="screw_body.mtl" obj="screw_body.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d" webgl_uuid="01D9E2F2-5EF5-47F4-A217-71754328C047" css3d_uuid="2A7E8F6B-5506-4878-8258-140A95C6EF52"></wxr-obj>
+  	<wxr-obj id="nut_body1" mtl="nut_body.mtl" obj="nut_body.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d" webgl_uuid="01D9E2F2-5EF5-47F4-A217-71754328C047" css3d_uuid="2A7E8F6B-5506-4878-8258-140A95C6EF52"></wxr-obj>
+   	<wxr-obj id="nut_body2" mtl="nut_body.mtl" obj="nut_body.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d" webgl_uuid="01D9E2F2-5EF5-47F4-A217-71754328C047" css3d_uuid="2A7E8F6B-5506-4878-8258-140A95C6EF52"></wxr-obj>
+  	<wxr-obj id="nut_body3" mtl="nut_body.mtl" obj="nut_body.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d" webgl_uuid="01D9E2F2-5EF5-47F4-A217-71754328C047" css3d_uuid="2A7E8F6B-5506-4878-8258-140A95C6EF52"></wxr-obj>
+  	<wxr-obj id="nut_body4" mtl="nut_body.mtl" obj="nut_body.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d" webgl_uuid="01D9E2F2-5EF5-47F4-A217-71754328C047" css3d_uuid="2A7E8F6B-5506-4878-8258-140A95C6EF52"></wxr-obj>
+  	<wxr-obj id="nut_body5" mtl="nut_body.mtl" obj="nut_body.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d" webgl_uuid="01D9E2F2-5EF5-47F4-A217-71754328C047" css3d_uuid="2A7E8F6B-5506-4878-8258-140A95C6EF52"></wxr-obj>
+  	<wxr-obj id="nut_body6" mtl="nut_body.mtl" obj="nut_body.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d" webgl_uuid="01D9E2F2-5EF5-47F4-A217-71754328C047" css3d_uuid="2A7E8F6B-5506-4878-8258-140A95C6EF52"></wxr-obj>
+	<wxr-obj id="cover" mtl="02_cover.mtl" obj="02_cover.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d" webgl_uuid="8FBC923C-F1AE-4605-A813-ACF2C2D4EF8C" css3d_uuid="A3DCD7A9-3C58-4185-B8BA-E99FA9ED9E02"></wxr-obj>
+	<wxr-obj id="seat" mtl="seat.mtl" obj="seat.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_ar" webgl_uuid="E0ED4C90-1FC7-44F3-9302-829683FF3DE2" css3d_uuid="80D6CF63-19EC-463D-9917-818F7CE7F492"></wxr-obj>
+	<wxr-obj id="ball" mtl="04_ball.mtl" obj="04_ball.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d" webgl_uuid="D98CC4C9-8BD7-46EA-B9F1-03C6A938B371" css3d_uuid="5256BB06-92BB-44C1-9DE1-49CBC0C1D4A5"></wxr-obj>
+	<wxr-obj id="holder" mtl="05_holder.mtl" obj="05_holder.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d" webgl_uuid="4E5A5612-0C82-4B86-8CFC-99BEA72554E2" css3d_uuid="317C25A2-9565-4725-8777-B9EAC86C6082"></wxr-obj>
+	<wxr-obj id="nut" mtl="05_nut.mtl" obj="05_nut.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d" webgl_uuid="5190C39D-58BE-4DEE-8051-AD690636807B" css3d_uuid="A608E28E-657D-486C-AFEF-44C475C34452">
+     		<wxr-animation type="movement" to="0 0.05 -0.025" duration="4000" repeat="Infinity" easing="linear"></wxr-animation> 
+    </wxr-obj>
+	<wxr-obj id="bolt" mtl="05_bolt.mtl" obj="05_bolt.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d" webgl_uuid="DE00B124-9E3D-4E43-9ACF-FCAEC840CDC8" css3d_uuid="2058E569-F542-4FA9-BE5B-7C9F6AC7B737">
+ 		<wxr-animation type="movement" to="0 0.01 -0.025" duration="4000" repeat="Infinity" easing="linear"></wxr-animation> 
+  	</wxr-obj>
+  	<wxr-obj id="nut1" mtl="05_nut.mtl" obj="05_nut.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d" webgl_uuid="5190C39D-58BE-4DEE-8051-AD690636807B" css3d_uuid="A608E28E-657D-486C-AFEF-44C475C34452"></wxr-obj>
+	<wxr-obj id="bolt1" mtl="05_bolt.mtl" obj="05_bolt.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d" webgl_uuid="DE00B124-9E3D-4E43-9ACF-FCAEC840CDC8" css3d_uuid="2058E569-F542-4FA9-BE5B-7C9F6AC7B737"></wxr-obj>
+  
+	<wxr-plane id="annotation00" texture="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/dialog/valve_3d/step00.jpg" webgl_uuid="EDC55D52-C25C-4B62-9E63-8980FB43501A" css3d_uuid="61301C19-9D88-4B5A-91C6-2334AE09A68B"></wxr-plane>
 </wxr-space>
 
 
-<wxr-space src="http://content.wxr.webizing.org/space/step02" disabled="" webgl_uuid="21DFE438-022A-4E56-A09D-C94B48FAFD94" css3d_uuid="76014D07-E92E-4DE6-BA78-8803AD0E5FC6">
-	<wxr-light-ambient color="0xf0f0f0" intensity="0.4" webgl_uuid="28E90FF3-742D-400B-AF40-C9E103103EC9" css3d_uuid="DD66C1C5-2CCC-4272-AB9E-271C0E9DAA33" id="" style="display: block;"></wxr-light-ambient>
-	<wxr-light-directional color="0xf0f0f0" intensity="0.4" webgl_uuid="944751C4-A073-4600-A351-25A4FBAB76A5" css3d_uuid="F78459EF-3724-4CA6-B2E1-1E77B89E58A3" id="" style="display: block;"></wxr-light-directional>
-	<wxr-obj id="base" mtl="base.mtl" obj="base.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d" webgl_uuid="8ADDB407-4DA7-471D-A29F-27085CF84DB8" css3d_uuid="8D8C9C1E-6BB9-435D-8BA6-75A136C76AE3" style="display: block;"></wxr-obj>
-	<wxr-obj id="00_handle" mtl="00_handle.mtl" obj="00_handle.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d" webgl_uuid="52B62013-3F13-45A3-8783-88ECFB3082D5" css3d_uuid="21731508-0480-4D8C-B4C4-464D3AB1C759" style="display: block; --wxr-transform:tranlate3d( 0.530395, 0, 0), rotate3d(0, 1.11066, 0), scale3d(1, 1, 1);">
+<wxr-space src="http://content.wxr.webizing.org/space/step02" webgl_uuid="21DFE438-022A-4E56-A09D-C94B48FAFD94" css3d_uuid="76014D07-E92E-4DE6-BA78-8803AD0E5FC6" disabled="">
+	<wxr-light-ambient color="0xf0f0f0" intensity="0.4" webgl_uuid="28E90FF3-742D-400B-AF40-C9E103103EC9" css3d_uuid="DD66C1C5-2CCC-4272-AB9E-271C0E9DAA33" id=""></wxr-light-ambient>
+	<wxr-light-directional color="0xf0f0f0" intensity="0.4" webgl_uuid="944751C4-A073-4600-A351-25A4FBAB76A5" css3d_uuid="F78459EF-3724-4CA6-B2E1-1E77B89E58A3" id=""></wxr-light-directional>
+	<wxr-obj id="base" mtl="base.mtl" obj="base.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d" webgl_uuid="8ADDB407-4DA7-471D-A29F-27085CF84DB8" css3d_uuid="8D8C9C1E-6BB9-435D-8BA6-75A136C76AE3"></wxr-obj>
+	<wxr-obj id="handle" mtl="00_handle.mtl" obj="00_handle.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d" webgl_uuid="52B62013-3F13-45A3-8783-88ECFB3082D5" css3d_uuid="21731508-0480-4D8C-B4C4-464D3AB1C759">
 		<wxr-animation type="rotation" to="0 1.57 0" duration="4000" repeat="Infinity" easing="linear"></wxr-animation>
 	</wxr-obj>
-	<wxr-obj id="00_arrow" mtl="00_arrow.mtl" obj="00_arrow.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d" webgl_uuid="19A2D807-0C47-4723-BDE4-757E9B408009" css3d_uuid="1045FD81-06C0-4996-964B-FF9D4C64452A" style="display: block;"></wxr-obj>
-	<wxr-obj id="01_screw" mtl="01_screw.mtl" obj="01_screw.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d" webgl_uuid="BAE45624-9608-44A1-AFC3-49C05FCA276F" css3d_uuid="1A91DDF5-A4BF-4683-B224-303B74D6B014" style="display: block;"></wxr-obj>
-	<wxr-obj id="02_cover" mtl="02_cover.mtl" obj="02_cover.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d" webgl_uuid="EEB48378-0331-4E0C-A613-BFC93C75A557" css3d_uuid="38267A70-ABC0-4AF5-A988-36F683C48BC1" style="display: block;"></wxr-obj>
-	<wxr-obj id="03_seal" mtl="03_seal.mtl" obj="03_seal.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d" webgl_uuid="2A4DA15D-0B28-463C-9980-690CFD958FD0" css3d_uuid="10EDBE65-7103-42EE-97FE-639D03E1B530" style="display: block;"></wxr-obj>
-	<wxr-obj id="04_ball" mtl="04_ball.mtl" obj="04_ball.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d" webgl_uuid="73828633-FCA8-4FEB-8FF5-682DC6F8681A" css3d_uuid="D6BCE52E-E4F1-494C-98A7-F0EED2018F92" style="display: block;"></wxr-obj>
-	<wxr-plane id="annotation01" texture="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/dialog/valve_3d/step01.jpg" webgl_uuid="EDC55D52-C25C-4B62-9E63-8980FB43501A" css3d_uuid="61301C19-9D88-4B5A-91C6-2334AE09A68B" style="--wxr-transform:tranlate3d( 0, 0, 0), rotate3d(0, 0, 0), scale3d(1, 1, 1); display: block;"></wxr-plane>
+    <wxr-obj id="screw_body1" mtl="screw_body.mtl" obj="screw_body.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d" webgl_uuid="01D9E2F2-5EF5-47F4-A217-71754328C047" css3d_uuid="2A7E8F6B-5506-4878-8258-140A95C6EF52"></wxr-obj>
+    <wxr-obj id="screw_body2" mtl="screw_body.mtl" obj="screw_body.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d" webgl_uuid="01D9E2F2-5EF5-47F4-A217-71754328C047" css3d_uuid="2A7E8F6B-5506-4878-8258-140A95C6EF52"></wxr-obj>
+    <wxr-obj id="screw_body3" mtl="screw_body.mtl" obj="screw_body.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d" webgl_uuid="01D9E2F2-5EF5-47F4-A217-71754328C047" css3d_uuid="2A7E8F6B-5506-4878-8258-140A95C6EF52"></wxr-obj>
+    <wxr-obj id="screw_body4" mtl="screw_body.mtl" obj="screw_body.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d" webgl_uuid="01D9E2F2-5EF5-47F4-A217-71754328C047" css3d_uuid="2A7E8F6B-5506-4878-8258-140A95C6EF52"></wxr-obj>
+    <wxr-obj id="screw_body5" mtl="screw_body.mtl" obj="screw_body.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d" webgl_uuid="01D9E2F2-5EF5-47F4-A217-71754328C047" css3d_uuid="2A7E8F6B-5506-4878-8258-140A95C6EF52"></wxr-obj>
+    <wxr-obj id="screw_body6" mtl="screw_body.mtl" obj="screw_body.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d" webgl_uuid="01D9E2F2-5EF5-47F4-A217-71754328C047" css3d_uuid="2A7E8F6B-5506-4878-8258-140A95C6EF52"></wxr-obj>
+  	<wxr-obj id="nut_body1" mtl="nut_body.mtl" obj="nut_body.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d" webgl_uuid="01D9E2F2-5EF5-47F4-A217-71754328C047" css3d_uuid="2A7E8F6B-5506-4878-8258-140A95C6EF52"></wxr-obj>
+   	<wxr-obj id="nut_body2" mtl="nut_body.mtl" obj="nut_body.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d" webgl_uuid="01D9E2F2-5EF5-47F4-A217-71754328C047" css3d_uuid="2A7E8F6B-5506-4878-8258-140A95C6EF52"></wxr-obj>
+  	<wxr-obj id="nut_body3" mtl="nut_body.mtl" obj="nut_body.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d" webgl_uuid="01D9E2F2-5EF5-47F4-A217-71754328C047" css3d_uuid="2A7E8F6B-5506-4878-8258-140A95C6EF52"></wxr-obj>
+  	<wxr-obj id="nut_body4" mtl="nut_body.mtl" obj="nut_body.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d" webgl_uuid="01D9E2F2-5EF5-47F4-A217-71754328C047" css3d_uuid="2A7E8F6B-5506-4878-8258-140A95C6EF52"></wxr-obj>
+  	<wxr-obj id="nut_body5" mtl="nut_body.mtl" obj="nut_body.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d" webgl_uuid="01D9E2F2-5EF5-47F4-A217-71754328C047" css3d_uuid="2A7E8F6B-5506-4878-8258-140A95C6EF52"></wxr-obj>
+  	<wxr-obj id="nut_body6" mtl="nut_body.mtl" obj="nut_body.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d" webgl_uuid="01D9E2F2-5EF5-47F4-A217-71754328C047" css3d_uuid="2A7E8F6B-5506-4878-8258-140A95C6EF52"></wxr-obj>
+	<wxr-obj id="arrow" mtl="00_arrow.mtl" obj="00_arrow.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d" webgl_uuid="19A2D807-0C47-4723-BDE4-757E9B408009" css3d_uuid="1045FD81-06C0-4996-964B-FF9D4C64452A"></wxr-obj>
+	<wxr-obj id="cover" mtl="02_cover.mtl" obj="02_cover.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d" webgl_uuid="EEB48378-0331-4E0C-A613-BFC93C75A557" css3d_uuid="38267A70-ABC0-4AF5-A988-36F683C48BC1"></wxr-obj>
+	<wxr-obj id="seat" mtl="seat.mtl" obj="seat.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_ar" webgl_uuid="2A4DA15D-0B28-463C-9980-690CFD958FD0" css3d_uuid="10EDBE65-7103-42EE-97FE-639D03E1B530"></wxr-obj>
+	<wxr-obj id="ball" mtl="04_ball.mtl" obj="04_ball.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d" webgl_uuid="73828633-FCA8-4FEB-8FF5-682DC6F8681A" css3d_uuid="D6BCE52E-E4F1-494C-98A7-F0EED2018F92"></wxr-obj>
+    <wxr-obj id="nut1" mtl="05_nut.mtl" obj="05_nut.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d" webgl_uuid="5190C39D-58BE-4DEE-8051-AD690636807B" css3d_uuid="A608E28E-657D-486C-AFEF-44C475C34452"></wxr-obj>
+	<wxr-obj id="bolt1" mtl="05_bolt.mtl" obj="05_bolt.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d" webgl_uuid="DE00B124-9E3D-4E43-9ACF-FCAEC840CDC8" css3d_uuid="2058E569-F542-4FA9-BE5B-7C9F6AC7B737"></wxr-obj>
+    <wxr-obj id="nut" mtl="05_nut.mtl" obj="05_nut.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d" webgl_uuid="5190C39D-58BE-4DEE-8051-AD690636807B" css3d_uuid="A608E28E-657D-486C-AFEF-44C475C34452"></wxr-obj>
+	<wxr-obj id="bolt" mtl="05_bolt.mtl" obj="05_bolt.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d" webgl_uuid="DE00B124-9E3D-4E43-9ACF-FCAEC840CDC8" css3d_uuid="2058E569-F542-4FA9-BE5B-7C9F6AC7B737"></wxr-obj>
+
+  <wxr-plane id="annotation01" texture="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/dialog/valve_3d/step01.jpg" webgl_uuid="EDC55D52-C25C-4B62-9E63-8980FB43501A" css3d_uuid="61301C19-9D88-4B5A-91C6-2334AE09A68B"></wxr-plane>
 </wxr-space>
 
 
-<wxr-space src="http://content.wxr.webizing.org/space/step03" disabled="" webgl_uuid="E15E74A9-0AE5-4AA3-AEBA-70C06BC9E6E3" css3d_uuid="6DDDFE62-7D9A-4A38-8BC3-AE5D4BB14CBE">
-	<wxr-light-ambient color="0xf0f0f0" intensity="0.4" id="" style="display: block;"></wxr-light-ambient>
-	<wxr-light-directional color="0xf0f0f0" intensity="0.4" id="" style="display: block;"></wxr-light-directional>
-	<wxr-obj id="base" mtl="base.mtl" obj="base.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d" style="display: block;"></wxr-obj>
-	<wxr-obj id="00_handle" mtl="00_handle.mtl" obj="00_handle.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d" style="display: block;"></wxr-obj>
-	<wxr-obj id="01_screw" mtl="01_screw.mtl" obj="01_screw.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d" style="display: block;">
-		<wxr-animation type="movement" to="0.1 0 0" duration="4000" repeat="Infinity" easing="linear"></wxr-animation>
+<wxr-space src="http://content.wxr.webizing.org/space/step03" webgl_uuid="E15E74A9-0AE5-4AA3-AEBA-70C06BC9E6E3" css3d_uuid="6DDDFE62-7D9A-4A38-8BC3-AE5D4BB14CBE">
+	<wxr-light-ambient color="0xf0f0f0" intensity="0.4" id=""></wxr-light-ambient>
+	<wxr-light-directional color="0xf0f0f0" intensity="0.4" id=""></wxr-light-directional>
+	<wxr-obj id="base" mtl="base.mtl" obj="base.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d"></wxr-obj>
+	<wxr-obj id="handle2" mtl="00_handle.mtl" obj="00_handle.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d"></wxr-obj>
+
+    <wxr-obj id="screw_body1" mtl="screw_body.mtl" obj="screw_body.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d" webgl_uuid="01D9E2F2-5EF5-47F4-A217-71754328C047" css3d_uuid="2A7E8F6B-5506-4878-8258-140A95C6EF52"></wxr-obj>
+    <wxr-obj id="screw_body2" mtl="screw_body.mtl" obj="screw_body.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d" webgl_uuid="01D9E2F2-5EF5-47F4-A217-71754328C047" css3d_uuid="2A7E8F6B-5506-4878-8258-140A95C6EF52"></wxr-obj>
+    <wxr-obj id="screw_body3" mtl="screw_body.mtl" obj="screw_body.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d" webgl_uuid="01D9E2F2-5EF5-47F4-A217-71754328C047" css3d_uuid="2A7E8F6B-5506-4878-8258-140A95C6EF52"></wxr-obj>
+    <wxr-obj id="screw_body4" mtl="screw_body.mtl" obj="screw_body.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d" webgl_uuid="01D9E2F2-5EF5-47F4-A217-71754328C047" css3d_uuid="2A7E8F6B-5506-4878-8258-140A95C6EF52"></wxr-obj>
+    <wxr-obj id="screw_body5" mtl="screw_body.mtl" obj="screw_body.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d" webgl_uuid="01D9E2F2-5EF5-47F4-A217-71754328C047" css3d_uuid="2A7E8F6B-5506-4878-8258-140A95C6EF52"></wxr-obj>
+    <wxr-obj id="screw_body6" mtl="screw_body.mtl" obj="screw_body.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d" webgl_uuid="01D9E2F2-5EF5-47F4-A217-71754328C047" css3d_uuid="2A7E8F6B-5506-4878-8258-140A95C6EF52"></wxr-obj>
+  	<wxr-obj id="nut_body1" mtl="nut_body.mtl" obj="nut_body.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d" webgl_uuid="01D9E2F2-5EF5-47F4-A217-71754328C047" css3d_uuid="2A7E8F6B-5506-4878-8258-140A95C6EF52"></wxr-obj>
+   	<wxr-obj id="nut_body2" mtl="nut_body.mtl" obj="nut_body.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d" webgl_uuid="01D9E2F2-5EF5-47F4-A217-71754328C047" css3d_uuid="2A7E8F6B-5506-4878-8258-140A95C6EF52"></wxr-obj>
+  	<wxr-obj id="nut_body3" mtl="nut_body.mtl" obj="nut_body.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d" webgl_uuid="01D9E2F2-5EF5-47F4-A217-71754328C047" css3d_uuid="2A7E8F6B-5506-4878-8258-140A95C6EF52"></wxr-obj>
+  	<wxr-obj id="nut_body4" mtl="nut_body.mtl" obj="nut_body.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d" webgl_uuid="01D9E2F2-5EF5-47F4-A217-71754328C047" css3d_uuid="2A7E8F6B-5506-4878-8258-140A95C6EF52"></wxr-obj>
+  	<wxr-obj id="nut_body5" mtl="nut_body.mtl" obj="nut_body.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d" webgl_uuid="01D9E2F2-5EF5-47F4-A217-71754328C047" css3d_uuid="2A7E8F6B-5506-4878-8258-140A95C6EF52"></wxr-obj>
+  	<wxr-obj id="nut_body6" mtl="nut_body.mtl" obj="nut_body.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d" webgl_uuid="01D9E2F2-5EF5-47F4-A217-71754328C047" css3d_uuid="2A7E8F6B-5506-4878-8258-140A95C6EF52"></wxr-obj>
+  
+  
+  
+  
+	<wxr-obj id="cover" mtl="02_cover.mtl" obj="02_cover.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d">
 	</wxr-obj>
-	<wxr-obj id="02_cover" mtl="02_cover.mtl" obj="02_cover.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d" style="display: block;">
+	<wxr-obj id="seat" mtl="seat.mtl" obj="seat.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_ar"></wxr-obj>
+	<wxr-obj id="ball" mtl="04_ball.mtl" obj="04_ball.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d"></wxr-obj>
+    <wxr-obj id="nut1" mtl="05_nut.mtl" obj="05_nut.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d" webgl_uuid="5190C39D-58BE-4DEE-8051-AD690636807B" css3d_uuid="A608E28E-657D-486C-AFEF-44C475C34452"></wxr-obj>
+	<wxr-obj id="bolt1" mtl="05_bolt.mtl" obj="05_bolt.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d" webgl_uuid="DE00B124-9E3D-4E43-9ACF-FCAEC840CDC8" css3d_uuid="2058E569-F542-4FA9-BE5B-7C9F6AC7B737"></wxr-obj>
+  
+	<wxr-plane id="annotation02" texture="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/dialog/valve_3d/step02.jpg"></wxr-plane>
+</wxr-space>
+
+<wxr-space src="http://content.wxr.webizing.org/space/step04" disabled="" webgl_uuid="E15E74A9-0AE5-4AA3-AEBA-70C06BC9E6E3" css3d_uuid="6DDDFE62-7D9A-4A38-8BC3-AE5D4BB14CBE">
+	<wxr-light-ambient color="0xf0f0f0" intensity="0.4" id=""></wxr-light-ambient>
+	<wxr-light-directional color="0xf0f0f0" intensity="0.4" id=""></wxr-light-directional>
+	<wxr-obj id="base" mtl="base.mtl" obj="base.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d"></wxr-obj>
+	<wxr-obj id="handle2" mtl="00_handle.mtl" obj="00_handle.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d"></wxr-obj>
+	<wxr-obj id="cover" mtl="02_cover.mtl" obj="02_cover.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d">
 		<wxr-animation type="movement" to="0.09 0 0" duration="4000" repeat="Infinity" easing="linear"></wxr-animation>
 	</wxr-obj>
-	<wxr-obj id="03_seal" mtl="03_seal.mtl" obj="03_seal.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d" style="display: block;"></wxr-obj>
-	<wxr-obj id="04_ball" mtl="04_ball.mtl" obj="04_ball.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d" style="display: block;"></wxr-obj>
-	<wxr-plane id="annotation02" texture="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/dialog/valve_3d/step02.jpg" style="display: block;"></wxr-plane>
+	<wxr-obj id="seat" mtl="seat.mtl" obj="seat.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_ar"></wxr-obj>
+	<wxr-obj id="ball" mtl="04_ball.mtl" obj="04_ball.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d"></wxr-obj>
+    <wxr-obj id="nut1" mtl="05_nut.mtl" obj="05_nut.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d" webgl_uuid="5190C39D-58BE-4DEE-8051-AD690636807B" css3d_uuid="A608E28E-657D-486C-AFEF-44C475C34452"></wxr-obj>
+	<wxr-obj id="bolt1" mtl="05_bolt.mtl" obj="05_bolt.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d" webgl_uuid="DE00B124-9E3D-4E43-9ACF-FCAEC840CDC8" css3d_uuid="2058E569-F542-4FA9-BE5B-7C9F6AC7B737"></wxr-obj>
+  
+	<wxr-plane id="annotation02" texture="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/dialog/valve_3d/step02.jpg"></wxr-plane>
 </wxr-space>
 
 
-<wxr-space src="http://content.wxr.webizing.org/space/step04" disabled="" webgl_uuid="2D5865F1-4164-4401-A240-BF1CC3FF5BF5" css3d_uuid="22B336E9-657A-48C6-9F45-28ABD778FB53">
-	<wxr-light-ambient color="0xf0f0f0" intensity="0.4" id="" style="display: block;"></wxr-light-ambient>
-	<wxr-light-directional color="0xf0f0f0" intensity="0.4" id="" style="display: block;"></wxr-light-directional>
-	<wxr-obj id="base" mtl="base.mtl" obj="base.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d" style="display: block;"></wxr-obj>
-	<wxr-obj id="00_handle" mtl="00_handle.mtl" obj="00_handle.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d" style="display: block;"></wxr-obj>
-	<wxr-obj id="03_seal" mtl="03_seal.mtl" obj="03_seal.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d" style="display: block;">
+
+
+<wxr-space src="http://content.wxr.webizing.org/space/step05" disabled="" webgl_uuid="2D5865F1-4164-4401-A240-BF1CC3FF5BF5" css3d_uuid="22B336E9-657A-48C6-9F45-28ABD778FB53">
+	<wxr-light-ambient color="0xf0f0f0" intensity="0.4" id=""></wxr-light-ambient>
+	<wxr-light-directional color="0xf0f0f0" intensity="0.4" id=""></wxr-light-directional>
+	<wxr-obj id="base" mtl="base.mtl" obj="base.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d"></wxr-obj>
+	<wxr-obj id="handle2" mtl="00_handle.mtl" obj="00_handle.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d"></wxr-obj>
+	<wxr-obj id="seat" mtl="seat.mtl" obj="seat.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_ar">
 		<wxr-animation type="movement" to="0.1 0 0" duration="4000" repeat="Infinity" easing="linear"></wxr-animation>
 	</wxr-obj>
-	<wxr-obj id="04_ball" mtl="04_ball.mtl" obj="04_ball.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d" style="display: block;"></wxr-obj>
-	<wxr-plane id="annotation03" texture="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/dialog/valve_3d/step03.jpg" style="display: block;"></wxr-plane>
+	<wxr-obj id="ball" mtl="04_ball.mtl" obj="04_ball.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d"></wxr-obj>
+    <wxr-obj id="nut1" mtl="05_nut.mtl" obj="05_nut.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d" webgl_uuid="5190C39D-58BE-4DEE-8051-AD690636807B" css3d_uuid="A608E28E-657D-486C-AFEF-44C475C34452"></wxr-obj>
+	<wxr-obj id="bolt1" mtl="05_bolt.mtl" obj="05_bolt.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d" webgl_uuid="DE00B124-9E3D-4E43-9ACF-FCAEC840CDC8" css3d_uuid="2058E569-F542-4FA9-BE5B-7C9F6AC7B737"></wxr-obj>
+  
+	<wxr-plane id="annotation03" texture="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/dialog/valve_3d/step03.jpg"></wxr-plane>
 </wxr-space>
 
-<wxr-space src="http://content.wxr.webizing.org/space/step05" disabled="" webgl_uuid="6FC1FF8F-DCBD-4857-B841-2EC6EEE4E408" css3d_uuid="7EA89004-E118-418E-B39B-A223951471C7">
-	<wxr-light-ambient color="0xf0f0f0" intensity="0.4" id="" style="display: block;"></wxr-light-ambient>
-	<wxr-light-directional color="0xf0f0f0" intensity="0.4" id="" style="display: block;"></wxr-light-directional>
-	<wxr-obj id="base" mtl="base.mtl" obj="base.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d" style="display: block;"></wxr-obj>
-	<wxr-obj id="00_handle" mtl="00_handle.mtl" obj="00_handle.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d" style="display: block;"></wxr-obj>
-	<wxr-obj id="04_ball" mtl="04_ball.mtl" obj="04_ball.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d" style="display: block;">
+<wxr-space src="http://content.wxr.webizing.org/space/step06" disabled="" webgl_uuid="6FC1FF8F-DCBD-4857-B841-2EC6EEE4E408" css3d_uuid="7EA89004-E118-418E-B39B-A223951471C7">
+	<wxr-light-ambient color="0xf0f0f0" intensity="0.4" id=""></wxr-light-ambient>
+	<wxr-light-directional color="0xf0f0f0" intensity="0.4" id=""></wxr-light-directional>
+	<wxr-obj id="base" mtl="base.mtl" obj="base.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d"></wxr-obj>
+	<wxr-obj id="handle2" mtl="00_handle.mtl" obj="00_handle.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d"></wxr-obj>
+	<wxr-obj id="ball" mtl="04_ball.mtl" obj="04_ball.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d">
 		<wxr-animation type="movement" to="0.1 0 0" duration="4000" repeat="Infinity" easing="linear"></wxr-animation>
 	</wxr-obj>
-	<wxr-plane id="annotation04" texture="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/dialog/valve_3d/step04.jpg" style="display: block;"></wxr-plane>
-</wxr-space></wxr-world>
+    <wxr-obj id="nut1" mtl="05_nut.mtl" obj="05_nut.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d" webgl_uuid="5190C39D-58BE-4DEE-8051-AD690636807B" css3d_uuid="A608E28E-657D-486C-AFEF-44C475C34452"></wxr-obj>
+	<wxr-obj id="bolt1" mtl="05_bolt.mtl" obj="05_bolt.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d" webgl_uuid="DE00B124-9E3D-4E43-9ACF-FCAEC840CDC8" css3d_uuid="2058E569-F542-4FA9-BE5B-7C9F6AC7B737"></wxr-obj>
+  
+	<wxr-plane id="annotation04" texture="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/dialog/valve_3d/step04.jpg"></wxr-plane>
+</wxr-space><wxr-requirement></wxr-requirement></wxr-world>
 	
 
 
@@ -334,3 +507,524 @@
 
 	
 
+
+	
+
+
+	
+
+
+	
+
+
+	
+
+
+	
+
+
+	
+
+
+	
+
+
+	
+
+
+	
+
+
+	
+
+
+	
+
+
+	
+
+
+	
+
+
+	
+
+
+	
+
+
+	
+
+
+	
+
+
+	
+
+
+	
+
+
+	
+
+
+	
+
+
+	
+
+
+	
+
+
+	
+
+
+	
+
+
+	
+
+
+	
+
+
+	
+
+
+	
+
+
+	
+
+
+	
+
+
+	
+
+
+	
+
+
+	
+
+
+	
+
+<div class="nsc-content-camera">
+    <div class="nsc-content-camera-buttons" flex="none" layout="row" layout-align="start start">
+        <button class="nsc-content-camera-button" type="button" id="nsc_video_camera_collapse">
+            <span class="nsc-icon nsc-icon-panel-collapse"></span>
+        </button>
+        <button class="nsc-content-camera-button" type="button" id="nsc_video_camera_expand">
+            <span class="nsc-icon nsc-icon-panel-expand"></span>
+        </button>
+        <button class="nsc-content-camera-button" type="button" id="nsc_video_camera_close">
+            <span class="nsc-icon nsc-icon-panel-close"></span>
+        </button>
+    </div>
+    <div class="nsc-content-camera-container">
+        <div class="nsc-content-camera-shadow"></div>
+    </div>
+</div>
+<div class="nsc-panel nsc-panel-compact">
+    <div class="nsc-panel-move"></div>
+    <div class="nsc-panel-tooltip">
+        <div class="nsc-panel-tooltip-layout" layout="row" layout-align="start center">CTRL+V to toggle the panel</div>
+    </div>
+
+    <div class="nsc-panel-layout" flex="" layout="row" layout-align="start center">
+        <div class="nsc-panel-groups" flex="" layout="row" layout-align="start start">
+
+            <!-- group -->
+            <div class="nsc-panel-group" flex="none" layout="row" layout-align="start start">
+                <div class="nsc-panel-button separated active">
+                    <div class="nsc-panel-select" flex="" layout="row">
+                        <div class="nsc-panel-text nsc-noselect" flex="" layout="row" layout-align="center center">
+                            <span class="nsc-icon nsc-icon-cursor-normal"></span>
+                        </div>
+                        <div class="nsc-panel-trigger">
+                            <span class="nsc-icon nsc-icon-arrow"></span>
+                        </div>
+                    </div>
+                    <div class="nsc-panel-dropdown to-top">
+                        <ul flex="" layout="row" layout-align="start center">
+                            <li class="nsc-panel-dropdown-icon" flex="" layout="row" layout-align="start center">
+                                <span class="nsc-icon nsc-icon-cursor-shade" data-i18n="videoPanelFocusMouse" data-event="nimbus-editor-active-tools" data-event-param="cursorShadow"></span>
+                            </li>
+                            <li class="nsc-panel-dropdown-icon" flex="" layout="row" layout-align="start center">
+                                <span class="nsc-icon nsc-icon-cursor-circle" data-i18n="videoPanelAnimatedCursor" data-event="nimbus-editor-active-tools" data-event-param="cursorRing"></span>
+                            </li>
+                            <!--<li class="nsc-panel-dropdown-icon " flex layout="row" layout-align="start center">-->
+                            <!--<span class="nsc-icon nsc-icon-cursor-tail"></span>-->
+                            <!--</li>-->
+                            <!--<li class="nsc-panel-dropdown-icon " flex layout="row" layout-align="start center">-->
+                            <!--<span class="nsc-icon nsc-icon-cursor-long"></span>-->
+                            <!--</li>-->
+                            <li class="nsc-panel-dropdown-icon" flex="" layout="row" layout-align="start center">
+                                <span class="nsc-icon nsc-icon-cursor-normal" data-i18n="videoPanelSimpleCursor" data-event="nimbus-editor-active-tools" data-event-param="cursorDefault"></span>
+                            </li>
+                            <li class="nsc-panel-dropdown-icon" flex="" layout="row" layout-align="start center">
+                                <span class="nsc-icon nsc-icon-cursor-none" data-event="nimbus-editor-active-tools" data-event-param="cursorNone"></span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!-- /group -->
+
+            <!-- group -->
+            <div class="nsc-panel-group" flex="none" layout="row" layout-align="start start">
+                <button class="nsc-panel-button" type="button">
+                    <span class="nsc-icon nsc-icon-pen" data-i18n="videoPanelPen" data-event="nimbus-editor-active-tools" data-event-param="pen"></span>
+                </button>
+                <button class="nsc-panel-button" type="button">
+                    <span class="nsc-icon nsc-icon-arrow-line" data-i18n="videoPanelArrow" data-event="nimbus-editor-active-tools" data-event-param="arrow"></span>
+                </button>
+                <button class="nsc-panel-button" type="button">
+                    <span class="nsc-icon nsc-icon-square" data-i18n="videoPanelSquare" data-event="nimbus-editor-active-tools" data-event-param="square"></span>
+                </button>
+                <div class="nsc-panel-button separated">
+                    <div class="nsc-panel-select" flex="" layout="row">
+                        <div class="nsc-panel-text nsc-noselect" flex="" layout="row" layout-align="center center">
+                            <span class="nsc-icon nsc-icon-attention"></span>
+                        </div>
+                        <div class="nsc-panel-trigger">
+                            <span class="nsc-icon nsc-icon-arrow"></span>
+                        </div>
+                    </div>
+                    <div class="nsc-panel-dropdown to-top">
+                        <ul flex="" layout="row" layout-align="start center">
+                            <li class="nsc-panel-dropdown-icon" flex="" layout="row" layout-align="start center">
+                                <span class="nsc-icon nsc-icon-attention" data-i18n="videoPanelMark" data-event="nimbus-editor-active-tools" data-event-param="notifRed"></span>
+                            </li>
+                            <li class="nsc-panel-dropdown-icon" flex="" layout="row" layout-align="start center">
+                                <span class="nsc-icon nsc-icon-question" data-i18n="videoPanelQuestion" data-event="nimbus-editor-active-tools" data-event-param="notifBlue"></span>
+                            </li>
+                            <li class="nsc-panel-dropdown-icon" flex="" layout="row" layout-align="start center">
+                                <span class="nsc-icon nsc-icon-done" data-i18n="videoPanelCheckmark" data-event="nimbus-editor-active-tools" data-event-param="notifGreen"></span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="nsc-panel-button assembled">
+                    <div class="nsc-panel-select" flex="" layout="row">
+                        <div class="nsc-panel-text nsc-noselect" flex="" layout="row" layout-align="center center">
+							<span class="nsc-icon nsc-icon-fill-none nsc-panel-icon-fill">
+								<span class="nsc-panel-icon-fill-inner" id="nsc_panel_button_colors"></span>
+							</span>
+                        </div>
+                        <div class="nsc-panel-trigger">
+                            <span class="nsc-icon nsc-icon-arrow"></span>
+                        </div>
+                    </div>
+                    <div class="nsc-panel-dropdown">
+                        <div class="nsc-panel-drop-area">
+                            <div class="nsc-panel-colors">
+
+                                <!-- picked -->
+                                <div class="colors-picked">
+                                    <div class="colors-picked-layout" flex="" layout="row" layout-align="start start" layout-wrap="">
+                                        <div class="colors-picked-item">
+                                            <button class="colors-picked-button" type="button" data-event="nimbus-editor-active-color" data-event-param="#000000">
+                                                <span class="colors-picked-button-inner"></span>
+                                            </button>
+                                        </div>
+                                        <div class="colors-picked-item">
+                                            <button class="colors-picked-button" type="button" data-event="nimbus-editor-active-color" data-event-param="#0000FF">
+                                                <span class="colors-picked-button-inner"></span>
+                                            </button>
+                                        </div>
+                                        <div class="colors-picked-item">
+                                            <button class="colors-picked-button" type="button" data-event="nimbus-editor-active-color" data-event-param="#FF00FF">
+                                                <span class="colors-picked-button-inner"></span>
+                                            </button>
+                                        </div>
+                                        <div class="colors-picked-item">
+                                            <button class="colors-picked-button" type="button" data-event="nimbus-editor-active-color" data-event-param="#00FFFF">
+                                                <span class="colors-picked-button-inner"></span>
+                                            </button>
+                                        </div>
+                                        <div class="colors-picked-item">
+                                            <button class="colors-picked-button" type="button" data-event="nimbus-editor-active-color" data-event-param="#00FF00">
+                                                <span class="colors-picked-button-inner"></span>
+                                            </button>
+                                        </div>
+                                        <div class="colors-picked-item">
+                                            <button class="colors-picked-button" type="button" data-event="nimbus-editor-active-color" data-event-param="#FFFF00">
+                                                <span class="colors-picked-button-inner"></span>
+                                            </button>
+                                        </div>
+                                        <div class="colors-picked-item">
+                                            <button class="colors-picked-button" type="button" data-event="nimbus-editor-active-color" data-event-param="#FF0000">
+                                                <span class="colors-picked-button-inner"></span>
+                                            </button>
+                                        </div>
+                                        <div class="colors-picked-item">
+                                            <button class="colors-picked-button" type="button" data-event="nimbus-editor-active-color" data-event-param="#FFFFFF">
+                                                <span class="colors-picked-button-inner"></span>
+                                            </button>
+                                        </div>
+                                        <!--<div class="colors-picked-item">-->
+                                        <!--<button class="colors-picked-button custom" type="button"> -->
+                                        <!--<i class="nsc-icon ic-color-custom"></i> -->
+                                        <!--</button>-->
+                                        <!--</div>-->
+                                    </div>
+                                </div>
+                                <!-- /picked -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /group -->
+
+            <!-- group -->
+            <div class="nsc-panel-group" flex="none" layout="row" layout-align="start start">
+                <button class="nsc-panel-button " type="button">
+                    <span class="nsc-icon nsc-icon-eraser" data-i18n="videoPanelClear" data-event="nimbus-editor-active-tools" data-event-param="clear"></span>
+                </button>
+                <button class="nsc-panel-button" type="button">
+                    <span class="nsc-icon nsc-icon-eraser-all" data-i18n="videoPanelClearAll" data-event="nimbus-editor-active-tools" data-event-param="clearAll"></span>
+                </button>
+                <button class="nsc-panel-button" type="button">
+                    <span class="nsc-icon nsc-icon-webcam" data-i18n="videoPanelCamera" id="nimbus_web_camera_toggle"></span>
+                </button>
+            </div>
+            <!-- /group -->
+        </div>
+
+        <div class="nsc-panel-actions" flex="none" layout="row" layout-align="start center">
+            <button class="nsc-panel-button big" type="button" id="nsc_panel_button_play">
+                <span class="nsc-icon nsc-icon-play"></span>
+            </button>
+            <button class="nsc-panel-button big" type="button" id="nsc_panel_button_pause">
+                <span class="nsc-icon nsc-icon-pause"></span>
+            </button>
+            <button class="nsc-panel-button big" type="button" id="nsc_panel_button_stop">
+                <span class="nsc-icon nsc-icon-stop"></span>
+            </button>
+        </div>
+
+        <!-- panel togglers -->
+        <div class="nsc-panel-togglers" layout="row" layout-align="start center" flex="none">
+            <button class="nsc-panel-toggle-button" type="button">
+                <span class="nsc-icon nsc-icon-panel-close" data-i18n="videoPanelHideShowPanel"></span>
+            </button>
+        </div>
+        <!-- /panel togglers -->
+
+    </div>
+</div>
+<div class="nsc-video-editor events"><canvas width="1426" height="782"></canvas><canvas width="1426" height="782"></canvas><canvas width="1426" height="782"></canvas><canvas width="1666" height="2358"></canvas><canvas width="1666" height="2358"></canvas><canvas width="1666" height="2358"></canvas></div>
+	
+
+<div class="nsc-content-camera">
+    <div class="nsc-content-camera-buttons" flex="none" layout="row" layout-align="start start">
+        <button class="nsc-content-camera-button" type="button" id="nsc_video_camera_collapse">
+            <span class="nsc-icon nsc-icon-panel-collapse"></span>
+        </button>
+        <button class="nsc-content-camera-button" type="button" id="nsc_video_camera_expand">
+            <span class="nsc-icon nsc-icon-panel-expand"></span>
+        </button>
+        <button class="nsc-content-camera-button" type="button" id="nsc_video_camera_close">
+            <span class="nsc-icon nsc-icon-panel-close"></span>
+        </button>
+    </div>
+    <div class="nsc-content-camera-container">
+        <div class="nsc-content-camera-shadow"></div>
+    </div>
+</div>
+<div class="nsc-panel nsc-panel-compact">
+    <div class="nsc-panel-move"></div>
+    <div class="nsc-panel-tooltip">
+        <div class="nsc-panel-tooltip-layout" layout="row" layout-align="start center">CTRL+V to toggle the panel</div>
+    </div>
+
+    <div class="nsc-panel-layout" flex="" layout="row" layout-align="start center">
+        <div class="nsc-panel-groups" flex="" layout="row" layout-align="start start">
+
+            <!-- group -->
+            <div class="nsc-panel-group" flex="none" layout="row" layout-align="start start">
+                <div class="nsc-panel-button separated active">
+                    <div class="nsc-panel-select" flex="" layout="row">
+                        <div class="nsc-panel-text nsc-noselect" flex="" layout="row" layout-align="center center">
+                            <span class="nsc-icon nsc-icon-cursor-normal"></span>
+                        </div>
+                        <div class="nsc-panel-trigger">
+                            <span class="nsc-icon nsc-icon-arrow"></span>
+                        </div>
+                    </div>
+                    <div class="nsc-panel-dropdown to-top">
+                        <ul flex="" layout="row" layout-align="start center">
+                            <li class="nsc-panel-dropdown-icon" flex="" layout="row" layout-align="start center">
+                                <span class="nsc-icon nsc-icon-cursor-shade" data-i18n="videoPanelFocusMouse" data-event="nimbus-editor-active-tools" data-event-param="cursorShadow"></span>
+                            </li>
+                            <li class="nsc-panel-dropdown-icon" flex="" layout="row" layout-align="start center">
+                                <span class="nsc-icon nsc-icon-cursor-circle" data-i18n="videoPanelAnimatedCursor" data-event="nimbus-editor-active-tools" data-event-param="cursorRing"></span>
+                            </li>
+                            <!--<li class="nsc-panel-dropdown-icon " flex layout="row" layout-align="start center">-->
+                            <!--<span class="nsc-icon nsc-icon-cursor-tail"></span>-->
+                            <!--</li>-->
+                            <!--<li class="nsc-panel-dropdown-icon " flex layout="row" layout-align="start center">-->
+                            <!--<span class="nsc-icon nsc-icon-cursor-long"></span>-->
+                            <!--</li>-->
+                            <li class="nsc-panel-dropdown-icon" flex="" layout="row" layout-align="start center">
+                                <span class="nsc-icon nsc-icon-cursor-normal" data-i18n="videoPanelSimpleCursor" data-event="nimbus-editor-active-tools" data-event-param="cursorDefault"></span>
+                            </li>
+                            <li class="nsc-panel-dropdown-icon" flex="" layout="row" layout-align="start center">
+                                <span class="nsc-icon nsc-icon-cursor-none" data-event="nimbus-editor-active-tools" data-event-param="cursorNone"></span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!-- /group -->
+
+            <!-- group -->
+            <div class="nsc-panel-group" flex="none" layout="row" layout-align="start start">
+                <button class="nsc-panel-button" type="button">
+                    <span class="nsc-icon nsc-icon-pen" data-i18n="videoPanelPen" data-event="nimbus-editor-active-tools" data-event-param="pen"></span>
+                </button>
+                <button class="nsc-panel-button" type="button">
+                    <span class="nsc-icon nsc-icon-arrow-line" data-i18n="videoPanelArrow" data-event="nimbus-editor-active-tools" data-event-param="arrow"></span>
+                </button>
+                <button class="nsc-panel-button" type="button">
+                    <span class="nsc-icon nsc-icon-square" data-i18n="videoPanelSquare" data-event="nimbus-editor-active-tools" data-event-param="square"></span>
+                </button>
+                <div class="nsc-panel-button separated">
+                    <div class="nsc-panel-select" flex="" layout="row">
+                        <div class="nsc-panel-text nsc-noselect" flex="" layout="row" layout-align="center center">
+                            <span class="nsc-icon nsc-icon-attention"></span>
+                        </div>
+                        <div class="nsc-panel-trigger">
+                            <span class="nsc-icon nsc-icon-arrow"></span>
+                        </div>
+                    </div>
+                    <div class="nsc-panel-dropdown to-top">
+                        <ul flex="" layout="row" layout-align="start center">
+                            <li class="nsc-panel-dropdown-icon" flex="" layout="row" layout-align="start center">
+                                <span class="nsc-icon nsc-icon-attention" data-i18n="videoPanelMark" data-event="nimbus-editor-active-tools" data-event-param="notifRed"></span>
+                            </li>
+                            <li class="nsc-panel-dropdown-icon" flex="" layout="row" layout-align="start center">
+                                <span class="nsc-icon nsc-icon-question" data-i18n="videoPanelQuestion" data-event="nimbus-editor-active-tools" data-event-param="notifBlue"></span>
+                            </li>
+                            <li class="nsc-panel-dropdown-icon" flex="" layout="row" layout-align="start center">
+                                <span class="nsc-icon nsc-icon-done" data-i18n="videoPanelCheckmark" data-event="nimbus-editor-active-tools" data-event-param="notifGreen"></span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="nsc-panel-button assembled">
+                    <div class="nsc-panel-select" flex="" layout="row">
+                        <div class="nsc-panel-text nsc-noselect" flex="" layout="row" layout-align="center center">
+							<span class="nsc-icon nsc-icon-fill-none nsc-panel-icon-fill">
+								<span class="nsc-panel-icon-fill-inner" id="nsc_panel_button_colors"></span>
+							</span>
+                        </div>
+                        <div class="nsc-panel-trigger">
+                            <span class="nsc-icon nsc-icon-arrow"></span>
+                        </div>
+                    </div>
+                    <div class="nsc-panel-dropdown">
+                        <div class="nsc-panel-drop-area">
+                            <div class="nsc-panel-colors">
+
+                                <!-- picked -->
+                                <div class="colors-picked">
+                                    <div class="colors-picked-layout" flex="" layout="row" layout-align="start start" layout-wrap="">
+                                        <div class="colors-picked-item">
+                                            <button class="colors-picked-button" type="button" data-event="nimbus-editor-active-color" data-event-param="#000000">
+                                                <span class="colors-picked-button-inner"></span>
+                                            </button>
+                                        </div>
+                                        <div class="colors-picked-item">
+                                            <button class="colors-picked-button" type="button" data-event="nimbus-editor-active-color" data-event-param="#0000FF">
+                                                <span class="colors-picked-button-inner"></span>
+                                            </button>
+                                        </div>
+                                        <div class="colors-picked-item">
+                                            <button class="colors-picked-button" type="button" data-event="nimbus-editor-active-color" data-event-param="#FF00FF">
+                                                <span class="colors-picked-button-inner"></span>
+                                            </button>
+                                        </div>
+                                        <div class="colors-picked-item">
+                                            <button class="colors-picked-button" type="button" data-event="nimbus-editor-active-color" data-event-param="#00FFFF">
+                                                <span class="colors-picked-button-inner"></span>
+                                            </button>
+                                        </div>
+                                        <div class="colors-picked-item">
+                                            <button class="colors-picked-button" type="button" data-event="nimbus-editor-active-color" data-event-param="#00FF00">
+                                                <span class="colors-picked-button-inner"></span>
+                                            </button>
+                                        </div>
+                                        <div class="colors-picked-item">
+                                            <button class="colors-picked-button" type="button" data-event="nimbus-editor-active-color" data-event-param="#FFFF00">
+                                                <span class="colors-picked-button-inner"></span>
+                                            </button>
+                                        </div>
+                                        <div class="colors-picked-item">
+                                            <button class="colors-picked-button" type="button" data-event="nimbus-editor-active-color" data-event-param="#FF0000">
+                                                <span class="colors-picked-button-inner"></span>
+                                            </button>
+                                        </div>
+                                        <div class="colors-picked-item">
+                                            <button class="colors-picked-button" type="button" data-event="nimbus-editor-active-color" data-event-param="#FFFFFF">
+                                                <span class="colors-picked-button-inner"></span>
+                                            </button>
+                                        </div>
+                                        <!--<div class="colors-picked-item">-->
+                                        <!--<button class="colors-picked-button custom" type="button"> -->
+                                        <!--<i class="nsc-icon ic-color-custom"></i> -->
+                                        <!--</button>-->
+                                        <!--</div>-->
+                                    </div>
+                                </div>
+                                <!-- /picked -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /group -->
+
+            <!-- group -->
+            <div class="nsc-panel-group" flex="none" layout="row" layout-align="start start">
+                <button class="nsc-panel-button " type="button">
+                    <span class="nsc-icon nsc-icon-eraser" data-i18n="videoPanelClear" data-event="nimbus-editor-active-tools" data-event-param="clear"></span>
+                </button>
+                <button class="nsc-panel-button" type="button">
+                    <span class="nsc-icon nsc-icon-eraser-all" data-i18n="videoPanelClearAll" data-event="nimbus-editor-active-tools" data-event-param="clearAll"></span>
+                </button>
+                <button class="nsc-panel-button" type="button">
+                    <span class="nsc-icon nsc-icon-webcam" data-i18n="videoPanelCamera" id="nimbus_web_camera_toggle"></span>
+                </button>
+            </div>
+            <!-- /group -->
+        </div>
+
+        <div class="nsc-panel-actions" flex="none" layout="row" layout-align="start center">
+            <button class="nsc-panel-button big" type="button" id="nsc_panel_button_play">
+                <span class="nsc-icon nsc-icon-play"></span>
+            </button>
+            <button class="nsc-panel-button big" type="button" id="nsc_panel_button_pause">
+                <span class="nsc-icon nsc-icon-pause"></span>
+            </button>
+            <button class="nsc-panel-button big" type="button" id="nsc_panel_button_stop">
+                <span class="nsc-icon nsc-icon-stop"></span>
+            </button>
+        </div>
+
+        <!-- panel togglers -->
+        <div class="nsc-panel-togglers" layout="row" layout-align="start center" flex="none">
+            <button class="nsc-panel-toggle-button" type="button">
+                <span class="nsc-icon nsc-icon-panel-close" data-i18n="videoPanelHideShowPanel"></span>
+            </button>
+        </div>
+        <!-- /panel togglers -->
+
+    </div>
+</div>
+<div class="nsc-video-editor events"><canvas width="1666" height="2358"></canvas><canvas width="1666" height="2358"></canvas><canvas width="1666" height="2358"></canvas></div>

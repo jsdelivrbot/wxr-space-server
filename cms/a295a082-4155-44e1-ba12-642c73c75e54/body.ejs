@@ -1,0 +1,95 @@
+
+	
+	<wxr-world><script src="https://cdn.rawgit.com/webcomponents/webcomponentsjs/v1.1.0/webcomponents-lite.js"></script>
+<link href="https://libs.webizing.org/wxr-0.7.html" rel="import">
+
+    <wxr-user user-id="yongjae.lee@wrl.onl" authority="owner" me=""></wxr-user>
+    <wxr-user user-id="jongho.lee@wrl.onl" authority="viewer" me=""></wxr-user>
+
+<style>
+  
+  	wxr-camera {
+		--wxr-transform: translate3d(0, 0.1, 0.6) rotate3d(0, 0, 0);
+	}
+
+	wxr-light-ambient {
+		--wxr-transform: translate3d(0, 0.5, 0);
+	}
+
+	wxr-light-directional {
+		--wxr-transform: translate3d(0, 100, 10);
+	}
+  
+    wxr-trigger {
+        --wxr-transform: translate3d(0, 0, 0) rotate3d(0, 0, 0);
+    }
+
+  #box01{
+    --wxr-transform: translate3d(0, 0, 0) rotate3d(0, 0, 0) scale3d(1, 1, 1);
+  }
+  
+   #box02{
+    --wxr-transform: translate3d(0, 0, 0) rotate3d(0, 0, 0) scale3d(1, 1, 1);
+  }
+  
+     #box03{
+    --wxr-transform: translate3d(0, 0, 0) rotate3d(0, 0, 0) scale3d(1, 1, 1);
+  }
+  
+  #anno{
+     --wxr-transform: translate3d(0, 0.1, 0.1) rotate3d(0, 0, 0) scale3d(0.001, 0.001, 0.01);
+
+  }
+  
+</style>
+
+<script>
+  function call(element, target){
+    console.log( 'TRIGGER called');
+  }
+  
+        function triggerCondition(trigger, target) {
+        const distanceToTarget = trigger.webGLObject3D.position.distanceTo(target.webGLObject3D.position);
+        if (distanceToTarget > 1) {
+          return true;
+        }
+        return false;
+      }
+</script>
+
+<wxr-view default="3D" current="3D" modes="[&quot;3D&quot;, &quot;VR&quot;]"></wxr-view>
+<wxr-camera fovy="61" near="0.1" far="1000" webgl_uuid="8103C02E-5250-4AE5-85B1-A2A11BEC5EE5" fov="60" aspect="1.7875536480686696"></wxr-camera>
+<wxr-space src="http://content.wxr.webizing.org/space/step01" enable="" webgl_uuid="3BA88665-86AB-4662-8781-141A96F7F2AD" css3d_uuid="75D9EA59-09E0-41B0-B7B0-1113B7C2B246">
+	
+		<wxr-light-ambient color="0xf0f0f0" intensity="0.4" webgl_uuid="E16D0EBF-FA62-406A-B106-9BC28C15868F" css3d_uuid="7755998B-5125-4514-93CA-CF006BF484BE"></wxr-light-ambient>
+		<wxr-light-directional color="0xf0f0f0" intensity="0.4" webgl_uuid="23902B80-D00D-40BD-B98A-FD78BF0E6658" css3d_uuid="4066E912-F4E9-485A-9970-EC9370FC7AFD"></wxr-light-directional>
+  		<wxr-box id="box01" width="0.1" height="0.1" depth="0.1" color="0xff0000" transparent="true" opacity="0.3" webgl_uuid="A5CA2AEC-98C5-44BA-9F4A-B5591C0E2ACC" css3d_uuid="A7BFDED4-E97C-4E25-B24B-1C26E077BC11" style="--wxr-transform:tranlate3d( 0, 0, 0), rotate3d(0, 0, 0), scale3d(1, 1, 1);">
+			<wxr-html id="anno" css3d_uuid="DD7D726F-DCD0-4753-8A56-0FEDC28CC63B" webgl_uuid="13FCDBC3-2660-4AA3-8041-3E6523F0276A">
+				<div class="bnno">
+					<h3>Sun</h3>
+					<iframe width="1100" height="1300" src="http://203.255.251.35:8321" frameborder="0" allowfullscreen=""></iframe>     
+				</div>
+			</wxr-html>
+             <wxr-animation type="rotation" to="1 0 0" duration="500000" repeat="Infinity" easing="linear"></wxr-animation>  
+  		</wxr-box>   
+  
+    	<wxr-box id="box02" width="0.05" height="0.1" depth="0.1" color="0xfff000" webgl_uuid="D2D6A673-C7D5-485D-97FE-ADB66873D20D" css3d_uuid="CD15AA98-758E-479B-9BC7-CC9458F92E9F">
+               <wxr-animation type="movement" to="1 0 0" duration="5000" repeat="1" easing="linear">
+          <wxr-animation type="movement" to="1 0 1" duration="5000" repeat="2" easing="linear"></wxr-animation>  
+          </wxr-animation>  
+          
+         <wxr-box id="box03" width="0.02" height="0.05" depth="0.03" color="0x008000" webgl_uuid="9959E985-0DBD-43EF-9E10-FB78821F99D1" css3d_uuid="F68BE479-601F-437B-A9DE-ADC9F19FB945">
+		<wxr-box id="box03" width="0.9" height="1" depth="0.03" color="0x008000" webgl_uuid="B310B402-94A5-4BA7-BE0C-3C21E30DF73F" css3d_uuid="DA49DDC6-CBED-4F2E-99E5-1C136A4EF400">
+  </wxr-box>
+ 
+
+
+  </wxr-box></wxr-box></wxr-space>
+
+
+</wxr-world>
+	
+
+
+	
+

@@ -1,0 +1,169 @@
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<wxr-world>
+<script src="https://cdn.rawgit.com/webcomponents/webcomponentsjs/v1.1.0/webcomponents-lite.js"></script>
+<link href="https://libs.webizing.org/wxr-0.8.html" rel="import">
+<style>
+  
+	wxr-camera {
+		--wxr-transform: translate3d(0, 0.1, 0.6) rotate3d(0, 0, 0);
+	}
+
+	wxr-light-ambient {
+		--wxr-transform: translate3d(0, 0.5, 0);
+	}
+
+	wxr-light-directional {
+		--wxr-transform: translate3d(0, 100, 10);
+	}
+	
+	
+	#first {
+		--wxr-transform: translate3d(0, 0, 0) scale3d(0.0001, 0.0001, 0.0001);
+	}
+    #second {
+		--wxr-transform: translate3d(0, 0, 0) scale3d(0.1, 0.1, 0.1);
+	}
+    #annotation00 {
+		--wxr-transform: translate3d(0, 0, 0) scale3d(0.07, 0.07, 0.07);
+	}
+  
+  
+  .annotation {
+	width: 80px;
+	background-color: rgba(255, 0, 0, 0);
+	font-size: 10px;
+	background-color: white;
+	padding: 0.4em 0.4em 0.4em 0.4em;
+	border-radius: 5px;
+	border-style: solid;
+	border-color: #231F20;
+	border-width: 1px;
+}
+
+  
+  
+  	#box01{
+		--wxr-transform: translate3d(0.05, 0, 0) scale3d(1,1,1);
+}
+
+</style>
+
+	<wxr-description title="insstek 3D" img="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/thumb/3d-thumb.png" desc="insstek 3D printer maintenance on the 3D web"></wxr-description>
+	<wxr-view default="3D" current="3D" modes="[&quot;3D&quot;, &quot;AR&quot;]"></wxr-view>
+
+	<wxr-requirement devices="[&quot;leap-motion&quot;]"></wxr-requirement>
+
+	<wxr-user user-id="yongjae.lee@wrl.onl" authority="owner"></wxr-user>
+	<wxr-user user-id="jongho.lee@wrl.onl" authority="viewer"></wxr-user>
+
+	<wxr-camera near="0.1" far="500" fov="60" aspect="1.2462271644162033"></wxr-camera>
+
+	<wxr-space src="http://content.wxr.webizing.org/space/step01" enable="" webgl_uuid="DEBF7567-C5A3-45E5-95DE-F9AA457FE64E" css3d_uuid="B8A82E09-A5A7-4D13-8E61-EE437D881974">
+		<wxr-target id="stones" src="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/target/insstek/01" webgl_uuid="B15A7973-D7B0-4F4F-A18E-128B4461A794" css3d_uuid="40CC55AB-B797-4032-BFF9-9F828D322912">       	
+   	      	<wxr-plane id="annotation00" texture="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/dialog/valve_3d/step00.jpg" webgl_uuid="4D3D975C-3348-4959-8958-5769400590B3" css3d_uuid="1BE95F48-B237-4A92-98E8-E4F338B1F104"></wxr-plane>
+  			<wxr-box id="box01" width="0.02" height="0.02" depth="0.02" color="0xFFF000">
+             <wxr-html id="second" css3d_uuid="2F803C1A-5084-4685-BA5B-3360BB0E987B" webgl_uuid="2C34DDE1-2776-48B6-945A-D419B206D8CA">
+				<div class="annotation">
+                  <h3> TEST IFRAME TEST <br>
+                  SECOND LINE</h3>
+				</div>
+       		</wxr-html>
+            <wxr-animation type="movement" to=" 0 0 0.1" duration="4000" repeat="Infinity" easing="linear"></wxr-animation> 
+
+          </wxr-box>
+  
+
+          
+	</wxr-target></wxr-space>
+
+</wxr-world>
+	
+
+
+	
+
+
+	
+
+
+	
+
+
+	
+
+
+	
+
+
+	
+
+
+	
+
+
+	
+
+
+	
+
+
+	
+
+
+	
+
+
+	
+
+
+	
+
+
+	
+
+
+	
+
+
+	
+
+
+	
+
+
+	
+
+
+	
+
+
+	
+
+
+	
+
+
+	
+

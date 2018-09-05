@@ -17,11 +17,6 @@
 	
 	
 	
-	
-	
-	
-	
-	
 	<wxr-world><script src="https://cdn.rawgit.com/webcomponents/webcomponentsjs/v1.1.0/webcomponents-lite.js"></script>
 <link href="https://libs.webizing.org/wxr-0.8.html" rel="import">
 <style>
@@ -39,7 +34,7 @@
     }
 
     #annotation02 {
-        --wxr-transform: translate3d(0.15, 0, 0) rotate3d(0, 0, 0) scale3d(0.1, 0.1, 0.1);
+        --wxr-transform: translate3d(0.13, 0, 0) rotate3d(-0.7, 0, 3.14) scale3d(0.1, 0.1, 0.1);
     }
 
     #annotation03 {
@@ -51,7 +46,7 @@
     }
 
     #annotation05 {
-        --wxr-transform: translate3d(0.15, 0, 0) rotate3d(0, 0, 0) scale3d(0.1, 0.1, 0.1);
+        --wxr-transform: translate3d(0.05, 0, 0) rotate3d(0, 0, 0) scale3d(0.05, 0.05, 0.05);
     }
 
 
@@ -90,14 +85,16 @@
         --wxr-transform: translate3d(0, -0.115, -0.06) rotate3d(0, 0, 0) scale3d(1, 1, 1);
     }
 
+
      #plate_clip{
-        --wxr-transform: translate3d(0, -0.113, -0.06) rotate3d(0, 0, 0) scale3d(1, 1, 1);
+        --wxr-transform: translate3d(0, 0, -0.015) rotate3d(1.5708, 0, 0) scale3d(1, 1, 1);
     }
 
 
     #plateclip_screw{
-        --wxr-transform: translate3d(0, -0.115, -0.06) rotate3d(0, 0, 0) scale3d(1, 1, 1);
+        --wxr-transform: translate3d(0, 0, -0.01) rotate3d(1.5708, 0, 0) scale3d(1, 1, 1);
     }
+
 
 
 
@@ -176,6 +173,13 @@
     }
 
 
+    #model05_bush{
+        --wxr-transform: translate3d(0.02, 0, 0) rotate3d(0, 1.5707963267948966, 0) scale3d(1, 1, 1);
+    }
+
+    #model05_shaft{
+        --wxr-transform: translate3d(0.02, 0, 0) rotate3d(0, 1.5707963267948966, 0) scale3d(1, 1, 1);
+    }
 
 
 
@@ -184,7 +188,7 @@
     }
 
     #STEP02 {
-        --wxr-transform: translate3d(0, 0, 0) rotate3d(0, 0, 0) scale3d(1, 1, 1);
+        --wxr-transform: translate3d(0, -0.1, -0.06) rotate3d(-1.5708, 0, 3.14) scale3d(1, 1, 1);
     }
 
     #STEP03 {
@@ -192,7 +196,7 @@
     }
   
     #STEP04 {
-        --wxr-transform: translate3d(0, 0, 0) rotate3d(0, 0, 0) scale3d(1, 1, 1);
+        --wxr-transform: translate3d(0, -0.139, -0.04) rotate3d(0, -1.5708, 0) scale3d(1, 1, 1);
     }
 
 
@@ -207,63 +211,47 @@
 <wxr-ar engine="vuforia"></wxr-ar>
 
 <wxr-camera fovy="61" near="0.05000024999875001" far="10000.099999934488" fov="63.5824998097939" aspect="1.7053669222343921"></wxr-camera>
-<wxr-space src="http://content.wxr.webizing.org/space/1" augbase="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/target/test/stones">
+<wxr-space src="http://content.wxr.webizing.org/space/1" augbase="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/target/test/stones" webgl_uuid="19CAB333-45F1-4B8A-86E3-B0EACBD467D1" css3d_uuid="6C64841F-561C-4B5B-8C6B-79E3F2B1EC93">
   
   <wxr-hand-steamvrcontroller id="80450fd8-6509-4496-96ac-0d71c9233f41"></wxr-hand-steamvrcontroller>
 
-    <wxr-light-ambient color="0xf0f0f0" intensity="0.3"></wxr-light-ambient>
-    <wxr-light-directional color="0xf0f0f0" intensity="0.5"></wxr-light-directional>
 
-    <wxr-target id="STEP01" src="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/target/insstek/01">
-        <wxr-obj id="model01_powder" mtl="model01_powder.mtl" obj="model01_powder.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/powder_ar">
-        </wxr-obj>
-        <wxr-obj id="model01_rightclip" mtl="model01_rightclip.mtl" obj="model01_rightclip.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/powder_ar">
-        </wxr-obj>
-        <wxr-obj id="model01_leftclip" mtl="model01_leftclip.mtl" obj="model01_leftclip.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/powder_ar">
-        </wxr-obj>
-        <wxr-obj id="model01_rightclip_bottom" mtl="model01_rightclip_bottom.mtl" obj="model01_rightclip_bottom.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/powder_ar">
-        </wxr-obj>
-        <wxr-obj id="model01_leftclip_bottom" mtl="model01_leftclip_bottom.mtl" obj="model01_leftclip_bottom.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/powder_ar">
-        </wxr-obj>
-        <wxr-plane id="annotation01" texture="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/dialog/powder_vr_eng/step01.jpg"></wxr-plane>
-    </wxr-target>
+    <wxr-target id="STEP02" src="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/target/insstek/02">
+    <wxr-light-ambient color="0xf0f0f0" intensity="0.2"></wxr-light-ambient>
+    <wxr-light-directional color="0xf0f0f0" intensity="0.3"></wxr-light-directional>
+        <wxr-obj id="plate_clip" mtl="plate_clip.mtl" obj="plate_clip.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/powder">
 
-
-     <wxr-target id="STEP02" src="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/target/insstek/02">
-        <wxr-obj id="plate" mtl="plate.mtl" obj="plate.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/powder">
         </wxr-obj>
         <wxr-obj id="plateclip_screw" mtl="plateclip_screw.mtl" obj="plateclip_screw.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/powder">
+   
         </wxr-obj>
-        <wxr-plane id="annotation02" texture="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/dialog/powder_vr_eng/step02.jpg">
+        <wxr-plane id="annotation02" texture="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/dialog/powder_ar_eng/step02.jpg">
         </wxr-plane>
     </wxr-target>
 
 
-
-
-
-    <wxr-target id="STEP03" src="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/target/insstek/03">
-        <wxr-obj id="coupling" mtl="coupling.mtl" obj="coupling.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/powder"></wxr-obj>
-        <wxr-obj id="coupling_screw" mtl="coupling_screw.mtl" obj="coupling_screw.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/powder">
+    <wxr-target id="STEP03" src="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/target/insstek/03" webgl_uuid="653B1362-4672-4327-BA2D-2D63A07C16AC" css3d_uuid="6ADC5418-173B-47F9-8EE6-96C8A8CC1100">
+        <wxr-obj id="coupling" mtl="coupling.mtl" obj="coupling.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/powder" webgl_uuid="CC749258-BF4A-4CFE-8E12-FD3B3262CAA2" css3d_uuid="E5B5DBBF-AD66-4333-8DDD-FF9F9BDF54D6"></wxr-obj>
+        <wxr-obj id="coupling_screw" mtl="coupling_screw.mtl" obj="coupling_screw.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/powder" webgl_uuid="6F6A7A4A-CF72-4C4F-BEDA-408AA986BC15" css3d_uuid="2F9BC1E3-1E39-486C-BBB7-6EAE7FACA586">
         </wxr-obj>
-        <wxr-obj id="bush_screw" mtl="bush_screw.mtl" obj="bush_screw.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/powder">
+        <wxr-obj id="bush_screw" mtl="bush_screw.mtl" obj="bush_screw.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/powder" webgl_uuid="F36E7EE3-8C36-4144-9CC1-7D4F2620B871" css3d_uuid="4BBD95A5-AEB0-4C02-95CC-550E1E38FE20">
         </wxr-obj>
-        <wxr-obj id="bush" mtl="bush.mtl" obj="bush.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/powder">
-        </wxr-obj>
-        <wxr-obj id="shaft" mtl="shaft.mtl" obj="shaft.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/powder">
-        </wxr-obj>
-        <wxr-plane id="annotation03" texture="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/dialog/powder_vr_eng/step03.jpg"></wxr-plane>
+        <wxr-plane id="annotation03" texture="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/dialog/powder_vr_eng/step03.jpg" webgl_uuid="7D7614B9-9E8B-4D93-A955-79D8B76D1420" css3d_uuid="F4BC2B09-C64D-4C51-8761-2E0898C69D62"></wxr-plane>
     </wxr-target>
 
 
-
-
-     <wxr-target id="STEP04" src="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/target/insstek/04">
-        <wxr-plane id="annotation04" texture="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/dialog/powder_vr_eng/step04.jpg"></wxr-plane>
+    <wxr-target id="STEP04" src="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/target/insstek/04" webgl_uuid="AE6F4189-88E6-47E9-9F86-3448E5181B8B" css3d_uuid="C5ABE964-FCF0-4F4F-85A1-6F04E873B1AD">
+   	<wxr-light-ambient color="0xf0f0f0" intensity="0.2" webgl_uuid="95CC19ED-51BB-4182-B88B-18F3F4A70776" css3d_uuid="EE89B8BB-0090-46A6-B961-EAC6098C932A"></wxr-light-ambient>
+   	 <wxr-light-directional color="0xf0f0f0" intensity="0.3" webgl_uuid="A6724B6D-B53C-445B-9D90-4D7FDCA7833A" css3d_uuid="656B856E-2A0D-4CF8-A302-2A3FA8CF5719"></wxr-light-directional>
+        <wxr-obj id="model05_bush" mtl="model05_bush.mtl" obj="model05_bush.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/powder_ar">
+        </wxr-obj>
+        <wxr-obj id="model05_shaft" mtl="model05_shaft.mtl" obj="model05_shaft.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/powder_ar">
+        </wxr-obj>
+        <wxr-plane id="annotation05" texture="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/dialog/powder_ar_eng/step04.jpg"></wxr-plane>
     </wxr-target>
   
-       <wxr-target id="STEP05" src="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/target/insstek/05">
-        <wxr-obj id="base" mtl="base.mtl" obj="base.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/powder_vr">
+       <wxr-target id="STEP05" src="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/target/insstek/05" webgl_uuid="78316076-EDFD-4D23-87AB-8D9041EB09CE" css3d_uuid="DEAD4368-F563-4299-AC28-100A051568ED">
+        <wxr-obj id="base" mtl="base.mtl" obj="base.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/powder_vr" webgl_uuid="F00D774D-F8B8-4B4B-9B8D-B176BD4C15CB" css3d_uuid="2B9B7742-1E2D-40CB-90AE-7090BB80B868">
         </wxr-obj>
     </wxr-target>
 
@@ -273,21 +261,6 @@
 </wxr-space>
 <wxr-requirement></wxr-requirement>
 </wxr-world>
-	
-
-
-	
-
-
-	
-
-
-	
-
-
-	
-
-
 	
 
 

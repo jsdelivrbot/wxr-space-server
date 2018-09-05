@@ -1,7 +1,21 @@
 
 	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	<wxr-world>
-
 <script src="https://cdn.rawgit.com/webcomponents/webcomponentsjs/v1.1.0/webcomponents-lite.js"></script>
 <link href="https://libs.webizing.org/wxr-0.8.html" rel="import">
 <style>
@@ -25,6 +39,9 @@
 	}
 
 	#prevBtn {
+      	position: absolute;
+        top: 50px;
+        right: 130px;
 		width: 100px;
 		height: 50px;
 		border: 3px solid black;
@@ -32,11 +49,34 @@
 	}
 
 	#nexBtn {
+      	 position: absolute;
+        top: 50px;
+        right: 30px;
 		width: 80px;
 		height: 50px;
 		border: 3px solid black;
 		font-size : 20px;
 	}
+  
+      .annotation {
+        position: absolute;
+        top: 50px;
+        right: 270px;
+        width: 120px;
+		height: 45px;
+		border: 3px solid black;
+		font-size : 20px;
+       	text-align: center; 
+    }
+  
+ 	 a:link {
+    	text-decoration: none;
+        vertical-align: middle;
+     	color: white;
+        padding: 20px 5px;
+}
+
+ 
 
 	#annotation01 {
 		--wxr-transform: translate3d(0.2, 0, -0.1) rotate3d(0, 0, 0) scale3d(0.3, 0.3, 0.3);
@@ -63,10 +103,6 @@
 		--wxr-transform: translate3d(0.2, 0, -0.1) rotate3d(0, 0, 0) scale3d(0.3, 0.3, 0.3);
 	}
   
-  	#3DPrinter{
-		--wxr-transform: translate3d(0, 0, -1) scale3d(1.1, 1.1, 1.1);
-	}
-
 	#model01_powder {
 		--wxr-transform: translate3d(-0.2, -0.2, -0.1) rotate3d(0, 0.1, 0) scale3d(1.5, 1.5, 1.5);
 	}
@@ -171,6 +207,8 @@
 	#model05_shaftarrow {
 		--wxr-transform: translate3d(-0.2, -0.2, -0.1) rotate3d(0, 0.1, 0) scale3d(1.5, 1.5, 1.5);
 	}
+  
+
 </style>
 
 <script>
@@ -213,7 +251,6 @@
 
 <button id="prevBtn" onclick="onPreviousButtonClick();">Previous</button>
 <button id="nexBtn" onclick="onNextButtonClick(this);">Next</button>
-
 
 
 	<wxr-description title="insstek 3D" img="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/thumb/3d-thumb.png" desc="insstek 3D printer maintenance on the 3D web"></wxr-description>
@@ -345,11 +382,56 @@
 			<wxr-light-directional color="0xf0f0f0" intensity="0.4"></wxr-light-directional>
 			<wxr-html id="sunAnnotation">
 				<div class="annotation">
-                  <a href="http://192.168.86.173:8321">Click to go to 3D Printer</a>
+                  <a href="http://192.168.86.173:8321">    3D Printer</a>
 				</div>
 			</wxr-html>
 		
 	</wxr-space></wxr-world>
+	
+
+
+	
+
+
+	
+
+
+	
+
+
+	
+
+
+	
+
+
+	
+
+
+	
+
+
+	
+
+
+	
+
+
+	
+
+
+	
+
+
+	
+
+
+	
+
+
+	
+
+
 	
 
 

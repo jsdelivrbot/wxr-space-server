@@ -1,0 +1,391 @@
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<wxr-world>
+<script src="https://cdn.rawgit.com/webcomponents/webcomponentsjs/v1.1.0/webcomponents-lite.js"></script>
+<link href="https://libs.webizing.org/wxr-0.8.html" rel="import">
+<style>
+	wxr-camera {
+		--wxr-transform: translate3d(0, 0.1, 0.6) rotate3d(0, 0, 0);
+	}
+
+	wxr-light-ambient {
+		--wxr-transform: translate3d(0, 0.5, 0);
+	}
+
+	wxr-light-directional {
+		--wxr-transform: translate3d(0, 100, 10);
+	}
+
+
+	#showStep{
+		width: 100px;
+		height: 50px;
+		border: 3px solid black;
+	}
+
+	#prevBtn {
+        position: absolute;
+        top: 60px;
+        right: 160px;
+		width: 100px;
+		height: 50px;
+		border: 3px solid black;
+		font-size : 20px;
+	}
+
+	#nexBtn {
+        position: absolute;
+        top: 60px;
+        right: 60px;
+		width: 80px;
+		height: 50px;
+		border: 3px solid black;
+		font-size : 20px;
+	}
+  
+  	#annotation00 {
+		--wxr-transform: translate3d(-0.3, 0, 0) rotate3d(-1.5708, 0, 0) scale3d(0.3, 0.3, 0.3);
+	}
+
+	#annotation01 {
+		--wxr-transform: translate3d(-0.3, 0, 0) rotate3d(-1.5708, 0, 0) scale3d(0.3, 0.3, 0.3);
+	}
+
+	#annotation02 {
+		--wxr-transform: translate3d(-0.3, 0, 0) rotate3d(0, 0, 0) scale3d(0.3, 0.3, 0.3);
+	}
+
+	#annotation03 {
+		--wxr-transform: translate3d(-0.3, 0, 0) rotate3d(0, 0, 0) scale3d(0.3, 0.3, 0.3);
+	}
+
+	#annotation04 {
+		--wxr-transform: translate3d(-0.3, 0, 0) rotate3d(0, 0, 0) scale3d(0.3, 0.3, 0.3);
+	}
+
+	#annotation05 {
+		--wxr-transform: translate3d(-0.3, 0, 0) rotate3d(0, 0, 0) scale3d(0.3, 0.3, 0.3);
+	}
+
+
+	#base {
+		--wxr-transform: translate3d(0, 0, 0) rotate3d(0, 0, 0) scale3d(1, 1, 1);
+	}
+
+	#handle{
+		--wxr-transform: translate3d(0, 0, 0) rotate3d(0, 0, 0) scale3d(1, 1, 1);
+	}
+  
+  	#handle2{
+		--wxr-transform: translate3d(0, 0, 0) rotate3d(0, 1.5708, 0) scale3d(1, 1, 1);
+	}
+
+	#arrow {
+		--wxr-transform: translate3d(0, 0, 0) rotate3d(0, 0, 0) scale3d(1, 1, 1);
+	}
+
+
+	#screw_body1 {
+		--wxr-transform: translate3d(0.05, -0.05944, -0.0335) rotate3d(0, 0, 0) scale3d(1, 1, 1);
+	}
+  	#screw_body2 {
+		--wxr-transform: translate3d(0.05, -0.05944, 0.0335) rotate3d(0, 0, 0) scale3d(1, 1, 1);
+	}
+  	#screw_body3 {
+		--wxr-transform: translate3d(0.05, -0.11746, -0.067) rotate3d(0, 0, 0) scale3d(1, 1, 1);
+	}
+  	#screw_body4 {
+		--wxr-transform: translate3d(0.05, -0.11746, 0.067) rotate3d(0, 0, 0) scale3d(1, 1, 1);
+	}
+  	#screw_body5 {
+		--wxr-transform: translate3d(0.05, -0.17548, -0.0335) rotate3d(0, 0, 0) scale3d(1, 1, 1);
+	}
+  	#screw_body6 {
+		--wxr-transform: translate3d(0.05, -0.17548, 0.0335) rotate3d(0, 0, 0) scale3d(1, 1, 1);
+	}
+  
+  	#nut_body1 {
+		--wxr-transform: translate3d(0.05, -0.05944, -0.0335) rotate3d(0, 0, 0) scale3d(1, 1, 1);
+	}
+  	#nut_body2 {
+		--wxr-transform: translate3d(0.05, -0.05944, 0.0335) rotate3d(0, 0, 0) scale3d(1, 1, 1);
+	}
+    #nut_body3 {
+		--wxr-transform: translate3d(0.05, -0.11746, -0.067) rotate3d(0, 0, 0) scale3d(1, 1, 1);
+	}
+    #nut_body4 {
+		--wxr-transform: translate3d(0.05, -0.11746, 0.067) rotate3d(0, 0, 0) scale3d(1, 1, 1);
+	}
+    #nut_body5 {
+		--wxr-transform: translate3d(0.05, -0.17548, -0.0335) rotate3d(0, 0, 0) scale3d(1, 1, 1);
+	}
+    #nut_body6 {
+		--wxr-transform: translate3d(0.05, -0.17548, 0.0335) rotate3d(0, 0, 0) scale3d(1, 1, 1);
+	}
+  
+    
+  
+  
+
+	#cover {
+		--wxr-transform: translate3d(0, 0, 0) rotate3d(0, 0, 0) scale3d(1, 1, 1);
+	}
+
+	#seat {
+		--wxr-transform: translate3d(0, 0, 0) rotate3d(0, 0, 0) scale3d(1, 1, 1);
+	}
+
+	#ball {
+		--wxr-transform: translate3d(0, 0, 0) rotate3d(0, 0, 0) scale3d(1, 1, 1);
+	}
+
+
+
+
+
+</style>
+
+
+<script>
+    let step=1;
+
+    function onNextButtonClick() {
+        console.log(arguments);
+        if(step===7){
+            return;
+        }
+
+        let currentURL, nextURL;
+
+        currentURL="http://content.wxr.webizing.org/space/step0"+step;
+        WXREvent.dispatchEvent({type: WXREvent.BEACON_MISSED, beacon: currentURL});
+
+        step+=1;
+
+        nextURL="http://content.wxr.webizing.org/space/step0" + step;
+        WXREvent.dispatchEvent({type: WXREvent.BEACON_DETECTED, beacon: nextURL});
+    }
+
+
+    function onPreviousButtonClick() {
+        if(step===0){
+            return;
+        }
+
+        let currentURL, nextURL;
+
+        currentURL="http://content.wxr.webizing.org/space/step0"+step;
+        WXREvent.dispatchEvent({type: WXREvent.BEACON_MISSED, beacon: currentURL});
+
+        step-=1;
+
+        nextURL="http://content.wxr.webizing.org/space/step0" + step;
+        WXREvent.dispatchEvent({type: WXREvent.BEACON_DETECTED, beacon: nextURL});
+    }
+</script>
+
+<button id="prevBtn" onclick="onPreviousButtonClick();">Previous</button>
+<button id="nexBtn" onclick="onNextButtonClick(this);">Next</button>
+
+
+
+<wxr-description title="Ball Valve 3D" img="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/thumb/3d-thumb.png" desc="Ball Valve 3D manual "></wxr-description>
+<wxr-view default="3D" current="3D" modes="[&quot;3D&quot;, &quot;VR&quot;]"></wxr-view>
+
+
+
+<wxr-user user-id="jungmin.ha@wrl.onl" authority="owner" me=""></wxr-user>
+<wxr-user user-id="jongho.lee@wrl.onl" authority="viewer"></wxr-user>
+
+<wxr-camera fovy="61" near="0.1" far="1000" webgl_uuid="2AB12CA1-F602-447C-9CC0-4D9008445F2B" fov="60" aspect="1.7433414043583535"></wxr-camera>
+
+
+<wxr-space src="http://content.wxr.webizing.org/space/step01" enable="" webgl_uuid="0FBC6252-0168-40C7-AA32-308CAB10C478" css3d_uuid="6CD71F63-90FD-40B8-8EA0-301ADFF5B38B" disabled="">
+	<wxr-light-ambient color="0xf0f0f0" intensity="0.4" webgl_uuid="1A8F5BB8-08B4-48D8-A21E-C62C7C2A5A9D" css3d_uuid="D6E18FE3-25CD-40D9-86C1-4B15DB6A15C3" id=""></wxr-light-ambient>
+	<wxr-light-directional color="0xf0f0f0" intensity="0.4" webgl_uuid="FB0FDCC5-57DF-41C4-AE31-DD418A3B7A3B" css3d_uuid="8F03902F-E358-4AC7-99C7-C12A9924A8B4" id=""></wxr-light-directional>
+	<wxr-obj id="base" mtl="base.mtl" obj="base.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d" webgl_uuid="2693B5DE-7266-43E7-AB37-2B9B325068DF" css3d_uuid="DD41E740-5D42-4B35-AE41-4AEF4A6EE7EF"></wxr-obj>
+	<wxr-obj id="handle" mtl="00_handle.mtl" obj="00_handle.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d" webgl_uuid="01D9E2F2-5EF5-47F4-A217-71754328C047" css3d_uuid="2A7E8F6B-5506-4878-8258-140A95C6EF52"></wxr-obj>
+  	<wxr-obj id="stopper" mtl="stopper.mtl" obj="stopper.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d" webgl_uuid="01D9E2F2-5EF5-47F4-A217-71754328C047" css3d_uuid="2A7E8F6B-5506-4878-8258-140A95C6EF52">
+  		<wxr-animation type="rotation" to="0 1.57 0" duration="3000" repeat="Infinity" easing="linear"></wxr-animation>
+  </wxr-obj>
+	<wxr-obj id="stopper_screw" mtl="stopper_screw.mtl" obj="stopper_screw.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d" webgl_uuid="01D9E2F2-5EF5-47F4-A217-71754328C047" css3d_uuid="2A7E8F6B-5506-4878-8258-140A95C6EF52">
+     		<wxr-animation type="movement" to="0 0.2 0" duration="3000" repeat="Infinity" easing="linear"></wxr-animation> 
+  </wxr-obj>
+  
+  	<wxr-obj id="screw_body1" mtl="screw_body.mtl" obj="screw_body.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d" webgl_uuid="01D9E2F2-5EF5-47F4-A217-71754328C047" css3d_uuid="2A7E8F6B-5506-4878-8258-140A95C6EF52"></wxr-obj>
+    <wxr-obj id="screw_body2" mtl="screw_body.mtl" obj="screw_body.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d" webgl_uuid="01D9E2F2-5EF5-47F4-A217-71754328C047" css3d_uuid="2A7E8F6B-5506-4878-8258-140A95C6EF52"></wxr-obj>
+    <wxr-obj id="screw_body3" mtl="screw_body.mtl" obj="screw_body.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d" webgl_uuid="01D9E2F2-5EF5-47F4-A217-71754328C047" css3d_uuid="2A7E8F6B-5506-4878-8258-140A95C6EF52"></wxr-obj>
+    <wxr-obj id="screw_body4" mtl="screw_body.mtl" obj="screw_body.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d" webgl_uuid="01D9E2F2-5EF5-47F4-A217-71754328C047" css3d_uuid="2A7E8F6B-5506-4878-8258-140A95C6EF52"></wxr-obj>
+    <wxr-obj id="screw_body5" mtl="screw_body.mtl" obj="screw_body.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d" webgl_uuid="01D9E2F2-5EF5-47F4-A217-71754328C047" css3d_uuid="2A7E8F6B-5506-4878-8258-140A95C6EF52"></wxr-obj>
+    <wxr-obj id="screw_body6" mtl="screw_body.mtl" obj="screw_body.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d" webgl_uuid="01D9E2F2-5EF5-47F4-A217-71754328C047" css3d_uuid="2A7E8F6B-5506-4878-8258-140A95C6EF52"></wxr-obj>
+  	<wxr-obj id="nut_body1" mtl="nut_body.mtl" obj="nut_body.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d" webgl_uuid="01D9E2F2-5EF5-47F4-A217-71754328C047" css3d_uuid="2A7E8F6B-5506-4878-8258-140A95C6EF52"></wxr-obj>
+   	<wxr-obj id="nut_body2" mtl="nut_body.mtl" obj="nut_body.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d" webgl_uuid="01D9E2F2-5EF5-47F4-A217-71754328C047" css3d_uuid="2A7E8F6B-5506-4878-8258-140A95C6EF52"></wxr-obj>
+  	<wxr-obj id="nut_body3" mtl="nut_body.mtl" obj="nut_body.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d" webgl_uuid="01D9E2F2-5EF5-47F4-A217-71754328C047" css3d_uuid="2A7E8F6B-5506-4878-8258-140A95C6EF52"></wxr-obj>
+  	<wxr-obj id="nut_body4" mtl="nut_body.mtl" obj="nut_body.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d" webgl_uuid="01D9E2F2-5EF5-47F4-A217-71754328C047" css3d_uuid="2A7E8F6B-5506-4878-8258-140A95C6EF52"></wxr-obj>
+  	<wxr-obj id="nut_body5" mtl="nut_body.mtl" obj="nut_body.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d" webgl_uuid="01D9E2F2-5EF5-47F4-A217-71754328C047" css3d_uuid="2A7E8F6B-5506-4878-8258-140A95C6EF52"></wxr-obj>
+  	<wxr-obj id="nut_body6" mtl="nut_body.mtl" obj="nut_body.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d" webgl_uuid="01D9E2F2-5EF5-47F4-A217-71754328C047" css3d_uuid="2A7E8F6B-5506-4878-8258-140A95C6EF52"></wxr-obj>
+	<wxr-obj id="cover" mtl="02_cover.mtl" obj="02_cover.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d" webgl_uuid="8FBC923C-F1AE-4605-A813-ACF2C2D4EF8C" css3d_uuid="A3DCD7A9-3C58-4185-B8BA-E99FA9ED9E02"></wxr-obj>
+	<wxr-obj id="seat" mtl="seat.mtl" obj="seat.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_ar" webgl_uuid="E0ED4C90-1FC7-44F3-9302-829683FF3DE2" css3d_uuid="80D6CF63-19EC-463D-9917-818F7CE7F492"></wxr-obj>
+	<wxr-obj id="ball" mtl="04_ball.mtl" obj="04_ball.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d" webgl_uuid="D98CC4C9-8BD7-46EA-B9F1-03C6A938B371" css3d_uuid="5256BB06-92BB-44C1-9DE1-49CBC0C1D4A5"></wxr-obj>
+ 
+	<wxr-plane id="annotation00" texture="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/dialog/valve_3d/step00.jpg" webgl_uuid="EDC55D52-C25C-4B62-9E63-8980FB43501A" css3d_uuid="61301C19-9D88-4B5A-91C6-2334AE09A68B"></wxr-plane>
+</wxr-space>
+
+
+<wxr-space src="http://content.wxr.webizing.org/space/step02" webgl_uuid="823EDD2D-76C7-4751-8E0C-565BBD696AE7" css3d_uuid="AAB6D3C4-8D9D-49AA-B953-70A7F912297C" disabled="">
+	<wxr-light-ambient color="0xf0f0f0" intensity="0.4" webgl_uuid="28E90FF3-742D-400B-AF40-C9E103103EC9" css3d_uuid="DD66C1C5-2CCC-4272-AB9E-271C0E9DAA33" id=""></wxr-light-ambient>
+	<wxr-light-directional color="0xf0f0f0" intensity="0.4" webgl_uuid="944751C4-A073-4600-A351-25A4FBAB76A5" css3d_uuid="F78459EF-3724-4CA6-B2E1-1E77B89E58A3" id=""></wxr-light-directional>
+	<wxr-obj id="base" mtl="base.mtl" obj="base.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d" webgl_uuid="8ADDB407-4DA7-471D-A29F-27085CF84DB8" css3d_uuid="8D8C9C1E-6BB9-435D-8BA6-75A136C76AE3"></wxr-obj>
+	<wxr-obj id="handle" mtl="00_handle.mtl" obj="00_handle.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d" webgl_uuid="52B62013-3F13-45A3-8783-88ECFB3082D5" css3d_uuid="21731508-0480-4D8C-B4C4-464D3AB1C759">
+		<wxr-animation type="rotation" to="0 1.57 0" duration="4000" repeat="Infinity" easing="linear"></wxr-animation>
+	</wxr-obj>
+    <wxr-obj id="stopper" mtl="stopper.mtl" obj="stopper.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d" webgl_uuid="01D9E2F2-5EF5-47F4-A217-71754328C047" css3d_uuid="2A7E8F6B-5506-4878-8258-140A95C6EF52"></wxr-obj>
+	<wxr-obj id="stopper_screw" mtl="stopper_screw.mtl" obj="stopper_screw.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d" webgl_uuid="01D9E2F2-5EF5-47F4-A217-71754328C047" css3d_uuid="2A7E8F6B-5506-4878-8258-140A95C6EF52"></wxr-obj>
+
+    <wxr-obj id="screw_body1" mtl="screw_body.mtl" obj="screw_body.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d" webgl_uuid="01D9E2F2-5EF5-47F4-A217-71754328C047" css3d_uuid="2A7E8F6B-5506-4878-8258-140A95C6EF52"></wxr-obj>
+    <wxr-obj id="screw_body2" mtl="screw_body.mtl" obj="screw_body.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d" webgl_uuid="01D9E2F2-5EF5-47F4-A217-71754328C047" css3d_uuid="2A7E8F6B-5506-4878-8258-140A95C6EF52"></wxr-obj>
+    <wxr-obj id="screw_body3" mtl="screw_body.mtl" obj="screw_body.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d" webgl_uuid="01D9E2F2-5EF5-47F4-A217-71754328C047" css3d_uuid="2A7E8F6B-5506-4878-8258-140A95C6EF52"></wxr-obj>
+    <wxr-obj id="screw_body4" mtl="screw_body.mtl" obj="screw_body.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d" webgl_uuid="01D9E2F2-5EF5-47F4-A217-71754328C047" css3d_uuid="2A7E8F6B-5506-4878-8258-140A95C6EF52"></wxr-obj>
+    <wxr-obj id="screw_body5" mtl="screw_body.mtl" obj="screw_body.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d" webgl_uuid="01D9E2F2-5EF5-47F4-A217-71754328C047" css3d_uuid="2A7E8F6B-5506-4878-8258-140A95C6EF52"></wxr-obj>
+    <wxr-obj id="screw_body6" mtl="screw_body.mtl" obj="screw_body.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d" webgl_uuid="01D9E2F2-5EF5-47F4-A217-71754328C047" css3d_uuid="2A7E8F6B-5506-4878-8258-140A95C6EF52"></wxr-obj>
+  	<wxr-obj id="nut_body1" mtl="nut_body.mtl" obj="nut_body.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d" webgl_uuid="01D9E2F2-5EF5-47F4-A217-71754328C047" css3d_uuid="2A7E8F6B-5506-4878-8258-140A95C6EF52"></wxr-obj>
+   	<wxr-obj id="nut_body2" mtl="nut_body.mtl" obj="nut_body.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d" webgl_uuid="01D9E2F2-5EF5-47F4-A217-71754328C047" css3d_uuid="2A7E8F6B-5506-4878-8258-140A95C6EF52"></wxr-obj>
+  	<wxr-obj id="nut_body3" mtl="nut_body.mtl" obj="nut_body.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d" webgl_uuid="01D9E2F2-5EF5-47F4-A217-71754328C047" css3d_uuid="2A7E8F6B-5506-4878-8258-140A95C6EF52"></wxr-obj>
+  	<wxr-obj id="nut_body4" mtl="nut_body.mtl" obj="nut_body.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d" webgl_uuid="01D9E2F2-5EF5-47F4-A217-71754328C047" css3d_uuid="2A7E8F6B-5506-4878-8258-140A95C6EF52"></wxr-obj>
+  	<wxr-obj id="nut_body5" mtl="nut_body.mtl" obj="nut_body.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d" webgl_uuid="01D9E2F2-5EF5-47F4-A217-71754328C047" css3d_uuid="2A7E8F6B-5506-4878-8258-140A95C6EF52"></wxr-obj>
+  	<wxr-obj id="nut_body6" mtl="nut_body.mtl" obj="nut_body.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d" webgl_uuid="01D9E2F2-5EF5-47F4-A217-71754328C047" css3d_uuid="2A7E8F6B-5506-4878-8258-140A95C6EF52"></wxr-obj>
+	<wxr-obj id="arrow" mtl="00_arrow.mtl" obj="00_arrow.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d" webgl_uuid="19A2D807-0C47-4723-BDE4-757E9B408009" css3d_uuid="1045FD81-06C0-4996-964B-FF9D4C64452A"></wxr-obj>
+	<wxr-obj id="cover" mtl="02_cover.mtl" obj="02_cover.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d" webgl_uuid="EEB48378-0331-4E0C-A613-BFC93C75A557" css3d_uuid="38267A70-ABC0-4AF5-A988-36F683C48BC1"></wxr-obj>
+	<wxr-obj id="seat" mtl="seat.mtl" obj="seat.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_ar" webgl_uuid="2A4DA15D-0B28-463C-9980-690CFD958FD0" css3d_uuid="10EDBE65-7103-42EE-97FE-639D03E1B530"></wxr-obj>
+	<wxr-obj id="ball" mtl="04_ball.mtl" obj="04_ball.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d" webgl_uuid="73828633-FCA8-4FEB-8FF5-682DC6F8681A" css3d_uuid="D6BCE52E-E4F1-494C-98A7-F0EED2018F92"></wxr-obj>
+
+	<wxr-plane id="annotation01" texture="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/dialog/valve_3d/step01.jpg" webgl_uuid="EDC55D52-C25C-4B62-9E63-8980FB43501A" css3d_uuid="61301C19-9D88-4B5A-91C6-2334AE09A68B"></wxr-plane>
+</wxr-space>
+
+
+<wxr-space src="http://content.wxr.webizing.org/space/step03" webgl_uuid="60A685D3-7CF3-4EE5-AAE6-B8A6B93C7DDC" css3d_uuid="73A04F41-A47E-498F-A29B-93E011919DCA">
+	<wxr-light-ambient color="0xf0f0f0" intensity="0.4" id="" webgl_uuid="6808DB71-BAD2-4666-858D-85D44B4A6719" css3d_uuid="C1179350-889D-4A43-ACD2-F7DD9AEF1466"></wxr-light-ambient>
+	<wxr-light-directional color="0xf0f0f0" intensity="0.4" id="" webgl_uuid="127316AD-A15F-46E6-AF2E-99C489A37BA2" css3d_uuid="9FE8C306-227D-4097-8EFD-EF1A75F13F4A"></wxr-light-directional>
+	<wxr-obj id="base" mtl="base.mtl" obj="base.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d" webgl_uuid="0FAAB3BF-2E97-487E-9FD3-1013B27D28DF" css3d_uuid="8BF09B75-6DCD-4264-AA9D-255A32D4089B"></wxr-obj>
+	<wxr-obj id="handle2" mtl="00_handle.mtl" obj="00_handle.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d" webgl_uuid="D07347BF-3497-442B-89EC-152F7CD0C9C3" css3d_uuid="9BBDD324-35DA-462B-8086-327CA841C777"></wxr-obj>
+  	<wxr-obj id="stopper" mtl="stopper.mtl" obj="stopper.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d" webgl_uuid="01D9E2F2-5EF5-47F4-A217-71754328C047" css3d_uuid="2A7E8F6B-5506-4878-8258-140A95C6EF52"></wxr-obj>
+	<wxr-obj id="stopper_screw" mtl="stopper_screw.mtl" obj="stopper_screw.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d" webgl_uuid="01D9E2F2-5EF5-47F4-A217-71754328C047" css3d_uuid="2A7E8F6B-5506-4878-8258-140A95C6EF52"></wxr-obj>
+
+    <wxr-obj id="screw_body1" mtl="screw_body.mtl" obj="screw_body.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d" webgl_uuid="3487CF8A-FD6C-4A63-A711-E183269191B1" css3d_uuid="883C2F06-E394-4E1B-864F-1597FE037579">
+       		<wxr-animation type="movement" to="0.055 -0.05944 -0.0335" duration="4000" repeat="Infinity" easing="linear"></wxr-animation> 
+  	</wxr-obj>
+    <wxr-obj id="screw_body2" mtl="screw_body.mtl" obj="screw_body.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d" webgl_uuid="937379EF-87DE-4C73-BC11-B2E2A99AE5A1" css3d_uuid="7C76D225-31A1-407B-A559-F54B5EC5C7A1"></wxr-obj>
+    <wxr-obj id="screw_body3" mtl="screw_body.mtl" obj="screw_body.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d" webgl_uuid="BF0A93E0-7C99-4929-9717-CF74DED5217A" css3d_uuid="BA00C854-1BE3-4D89-B037-DC9F7F5FF4D0"></wxr-obj>
+    <wxr-obj id="screw_body4" mtl="screw_body.mtl" obj="screw_body.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d" webgl_uuid="E39A9619-A5DD-496E-B32D-DD4A7B7D8B9F" css3d_uuid="9AF07F32-2D7D-4461-9432-B5D388A88B31"></wxr-obj>
+    <wxr-obj id="screw_body5" mtl="screw_body.mtl" obj="screw_body.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d" webgl_uuid="E4AD946C-D73A-49D0-9340-A4DDD608CA66" css3d_uuid="49E82F1E-795D-41EB-8DBA-E1F729920B2A"></wxr-obj>
+    <wxr-obj id="screw_body6" mtl="screw_body.mtl" obj="screw_body.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d" webgl_uuid="7708514D-BAF1-462F-B8DB-A4E2B0FC9B98" css3d_uuid="E08E63CD-4913-407F-B6F8-8272249B107C"></wxr-obj>
+  	<wxr-obj id="nut_body1" mtl="nut_body.mtl" obj="nut_body.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d" webgl_uuid="520BBAE3-FDBD-4B63-AAC0-F2E3C0D78A65" css3d_uuid="70FAEF86-F3BA-4E5C-A8A2-6D501D9519E0"></wxr-obj>
+   	<wxr-obj id="nut_body2" mtl="nut_body.mtl" obj="nut_body.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d" webgl_uuid="8499B64A-F7EA-46FD-95A3-CE072C79B060" css3d_uuid="F84A5A2D-47B7-4F64-B7DF-812AC756DFDE"></wxr-obj>
+  	<wxr-obj id="nut_body3" mtl="nut_body.mtl" obj="nut_body.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d" webgl_uuid="90AC614B-0611-4D27-892B-8A71225B5DD6" css3d_uuid="A2597CE3-1B96-4BD2-8F94-A606768B2E79"></wxr-obj>
+  	<wxr-obj id="nut_body4" mtl="nut_body.mtl" obj="nut_body.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d" webgl_uuid="C3730CA8-2016-44CF-87D3-3DFF21876699" css3d_uuid="9D4A3624-FFC6-49F6-B565-9F93FB51C69C"></wxr-obj>
+  	<wxr-obj id="nut_body5" mtl="nut_body.mtl" obj="nut_body.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d" webgl_uuid="34B5A02A-30D4-4D85-93E4-A40FFD4B488E" css3d_uuid="E8B857C6-C74A-442E-BB95-3463BA1D2013"></wxr-obj>
+  	<wxr-obj id="nut_body6" mtl="nut_body.mtl" obj="nut_body.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d" webgl_uuid="AF9ADF4A-0055-455B-9F36-E2FB39CC438C" css3d_uuid="197F19DA-31A1-48A9-990B-5D8097331F0C"></wxr-obj>
+  
+      
+	<wxr-obj id="cover" mtl="02_cover.mtl" obj="02_cover.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d" webgl_uuid="E2F69282-890C-4C0F-97CD-BDC3A4B68805" css3d_uuid="8970E27F-5F2A-4B8A-9590-89DEA13C5E81">
+	</wxr-obj>
+	<wxr-obj id="seat" mtl="seat.mtl" obj="seat.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_ar" webgl_uuid="48EC8392-9743-4936-803E-1BE1B3045846" css3d_uuid="85BE6E5D-1C30-4BD1-9967-7002828B296B"></wxr-obj>
+	<wxr-obj id="ball" mtl="04_ball.mtl" obj="04_ball.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d" webgl_uuid="F7D0F83F-8B86-4A7A-9ED9-D98CF1C8F493" css3d_uuid="35C6B019-CBE0-4F83-9663-B0C918C4F592"></wxr-obj>
+  
+	<wxr-plane id="annotation02" texture="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/dialog/valve_3d/step02.jpg" webgl_uuid="879C1394-13AA-4E7C-BBA1-17060862AF90" css3d_uuid="AECD1950-31EB-4411-B494-012AFB7F4A11"></wxr-plane>
+</wxr-space>
+
+<wxr-space src="http://content.wxr.webizing.org/space/step04" disabled="" webgl_uuid="FB619E0C-4A96-434F-BA57-E1A0D372CFDE" css3d_uuid="359AB5DA-924D-4D39-91F5-B90453838417">
+	<wxr-light-ambient color="0xf0f0f0" intensity="0.4" id=""></wxr-light-ambient>
+	<wxr-light-directional color="0xf0f0f0" intensity="0.4" id=""></wxr-light-directional>
+	<wxr-obj id="base" mtl="base.mtl" obj="base.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d"></wxr-obj>
+	<wxr-obj id="handle2" mtl="00_handle.mtl" obj="00_handle.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d"></wxr-obj>
+    <wxr-obj id="stopper" mtl="stopper.mtl" obj="stopper.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d" webgl_uuid="01D9E2F2-5EF5-47F4-A217-71754328C047" css3d_uuid="2A7E8F6B-5506-4878-8258-140A95C6EF52"></wxr-obj>
+	<wxr-obj id="stopper_screw" mtl="stopper_screw.mtl" obj="stopper_screw.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d" webgl_uuid="01D9E2F2-5EF5-47F4-A217-71754328C047" css3d_uuid="2A7E8F6B-5506-4878-8258-140A95C6EF52"></wxr-obj>
+
+  
+	<wxr-obj id="cover" mtl="02_cover.mtl" obj="02_cover.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d">
+		<wxr-animation type="movement" to="0.09 0 0" duration="4000" repeat="Infinity" easing="linear"></wxr-animation>
+	</wxr-obj>
+	<wxr-obj id="seat" mtl="seat.mtl" obj="seat.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_ar"></wxr-obj>
+	<wxr-obj id="ball" mtl="04_ball.mtl" obj="04_ball.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d"></wxr-obj>
+   
+	<wxr-plane id="annotation02" texture="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/dialog/valve_3d/step02.jpg"></wxr-plane>
+</wxr-space>
+
+
+
+
+<wxr-space src="http://content.wxr.webizing.org/space/step05" disabled="" webgl_uuid="8ED097EB-1FBA-4886-9D61-A08BCBFA3B65" css3d_uuid="877B3F1A-F6EB-41A8-BC60-6F436B8D816E">
+	<wxr-light-ambient color="0xf0f0f0" intensity="0.4" id=""></wxr-light-ambient>
+	<wxr-light-directional color="0xf0f0f0" intensity="0.4" id=""></wxr-light-directional>
+	<wxr-obj id="base" mtl="base.mtl" obj="base.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d"></wxr-obj>
+	<wxr-obj id="handle2" mtl="00_handle.mtl" obj="00_handle.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d"></wxr-obj>
+  	<wxr-obj id="stopper" mtl="stopper.mtl" obj="stopper.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d" webgl_uuid="01D9E2F2-5EF5-47F4-A217-71754328C047" css3d_uuid="2A7E8F6B-5506-4878-8258-140A95C6EF52"></wxr-obj>
+  	<wxr-obj id="stopper_screw" mtl="stopper_screw.mtl" obj="stopper_screw.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d" webgl_uuid="01D9E2F2-5EF5-47F4-A217-71754328C047" css3d_uuid="2A7E8F6B-5506-4878-8258-140A95C6EF52"></wxr-obj>
+
+  
+	<wxr-obj id="seat" mtl="seat.mtl" obj="seat.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_ar">
+		<wxr-animation type="movement" to="0.1 0 0" duration="4000" repeat="Infinity" easing="linear"></wxr-animation>
+	</wxr-obj>
+	<wxr-obj id="ball" mtl="04_ball.mtl" obj="04_ball.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d"></wxr-obj>
+
+	<wxr-plane id="annotation03" texture="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/dialog/valve_3d/step03.jpg"></wxr-plane>
+</wxr-space>
+
+<wxr-space src="http://content.wxr.webizing.org/space/step06" disabled="" webgl_uuid="7B48224F-6A64-4564-A72E-225A36E70C94" css3d_uuid="3AE65D5A-C2C7-4EA4-887D-9DCFFB2A78AB">
+	<wxr-light-ambient color="0xf0f0f0" intensity="0.4" id=""></wxr-light-ambient>
+	<wxr-light-directional color="0xf0f0f0" intensity="0.4" id=""></wxr-light-directional>
+	<wxr-obj id="base" mtl="base.mtl" obj="base.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d"></wxr-obj>
+	<wxr-obj id="handle2" mtl="00_handle.mtl" obj="00_handle.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d"></wxr-obj>
+	<wxr-obj id="ball" mtl="04_ball.mtl" obj="04_ball.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d">
+		<wxr-animation type="movement" to="0.1 0 0" duration="4000" repeat="Infinity" easing="linear"></wxr-animation>
+	</wxr-obj>
+
+	<wxr-plane id="annotation04" texture="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/dialog/valve_3d/step04.jpg"></wxr-plane>
+</wxr-space><wxr-requirement></wxr-requirement></wxr-world>
+	
+
+
+	
+
+
+	
+
+
+	
+
+
+	
+
+
+	
+
+
+	
+
+
+	
+
+
+	
+
+
+	
+
+
+	
+
+
+	
+

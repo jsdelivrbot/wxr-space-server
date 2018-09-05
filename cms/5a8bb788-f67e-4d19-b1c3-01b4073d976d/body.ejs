@@ -1,78 +1,6 @@
 
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	<wxr-world><script src="https://cdn.rawgit.com/webcomponents/webcomponentsjs/v1.1.0/webcomponents-lite.js"></script>
 <link href="https://libs.webizing.org/wxr-0.7.html" rel="import">
 
@@ -110,385 +38,6 @@
   }
   
   #anno{
-     --wxr-transform: translate3d(0, 0.1, 0.1) rotate3d(0, 0, 0) scale3d(0.001, 0.001, 0.01);
-
-  }
-  
-</style>
-
-<script>
-  function call(element, target){
-    console.log( 'TRIGGER called');
-  }
-  
-        function triggerCondition(trigger, target) {
-        const distanceToTarget = trigger.webGLObject3D.position.distanceTo(target.webGLObject3D.position);
-        if (distanceToTarget > 1) {
-          return true;
-        }
-        return false;
-      }
-</script>
-
-<wxr-view default="3D" current="3D" modes="[&quot;3D&quot;, &quot;VR&quot;]"></wxr-view>
-<wxr-camera fovy="61" near="0.1" far="1000" webgl_uuid="4F1A88FA-E9D7-4999-A155-DBAF8B96BDC8" fov="60" aspect="1.9571865443425076"></wxr-camera>
-<wxr-space src="http://content.wxr.webizing.org/space/step01" enable="" webgl_uuid="50F5ABE0-D4EC-4F58-8F71-27FD1D1B9E16" css3d_uuid="EEC292AF-4EAE-4BAC-977E-D40DF6BDF561">
-	
-		<wxr-light-ambient color="0xf0f0f0" intensity="0.4" webgl_uuid="A2B78697-A582-4210-B889-8999328E6567" css3d_uuid="883AF8EF-5E66-4EC3-B59C-3959DF312F88"></wxr-light-ambient>
-		<wxr-light-directional color="0xf0f0f0" intensity="0.4" webgl_uuid="5A39DE73-2F0E-400D-937C-8A634E5BE9EF" css3d_uuid="BA88F02E-0E5F-4BF3-A599-EBA8EADC61AD"></wxr-light-directional>
-  		<wxr-box id="box01" width="0.1" height="0.1" depth="0.1" color="0xff0000" transparent="true" opacity="0.3" webgl_uuid="859BD93F-A67A-471E-98DB-64B2A8E899F9" css3d_uuid="BB68B5A6-C50A-45C0-ADB9-9AC6975AEA2E" style="--wxr-transform:tranlate3d( 0, 0, 0), rotate3d(0, 0, 0), scale3d(1, 1, 1);">
-			<wxr-html id="anno" css3d_uuid="0526AB99-4B52-4AB9-B09A-EDEE671417FE" webgl_uuid="136DE701-3A7C-4FAF-8375-E66778CED976">
-				<div class="bnno">
-					<h3>Sun</h3>
-					<iframe width="1100" height="1300" src="http://203.255.251.35:8321" frameborder="0" allowfullscreen=""></iframe>     
-				</div>
-			</wxr-html>
-             <wxr-animation type="rotation" to="1 0 0" duration="5000" repeat="Infinity" easing="linear"></wxr-animation>  
-  		</wxr-box>   
-  
-    	<wxr-box id="box02" width="0.05" height="0.1" depth="0.1" color="0xfff000" webgl_uuid="147897E2-5317-4F49-BB7B-B1048443BFF9" css3d_uuid="87F16390-1DD2-4699-9DF5-CCFC84CC252E">
-               <wxr-animation type="movement" to="1 0 0" duration="5000" repeat="1" easing="linear">
-          <wxr-animation type="movement" to="1 0 1" duration="5000" repeat="2" easing="linear"></wxr-animation>  
-          </wxr-animation>  
-          
-         <wxr-box id="box03" width="0.02" height="0.05" depth="0.03" color="0x008000" webgl_uuid="55BF9B59-CECD-4E8E-BA0F-005E058FB881" css3d_uuid="D80FFE92-6ADB-4F0B-A47B-1E896488E350">
-
-  </wxr-box>
- 
-
-
-  </wxr-box></wxr-space>
-
-
-</wxr-world>
-	
-
-
-	
-
-
-	
-
-
-	
-
-
-	
-
-
-	
-
-
-	
-
-
-	
-
-
-	
-
-
-	
-
-
-	
-
-
-	
-
-
-	
-
-
-	
-
-
-	
-
-
-	
-
-
-	
-
-
-	
-
-
-	
-
-
-	
-
-
-	
-
-
-	
-
-
-	
-
-
-	
-
-
-	
-
-
-	
-
-
-	
-
-
-	
-
-
-	
-
-
-	
-
-
-	
-
-
-	
-
-
-	
-
-
-	
-
-
-	
-
-
-	
-
-
-	
-
-
-	
-
-
-	
-
-
-	
-
-
-	
-
-
-	
-
-
-	
-
-
-	
-
-
-	
-
-
-	
-
-
-	
-
-
-	
-
-
-	
-
-
-	
-
-
-	
-
-
-	
-
-
-	
-
-
-	
-
-
-	
-
-
-	
-
-
-	
-
-
-	
-
-
-	
-
-
-	
-
-
-	
-
-
-	
-
-
-	
-
-
-	
-
-
-	
-
-
-	
-
-
-
-
-	
-
-
-
-
-	
-
-
-
-
-	
-
-
-
-
-	
-
-
-	
-
-
-	
-
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	<wxr-world><script src="https://cdn.rawgit.com/webcomponents/webcomponentsjs/v1.1.0/webcomponents-lite.js"></script>
-<link href="https://libs.webizing.org/wxr-0.7.html" rel="import">
-
-    <wxr-user user-id="yongjae.lee@wrl.onl" authority="owner" me=""></wxr-user>
-    <wxr-user user-id="jongho.lee@wrl.onl" authority="viewer" me=""></wxr-user>
-
-<style>
-  
-  	wxr-camera {
-		--wxr-transform: translate3d(0, 0.1, 0.6) rotate3d(0, 0, 0);
-	}
-
-	wxr-light-ambient {
-		--wxr-transform: translate3d(0, 0.5, 0);
-	}
-
-	wxr-light-directional {
-		--wxr-transform: translate3d(0, 100, 10);
-	}
-  
-    wxr-trigger {
-        --wxr-transform: translate3d(0, 0, 0) rotate3d(0, 0, 0);
-    }
-
-  #box01{
-    --wxr-transform: translate3d(0, 0, 0) rotate3d(0, 0, 0) scale3d(1, 1, 1);
-  }
-  
-   #box02{
-    --wxr-transform: translate3d(0, 0, 0) rotate3d(0, 0, 0) scale3d(1, 1, 1);
-  }
-  
-  #anno{
      --wxr-transform: translate3d(0, 0.1, 0.1) rotate3d(0, 0, 0) scale3d(0.0001, 0.0001, 0.001);
 
   }
@@ -510,259 +59,34 @@
 </script>
 
 <wxr-view default="3D" current="3D" modes="[&quot;3D&quot;, &quot;VR&quot;]"></wxr-view>
-<wxr-camera fovy="61" near="0.1" far="1000" webgl_uuid="7B28A383-A945-4E76-A636-D788C978A68B" fov="60" aspect="1.9571865443425076"></wxr-camera>
-<wxr-space src="http://content.wxr.webizing.org/space/step01" enable="" webgl_uuid="CA884EB5-D6B1-4E93-983E-E831B429B428" css3d_uuid="7502982F-8AEB-49BD-B612-EDCDEF03B615">
+<wxr-camera fovy="61" near="0.1" far="1000" webgl_uuid="D04EA80D-E851-4E55-A3E5-D37B28BE1913" fov="60" aspect="1.8867497168742922"></wxr-camera>
+<wxr-space src="http://content.wxr.webizing.org/space/step01" enable="" webgl_uuid="C5843BC8-29B6-48A2-A4C1-F6F0007557C9" css3d_uuid="4A166D02-6897-4385-A088-8E2FA0A7B181">
 	
-		<wxr-light-ambient color="0xf0f0f0" intensity="0.4" webgl_uuid="D9F382F0-2E85-4BC3-8474-DFD659D81F44" css3d_uuid="EB02A3A6-3D31-40B3-8662-726B6060CE60"></wxr-light-ambient>
-		<wxr-light-directional color="0xf0f0f0" intensity="0.4" webgl_uuid="C860AD90-EAAD-4143-94C2-7CB9AA6D2A26" css3d_uuid="02877100-9151-4415-8207-31E08FAFD3FF"></wxr-light-directional>
-  		<wxr-box id="box01" width="0.1" height="0.1" depth="0.1" color="0xff0000" transparent="true" opacity="0.3" webgl_uuid="7891E738-F991-47FC-9FA2-91D3D2E70C86" css3d_uuid="51767D69-42D9-4355-8CAC-86E0AB87EEB7" style="--wxr-transform:tranlate3d( -0.00336, 0, 0), rotate3d(0.00336, 0, 0), scale3d(1, 1, 1);">
-			<wxr-html id="anno" css3d_uuid="194118AF-86D5-441E-A04F-988497630E9B" webgl_uuid="E253F26C-7A5B-4DF2-BE3C-0C09AD177E2E">
+		<wxr-light-ambient color="0xf0f0f0" intensity="0.4" webgl_uuid="338FD4EC-B569-45B0-B631-2A8DBA9A35B2" css3d_uuid="996A14D4-E353-4D1B-856C-5548294BF7AA"></wxr-light-ambient>
+		<wxr-light-directional color="0xf0f0f0" intensity="0.4" webgl_uuid="3883AFF0-D4E5-4AFF-B9EB-06508003A80E" css3d_uuid="760E6C49-B17C-4EA7-BA79-3C3CC643EEB0"></wxr-light-directional>
+  		<wxr-box id="box01" width="0.1" height="0.1" depth="0.1" color="0xff0000" transparent="true" opacity="0.3" webgl_uuid="05394776-C305-4D73-8FCF-79112F336DE8" css3d_uuid="55F0E338-6284-4AEA-AFE9-F7AAA1AF26B5" style="--wxr-transform:tranlate3d( -0.756648, -0.118294, 0), rotate3d(0.56936, 0, 0), scale3d(1, 1, 1);">
+			<wxr-html id="anno" css3d_uuid="A3E01629-75FD-4681-A017-396827422FD4" webgl_uuid="E0D533FD-418A-4227-B7F2-090620DE48F5">
 				<div class="bnno">
 					<h3>Sun</h3>
 					<iframe width="1100" height="1300" src="http://203.255.251.35:8321" frameborder="0" allowfullscreen=""></iframe>     
 				</div>
 			</wxr-html>
              <wxr-animation type="rotation" to="1 0 0" duration="5000" repeat="Infinity" easing="linear"></wxr-animation>  
-             <wxr-animation type="movement" to="-1 0 0" duration="5000" repeat="1" easing="linear"></wxr-animation> 
   		</wxr-box>   
   
-    	<wxr-box id="box02" width="0.05" height="0.1" depth="0.1" color="0xfff000" webgl_uuid="95DD185D-04A4-41D1-AE8D-E41635E1BB7B" css3d_uuid="E7272768-ED9B-4702-BC9B-60C069586902">
+    	<wxr-box id="box02" width="0.05" height="0.1" depth="0.1" color="0x008000" webgl_uuid="DE2AAAAC-C836-4DA8-A431-6C478D87D260" css3d_uuid="5BC41E7D-ABF1-4243-BA2A-1141C61B5B9A">
                <wxr-animation type="movement" to="1 0 0" duration="5000" repeat="1" easing="linear">
           <wxr-animation type="movement" to="1 0 1" duration="5000" repeat="2" easing="linear"></wxr-animation>  
           </wxr-animation>  
           
-  </wxr-box>
+         <wxr-box id="box03" width="0.02" height="0.05" depth="0.03" color="0x008100" webgl_uuid="C805844A-0404-4A5C-8B6A-972E232DCC66" css3d_uuid="26548FF2-F001-4F07-A335-7B86E958390E"> </wxr-box>
  
+    <wxr-box id="box04" width="0.2" height="0.05" depth="1" color="0x008100" webgl_uuid="A76B13F9-7086-4665-89C9-25CCE467A8A0" css3d_uuid="3A452EE8-EE8E-4C83-B135-DAB47F7735ED"> </wxr-box>
 
-
-  </wxr-space>
+  </wxr-box></wxr-space>
 
 
 </wxr-world>
-	
-
-
-	
-
-
-	
-
-
-	
-
-
-	
-
-
-	
-
-
-	
-
-
-	
-
-
-	
-
-
-	
-
-
-	
-
-
-	
-
-
-	
-
-
-	
-
-
-	
-
-
-	
-
-
-	
-
-
-	
-
-
-	
-
-
-	
-
-
-	
-
-
-	
-
-
-	
-
-
-	
-
-
-	
-
-
-	
-
-
-	
-
-
-	
-
-
-	
-
-
-	
-
-
-	
-
-
-	
-
-
-	
-
-
-	
-
-
-	
-
-
-	
-
-
-	
-
-
-	
-
-
-	
-
-
-	
-
-
-	
-
-
-	
-
-
-	
-
-
-	
-
-
-	
-
-
-	
-
-
-	
-
-
-	
-
-
-	
-
-
-	
-
-
-	
-
-
-	
-
-
-	
-
-
-	
-
-
-	
-
-
-	
-
-
-	
-
-
-	
-
-
-	
-
-
-	
-
-
-	
-
-
-	
-
-
-	
-
-
-	
-
-
-	
-
-
-	
-
-
-
-
-	
-
-
-
-
-	
-
-
-
-
-	
-
-
-
-
-	
-
-
-	
-
-
-	
-
-
 	
 
 <div class="nsc-content-camera" style="top: 10px; left: 10px;">
@@ -951,6 +275,215 @@
 
         <div class="nsc-panel-actions" flex="none" layout="row" layout-align="start center">
             <button class="nsc-panel-button big" type="button" id="nsc_panel_button_play" style="display: none;">
+                <span class="nsc-icon nsc-icon-play"></span>
+            </button>
+            <button class="nsc-panel-button big" type="button" id="nsc_panel_button_pause">
+                <span class="nsc-icon nsc-icon-pause"></span>
+            </button>
+            <button class="nsc-panel-button big" type="button" id="nsc_panel_button_stop">
+                <span class="nsc-icon nsc-icon-stop"></span>
+            </button>
+        </div>
+
+        <!-- panel togglers -->
+        <div class="nsc-panel-togglers" layout="row" layout-align="start center" flex="none">
+            <button class="nsc-panel-toggle-button" type="button">
+                <span class="nsc-icon nsc-icon-panel-close" data-i18n="videoPanelHideShowPanel"></span>
+            </button>
+        </div>
+        <!-- /panel togglers -->
+
+    </div>
+</div>
+<div class="nsc-video-editor events" style="width: 1666px; height: 883px;"><canvas width="1666" height="883" style="width: 1666px; height: 883px; position: absolute; top: 0px; left: 0px; z-index: 0;"></canvas><canvas width="1666" height="883" style="width: 1666px; height: 883px; position: absolute; top: 0px; left: 0px; z-index: 1;"></canvas><canvas width="1666" height="883" style="width: 1666px; height: 883px; position: absolute; top: 0px; left: 0px; z-index: 2;"></canvas><canvas width="1666" height="883" style="width: 1666px; height: 883px; position: absolute; top: 0px; left: 0px; z-index: 0;"></canvas><canvas width="1666" height="883" style="width: 1666px; height: 883px; position: absolute; top: 0px; left: 0px; z-index: 1;"></canvas><canvas width="1666" height="883" style="width: 1666px; height: 883px; position: absolute; top: 0px; left: 0px; z-index: 2;"></canvas><canvas width="1666" height="883" style="width: 1666px; height: 883px; position: absolute; top: 0px; left: 0px; z-index: 0;"></canvas><canvas width="1666" height="883" style="width: 1666px; height: 883px; position: absolute; top: 0px; left: 0px; z-index: 1;"></canvas><canvas width="1666" height="883" style="width: 1666px; height: 883px; position: absolute; top: 0px; left: 0px; z-index: 2;"></canvas></div>
+	
+
+<div class="nsc-content-camera" style="top: 10px; left: 10px;">
+    <div class="nsc-content-camera-buttons" flex="none" layout="row" layout-align="start start">
+        <button class="nsc-content-camera-button" type="button" id="nsc_video_camera_collapse" style="display: none">
+            <span class="nsc-icon nsc-icon-panel-collapse"></span>
+        </button>
+        <button class="nsc-content-camera-button" type="button" id="nsc_video_camera_expand">
+            <span class="nsc-icon nsc-icon-panel-expand"></span>
+        </button>
+        <button class="nsc-content-camera-button" type="button" id="nsc_video_camera_close">
+            <span class="nsc-icon nsc-icon-panel-close"></span>
+        </button>
+    </div>
+    <div class="nsc-content-camera-container">
+        <div class="nsc-content-camera-shadow"></div>
+    </div>
+</div>
+<div class="nsc-panel nsc-panel-compact" style="display: none;">
+    <div class="nsc-panel-move"></div>
+    <div class="nsc-panel-tooltip">
+        <div class="nsc-panel-tooltip-layout" layout="row" layout-align="start center">CTRL+V to toggle the panel</div>
+    </div>
+
+    <div class="nsc-panel-layout" flex="" layout="row" layout-align="start center">
+        <div class="nsc-panel-groups" flex="" layout="row" layout-align="start start">
+
+            <!-- group -->
+            <div class="nsc-panel-group" flex="none" layout="row" layout-align="start start">
+                <div class="nsc-panel-button separated active">
+                    <div class="nsc-panel-select" flex="" layout="row">
+                        <div class="nsc-panel-text nsc-noselect" flex="" layout="row" layout-align="center center">
+                            <span class="nsc-icon nsc-icon-cursor-normal"></span>
+                        </div>
+                        <div class="nsc-panel-trigger">
+                            <span class="nsc-icon nsc-icon-arrow"></span>
+                        </div>
+                    </div>
+                    <div class="nsc-panel-dropdown to-top">
+                        <ul flex="" layout="row" layout-align="start center">
+                            <li class="nsc-panel-dropdown-icon" flex="" layout="row" layout-align="start center">
+                                <span class="nsc-icon nsc-icon-cursor-shade" data-i18n="videoPanelFocusMouse" data-event="nimbus-editor-active-tools" data-event-param="cursorShadow"></span>
+                            </li>
+                            <li class="nsc-panel-dropdown-icon" flex="" layout="row" layout-align="start center">
+                                <span class="nsc-icon nsc-icon-cursor-circle" data-i18n="videoPanelAnimatedCursor" data-event="nimbus-editor-active-tools" data-event-param="cursorRing"></span>
+                            </li>
+                            <!--<li class="nsc-panel-dropdown-icon " flex layout="row" layout-align="start center">-->
+                            <!--<span class="nsc-icon nsc-icon-cursor-tail"></span>-->
+                            <!--</li>-->
+                            <!--<li class="nsc-panel-dropdown-icon " flex layout="row" layout-align="start center">-->
+                            <!--<span class="nsc-icon nsc-icon-cursor-long"></span>-->
+                            <!--</li>-->
+                            <li class="nsc-panel-dropdown-icon" flex="" layout="row" layout-align="start center">
+                                <span class="nsc-icon nsc-icon-cursor-normal" data-i18n="videoPanelSimpleCursor" data-event="nimbus-editor-active-tools" data-event-param="cursorDefault"></span>
+                            </li>
+                            <li class="nsc-panel-dropdown-icon" flex="" layout="row" layout-align="start center">
+                                <span class="nsc-icon nsc-icon-cursor-none" data-event="nimbus-editor-active-tools" data-event-param="cursorNone"></span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!-- /group -->
+
+            <!-- group -->
+            <div class="nsc-panel-group" flex="none" layout="row" layout-align="start start">
+                <button class="nsc-panel-button" type="button">
+                    <span class="nsc-icon nsc-icon-pen" data-i18n="videoPanelPen" data-event="nimbus-editor-active-tools" data-event-param="pen"></span>
+                </button>
+                <button class="nsc-panel-button" type="button">
+                    <span class="nsc-icon nsc-icon-arrow-line" data-i18n="videoPanelArrow" data-event="nimbus-editor-active-tools" data-event-param="arrow"></span>
+                </button>
+                <button class="nsc-panel-button" type="button">
+                    <span class="nsc-icon nsc-icon-square" data-i18n="videoPanelSquare" data-event="nimbus-editor-active-tools" data-event-param="square"></span>
+                </button>
+                <div class="nsc-panel-button separated">
+                    <div class="nsc-panel-select" flex="" layout="row">
+                        <div class="nsc-panel-text nsc-noselect" flex="" layout="row" layout-align="center center">
+                            <span class="nsc-icon nsc-icon-attention"></span>
+                        </div>
+                        <div class="nsc-panel-trigger">
+                            <span class="nsc-icon nsc-icon-arrow"></span>
+                        </div>
+                    </div>
+                    <div class="nsc-panel-dropdown to-top">
+                        <ul flex="" layout="row" layout-align="start center">
+                            <li class="nsc-panel-dropdown-icon" flex="" layout="row" layout-align="start center">
+                                <span class="nsc-icon nsc-icon-attention" data-i18n="videoPanelMark" data-event="nimbus-editor-active-tools" data-event-param="notifRed"></span>
+                            </li>
+                            <li class="nsc-panel-dropdown-icon" flex="" layout="row" layout-align="start center">
+                                <span class="nsc-icon nsc-icon-question" data-i18n="videoPanelQuestion" data-event="nimbus-editor-active-tools" data-event-param="notifBlue"></span>
+                            </li>
+                            <li class="nsc-panel-dropdown-icon" flex="" layout="row" layout-align="start center">
+                                <span class="nsc-icon nsc-icon-done" data-i18n="videoPanelCheckmark" data-event="nimbus-editor-active-tools" data-event-param="notifGreen"></span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="nsc-panel-button assembled">
+                    <div class="nsc-panel-select" flex="" layout="row">
+                        <div class="nsc-panel-text nsc-noselect" flex="" layout="row" layout-align="center center">
+							<span class="nsc-icon nsc-icon-fill-none nsc-panel-icon-fill">
+								<span class="nsc-panel-icon-fill-inner" id="nsc_panel_button_colors" style="background:#00FF00;"></span>
+							</span>
+                        </div>
+                        <div class="nsc-panel-trigger">
+                            <span class="nsc-icon nsc-icon-arrow"></span>
+                        </div>
+                    </div>
+                    <div class="nsc-panel-dropdown">
+                        <div class="nsc-panel-drop-area">
+                            <div class="nsc-panel-colors">
+
+                                <!-- picked -->
+                                <div class="colors-picked">
+                                    <div class="colors-picked-layout" flex="" layout="row" layout-align="start start" layout-wrap="">
+                                        <div class="colors-picked-item">
+                                            <button class="colors-picked-button" type="button" data-event="nimbus-editor-active-color" data-event-param="#000000">
+                                                <span class="colors-picked-button-inner" style="background: #000000;"></span>
+                                            </button>
+                                        </div>
+                                        <div class="colors-picked-item">
+                                            <button class="colors-picked-button" type="button" data-event="nimbus-editor-active-color" data-event-param="#0000FF">
+                                                <span class="colors-picked-button-inner" style="background: #0000FF;"></span>
+                                            </button>
+                                        </div>
+                                        <div class="colors-picked-item">
+                                            <button class="colors-picked-button" type="button" data-event="nimbus-editor-active-color" data-event-param="#FF00FF">
+                                                <span class="colors-picked-button-inner" style="background: #FF00FF;"></span>
+                                            </button>
+                                        </div>
+                                        <div class="colors-picked-item">
+                                            <button class="colors-picked-button" type="button" data-event="nimbus-editor-active-color" data-event-param="#00FFFF">
+                                                <span class="colors-picked-button-inner" style="background: #00FFFF;"></span>
+                                            </button>
+                                        </div>
+                                        <div class="colors-picked-item">
+                                            <button class="colors-picked-button" type="button" data-event="nimbus-editor-active-color" data-event-param="#00FF00">
+                                                <span class="colors-picked-button-inner" style="background: #00FF00;"></span>
+                                            </button>
+                                        </div>
+                                        <div class="colors-picked-item">
+                                            <button class="colors-picked-button" type="button" data-event="nimbus-editor-active-color" data-event-param="#FFFF00">
+                                                <span class="colors-picked-button-inner" style="background: #FFFF00;"></span>
+                                            </button>
+                                        </div>
+                                        <div class="colors-picked-item">
+                                            <button class="colors-picked-button" type="button" data-event="nimbus-editor-active-color" data-event-param="#FF0000">
+                                                <span class="colors-picked-button-inner" style="background: #FF0000;"></span>
+                                            </button>
+                                        </div>
+                                        <div class="colors-picked-item">
+                                            <button class="colors-picked-button" type="button" data-event="nimbus-editor-active-color" data-event-param="#FFFFFF">
+                                                <span class="colors-picked-button-inner" style="background: #FFFFFF;"></span>
+                                            </button>
+                                        </div>
+                                        <!--<div class="colors-picked-item">-->
+                                        <!--<button class="colors-picked-button custom" type="button"> -->
+                                        <!--<i class="nsc-icon ic-color-custom"></i> -->
+                                        <!--</button>-->
+                                        <!--</div>-->
+                                    </div>
+                                </div>
+                                <!-- /picked -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /group -->
+
+            <!-- group -->
+            <div class="nsc-panel-group" flex="none" layout="row" layout-align="start start">
+                <button class="nsc-panel-button " type="button">
+                    <span class="nsc-icon nsc-icon-eraser" data-i18n="videoPanelClear" data-event="nimbus-editor-active-tools" data-event-param="clear"></span>
+                </button>
+                <button class="nsc-panel-button" type="button">
+                    <span class="nsc-icon nsc-icon-eraser-all" data-i18n="videoPanelClearAll" data-event="nimbus-editor-active-tools" data-event-param="clearAll"></span>
+                </button>
+                <button class="nsc-panel-button" type="button">
+                    <span class="nsc-icon nsc-icon-webcam" data-i18n="videoPanelCamera" id="nimbus_web_camera_toggle"></span>
+                </button>
+            </div>
+            <!-- /group -->
+        </div>
+
+        <div class="nsc-panel-actions" flex="none" layout="row" layout-align="start center">
+            <button class="nsc-panel-button big" type="button" id="nsc_panel_button_play">
                 <span class="nsc-icon nsc-icon-play"></span>
             </button>
             <button class="nsc-panel-button big" type="button" id="nsc_panel_button_pause">
@@ -1181,5 +714,3 @@
     </div>
 </div>
 <div class="nsc-video-editor events" style="width: 1666px; height: 883px;"><canvas width="1666" height="883" style="width: 1666px; height: 883px; position: absolute; top: 0px; left: 0px; z-index: 0;"></canvas><canvas width="1666" height="883" style="width: 1666px; height: 883px; position: absolute; top: 0px; left: 0px; z-index: 1;"></canvas><canvas width="1666" height="883" style="width: 1666px; height: 883px; position: absolute; top: 0px; left: 0px; z-index: 2;"></canvas></div>
-	
-

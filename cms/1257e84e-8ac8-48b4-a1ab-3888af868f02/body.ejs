@@ -1,0 +1,171 @@
+
+	
+	
+	
+	
+	
+	<wxr-world><script src="https://cdn.rawgit.com/webcomponents/webcomponentsjs/v1.1.0/webcomponents-lite.js"></script>
+<link href="https://libs.webizing.org/wxr-0.8.html" rel="import">
+<style>
+    wxr-camera {
+        --wxr-transform: translate3d(0, 0.1, 0.6) rotate3d(0, 0, 0);
+    }
+
+    wxr-light-ambient {
+        --wxr-transform: translate3d(0, 0.5, 0);
+    }
+  
+ 	 wxr-light-directional{
+        --wxr-transform: translate3d(0, 0, 0.5);
+    }
+  
+  
+  
+    #handle_arrow {
+		--wxr-transform: translate3d(-0.15, 0, 0) rotate3d(1.5708, 0, 0) scale3d(1.1, 1.1, 1.1);
+	}
+  
+    	#handle{
+		--wxr-transform: translate3d(-0.15, 0, 0) rotate3d(1.5708, 0, 0) scale3d(1.1, 1.1, 1.1);
+	}
+  
+  
+  	#cover {
+		--wxr-transform: translate3d(0.01, -0.2, 0) rotate3d(1.5708, 0, 0) scale3d(1.1, 1.1, 1.1);
+	}
+    
+	#screws {
+		--wxr-transform: translate3d(0.01, -0.4, 0) rotate3d(1.5708, 0, 0) scale3d(1.1, 1.1, 1.1);
+	}
+  
+
+    #stopper_screw{
+		--wxr-transform: translate3d(-0.15, 0, 0) rotate3d(1.5708, 0, 0) scale3d(1, 1, 1);
+	}
+ 
+     #ball{
+		--wxr-transform: translate3d(0, 0.05, 0.3) rotate3d(0, -1.5708, 0) scale3d(1.15, 1.15, 1.15);
+	}
+      
+     #seat{
+		--wxr-transform: translate3d(0, 0.05, 0.1) rotate3d(0, -1.5708, 0) scale3d(1.15, 1.15, 1.15);
+	}
+  
+  
+
+  
+    #annotation01 {
+		--wxr-transform: translate3d(-0.15, 0.1, 0) rotate3d(0, 0, 0) scale3d(0.08, 0.08, 0.08);
+	}
+  
+    #annotation02 {
+		--wxr-transform: translate3d(-0.11, 0, 0.05) rotate3d(0, 0, 3.14) scale3d(0.07, 0.07, 0.07);
+	}
+  
+     #annotation03 {
+		--wxr-transform: translate3d(-0.08, 0, 0) rotate3d(0, 0, 0) scale3d(0.07, 0.07, 0.07);
+	}
+  
+  
+  
+     #STEP01{
+		--wxr-transform: translate3d(0.1, 0, 0) rotate3d(-1.5708, 0, -0.02) scale3d(1, 1, 1);
+	}
+  
+    
+     #STEP02{
+		--wxr-transform: translate3d(-0.02, -0.12, 0.01) rotate3d(-1.5708, 0, 1.5708) scale3d(1, 1, 1);
+	}
+  
+    
+     #STEP03{
+		--wxr-transform: translate3d(-0.02, -0.035, 0) rotate3d(0, 1.5708, 0) scale3d(1, 1, 1);
+	}
+
+  
+   
+  	#base {
+		--wxr-transform: translate3d(0, -0.09, 0) rotate3d(0, -1.5708, 0) scale3d(1.1, 1.1, 1.1);
+	}
+
+  
+  
+  
+</style> 
+
+
+
+
+<wxr-user user-id="jungmin.ha@wrl.onl" authority="owner" me=""></wxr-user>
+
+<wxr-description title="insstek AR" img="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/thumb/ar-thumb.png" desc="insstek 3D printer maintenance using WXR AR browser"></wxr-description>
+<wxr-view default="3D" current="3D" modes="[&quot;3D&quot;, &quot;AR&quot;, &quot;VR&quot;]"></wxr-view>
+<wxr-ar engine="vuforia"></wxr-ar>
+
+<wxr-camera fovy="61" near="0.05000024999875001" far="10000.099999934488" fov="63.5824998097939" aspect="1.7053669222343921"></wxr-camera>
+<wxr-space src="http://content.wxr.webizing.org/space/1" augbase="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/target/test/stones" webgl_uuid="6E6EC871-3AC0-4E71-8C4E-81BEEBC869DA" css3d_uuid="07209C1C-01CF-49C1-8E9D-371A32C3F2F0">
+
+	<wxr-target id="STEP01" src="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/target/ballvalve/01" webgl_uuid="085F152D-6AF2-47F3-AD0A-A731B838CFDF" css3d_uuid="771DBB6B-561D-4239-845E-E90C09CEBFD2">
+  	  <wxr-light-ambient color="0xf0f0f0" intensity="0.3" webgl_uuid="2F35B0C7-AFF3-4ABE-9A7C-33335E5B965F" css3d_uuid="9516BD10-4F52-4DD8-9CC9-3E73AB8CFD2C"></wxr-light-ambient>
+  	  <wxr-light-directional color="0xf0f0f0" intensity="0.5" webgl_uuid="FB6E34FE-A408-443F-A2F5-B2F241817A4E" css3d_uuid="EBD6605A-9210-498B-8621-9B4AE5C0BD68"></wxr-light-directional>
+      	  <wxr-obj id="handle" mtl="00_handle.mtl" obj="00_handle.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d" webgl_uuid="52B62013-3F13-45A3-8783-88ECFB3082D5" css3d_uuid="21731508-0480-4D8C-B4C4-464D3AB1C759">
+      		<wxr-animation type="rotation" to="1.5708 1.5708 0" duration="4000" repeat="Infinity" easing="linear"></wxr-animation>
+       </wxr-obj>
+
+       	<wxr-obj id="handle_arrow" mtl="00_arrow.mtl" obj="00_arrow.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d" webgl_uuid="C9F79D59-528E-48C3-9F4E-F01A41F55078" css3d_uuid="CB413FD5-76E0-4FBE-A61B-3754D078FBFE"></wxr-obj>	
+		<wxr-plane id="annotation01" texture="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/dialog/valve_ar_reassem/step03.jpg" webgl_uuid="F685DA9D-279D-4418-A251-B1C56583865F" css3d_uuid="750E3DE6-5077-4E11-925C-9277ACCF2074"></wxr-plane>
+    </wxr-target>
+ 
+  
+	<wxr-target id="STEP02" src="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/target/ballvalve/02">
+  	  <wxr-light-ambient color="0xf0f0f0" intensity="0.3" webgl_uuid="421FCFB1-780C-42A3-AEBB-7DDB6F28E474" css3d_uuid="1126687D-9F7D-4870-ABE7-1E5F07E7746E"></wxr-light-ambient>
+  	  <wxr-light-directional color="0xf0f0f0" intensity="0.5" webgl_uuid="D79DC390-0CD6-49A4-B311-3E0D6234789E" css3d_uuid="74BB361C-AEB9-4109-A4A1-E6DECEB45F1C"></wxr-light-directional>
+ 	  	<wxr-obj id="cover" mtl="cover.mtl" obj="cover.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_ar" webgl_uuid="F12EB958-810F-40F7-9079-880B3FDD4E35" css3d_uuid="E33542B9-8A21-4B4C-B98A-6DF039F1B93F">
+	 	   <wxr-animation type="movement" to="0.01 -0.08 0" duration="3000" repeat="Infinity" easing="linear"></wxr-animation>
+       </wxr-obj>	
+      	<wxr-obj id="screws" mtl="screws.mtl" obj="screws.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_ar" webgl_uuid="1E7B4862-C6E0-473B-BB2E-7859892D6189" css3d_uuid="2A42329B-24BF-4D0B-BEA3-B9B07D28FEE3">
+           <wxr-animation type="movement" to="0.01 -0.08 0" duration="3000" repeat="Infinity" easing="linear"></wxr-animation>
+		</wxr-obj>
+		<wxr-plane id="annotation02" texture="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/dialog/valve_ar_reassem/step02.jpg" webgl_uuid="307FE0E0-BC52-4C6D-BE69-C98D44149BB6" css3d_uuid="77E5EDAF-7497-49B1-9A45-FDCF662391EA"></wxr-plane>
+    </wxr-target>
+  
+	<wxr-target id="STEP03" src="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/target/ballvalve/03" webgl_uuid="52F76329-2C59-4374-87F8-99AB428361D8" css3d_uuid="BB91BF12-F99C-42B9-9B74-5879325D471E">
+  	  <wxr-light-ambient color="0xf0f0f0" intensity="0.3" webgl_uuid="421FCFB1-780C-42A3-AEBB-7DDB6F28E474" css3d_uuid="1126687D-9F7D-4870-ABE7-1E5F07E7746E"></wxr-light-ambient>
+  	  <wxr-light-directional color="0xf0f0f0" intensity="0.5" webgl_uuid="D79DC390-0CD6-49A4-B311-3E0D6234789E" css3d_uuid="74BB361C-AEB9-4109-A4A1-E6DECEB45F1C"></wxr-light-directional>
+ 	  	<wxr-obj id="seat" mtl="seat.mtl" obj="seat.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_ar" webgl_uuid="F12EB958-810F-40F7-9079-880B3FDD4E35" css3d_uuid="E33542B9-8A21-4B4C-B98A-6DF039F1B93F">
+            <wxr-animation type="movement" to="0 0.05 0" duration="3000" repeat="Infinity" easing="linear"></wxr-animation>
+		</wxr-obj>	
+      	<wxr-obj id="ball" mtl="04_ball.mtl" obj="04_ball.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d" webgl_uuid="1E7B4862-C6E0-473B-BB2E-7859892D6189" css3d_uuid="2A42329B-24BF-4D0B-BEA3-B9B07D28FEE3">
+	       <wxr-animation type="movement" to="0 0.05 0" duration="3000" repeat="Infinity" easing="linear"></wxr-animation>
+       </wxr-obj>
+		<wxr-plane id="annotation03" texture="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/dialog/valve_ar_reassem/step01.jpg" webgl_uuid="307FE0E0-BC52-4C6D-BE69-C98D44149BB6" css3d_uuid="77E5EDAF-7497-49B1-9A45-FDCF662391EA"></wxr-plane>
+    </wxr-target>
+  
+  
+  
+  	<wxr-target id="STEP03" src="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/target/ballvalve/04" webgl_uuid="52F76329-2C59-4374-87F8-99AB428361D8" css3d_uuid="BB91BF12-F99C-42B9-9B74-5879325D471E">
+  	  <wxr-light-ambient color="0xf0f0f0" intensity="0.2" webgl_uuid="421FCFB1-780C-42A3-AEBB-7DDB6F28E474" css3d_uuid="1126687D-9F7D-4870-ABE7-1E5F07E7746E"></wxr-light-ambient>
+  	  <wxr-light-directional color="0xf0f0f0" intensity="0.2" webgl_uuid="D79DC390-0CD6-49A4-B311-3E0D6234789E" css3d_uuid="74BB361C-AEB9-4109-A4A1-E6DECEB45F1C"></wxr-light-directional>
+       	<wxr-obj id="base" mtl="base-ar.mtl" obj="base-ar.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_ar" webgl_uuid="C9F79D59-528E-48C3-9F4E-F01A41F55078" css3d_uuid="CB413FD5-76E0-4FBE-A61B-3754D078FBFE"></wxr-obj>	
+
+    </wxr-target>
+  
+  
+  </wxr-space></wxr-world>
+	
+
+
+	
+
+
+	
+
+
+	
+
+
+	
+
+
+	
+

@@ -156,6 +156,9 @@
 	
 	
 	
+	
+	
+	
 	<wxr-world>
 <script src="https://cdn.rawgit.com/webcomponents/webcomponentsjs/v1.1.0/webcomponents-lite.js"></script>
 <link href="https://libs.webizing.org/wxr-0.8.html" rel="import">
@@ -175,7 +178,7 @@
 	
 	
 	#sunAnnotation {
-		--wxr-transform: translate3d(0, -30, -100) scale3d(0.1, 0.1, 0.1);
+		--wxr-transform: translate3d(0, 0, -100) scale3d(0.1, 0.1, 0.1);
 	}
 
   	#sun{
@@ -203,18 +206,24 @@
 
 	<wxr-space src="http://content.wxr.webizing.org/space/step01" enable="">
 		<wxr-target id="stones" src="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/target/test/stones">       	
-         <wxr-box id="box01" color="0x000fff"></wxr-box> 
-			<wxr-html id="sunAnnotation">
+   			<wxr-html id="sunAnnotation">
 				<div class="annotation">
-					<iframe width="1000" height="1200" src="http://192.168.86.173:8321" frameborder="0" allowfullscreen=""></iframe>
+					<iframe width="1000" height="1200" src="http://203.255.251.35:8321" frameborder="0" allowfullscreen=""></iframe>
 				</div>
        		</wxr-html>
-             <wxr-animation type="movement" to="0 0 0" duration="4000" repeat="Infinity" easing="linear"></wxr-animation>
-       </wxr-target>
-
-	</wxr-space>
+            
+	</wxr-target></wxr-space>
 
 </wxr-world>
+	
+
+
+	
+
+
+	
+
+
 	
 
 
