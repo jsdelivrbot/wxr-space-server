@@ -1,0 +1,129 @@
+
+	
+	<wxr-world><script src="https://cdn.rawgit.com/webcomponents/webcomponentsjs/v1.1.0/webcomponents-lite.js"></script>
+<link href="https://libs.webizing.org/wxr-0.8.html" rel="import">
+<style>
+    wxr-camera {
+        --wxr-transform: translate3d(0, 0.1, 0.6) rotate3d(0, 0, 0);
+    }
+
+    wxr-light-ambient {
+        --wxr-transform: translate3d(0, 0.5, 0);
+    }
+
+
+
+  
+	#model1_1{
+  		--wxr-transform: translate3d(-0.03, 0.1, 0) rotate3d(0, 3.1415, 0) scale3d(0.5, 0.5, 0.5);
+  	}
+  	#model1_2{
+  		--wxr-transform: translate3d(0, -0.065, 0) rotate3d(0, 0, 0) scale3d(0.65, 0.65, 0.65);
+  	}
+  	#model1_3{
+  		--wxr-transform: translate3d(0, -0.078, 0) rotate3d(0, 0, 0) scale3d(0.65, 0.65, 0.65);
+  	}
+  	#model2_2{
+  		--wxr-transform: translate3d(0, -0.085, 0) rotate3d(0, 0, 0) scale3d(0.65, 0.65, 0.65);
+  	}
+  	#model2_3{
+  		--wxr-transform: translate3d(0, -0.072, 0) rotate3d(3.1415, 0, 0) scale3d(0.65, 0.65, 0.65);
+  	}
+  	#model3_1_1{  /*Up*/
+  		--wxr-transform: translate3d(0, 0.03, 0) rotate3d(0, 0, 0) scale3d(1,1,1);
+  	}
+	#model3_1_2{  /*Down*/
+  		--wxr-transform: translate3d(0, -0.01, 0) rotate3d(3.1416, 0, 0) scale3d(1,1,1);
+  	}
+  	#model3_1_3{  /*Right*/
+  		--wxr-transform: translate3d(0.02, 0.01, 0) rotate3d(0, 0, -1.5708) scale3d(1,1,1);
+  	}
+ 	#model3_1_4{   /*Left*/
+  		--wxr-transform: translate3d(-0.02, 0.01, 0) rotate3d(0, 0, 1.5708) scale3d(1,1,1);
+  	}
+  
+  
+  
+  	
+   
+ 
+</style>
+
+<wxr-user user-id="jisoo.lee@wrl.onl" authority="owner" me=""></wxr-user>
+
+<wxr-description title="insstek AR" img="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/thumb/ar-thumb.png" desc="insstek 3D printer maintenance using WXR AR browser"></wxr-description>
+<wxr-view default="3D" current="3D" modes="[&quot;3D&quot;,&quot;AR&quot;,&quot;VR&quot;]"></wxr-view>
+<wxr-ar engine="vuforia"></wxr-ar>
+
+<wxr-camera fovy="61" near="0.05000024999875001" far="10000.099999934488" fov="63.5824998097939" aspect="1.7053669222343921"></wxr-camera>
+<wxr-space src="http://content.wxr.webizing.org/space/1" augbase="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/target/test/stones" webgl_uuid="A7A97AE1-4673-4D30-B8DD-764D33CD19FB" css3d_uuid="4005AF0F-3B5A-44BA-BAC6-7336917E21C3" id="null">
+  
+
+  <!--<wxr-hand-steamvrcontroller id="80450fd8-6509-4496-96ac-0d71c9233f41" style="display: none;"></wxr-hand-steamvrcontroller>-->
+
+    
+    <wxr-target id="STEP01" src="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/target/nozzle/remove_nozzle" webgl_uuid="0A5E4033-DE6C-4F02-84E6-D9B0DA0568DF" css3d_uuid="C84BE805-D353-4018-81AE-5534EB09C612">
+      	<wxr-light-ambient color="0xf0f0f0" intensity="0.3" webgl_uuid="C5C9C565-55B1-4D25-A489-A16D13FE4140" css3d_uuid="2CB8507B-E16D-42EF-8641-A1EB3F4E6E99"></wxr-light-ambient>
+    	<wxr-light-directional color="0xf0f0f0" intensity="0.5" webgl_uuid="FA2C21BE-0E52-49C1-8F37-377DC68902DE" css3d_uuid="6572E731-CF9F-422F-AB29-94F078615AE9"></wxr-light-directional> 
+		<!--노즐파트, 파손노즐, cw 화살표 증강-->    	
+      	<wxr-obj id="model1_1" mtl="laser_nozzle.mtl" obj="laser_nozzle.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/nozzle" webgl_uuid="A53B1B8A-BC35-4B5A-9BAE-A4DA48081FE1" css3d_uuid="C0D6469F-CBE7-461A-AD88-9C346ABDA9C7">
+      	</wxr-obj>
+      	<wxr-obj id="model1_2" mtl="destroyed.mtl" obj="destroyed.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/nozzle">
+          	<wxr-animation type="movement" to="0 -0.02 0" duration="3000" repeat="Infinity" easing="linear"></wxr-animation>
+      	</wxr-obj>
+      	<wxr-obj id="model1_3" mtl="rotate.mtl" obj="rotate.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/nozzle" webgl_uuid="A8EF542E-BF1E-4DD5-93A1-9E8D226D3647" css3d_uuid="09447870-9634-47E4-9CA2-5B81C3C4123D">
+         	<wxr-animation type="rotation" to="0 -6.2830 0" duration="3000" repeat="Infinity" easing="linear"></wxr-animation>
+      	</wxr-obj>
+    </wxr-target>
+
+    <wxr-target id="STEP02" src="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/target/nozzle/replace_nozzle" webgl_uuid="8466B77C-98FA-4558-9418-3D0603058844" css3d_uuid="9C08A96D-FE3F-4E25-A6D8-2E26C2E68E9F">
+	    <wxr-light-ambient color="0xf0f0f0" intensity="0.3" webgl_uuid="F80C58BF-B8A5-4E21-8F9D-549DAE373DD3" css3d_uuid="433743DC-A996-492A-8357-E6090B7C8964"></wxr-light-ambient>
+      	<wxr-light-directional color="0xf0f0f0" intensity="0.5" webgl_uuid="F4AF9C14-C75A-48AC-B914-575A629A2C00" css3d_uuid="402D5B44-87D7-4D0C-8245-B108E957C1F1"></wxr-light-directional>	
+      	<!--노즐파트, 새 노즐, ccw 화살표 증강-->    	
+		<wxr-obj id="model1_1" mtl="laser_nozzle.mtl" obj="laser_nozzle.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/nozzle" webgl_uuid="A53B1B8A-BC35-4B5A-9BAE-A4DA48081FE1" css3d_uuid="C0D6469F-CBE7-461A-AD88-9C346ABDA9C7">
+      	</wxr-obj>
+      	<wxr-obj id="model2_2" mtl="new.mtl" obj="new.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/nozzle" webgl_uuid="BB9CD3A3-524D-49F5-A3A7-766424268383" css3d_uuid="8DD15AAD-657D-4A06-87B0-B9320AB731AC">
+          	<wxr-animation type="movement" to="0 0.02 0" duration="3000" repeat="Infinity" easing="linear"></wxr-animation>
+      	</wxr-obj>
+      	<wxr-obj id="model2_3" mtl="rotate.mtl" obj="rotate.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/nozzle" webgl_uuid="82E4B578-F55E-4323-AB0C-82F53A5B8E33" css3d_uuid="9400BA96-D1C7-4E37-8298-581B3D923D86">
+         	<wxr-animation type="rotation" to="0 -6.2830 0" duration="3000" repeat="Infinity" easing="linear"></wxr-animation>
+      	</wxr-obj>
+    </wxr-target>
+  
+    <wxr-target id="STEP03" src="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/target/nozzle/move_nozzle" webgl_uuid="05C1F7B2-CC8A-4F92-BF3D-1A80AC98CE92" css3d_uuid="7F72A5D1-5BAD-4B2F-8698-705D5D6CBA86">
+	    <wxr-light-ambient color="0xf0f0f0" intensity="0.3" webgl_uuid="01A51B9D-28E6-4E55-B163-F9A4D4CD2426" css3d_uuid="FE673220-603C-4FC9-8DE9-03269E559BB2"></wxr-light-ambient>
+      	<wxr-light-directional color="0xf0f0f0" intensity="0.5" webgl_uuid="BCED5625-FDFF-42CE-8300-72F0F8D9EA29" css3d_uuid="B679ADA4-C21D-41FD-9959-36806C7E3C50"></wxr-light-directional>	
+       	<!--화살표 네개, 노즐파트와 노즐, 원판, 연필 증강-->
+      	<wxr-obj id="model3_1_1" mtl="red_arrow.mtl" obj="red_arrow.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/nozzle" webgl_uuid="93525EBB-F76C-4099-A901-06B2796106D7" css3d_uuid="AAB7EFB9-91FC-43A4-9A0D-C3B6D31B86FC">
+      	</wxr-obj>
+      	<wxr-obj id="model3_1_2" mtl="red_arrow.mtl" obj="red_arrow.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/nozzle" webgl_uuid="27AC4528-0EEF-44A6-B1E3-547ADBEFDAE1" css3d_uuid="011DD204-3952-4097-8905-9C182ABA6599">
+      	</wxr-obj>
+      	<wxr-obj id="model3_1_3" mtl="red_arrow.mtl" obj="red_arrow.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/nozzle" webgl_uuid="46FDAEB4-1768-4CB2-BBC7-9E9E23E0D7C3" css3d_uuid="1E209FA8-F9B0-4EA7-9ACC-090A1C6DFDE5">
+      	</wxr-obj>
+      	<wxr-obj id="model3_1_4" mtl="red_arrow.mtl" obj="red_arrow.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/nozzle" webgl_uuid="EB071E97-6956-4F21-AC15-4E94B9E88A16" css3d_uuid="3929C753-3E81-42E0-9744-81E01A3DC76F">
+      	</wxr-obj>      
+<!--      	<wxr-obj id="model3_2" mtl="rotate.mtl" obj="rotate.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/nozzle">
+         	<wxr-animation type="rotation" to="0 -6.2830 0" duration="3000" repeat="Infinity" easing="linear"></wxr-animation>
+      	</wxr-obj>
+      	<wxr-obj id="model3_3" mtl="rotate.mtl" obj="rotate.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/nozzle">
+         	<wxr-animation type="rotation" to="0 -6.2830 0" duration="3000" repeat="Infinity" easing="linear"></wxr-animation>
+      	</wxr-obj>
+      	<wxr-obj id="model4_3" mtl="rotate.mtl" obj="rotate.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/nozzle">
+         	<wxr-animation type="rotation" to="0 -6.2830 0" duration="3000" repeat="Infinity" easing="linear"></wxr-animation>
+      	</wxr-obj>
+-->  
+    </wxr-target> 
+  
+
+
+    <!--<wxr-hand-steamvrcontroller id="80450fd8-6509-4496-96ac-0d71c9233f41" style="display: none;"></wxr-hand-steamvrcontroller>-->
+
+
+</wxr-space>
+
+</wxr-world>
+	
+
+
+	
+
