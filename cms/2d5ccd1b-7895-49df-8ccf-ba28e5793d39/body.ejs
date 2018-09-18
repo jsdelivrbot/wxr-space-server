@@ -9,9 +9,11 @@
 	
 	
 	
+	
+	
 	<wxr-world><script src="https://cdn.rawgit.com/webcomponents/webcomponentsjs/v1.1.0/webcomponents-lite.js"></script>
 <link href="https://libs.webizing.org/wxr-0.8.html" rel="import">
-<style>
+<style id="internal">
     wxr-space {
         --wxr-transform: translate3d(0, 0, 0) rotate3d(0, 0, 0);
    
@@ -209,7 +211,7 @@
 <wxr-ar engine="vuforia"></wxr-ar>
 
 <wxr-camera fovy="61" near="0.05000024999875001" far="10000.099999934488" fov="63.5824998097939" aspect="1.7053669222343921"></wxr-camera>
-<wxr-space src="http://content.wxr.webizing.org/space/1" augbase="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/target/test/stones" webgl_uuid="A7CACCB3-7FD3-41CD-B832-3C85B0F4B78F" css3d_uuid="5199119F-020E-4213-9CD4-030650A823CE">
+<wxr-space src="http://content.wxr.webizing.org/space/1" augbase="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/target/test/stones" webgl_uuid="A7CACCB3-7FD3-41CD-B832-3C85B0F4B78F" css3d_uuid="5199119F-020E-4213-9CD4-030650A823CE" id="null">
   
   <wxr-hand-steamvrcontroller id="80450fd8-6509-4496-96ac-0d71c9233f41"></wxr-hand-steamvrcontroller>
 
@@ -224,7 +226,7 @@
         <wxr-obj id="plateclip_screw" mtl="plateclip_screw.mtl" obj="plateclip_screw.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/powder" webgl_uuid="EA675939-6206-4ECB-B848-6E0A9B4BC186" css3d_uuid="21FFF847-E04E-4F3E-BF8D-07B2CC3A5091">
    
         </wxr-obj>
-        <wxr-plane id="annotation02" texture="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/dialog/powder_ar_eng/step02.jpg" webgl_uuid="DCED2FBB-DD06-4A13-8965-7032404B1B83" css3d_uuid="AAB3A0CD-EC6B-448F-A350-2F6EBB168B3D">
+        <wxr-plane id="annotation02" texture="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/dialog/powder_ar_eng/step02.jpg" anisotropy="16" webgl_uuid="DCED2FBB-DD06-4A13-8965-7032404B1B83" css3d_uuid="AAB3A0CD-EC6B-448F-A350-2F6EBB168B3D">
         </wxr-plane>
     </wxr-target>
 
@@ -237,7 +239,7 @@
         </wxr-obj>
         <wxr-obj id="bush_screw" mtl="bush_screw.mtl" obj="bush_screw.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/powder" webgl_uuid="1EECA296-95B0-4B4A-8041-5A8E221142D0" css3d_uuid="906FE6DE-AD57-466A-9DB3-32FB535C8974">
         </wxr-obj>
-        <wxr-plane id="annotation03" texture="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/dialog/powder_vr_eng/step03.jpg" webgl_uuid="874CF8AC-1D83-4630-AA75-3F108D94F9A0" css3d_uuid="7B87C178-91AB-4A16-A6AF-95D3EB2161B9"></wxr-plane>
+        <wxr-plane id="annotation03" texture="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/dialog/powder_vr_eng/step03.jpg" anisotropy="16" webgl_uuid="874CF8AC-1D83-4630-AA75-3F108D94F9A0" css3d_uuid="7B87C178-91AB-4A16-A6AF-95D3EB2161B9"></wxr-plane>
   		
   </wxr-target>
 
@@ -249,7 +251,7 @@
         </wxr-obj>
         <wxr-obj id="model05_shaft" mtl="model05_shaft.mtl" obj="model05_shaft.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/powder_ar" webgl_uuid="EBED50BB-986A-4451-BA3F-07380142C04D" css3d_uuid="DC46D8A7-96BD-4531-A14C-40F6EA20523C">
         </wxr-obj>
-        <wxr-plane id="annotation05" texture="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/dialog/powder_ar_eng/step04.jpg" webgl_uuid="BFAE4B20-B727-4E0D-A6D4-6E2205C38095" css3d_uuid="D66873A7-4F2C-4471-B1C9-592F04FC75BC"></wxr-plane>
+        <wxr-plane id="annotation05" texture="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/dialog/powder_ar_eng/step04.jpg" anisotropy="16" webgl_uuid="BFAE4B20-B727-4E0D-A6D4-6E2205C38095" css3d_uuid="D66873A7-4F2C-4471-B1C9-592F04FC75BC"></wxr-plane>
   		   
   </wxr-target>
   
@@ -266,6 +268,12 @@
 </wxr-space>
 <wxr-requirement></wxr-requirement>
 </wxr-world>
+	
+
+
+	
+
+
 	
 
 

@@ -27,6 +27,7 @@
 	
 	
 	
+	
 	<wxr-world><script src="https://cdn.rawgit.com/webcomponents/webcomponentsjs/v1.1.0/webcomponents-lite.js"></script>
 <link href="https://libs.webizing.org/wxr-0.8.html" rel="import">
 
@@ -61,7 +62,7 @@ wxr-camera
 
 <wxr-camera fovy="61" near="0.05000024999875001" far="10000.099999934488" fov="63.5824998097939" aspect="1.7053669222343921"></wxr-camera>
 <wxr-space src="http://content.wxr.webizing.org/space/1" augbase="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/target/test/stones" webgl_uuid="4C9777FF-B274-4EBD-829B-FF55CFE7CDFF" css3d_uuid="E32922B6-B66E-4114-B7A8-ECFA40320BC8" id="null">
-  <script> function onCollide(box, result) {console.log(box, result); /*box.stopAnimation();*/ box.oncollide="";} </script>
+  <script> function onCollide(box, result) {console.log(box, result); box.stopAnimation(); box.oncollide="";} </script>
   <wxr-box id="test" width="0.1" height="0.1" depth="0.1" collisionmesh="true" collisionradius="0.05" oncollide="onCollide(this, result)">
 
     <wxr-animation type="revolution" to="0 0.2 0" radius="0.3" duration="5000" repeat="0"></wxr-animation>
@@ -69,6 +70,9 @@ wxr-camera
   </wxr-box>
   <wxr-box id="targetBox" width="0.1" height="0.1" depth="0.1" collisionmesh="true"></wxr-box>
 </wxr-space></wxr-world>
+	
+
+
 	
 
 

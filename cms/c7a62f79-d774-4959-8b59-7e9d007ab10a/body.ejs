@@ -1,0 +1,83 @@
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<wxr-world>
+<script src="https://cdn.rawgit.com/webcomponents/webcomponentsjs/v1.1.0/webcomponents-lite.js"></script>
+<link href="https://libs.webizing.org/wxr-0.8.html" rel="import">
+<style>
+    wxr-camera {
+        --wxr-transform: translate3d(0, 0.1, 0.6) rotate3d(0, 0, 0);
+    }
+    #plane_1 {
+        --wxr-transform: translate3d(-0.26, 0, 0) rotate3d(-1.57, 0, 0);
+    }
+    #plane_2 {
+        --wxr-transform: translate3d(0.26, 0, 0) rotate3d(-1.57, 0, 0);
+    }
+</style>
+
+<script>
+    window.addEventListener('WebComponentsReady', function() {
+        WXR.WebizingDeviceConfigManager.webizingDeviceManagerEnable = false;
+        WXR.InteractionListener.webizingDeviceManagerEnable = false;
+        WXR.InteractionListener.interactionEventServerEnable = false;
+    });
+</script>
+
+<wxr-user user-id="jungmin.ha@wrl.onl" authority="owner" me=""></wxr-user>
+
+<wxr-description title="insstek AR" img="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/thumb/ar-thumb.png" desc="insstek 3D printer maintenance using WXR AR browser"></wxr-description>
+<wxr-view default="3D" current="3D" modes="[&quot;3D&quot;,&quot;AR&quot;,&quot;VR&quot;]"></wxr-view>
+<wxr-ar engine="vuforia"></wxr-ar>
+
+<wxr-camera fovy="61" near="0.05000024999875001" far="10000.099999934488" fov="63.5824998097939" aspect="1.7721518987341771" webgl_uuid="FAA626F6-2280-49D8-9ABF-727470A8CA63"></wxr-camera>
+
+<wxr-space webgl_uuid="E4A97F80-FF94-423E-8CAC-DF1501C73F56" css3d_uuid="0568B33B-9CE8-4D9A-98A3-B792BEBD7116" id="null">
+<!--    <wxr-box width="0.1" height="0.1" depth="0.1" webgl_uuid="F3395739-9584-473B-8121-C0875CA85B19" css3d_uuid="575F926D-3EF5-4A22-B45D-AEF691EB5119"></wxr-box> -->
+    <wxr-plane width="0.5" height="0.5" id="plane_1" anisotropy="2" texture="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/images/brick/seamless_brick.jpg" webgl_uuid="D085A343-DF0E-4364-8D7D-45C55C48213B" css3d_uuid="DB28D27D-51D6-4EF2-8396-583814BA924D"></wxr-plane>
+    <wxr-plane width="0.5" height="0.5" id="plane_2" anisotropy="16" texture="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/images/brick/seamless_brick.jpg" webgl_uuid="68A61C0F-2091-4278-89FD-AACBA776657D" css3d_uuid="FFEDE44D-152C-4980-ABEE-DEB7AFC344EC"></wxr-plane>
+</wxr-space></wxr-world>
+	
+
+
+	
+
+
+	
+
+
+	
+
+
+	
+
+
+	
+
+
+	
+
+
+	
+
+
+	
+
+
+	
+
+
+	
+
+
+	
+

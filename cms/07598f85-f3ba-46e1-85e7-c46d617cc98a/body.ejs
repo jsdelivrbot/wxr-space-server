@@ -9,8 +9,30 @@
 	
 	
 	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	<wxr-world><script src="https://cdn.rawgit.com/webcomponents/webcomponentsjs/v1.1.0/webcomponents-lite.js"></script>
 <link href="https://libs.webizing.org/wxr-0.8.html" rel="import">
+
+<script>
+    window.addEventListener('WebComponentsReady', function() {
+        WXR.WebizingDeviceConfigManager.webizingDeviceManagerEnable = false;
+        WXR.InteractionListener.webizingDeviceManagerEnable = false;
+        WXR.InteractionListener.interactionEventServerEnable = false;
+    });
+</script>
 <style>
     wxr-camera {
         --wxr-transform: translate3d(0, 0.1, 0.6) rotate3d(0, 0, 0);
@@ -27,13 +49,13 @@
   		--wxr-transform: translate3d(-0.03, 0.1, 0) rotate3d(0, 3.1415, 0) scale3d(0.5, 0.5, 0.5);
   	}
   	#model1_2{
-  		--wxr-transform: translate3d(0, -0.065, 0) rotate3d(0, 0, 0) scale3d(0.65, 0.65, 0.65);
+  		--wxr-transform: translate3d(-0.001, -0.064, 0.0019) rotate3d(0, 0, 0) scale3d(0.65, 0.65, 0.65);
   	}
   	#model1_3{
   		--wxr-transform: translate3d(0, -0.078, 0) rotate3d(0, 0, 0) scale3d(0.65, 0.65, 0.65);
   	}
   	#model2_2{
-  		--wxr-transform: translate3d(0, -0.085, 0) rotate3d(0, 0, 0) scale3d(0.65, 0.65, 0.65);
+  		--wxr-transform: translate3d(-0.001, -0.084, 0.0019) rotate3d(0, 0, 0) scale3d(0.65, 0.65, 0.65);
   	}
   	#model2_3{
   		--wxr-transform: translate3d(0, -0.072, 0) rotate3d(3.1415, 0, 0) scale3d(0.65, 0.65, 0.65);
@@ -42,14 +64,26 @@
   		--wxr-transform: translate3d(0, 0.025, 0) rotate3d(0, 0, 0) scale3d(1,1,1);
   	}
 	#model3_1_2{  /*Down*/
-  		--wxr-transform: translate3d(0, -0.05, 0) rotate3d(3.1416, 0, 0) scale3d(1,1,1);
+  		--wxr-transform: translate3d(0, 0.005, 0) rotate3d(3.1416, 0, 0) scale3d(1,1,1);
   	}
   	#model3_1_3{  /*Right*/
-  		--wxr-transform: translate3d(0.015, 0.1, 0) rotate3d(0, 0, -1.5708) scale3d(1,1,1);
+  		--wxr-transform: translate3d(0.015, 0.015, 0) rotate3d(0, 0, -1.5708) scale3d(1,1,1);
   	}
  	#model3_1_4{   /*Left*/
-  		--wxr-transform: translate3d(-0.015, 0.1, 0) rotate3d(0, 0, 1.5708) scale3d(1,1,1);
+  		--wxr-transform: translate3d(-0.015, 0.015, 0) rotate3d(0, 0, 1.5708) scale3d(1,1,1);
   	}
+  	#model3_2{
+  		--wxr-transform: translate3d(-0.1, 0.1, 0) rotate3d(0, 3.1415, 0) scale3d(0.5, 0.5, 0.5); 	
+  	}
+  	#model3_3{
+  		--wxr-transform: translate3d(-0.0692, -0.064, 0.0019) rotate3d(0, 0, 0) scale3d(0.65, 0.65, 0.65); 	
+  	}
+  	#model3_4{
+  		--wxr-transform: translate3d(-0.369678, -0.401, 0.0044) rotate3d(0, 0, 0) scale3d(0.4, 0.4, 0.4); 	
+  	}
+  
+  
+  
   
   
   
@@ -110,17 +144,35 @@
       	<wxr-obj id="model3_1_3" mtl="red_arrow.mtl" obj="red_arrow.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/nozzle" webgl_uuid="46FDAEB4-1768-4CB2-BBC7-9E9E23E0D7C3" css3d_uuid="1E209FA8-F9B0-4EA7-9ACC-090A1C6DFDE5">
       	</wxr-obj>
       	<wxr-obj id="model3_1_4" mtl="red_arrow.mtl" obj="red_arrow.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/nozzle" webgl_uuid="EB071E97-6956-4F21-AC15-4E94B9E88A16" css3d_uuid="3929C753-3E81-42E0-9744-81E01A3DC76F">
-      	</wxr-obj>      
-<!--      	<wxr-obj id="model3_2" mtl="rotate.mtl" obj="rotate.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/nozzle">
-         	<wxr-animation type="rotation" to="0 -6.2830 0" duration="3000" repeat="Infinity" easing="linear"></wxr-animation>
       	</wxr-obj>
-      	<wxr-obj id="model3_3" mtl="rotate.mtl" obj="rotate.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/nozzle">
-         	<wxr-animation type="rotation" to="0 -6.2830 0" duration="3000" repeat="Infinity" easing="linear"></wxr-animation>
+      
+		<script> 
+          function onCollide(box, result){
+            console.log(box, result); 
+            document.getElementById('model3_2').stopAnimation();
+            box.stopAnimation(); 
+            box.oncollide="";
+            setTimeout( function() { alert('alert'); }, 1000); 
+            /*연필 돌아가는 애니메이션 보여줄 동안 기다렸다가 다음 화면으로 전환되는 함수를 호출한다.*/
+            
+          } 
+        </script>      
+      
+      	<wxr-obj id="model3_2" mtl="laser_nozzle.mtl" obj="laser_nozzle.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/nozzle" animationrepeat="10"> <!-- animationrepeat="Infinity"-->
+            <!--애니메이션 연속 적용. -->
+            <wxr-animation type="movement" to="-0.3 0 0" duration="3000"></wxr-animation>
+            <wxr-animation type="movement" to="0 -0.3 0" duration="3000" delay="1000"></wxr-animation>          
       	</wxr-obj>
-      	<wxr-obj id="model4_3" mtl="rotate.mtl" obj="rotate.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/nozzle">
-         	<wxr-animation type="rotation" to="0 -6.2830 0" duration="3000" repeat="Infinity" easing="linear"></wxr-animation>
-      	</wxr-obj>
--->  
+      	<wxr-obj id="model3_3" mtl="new.mtl" obj="new.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/nozzle" collisionmesh="true" collisionradius="0.025" oncollide="onCollide(this,result)" animationrepeat="10"> <!-- animationrepeat="Infinity"-->
+            <!--애�����이션 연속 적용. -->
+          	<wxr-animation type="movement" to="-0.3 0 0" duration="3000"></wxr-animation>
+          	<wxr-animation type="movement" to="0 -0.3 0" duration="3000" delay="1000"></wxr-animation>            
+      	</wxr-obj>  
+      	<wxr-obj id="model3_4" mtl="plate.mtl" obj="plate.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/nozzle" collisionmesh="true">
+        </wxr-obj>
+      
+      	<wxr-box width="0.028218" height="0.028218" depth="0.028218" color="0x000000"></wxr-box>
+
     </wxr-target> 
   
 
@@ -132,6 +184,48 @@
 
 
 </wxr-world>
+	
+
+
+	
+
+
+	
+
+
+	
+
+
+	
+
+
+	
+
+
+	
+
+
+	
+
+
+	
+
+
+	
+
+
+	
+
+
+	
+
+
+	
+
+
+	
+
+
 	
 
 

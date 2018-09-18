@@ -1,0 +1,48 @@
+
+	
+	
+	<wxr-world>
+<script src="https://cdn.rawgit.com/webcomponents/webcomponentsjs/v1.1.0/webcomponents-lite.js"></script>
+<link href="https://libs.webizing.org/wxr-0.8.html" rel="import">
+<style>
+    wxr-camera {
+        --wxr-transform: translate3d(0, 0.1, 0.6) rotate3d(0, 0, 0);
+    }
+    #plane_1 {
+        --wxr-transform: translate3d(-0.26, 0, 0) rotate3d(-1.57, 0, 0);
+    }
+    #plane_2 {
+        --wxr-transform: translate3d(0.26, 0, 0) rotate3d(-1.57, 0, 0);
+    }
+</style>
+
+<script>
+    window.addEventListener('WebComponentsReady', function() {
+        WXR.WebizingDeviceConfigManager.webizingDeviceManagerEnable = false;
+        WXR.InteractionListener.webizingDeviceManagerEnable = false;
+        WXR.InteractionListener.interactionEventServerEnable = false;
+    });
+</script>
+
+<wxr-user user-id="jungmin.ha@wrl.onl" authority="owner" me=""></wxr-user>
+
+<wxr-description title="insfjhgjgk" img="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/thumb/ar-thumb.png" desc="insstek 3D printer maintenance using WXR AR browser"></wxr-description>
+<wxr-view default="3D" current="3D" modes="[&quot;3D&quot;,&quot;AR&quot;,&quot;VR&quot;]"></wxr-view>
+<wxr-ar engine="vuforia"></wxr-ar>
+
+<wxr-camera fovy="61" near="0.05000024999875001" far="10000.099999934488" fov="63.5824998097939" aspect="1.7721518987341771" webgl_uuid="FAA626F6-2280-49D8-9ABF-727470A8CA63"></wxr-camera>
+
+<wxr-space webgl_uuid="E9EA38FA-A469-4B10-A819-46EF2DD69065" css3d_uuid="01294CF3-440D-40F0-BCCA-95A32FD5416C" id="null">
+    <wxr-plane width="0.5" height="0.5" id="plane_1" anisotropy="16" minfilter="NearestMipMapNearestFilter" texture="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/images/brick/seamless_brick.jpg" webgl_uuid="5F8DDB53-E1F8-41E0-BD8B-3ACA844E2326" css3d_uuid="02B6E030-8903-4DAE-B5C0-EDFA7A69048B"></wxr-plane>
+    <wxr-plane width="0.5" height="0.5" id="plane_2" anisotropy="16" minfilter="NearestMipMapLinearFilter" texture="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/images/brick/seamless_brick.jpg" webgl_uuid="69B644A0-5B2E-4D16-9A10-67E4E7DB67DB" css3d_uuid="2D6DA9F0-8233-493F-A7D0-5738AF3B55B1"></wxr-plane>
+<!--    <wxr-plane width="0.5" height="0.5" id="plane_3" anisotropy="16" minfilter="LinearMipMapNearestFilter" texture="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/images/brick/seamless_brick.jpg" webgl_uuid="5F8DDB53-E1F8-41E0-BD8B-3ACA844E2326" css3d_uuid="02B6E030-8903-4DAE-B5C0-EDFA7A69048B"></wxr-plane>
+    <wxr-plane width="0.5" height="0.5" id="plane_4" anisotropy="16" minfilter="LinearMipMapLinearFilter" texture="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/images/brick/seamless_brick.jpg" webgl_uuid="69B644A0-5B2E-4D16-9A10-67E4E7DB67DB" css3d_uuid="2D6DA9F0-8233-493F-A7D0-5738AF3B55B1"></wxr-plane> -->
+</wxr-space><wxr-requirement></wxr-requirement></wxr-world>
+	
+
+
+	
+
+
+	
+
