@@ -2,35 +2,6 @@
 	
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	<wxr-world><script src="https://cdn.rawgit.com/webcomponents/webcomponentsjs/v1.1.0/webcomponents-lite.js"></script>
 <link href="https://libs.webizing.org/wxr-0.8.html" rel="import">
 
@@ -47,12 +18,13 @@ wxr-camera
 {
 --wxr-transform:translate3d(0,0.4,0.6)rotate3d(0,0,0);
 }
-#test
+#triggerTarget
 {
---wxr-transform : translate3d(0,0,0) rotate3d(0.7,0,0) scale3d(1,1,1);
+--wxr-transform:translate3d(0,0,0)rotate3d(0.7,0,0)scale3d(1,1,1);
 }
-#targetBox {
---wxr-transform : translate3d(-0.3,0,0) rotate3d(0,0,0) scale3d(1,1,1);
+#targetBox
+{
+--wxr-transform : translate3d(0.2128799170227733,0.5723613754091453,0) rotate3d(0,0,0) scale3d(1,1,1);
 }
 
 
@@ -65,108 +37,21 @@ wxr-camera
 <wxr-camera fovy="61" near="0.05000024999875001" far="10000.099999934488" fov="63.5824998097939" aspect="1.7053669222343921"></wxr-camera>
 
 
-<wxr-space src="http://content.wxr.webizing.org/space/1" augbase="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/target/test/stones" webgl_uuid="4C9777FF-B274-4EBD-829B-FF55CFE7CDFF" css3d_uuid="E32922B6-B66E-4114-B7A8-ECFA40320BC8" id="null">
+<wxr-space src="http://content.wxr.webizing.org/space/1" augbase="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/target/test/stones" webgl_uuid="70D6962C-607A-486F-9C01-259EB939BC16" css3d_uuid="B6BF228C-BF7D-4097-8160-F5A4D7744EB5" id="null">
   <script> 
-    function onCollide(box, result) {
-      console.log(box, result); 
-      box.stopAnimation(); 
-      box.oncollide="";
+    function isFaraway(trigger, target) {
+      const distance = trigger.webGLObject3D.getWorldPosition().distanceTo( target.webGLObject3D.getWorldPosition() );
+      return distance > 0.5 ? true : false;
+    }
+    function removeAnimation(target) {
+      alert('distance from target is far enough!');
     } 
   </script>
-  <wxr-box id="test" width="0.1" height="0.1" depth="0.1" collisionmesh="true" collisionradius="0.05" oncollide="onCollide(this, result)">
-    <wxr-animation type="revolution" to="0 0.2 0" radius="0.3" duration="5000" repeat="0"></wxr-animation>
+  <wxr-box id="targetBox" width="0.1" height="0.1" depth="0.1" collisionmesh="true" webgl_uuid="2738D459-7B74-4DE3-8CAA-04D83E54D055" css3d_uuid="C7A27B66-F5EA-41EA-B040-2280B2064DAA" observetrigger="true">
+    <wxr-animation type="movement" duration="3000"></wxr-animation>
   </wxr-box>
-  <wxr-box id="targetBox" width="0.1" height="0.1" depth="0.1" collisionmesh="true">
-    <wxr-animation type="helix" to="0 0.2 0 0 3.14 0" duration="3000"></wxr-animation>
-  </wxr-box>
+  <wxr-trigger id="triggerTarget" targets="[&quot;targetBox&quot;]" condition="isFaraway(this, target)" ontrigger="removeAnimation(this, target)" observetrigger="true"></wxr-trigger>
 </wxr-space></wxr-world>
-	
-
-
-	
-
-
-	
-
-
-	
-
-
-	
-
-
-	
-
-
-	
-
-
-	
-
-
-	
-
-
-	
-
-
-	
-
-
-	
-
-
-	
-
-
-	
-
-
-	
-
-
-	
-
-
-	
-
-
-	
-
-
-	
-
-
-	
-
-
-	
-
-
-	
-
-
-	
-
-
-	
-
-
-	
-
-
-	
-
-
-	
-
-
-	
-
-
-	
-
-
 	
 
 
