@@ -1,0 +1,163 @@
+
+	
+	
+	<wxr-world><script src="https://cdn.rawgit.com/webcomponents/webcomponentsjs/v1.1.0/webcomponents-lite.js"></script>
+<link href="https://libs.webizing.org/wxr-0.8.html" rel="import">
+
+<script>
+
+window.addEventListener('WebComponentsReady',function()
+{
+WXR.WebizingDeviceConfigManager.webizingDeviceManagerEnable=false;WXR.InteractionListener.webizingDeviceManagerEnable=false;WXR.InteractionListener.interactionEventServerEnable=false;
+}
+);
+
+</script>
+
+<style id="internal">
+
+wxr-camera
+{
+--wxr-transform:translate3d(0,0.1,2.6)rotate3d(0,0,0);
+}
+wxr-light-ambient
+{
+--wxr-transform:translate3d(0,0,0)rotate3d(0,0,0)scale3d(1,1,1);
+}
+#target0
+{
+--wxr-transform:translate3d(0,0,0)rotate3d(0,0,0)scale3d(1,1,1);
+}
+#target1
+{
+--wxr-transform:translate3d(0,0,0)rotate3d(0,0,0)scale3d(1,1,1);
+}
+#target2
+{
+--wxr-transform:translate3d(-0.00125794,-0.21579,0.0531772)rotate3d(0,0,0)scale3d(1.3,1.3,1.3);
+}
+#target3
+{
+--wxr-transform:translate3d(0.249956,-0.21579,0.0531772)rotate3d(0,0,0)scale3d(1.3,1.3,1.3);
+}
+#model0_1
+{
+--wxr-transform:translate3d(0,0,0)rotate3d(0,0,0)scale3d(1,1,1);
+}
+#model0_2
+{
+--wxr-transform:translate3d(-0.09170706894158555,-0.493668,0.30068004405175985)rotate3d(0,-2.932197562501646,0)scale3d(1.5,1.5,1.5);
+}
+#model1_1
+{
+--wxr-transform:translate3d(-0.0623322,0.111554,0.0507765)rotate3d(0,3.1415,0)scale3d(1,1,1);
+}
+#model1_2
+{
+--wxr-transform:translate3d(-0.0999487,-0.524552,0.296761)rotate3d(0,0,0)scale3d(1,1,1);
+}
+#model2_1
+{
+--wxr-transform:translate3d(0.0005319874696434954,0,0)rotate3d(0,0,0)scale3d(1,1,1);
+}
+#model2_2
+{
+--wxr-transform:translate3d(0,-0.025,0)rotate3d(0,-1.927833833318461,0)scale3d(1,1,1);
+}
+#model3_1
+{
+--wxr-transform:translate3d(0,0,0)rotate3d(0,0,0)scale3d(1,1,1);
+}
+#model3_2
+{
+--wxr-transform:translate3d(0,-0.025,0)rotate3d(0,-3.2160582666727136,0)scale3d(1,1,1);
+}
+
+
+</style>
+
+<wxr-user user-id="jisoo.lee@wrl.onl" authority="owner" me=""></wxr-user>
+
+<wxr-description title="insstek AR" img="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/thumb/ar-thumb.png" desc="insstek 3D printer maintenance using WXR AR browser"></wxr-description>
+<wxr-view default="3D" current="3D" modes="[&quot;3D&quot;,&quot;AR&quot;,&quot;VR&quot;]"></wxr-view>
+<wxr-ar engine="vuforia"></wxr-ar>
+
+<wxr-camera fovy="61" near="0.05000024999875001" far="10000.099999934488" fov="63.5824998097939" aspect="1.7053669222343921"></wxr-camera>
+<wxr-space src="http://content.wxr.webizing.org/space/1" augbase="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/target/test/stones" webgl_uuid="CD61D9F2-9EAC-43F6-8857-648A28C7350B" css3d_uuid="E9844E19-A572-42AA-BCBC-5D14DF013359" id="null">
+  
+
+    
+    <wxr-target id="target0" src="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/target/nozzle/remove_nozzle" webgl_uuid="89F48022-3488-48C9-B969-DAE29E8274CD" css3d_uuid="7AB3BEAE-C6E1-41C5-AF1A-3362AC85AD04" observetrigger="true">
+        <wxr-light-ambient color="0xf0f0f0" intensity="0.3" webgl_uuid="B07A39BC-CFC7-4652-92C2-263EDC2A3A7F" css3d_uuid="7A77DCE0-21DB-48F0-8761-102778DF1AF6"></wxr-light-ambient>
+        <wxr-light-directional color="0xf0f0f0" intensity="0.5" webgl_uuid="15221502-3431-464E-A4BC-1D982E15A7C3" css3d_uuid="398B5255-2A52-4822-A4B9-AF5C37ABF74F"></wxr-light-directional> 
+       
+       <!-- <wxr-obj id="model0_1" mtl="s_printer.mtl" obj="s_printer.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/nozzle" webgl_uuid="B26ECA4B-2009-4352-BCFA-353198463237" css3d_uuid="5804A9FD-8BB4-4003-9D31-C47527662483" observetrigger="true">
+        </wxr-obj>-->
+ 	</wxr-target>
+  	
+  	<wxr-target id="target1" src="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/target/nozzle/nozzle_part" webgl_uuid="F8E9FDFB-58BA-4B3A-A367-87A209E3B0D9" css3d_uuid="C1C30014-F759-4B3E-A013-DFDC9DD27552" observetrigger="true">
+      	<wxr-obj id="model1_1" mtl="laser_nozzle.mtl" obj="laser_nozzle.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/nozzle" observetrigger="true" webgl_uuid="87F83590-A371-4801-9EE7-59BE552E171B" css3d_uuid="D567FCA1-BE8D-4855-8151-3893EFFF3E49"> 
+      	      
+      	</wxr-obj>
+        <wxr-obj id="model1_2" mtl="plate.mtl" obj="plate.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/nozzle" webgl_uuid="F1BB291D-0EA0-4ACF-8234-ED4F03C1EAFB" css3d_uuid="85EEC445-4DB5-4264-891B-D09D12AF84AD" observetrigger="true">
+        </wxr-obj>
+      	<wxr-obj id="model1_3" mtl="hexkey.mtl" obj="hexkey.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/nozzle" webgl_uuid="69CBFA68-B1F8-4294-B408-3D318FCB045B" css3d_uuid="90193C51-1782-47AE-AE2F-1825F63D9678" observetrigger="true">
+        <!--	<wxr-animation type="helix" to="0 0 -0.2 0 0 -6.2831" repeat="Infinity" duration="3000">
+            </wxr-animation>
+        -->      
+        </wxr-obj>
+  </wxr-target>
+  
+  <wxr-target id="target2" src="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/target/nozzle/destroyed_nozzle" webgl_uuid="C07FF651-4990-4540-BFF6-BE688930254C" css3d_uuid="3591C590-CC74-4B24-BA9A-E977DD7840E9" observetrigger="true">
+      	
+    	<script>
+        	function isFaraway(trigger, target){
+            	const distance = trigger.webGLObject3D.getWorldPosition().distanceTo(target.webGLObject3D.getWorldPosition());
+              	return distance > 0.2 ? true : false;
+            }
+          	function removeTarget(target){
+            	alert('far away~~~');
+              	/*$(#model2_1)[0].remove(); //멀어지면 파손된 노즐을 없앤다.
+                */
+            }
+        </script>
+    
+    	<wxr-obj id="model2_1" mtl="destroyed.mtl" obj="destroyed.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/nozzle" observetrigger="true" collisionmesh="true" webgl_uuid="DA748633-1C3B-43EB-91F2-298D572E5293" css3d_uuid="1C59D552-E564-4972-939A-15D2C91A17D7">
+      	</wxr-obj>
+    	<wxr-obj id="model2_2" mtl="rotate.mtl" obj="rotate.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/nozzle" observetrigger="true" webgl_uuid="F5C41212-49F5-487B-8FC4-954E5587966A" css3d_uuid="2A852D8B-ACFD-4DFD-B462-35F4C36F3357">
+           	<wxr-animation type="rotation" to="0 -6.2830 0" duration="3000" repeat="Infinity" easing="linear"></wxr-animation>
+      	</wxr-obj>
+  		<wxr-box id="box" width="0.01" height="0.01" depth="0.01" observetrigger="true">
+    	</wxr-box>
+    	
+    	<wxr-trigger id="triggerTarget" targets="[&quot;model2_1&quot;]" condition="isFaraway(this,target)" ontrigger="removeTarget(this, target)"></wxr-trigger>
+
+  </wxr-target>
+  
+  
+  <wxr-target id="target3" src="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/target/nozzle/new_nozzle" webgl_uuid="995918B4-17D1-4889-AE3F-480F6ED06552" css3d_uuid="B9EB3DEA-5AFD-41DD-BD2E-4A55E481BE50" observetrigger="true">
+      	<wxr-obj id="model3_1" mtl="new.mtl" obj="new.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/nozzle" observetrigger="true" webgl_uuid="3AD5DBEA-827F-4F4F-9591-21F94FFAFDD9" css3d_uuid="D75F35DE-AC83-4166-8520-9F2C046071C0">
+      	</wxr-obj>
+    	<wxr-obj id="model3_2" mtl="rotate.mtl" obj="rotate.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/nozzle" observetrigger="true" webgl_uuid="3648804D-104C-408E-9E8D-7A2F4B30DE80" css3d_uuid="4BFDEF6E-FCB7-4904-845F-C9BA17A8A79B">
+          	 <wxr-animation type="rotation" to="0 -6.2830 0" duration="3000" repeat="Infinity" easing="linear"></wxr-animation>
+      	</wxr-obj>
+  </wxr-target>
+
+  <wxr-target id="target0" src="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/target/nozzle/remove_nozzle" webgl_uuid="52714DCD-205A-4E29-BC2E-F48563A4042C" css3d_uuid="EA19357D-FA40-4DD3-AEB9-290254032E89" observetrigger="true">
+   		<wxr-obj id="model0_2" mtl="pencil3.mtl" obj="pencil3.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/nozzle" webgl_uuid="6CA1304E-1B53-46A1-A55A-AD0330C6024E" css3d_uuid="FC01DE2C-9D03-48CF-A7D4-431076B90A89" observetrigger="true">
+    		<wxr-animation type="rotation" to="0 -6.2830 0" duration="8000" repeat="Infinity" easing="linear"></wxr-animation>
+    	</wxr-obj>
+  </wxr-target>
+  
+  
+  
+
+</wxr-space> </wxr-world>
+	
+
+
+	
+
+
+	
+
