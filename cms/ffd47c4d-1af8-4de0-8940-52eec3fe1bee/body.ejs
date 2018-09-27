@@ -7,6 +7,8 @@
 	
 	
 	
+	
+	
 	<wxr-world><!--새노즐과 금속판에 위치한 트리거를 새노즐과 금속판 충돌로 바꾼다.-->
 <!--위 충돌 발생시 moveTo를 이용해 중앙쪽으로 가도록 일단 해둠-->
 <!--추후, 다른 방안? 노즐이 내려오면 더 이상 내려가지 못하도록 y좌표만 조정하는 방안을 생각해 볼 수있음 이렇게 할 경우에 연필(4_2)을 노즐파트(1_1)에 append 필요-->
@@ -114,7 +116,7 @@ wxr-light-ambient
 <wxr-ar engine="vuforia"></wxr-ar>
 
 <wxr-camera fovy="61" near="0.05000024999875001" far="10000.099999934488" fov="63.5824998097939" aspect="1.7053669222343921"></wxr-camera>
-<wxr-space src="http://content.wxr.webizing.org/space/1" augbase="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/target/test/stones" webgl_uuid="F8D4F428-92F9-4367-8C31-C52B667872D4" css3d_uuid="E68B4096-4516-42E4-9237-F438583DD81E" id="null">
+<wxr-space src="http://content.wxr.webizing.org/space/1" augbase="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/target/test/stones" webgl_uuid="76A993D1-B1F1-4682-84AF-C6EF39D69F48" css3d_uuid="9448EAA4-16DC-43AC-9334-EAA1C8EE0053" id="null">
   
   
   <script> 
@@ -147,7 +149,7 @@ wxr-light-ambient
        }
        function action1(trigger, target){
           //alert('first collision!');
-            $('#model1_1')[0].append($('#model3_1')[0])	//parent : nozzle part, child : new nozzle
+            $('#model1_1')[0].append($('#model3_1')[0]) //parent : nozzle part, child : new nozzle
             $('#model3_1')[0].moveTo(0,0,0) 
 
             $('#model3_2').remove();
@@ -156,23 +158,32 @@ wxr-light-ambient
             trigger.ontrigger="";
        }
        function action2(trigger, target){
-       		//alert('second collison!');
+          //alert('second collison!');
+             $('#model4_1')[0].append($('#model1_1')[0])
             //plate - nozzle part collision detection : move nozzle to center of the plate ======================================================================check again
-            $('#model1_1')[0].moveTo(-0.0985776373860987, -0.43, 0.29775719447753135) 
-			
-         	//appear pencil and start animation
+            $('#model1_1')[0].moveTo(0.0013710626139013, 0.094552, 0.0009961944775313) 
+          
+      
+          //appear pencil and start animation
             $('#model4_2')[0].changedDomStyleDisplay('block'); 
             $('#model4_2')[0].startAnimation();
+         
+          var x11 = $('#model1_1')[0].webGLObject3D.getWorldPosition().x;
+          var y11 = $('#model1_1')[0].webGLObject3D.getWorldPosition().y;
+          var z11 = $('#model1_1')[0].webGLObject3D.getWorldPosition().z;
+                         
             setTimeout(function() {
             $('#model4_2')[0].changedDomStyleDisplay('none'); 
                 setTimeout(function(){
+                  //before show the wrench, move it to appropriate position 
+                  $('#model1_2')[0].moveTo(x11, y11 + 0.0787986341506225, z11 + 0.0357455590428265); 
                   $('#model1_2')[0].changedDomStyleDisplay('block');
                   $('#model1_2')[0].startAnimation();
 
                 }, 1000);
             }, 15000); 
             //Wait for pencil animation and pause for 1 second
-      		//After that, hide pencil and appear hex wrench
+          //After that, hide pencil and appear hex wrench
            
 
             trigger.ontrigger="";
@@ -181,13 +192,13 @@ wxr-light-ambient
        //default settings
        function action0(object){
    
-           $('#model2_1')[0].append($('#model2_2')[0])	//parent : destroyed, child : rotation arrow
-           $('#model3_1')[0].append($('#model3_2')[0])	//parent : new, child : rotation arrow
-           $('#model1_1')[0].append($('#model1_2')[0])	//parent : nozzle part, child : hex wrench
-           $('#model1_2')[0].moveTo(0, 0.0787986341506225, 0.0357455590428265) 
+           $('#model2_1')[0].append($('#model2_2')[0])  //parent : destroyed, child : rotation arrow
+           $('#model3_1')[0].append($('#model3_2')[0])  //parent : new, child : rotation arrow
+           //$('#model1_1')[0].append($('#model1_2')[0])  //parent : nozzle part, child : hex wrench
+           //$('#model1_2')[0].moveTo(0, 0.0787986341506225, 0.0357455590428265) 
           
-		   //$('#model1_2')[0].changedDomStyleDisplay('none');	//hide hex wrench 
-           $('#model4_2')[0].changedDomStyleDisplay('none');	//hide pencil 	
+       $('#model1_2')[0].changedDomStyleDisplay('none');  //hide hex wrench 
+           $('#model4_2')[0].changedDomStyleDisplay('none');  //hide pencil   
 
             
            object.oncollide="";
@@ -217,49 +228,50 @@ wxr-light-ambient
     </script> 
 
     
-    <wxr-target id="target0" src="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/target/nozzle/remove_nozzle" webgl_uuid="FA147CC8-9688-4439-839A-0971BC754C02" css3d_uuid="4BC950F4-7085-4C38-992E-08B45D9E94AB" observetrigger="true">
-        <wxr-light-ambient color="0xf0f0f0" intensity="0.3" webgl_uuid="CE079484-EBE2-47D4-9F3E-9D822EBEE891" css3d_uuid="17559D4E-4675-4E2B-BF64-7A620C2C5138"></wxr-light-ambient>
-        <wxr-light-directional color="0xf0f0f0" intensity="0.5" webgl_uuid="1851D970-93EB-4041-A7CC-80BFE0BA938D" css3d_uuid="B146E49A-0242-4A2B-9360-C6FDE3BAF584"></wxr-light-directional> 
-       	
-      	<!--simple printer-->
-        <wxr-obj id="model0_1" mtl="s_printer.mtl" obj="s_printer.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/nozzle" webgl_uuid="1DC32F91-62A0-4023-A374-64DC62CC3970" css3d_uuid="2D8C009A-2DAB-48E6-82AE-5478B71E8231" observetrigger="true">
+    <wxr-target id="target0" src="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/target/nozzle/remove_nozzle" webgl_uuid="EE00873E-A9C4-4049-9C42-452FE5E1E31A" css3d_uuid="70BDED02-060F-486A-AABD-F5B6BDC73B26" observetrigger="true">
+        <wxr-light-ambient color="0xf0f0f0" intensity="0.3" webgl_uuid="F1B73D5D-A225-4E47-9687-1B5EFF59EC10" css3d_uuid="AD804B68-4393-4A8E-87CC-F43FC6C15BCE"></wxr-light-ambient>
+        <wxr-light-directional color="0xf0f0f0" intensity="0.5" webgl_uuid="68F31182-AAB9-4B2C-A786-9914D8C22A4C" css3d_uuid="281FDDED-8708-4C1B-AC0D-1E9504761B83"></wxr-light-directional> 
+        
+        <!--simple printer-->
+        <wxr-obj id="model0_1" mtl="s_printer.mtl" obj="s_printer.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/nozzle" webgl_uuid="CE8CDD58-2951-46FE-8336-3AA49731B29A" css3d_uuid="D958FB44-CB41-45B5-9324-3022D22220FE" observetrigger="true">
         </wxr-obj>
-  	</wxr-target>
+    </wxr-target>
     
   
-    <wxr-target id="target1" src="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/target/nozzle/nozzle_part" webgl_uuid="2E55A7DF-245C-4B72-A0A0-847CA5803D9E" css3d_uuid="2C2AFA49-D84E-4419-BF47-4AAE1EF40DA3" observetrigger="true">
+    <wxr-target id="target1" src="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/target/nozzle/nozzle_part" webgl_uuid="AA0884ED-198B-4A84-8E10-3B82E23CB68D" css3d_uuid="02F17389-42C6-46DF-802D-48D77733F534" observetrigger="true">
 <!--        <wxr-obj id="model1_1" mtl="nozzle_part.mtl" obj="nozzle_part.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/nozzle" observetrigger="true" collisionmesh="true" collisionradius="0.05" oncollide="action0(this)" disable-animation-auto-start="" webgl_uuid="65B5022C-1D35-4F4E-B638-3F6B9F50696E" css3d_uuid="E92C6ABA-C5EC-4FF3-BC20-639B3732C9C7"> 
         <wxr-animation type="movement" to="-0.0985776373860987 -0.2102909056489448 0.2441634944775313" duration="5000" repeat="2" easing="linear"></wxr-animation>
 -->     
     <!--nozzle part : apply animation moving by x,y,z axis -->
-    <wxr-obj id="model1_1" mtl="nozzle_part.mtl" obj="nozzle_part.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/nozzle" observetrigger="true" collisionmesh="true" collisionradius="0.05" oncollide="action0(this)" disable-animation-auto-start="" animationrepeat="2" webgl_uuid="A9953D93-3188-4585-BBA9-75F3307C5590" css3d_uuid="0DC5E027-DDF8-4A3C-90A3-6DF97A0199FF">
-    	<wxr-animation type="movement" to="0 0 0.2441634944775313" duration="1500" easing="linear"></wxr-animation>
+    <wxr-obj id="model1_1" mtl="nozzle_part.mtl" obj="nozzle_part.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/nozzle" observetrigger="true" collisionmesh="true" collisionradius="0.05" oncollide="action0(this)" disable-animation-auto-start="" animationrepeat="2" webgl_uuid="894BE9F9-4F71-44D1-B568-D28318857F24" css3d_uuid="CEFED1CC-03AF-4E9A-8258-E46CC5B24534">
+      <wxr-animation type="movement" to="0 0 0.2441634944775313" duration="1500" easing="linear"></wxr-animation>
         <wxr-animation type="movement" to="-0.0985776373860987 0 0" duration="1500" easing="linear"></wxr-animation>
         <wxr-animation type="movement" to="0 -0.2102909056489448 0" duration="1500" easing="linear"></wxr-animation>
-    <wxr-obj id="model1_2" mtl="hexkey2.mtl" obj="hexkey2.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/nozzle" observetrigger="true" disable-animation-auto-start="" webgl_uuid="956BCBC2-E1AA-41D3-9606-0E09ADE29A99" css3d_uuid="C06926E3-CC13-48EA-82B5-545165899712">
+    </wxr-obj>  
+    <wxr-obj id="model1_2" mtl="hexkey2.mtl" obj="hexkey2.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/nozzle" observetrigger="true" disable-animation-auto-start="" webgl_uuid="DA4914F2-0071-4EF5-9196-38FA6F09AF5F" css3d_uuid="576E5A63-4B6A-43AF-8E3A-0667806F12FC">
   
         <wxr-animation type="helix" to="0 0 0.01 0 0 -6.2831" repeat="4" duration="5000"></wxr-animation>     
-    </wxr-obj></wxr-obj>
+    </wxr-obj>
       
-      <script>		   $('#model1_2')[0].changedDomStyleDisplay('none');	//hide hex wrench 
+      <script>       $('#model1_2')[0].changedDomStyleDisplay('none');  //hide hex wrench 
 </script>
       
 
-	<!--hex wrench-->		
+  <!--hex wrench-->   
     <!--<wxr-obj id="model1_2" mtl="hexkey2.mtl" obj="hexkey2.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/nozzle" observetrigger="true" disable-animation-auto-start="" webgl_uuid="956BCBC2-E1AA-41D3-9606-0E09ADE29A99" css3d_uuid="C06926E3-CC13-48EA-82B5-545165899712">-->
     
         
   </wxr-target>
   
   
-  <wxr-target id="target2" src="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/target/nozzle/destroyed_nozzle" webgl_uuid="892751B6-124F-4036-A2C3-7D13CAD768B8" css3d_uuid="1339982F-C44A-48D7-883E-04452837875A" observetrigger="true">
+  <wxr-target id="target2" src="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/target/nozzle/destroyed_nozzle" webgl_uuid="4383251C-2AF7-4FF5-A968-3463CC6FFA8A" css3d_uuid="DD07403B-9EAE-4703-9741-19FECB13011A" observetrigger="true">
         
     <script>
-        function isFaraway(trigger, target){	//check distance between nozzle part and destroyed nozzle
+        function isFaraway(trigger, target){  //check distance between nozzle part and destroyed nozzle
           const distance = trigger.webGLObject3D.getWorldPosition().distanceTo(target.webGLObject3D.getWorldPosition());
           return distance > 0.15 ? true : false;
         }
-        function removeTarget(target){	//If destroyed nozzle is far enough from nozzle part, discard destroyed nozzle and rotational arrow.
+        function removeTarget(target){  //If destroyed nozzle is far enough from nozzle part, discard destroyed nozzle and rotational arrow.
           //alert('far away~~~');
           $('#model2_1').remove();
           $('#model2_2').remove();
@@ -268,34 +280,34 @@ wxr-light-ambient
     </script>
     
     <!--destroyed nozzle-->
-    <wxr-obj id="model2_1" mtl="destroyed.mtl" obj="destroyed.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/nozzle" observetrigger="true" collisionmesh="true" webgl_uuid="D7176473-20E6-4C0A-BD3A-D18AD44AE829" css3d_uuid="A277E2CC-5FF8-41DE-B4E8-D837631CE0A6">
+    <wxr-obj id="model2_1" mtl="destroyed.mtl" obj="destroyed.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/nozzle" observetrigger="true" collisionmesh="true" webgl_uuid="57AEEEB8-44FF-4A99-A213-CDF2A41934A3" css3d_uuid="74860081-6773-4CE9-A0BC-9E547F0B1E2A">
     
     <!--rotation arrow(clockwise)-->  
-    <wxr-obj id="model2_2" mtl="rotate.mtl" obj="rotate.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/nozzle" observetrigger="true" webgl_uuid="EC2F424E-E126-4B87-A897-454B0BBC4FDA" css3d_uuid="9704F0DC-6DD4-4174-9728-5532C4A984E3">
-    	<wxr-animation type="rotation" to="0 -6.2830 0" duration="3000" repeat="Infinity" easing="linear"></wxr-animation>   
+    <wxr-obj id="model2_2" mtl="rotate.mtl" obj="rotate.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/nozzle" observetrigger="true" webgl_uuid="E69E2FC9-8E9B-49B8-A680-5F82E7FA7957" css3d_uuid="B2A0D9C5-30D5-4E67-84F0-6BA9A16F653F">
+      <wxr-animation type="rotation" to="0 -6.2830 0" duration="3000" repeat="Infinity" easing="linear"></wxr-animation>   
     </wxr-obj></wxr-obj>
-	        
+          
   </wxr-target>
   
   
-  <wxr-target id="target3" src="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/target/nozzle/new_nozzle" webgl_uuid="EED4F32B-679F-4808-84BE-8337FC9457AF" css3d_uuid="8246953B-29A1-4E17-B545-C2346B8A8B53" observetrigger="true">
+  <wxr-target id="target3" src="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/target/nozzle/new_nozzle" webgl_uuid="BE323690-DEE7-43DE-BAFD-B3B396DD2189" css3d_uuid="7FBE9D93-2C86-4922-868D-F209772BAF4E" observetrigger="true">
     <!--new nozzle-->
-    <wxr-obj id="model3_1" mtl="new.mtl" obj="new.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/nozzle" observetrigger="true" collisionmesh="true" collisionradius="0.06" oncollide="onCollide(this, result)" webgl_uuid="B58127A2-80AE-4C69-A8AD-93A49CB5622C" css3d_uuid="D3A1A35F-950B-4372-9F39-58651D12A103">
-    <wxr-obj id="model3_2" mtl="rotate.mtl" obj="rotate.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/nozzle" observetrigger="true" webgl_uuid="E1461494-8360-4114-B421-260BE82DDDE9" css3d_uuid="B354D789-E9DD-458E-BD27-84EA8CD3E5A0">
-    	<wxr-animation type="rotation" to="0 -6.2830 0" duration="3000" repeat="Infinity" easing="linear"></wxr-animation>
+    <wxr-obj id="model3_1" mtl="new.mtl" obj="new.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/nozzle" observetrigger="true" webgl_uuid="C11B67F3-90BF-42DC-9D95-51385B9DD92E" css3d_uuid="453F7C1B-83BC-4097-BF84-D7BE1CC39610">
+    <wxr-obj id="model3_2" mtl="rotate.mtl" obj="rotate.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/nozzle" observetrigger="true" webgl_uuid="F01D2657-7C10-4F68-9215-75834468D3F4" css3d_uuid="1E7FF7F0-6689-49EF-9925-D2EB274C3FE3">
+      <wxr-animation type="rotation" to="0 -6.2830 0" duration="3000" repeat="Infinity" easing="linear"></wxr-animation>
     </wxr-obj></wxr-obj>
     <!--rotation arrow(counter clockwise)-->  
     
       
   </wxr-target>
 
-  <wxr-target id="target4" src="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/target/nozzle/plate" webgl_uuid="A282B9EB-E767-4A27-B7BD-04964F9E7656" css3d_uuid="BC10885F-E72A-458F-82B2-6A250148D498" observetrigger="true">
+  <wxr-target id="target4" src="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/target/nozzle/plate" webgl_uuid="3E3F4B31-A4C8-4781-BE26-FAD1F1CAB1BC" css3d_uuid="FBCA267F-9810-417F-A7A1-E013C574C52E" observetrigger="true">
     <!--plate-->  
-	<wxr-obj id="model4_1" mtl="plate.mtl" obj="plate.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/nozzle" collisionmesh="true" webgl_uuid="E94708F6-78CB-47F6-AB0A-761B9BA55275" css3d_uuid="FEE9470C-7FCC-4085-9DFE-D5294C00FCFB" observetrigger="true">
+  <wxr-obj id="model4_1" mtl="plate.mtl" obj="plate.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/nozzle" webgl_uuid="9B764886-F511-4943-B129-A67EA9AB1265" css3d_uuid="80DF7204-F030-4A19-947B-1DC586E9FB5F" observetrigger="true">
     </wxr-obj>
     <!--pencil-->
-    <wxr-obj id="model4_2" mtl="pencil4.mtl" obj="pencil4.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/nozzle" observetrigger="true" webgl_uuid="CB26A96D-F7BF-4F72-A0EC-28944E502C5D" css3d_uuid="8CC41932-0025-4817-A9C8-344258C04BF5"><!-- disable-animation-auto-start="" >-->
-    	<wxr-animation type="rotation" to="0 -6.2830 0" duration="5000" repeat="Infinity" easing="linear"></wxr-animation>
+    <wxr-obj id="model4_2" mtl="pencil4.mtl" obj="pencil4.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/nozzle" observetrigger="true" disable-animation-auto-start="" webgl_uuid="5E3F3ED7-2013-4FD7-A50C-6C0EB9ACE01D" css3d_uuid="EECC177A-8540-4768-9D4E-3E3F481CA936"><!-- disable-animation-auto-start="" >-->
+      <wxr-animation type="rotation" to="0 -6.2830 0" duration="5000" repeat="Infinity" easing="linear"></wxr-animation>
     </wxr-obj>
   </wxr-target>
   
@@ -305,7 +317,15 @@ wxr-light-ambient
   <wxr-trigger id="triggerTarget3" targets="[&quot;model1_1&quot;]" condition="collision2(this, target)" ontrigger="action2(this, target)" observetrigger="true"></wxr-trigger> <!--Plate and Nozzle part : check "collision2"-->
 
   </wxr-space>
+
+
 </wxr-world>
+	
+
+
+	
+
+
 	
 
 
