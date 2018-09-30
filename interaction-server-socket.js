@@ -13,6 +13,7 @@ module.exports = function(passportAuthorize) {
 
   // To get session of passport in socket logic, use passport.socketio middleware.
   io.use(passportAuthorize);
+  io.set('origins', '*:*');
 
 
   io.on('connection', function(socket){
