@@ -1,9 +1,12 @@
 {
-  "port": 80,
+  "port": 8080,
   "dbConfig": {
-    "db": 0
+    "db": 1
   },
-  "SocketIO": {
-    "port": 3010
+  "RealtimeDatasyncServer": {
+  	"port": 6710
+  },
+  "InteractionServer": {
+    "port": 6711
   }
 }
