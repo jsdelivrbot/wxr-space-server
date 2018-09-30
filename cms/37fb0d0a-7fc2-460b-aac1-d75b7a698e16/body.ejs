@@ -8,95 +8,81 @@
 	
 	
 	
+	
 	<wxr-world><script src="https://cdn.rawgit.com/webcomponents/webcomponentsjs/v1.1.0/webcomponents-lite.js"></script>
 <link href="https://libs.webizing.org/wxr-0.8.html" rel="import">
 <style id="internal">
-    wxr-camera {
-        --wxr-transform: translate3d(0, 0.1, 0.6) rotate3d(0, 0, 0);
-    }
 
-    wxr-light-ambient {
-        --wxr-transform: translate3d(0, 0.5, 0);
-    }
-  
- 	 wxr-light-directional{
-        --wxr-transform: translate3d(0, 0, 0.5);
-    }
-  
-  
+wxr-camera
+{
+--wxr-transform:translate3d(0,0.1,0.6)rotate3d(0,0,0);
+}
+wxr-light-ambient
+{
+--wxr-transform:translate3d(0,0.5,0);
+}
+wxr-light-directional
+{
+--wxr-transform:translate3d(0,0,0.5);
+}
+#handle_arrow
+{
+--wxr-transform:translate3d(-0.15,-0.033,0.02)rotate3d(-1.5708,0,0)scale3d(2,2,2);
+}
+#handle
+{
+--wxr-transform : translate3d(-0.14344990505557256,0.0028270874343455446,0.003946132977745487) rotate3d(2.602014206794265,-1.4565183478870798,0.9902654409315802) scale3d(1.3999985999999998,1.4000000000000004,1.4000000000000004);
+}
+#cover
+{
+--wxr-transform:translate3d(0.01,-0.15,-0.1)rotate3d(1.5708,0,0)scale3d(1.5,1.5,1.5);
+}
+#screws
+{
+--wxr-transform:translate3d(0.01,-0.15,-0.1)rotate3d(1.5708,0,0)scale3d(1.5,1.5,1.5);
+}
+#stopper_screw
+{
+--wxr-transform:translate3d(-0.15,0,0)rotate3d(1.5708,0,0)scale3d(1,1,1);
+}
+#ball
+{
+--wxr-transform:translate3d(0,0.05,0)rotate3d(0,-1.5708,0)scale3d(1.15,1.15,1.15);
+}
+#seat
+{
+--wxr-transform:translate3d(0,0.05,0)rotate3d(0,-1.5708,0)scale3d(1.15,1.15,1.15);
+}
+#annotation01
+{
+--wxr-transform:translate3d(-0.215,-0.1,0)rotate3d(0,0,3.14)scale3d(0.08,0.08,0.08);
+}
+#annotation02
+{
+--wxr-transform:translate3d(-0.11,0,0.05)rotate3d(0,0,3.14)scale3d(0.07,0.07,0.07);
+}
+#annotation03
+{
+--wxr-transform:translate3d(-0.08,0,0)rotate3d(0,0,0)scale3d(0.07,0.07,0.07);
+}
+#STEP01
+{
+--wxr-transform:translate3d(-0.2,1.04,0)rotate3d(-1.5708,0,3.14)scale3d(1,1,1);
+}
+#STEP02
+{
+--wxr-transform:translate3d(-0.07,0.975,0.009)rotate3d(-1.5708,0,1.5708)scale3d(1,1,1);
+}
+#STEP03
+{
+--wxr-transform:translate3d(-0.02,0.965,0)rotate3d(0,1.5708,0)scale3d(1,1,1);
+}
+#base
+{
+--wxr-transform:translate3d(0,-0.09,0)rotate3d(0,-1.5708,0)scale3d(1.5,1.5,1.5);
+}
 
-      #handle_arrow {
-		--wxr-transform: translate3d(-0.15, -0.033, 0.02) rotate3d(-1.5708, 0, 0) scale3d(2, 2, 2);
-	}
-   	#handle{
-		--wxr-transform: translate3d(-0.145, 0, -0.02) rotate3d(1.5708, 0, 0) scale3d(1.4, 1.4, 1.4);
-	}
-  
 
- 
-  
-  	#cover {
-		--wxr-transform: translate3d(0.01, -0.15, -0.1) rotate3d(1.5708, 0, 0) scale3d(1.5, 1.5, 1.5);
-	}
-    
-	#screws {
-		--wxr-transform: translate3d(0.01, -0.15, -0.1) rotate3d(1.5708, 0, 0) scale3d(1.5, 1.5, 1.5);
-	}
-  
-  
- 
-    #stopper_screw{
-		--wxr-transform: translate3d(-0.15, 0, 0) rotate3d(1.5708, 0, 0) scale3d(1, 1, 1);
-	}
- 
-     #ball{
-		--wxr-transform: translate3d(0, 0.05, 0) rotate3d(0, -1.5708, 0) scale3d(1.15, 1.15, 1.15);
-	}
-      
-     #seat{
-		--wxr-transform: translate3d(0, 0.05, 0) rotate3d(0, -1.5708, 0) scale3d(1.15, 1.15, 1.15);
-	}
-  
-  
-
-  
-    #annotation01 {
-		--wxr-transform: translate3d(-0.215, -0.1, 0) rotate3d(0, 0, 3.14) scale3d(0.08, 0.08, 0.08);
-	}
-  
-    #annotation02 {
-		--wxr-transform: translate3d(-0.11, 0, 0.05) rotate3d(0, 0, 3.14) scale3d(0.07, 0.07, 0.07);
-	}
-  
-     #annotation03 {
-		--wxr-transform: translate3d(-0.08, 0, 0) rotate3d(0, 0, 0) scale3d(0.07, 0.07, 0.07);
-	}
-  
-  
-  
-     #STEP01{
-		--wxr-transform: translate3d(-0.2, 1.04, 0) rotate3d(-1.5708, 0, 3.14) scale3d(1, 1, 1);
-	}
-  
-    
-     #STEP02{
-		--wxr-transform: translate3d(-0.07, 0.975, 0.009) rotate3d(-1.5708, 0, 1.5708) scale3d(1, 1, 1);
-	}
-  
-    
-     #STEP03{
-		--wxr-transform: translate3d(-0.02, 0.965, 0) rotate3d(0, 1.5708, 0) scale3d(1, 1, 1);
-	}
-
-  
-   
-  	#base {
-		--wxr-transform: translate3d(0, -0.09, 0) rotate3d(0, -1.5708, 0) scale3d(1.5, 1.5, 1.5);
-	}
-
-  
-  
-  
 </style> 
 
 
@@ -108,13 +94,13 @@
 <wxr-view default="3D" current="3D" modes="[&quot;3D&quot;, &quot;AR&quot;, &quot;VR&quot;]"></wxr-view>
 <wxr-ar engine="vuforia"></wxr-ar>
 
-<wxr-camera fovy="61" near="0.05000024999875001" far="10000.099999934488" fov="49.23502100681525" aspect="0.7494508136062925"></wxr-camera>
+<wxr-camera fovy="61" near="0.05000024999875001" far="10000.099999934488" fov="49.65813393333804" aspect="0.7499155124663351"></wxr-camera>
 <wxr-space src="http://content.wxr.webizing.org/space/1" augbase="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/target/test/stones" id="null">
 
     <wxr-target id="STEP01" src="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/target/ballvalve/01">
         <wxr-light-ambient color="0xf0f0f0" intensity="0.3"></wxr-light-ambient>
         <wxr-light-directional color="0xf0f0f0" intensity="0.5"></wxr-light-directional>
-        <wxr-obj id="handle" mtl="00_handle.mtl" obj="00_handle.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d"></wxr-obj>	
+        <wxr-obj id="handle" mtl="00_handle.mtl" obj="00_handle.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d" observetrigger="true"></wxr-obj>	
         <wxr-obj id="handle_arrow" mtl="00_arrow.mtl" obj="00_arrow.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/valve_3d"></wxr-obj>
         <wxr-plane id="annotation01" texture="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/dialog/valve_ar/step01.jpg"></wxr-plane>
     </wxr-target>
@@ -147,6 +133,9 @@
     <wxr-hand-steamvrcontroller id="7f5f6c3d-c029-4d17-a24d-20e27b9030b1"></wxr-hand-steamvrcontroller>
   
 </wxr-space></wxr-world>
+	
+
+
 	
 
 
