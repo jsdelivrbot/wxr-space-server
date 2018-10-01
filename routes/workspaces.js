@@ -253,7 +253,7 @@ function inviteMember(req, res) {
 
 		// add member
 		.then( () => !!memberInstance ? workspaceInstance.setInvite(memberInstance) : Promise.reject(`The user doesn't exist.`) )
-		.then( () => mailer.sendInvitationMail(email, memberInstance.p('name'), `http://es2.webizing.org/workspaces/` + workspaceInstance.id + `/members/join`) )
+		.then( () => mailer.sendInvitationMail(email, memberInstance.p('name'), `http://es.webizing.org/workspaces/` + workspaceInstance.id + `/members/join`) )
 		.then( () => res.json(APIResponseMessage.OK()) )
 		.catch( reason => res.json(APIResponseMessage.ERROR(reason)) );
 }
