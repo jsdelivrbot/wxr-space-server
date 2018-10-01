@@ -125,7 +125,16 @@ function searchWorkspacePage(req, res) {
 		workspaceList: [],
 	};
 
-	res.render('search', options);
+	WorkspaceModel.findAndLoadByKeyword(keyword)
+		.then( instances => {
+			const promisesArray = instances.map(i => i.getRefinedProperty());
+			return Promise.all(promisesArray);
+		})
+		.then( properties => {options.workspaceList = properties} )
+		.then( () => res.render('search', options) );
+		//.catch( reason => res.render('index', options) );
+
+	//res.render('search', options);
 }
 
 

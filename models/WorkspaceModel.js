@@ -207,6 +207,17 @@ WorkspaceModel.getAllWorkspaces = function () {
 	return this.findAndLoadAll();
 };
 
+WorkspaceModel.findAndLoadByKeyword = function(keyword) {
+	console.log('=============================================');
+	//let re = new RegExp(keyword);
+	//console.log(re);
+	//let obj = new WorkspaceModel();
+	//obj.properties.name = /test01/;
+	//console.log(obj);
+	return this._pFindAndLoad({name: /(?=test).*/});
+		//.then( instances => Promise.resolve(instances[0]) );
+};
+
 WorkspaceModel.resolveChannelName = function(wsId) {
 	return `DATABASE${config.get('dbConfig.db')}:wsId`;
 };
