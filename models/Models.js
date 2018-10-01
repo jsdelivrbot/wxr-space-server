@@ -84,48 +84,6 @@ function _pFindAndLoad(indexSet) {
 	}
 }
 
-function _pFindAndLoadByKeyword(keyword) {
-
-	const model = nohm.getModels()[this.prototype.modelName];
-
-	if (typeof indexSet === 'string') {
-		// Find by id
-		const id = indexSet;
-		return new Promise( (resolve, reject) => {
-			let instance = nohm.factory(this.prototype.modelName, id, (err, prop) => {
-				if (err === 'not found') instance = undefined;
-				else if (err) return reject(err);
-				resolve(instance);
-			});
-		});
-	} else if (typeof indexSet === 'object' ) {
-		// delete empty property??????????? 아니뭐시발 어쩌라고 ㅋㅋㅋ
-		// 얘만가지고 프로퍼티가 비어인는건지 어떻게 알아요
-		// 아 진짜 빡치게 할건가 
-		// 아그리고 네임에서도 찾고 디스크립션에서도 찾아야하는데
-		// 둘다 넣으면 둘다있는것만 찾는다며
-		// 그럼 따로따로해서 합쳐야지
-
-		// 아니 무슨 디비에서 찾는게 이딴식이야
-		// 요즘 세상에 이렇게 복잡하게 하는게 어딧어 
-		// 뭔말인지 하난도 ㅁ르겟네 
-		for (let key in indexSet) {
-			const val = indexSet[key];
-			if (val === '' || val === undefined || val === null)
-				delete indexSet[key];
-		}
-		// Find by index
-		return new Promise( (resolve, reject) => {
-			model.findAndLoad(indexSet, (err, instances) => {
-				if (err === 'not found') instances = [];
-				else if (err) return reject(err);
-				resolve(instances);
-			});
-		});
-	}
-}
-
-
 function findAndLoadAll() {
 	return _pFindAndLoad.call(this, {});
 }

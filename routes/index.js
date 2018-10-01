@@ -133,8 +133,6 @@ function searchWorkspacePage(req, res) {
 		.then( properties => {options.workspaceList = properties} )
 		.then( () => res.render('search', options) );
 		//.catch( reason => res.render('index', options) );
-
-	//res.render('search', options);
 }
 
 

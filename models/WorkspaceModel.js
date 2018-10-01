@@ -208,13 +208,7 @@ WorkspaceModel.getAllWorkspaces = function () {
 };
 
 WorkspaceModel.findAndLoadByKeyword = function(keyword) {
-	console.log('=============================================');
-	//let re = new RegExp(keyword);
-	//console.log(re);
-	//let obj = new WorkspaceModel();
-	//obj.properties.name = /test01/;
-	//console.log(obj);
-	return this._pFindAndLoad({name: /(?=test).*/});
+	return this._pFindAndLoad({name: keyword});
 		//.then( instances => Promise.resolve(instances[0]) );
 };
 
