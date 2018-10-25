@@ -1,0 +1,317 @@
+
+	<wxr-world><!--새노즐과 금속판에 위치한 트리거를 새노즐과 금속판 충돌로 바꾼다.-->
+<!--위 충돌 발생시 moveTo를 이용해 중앙쪽으로 가도록 일단 해둠-->
+<!--추후, 다른 방안? 노즐이 내려오면 더 이상 내려가지 못하도록 y좌표만 조정하는 방안을 생각해 볼 수있음 이렇게 할 경우에 연필(4_2)을 노즐파트(1_1)에 append 필요-->
+<!--연필 모델 정교한 계산이 이루어진 것으로 교체-->
+
+
+<!--얼추.. 얼추 되는데 금속판에 붙이게 되면 또 맛이 갈듯-->
+
+
+<script src="https://cdn.rawgit.com/webcomponents/webcomponentsjs/v1.1.0/webcomponents-lite.js"></script>
+<link href="https://libs.webizing.org/wxr-0.8.html" rel="import">
+
+<script>
+
+window.addEventListener('WebComponentsReady',function()
+{
+WXR.WebizingDeviceConfigManager.webizingDeviceManagerEnable=false;WXR.InteractionListener.webizingDeviceManagerEnable=false;WXR.InteractionListener.interactionEventServerEnable=false;
+}
+);
+
+</script>
+
+<style id="internal">
+
+wxr-camera
+{
+--wxr-transform:translate3d(0,0.1,2.6)rotate3d(0,0,0);
+}
+wxr-light-ambient
+{
+--wxr-transform:translate3d(0,0,0)rotate3d(0,0,0)scale3d(1,1,1);
+}
+#target0
+{
+--wxr-transform:translate3d(0,0,0)rotate3d(0,0,0)scale3d(1,1,1);
+}
+#target1
+{
+--wxr-transform:translate3d(0,0,0)rotate3d(0,0,0)scale3d(1,1,1);
+}
+#target2
+{
+--wxr-transform:translate3d(-0.00125794,-0.21579,0.0531772)rotate3d(0,0,0)scale3d(1,1,1);
+}
+#target3
+{
+--wxr-transform:translate3d(0.249956,-0.21579,0.0531772)rotate3d(0,0,0)scale3d(1,1,1);
+}
+#target4
+{
+--wxr-transform:translate3d(-0.0999487,-0.524552,0.296761)rotate3d(0,0,0)scale3d(1,1,1);
+}
+#model0_1
+{
+--wxr-transform:translate3d(0,0,0)rotate3d(0,0,0)scale3d(1,1,1);
+}
+#model1_1
+{
+--wxr-transform:translate3d(0,-0.2148550464118157,0.053593716449699125)rotate3d(0,0,0)scale3d(1,1,1);
+}
+#model1_2
+{
+--wxr-transform : translate3d(0,0.0787986341506225,0.0357455590428265) rotate3d(0,0,0) scale3d(1,1,1);
+}
+#model2_1
+{
+--wxr-transform:translate3d(0.000531987,0,0)rotate3d(0,0,0)scale3d(1.3,1.3,1.3);
+}
+#model2_2
+{
+--wxr-transform:translate3d(0,-0.025,0)rotate3d(-3.1415,0,0)scale3d(1,1,1);
+}
+#model3_1
+{
+--wxr-transform:translate3d(0,0,0)rotate3d(0,0,0)scale3d(1.3,1.3,1.3);
+}
+#model3_2
+{
+--wxr-transform:translate3d(0,-0.035,0)rotate3d(0,-3.2160582666727136,0)scale3d(1,1,1);
+}
+#model4_1
+{
+--wxr-transform:translate3d(0,0,0)rotate3d(0,0,0)scale3d(1,1,1);
+}
+#model4_2
+{
+--wxr-transform:translate3d(0,0.030884,0)rotate3d(0,-2.932197562501646,0)scale3d(1.5,1.5,1.5);
+}
+#triggerTarget
+{
+--wxr-transform:translate3d(-0.00125794,-0.21579,0.0531772)rotate3d(0,0,0)scale3d(1.3,1.3,1.3);
+}
+#triggerTarget2
+{
+--wxr-transform:translate3d(-0.00125794,-0.21579,0.0531772)rotate3d(0,0,0)scale3d(1.3,1.3,1.3);
+}
+#triggerTarget3
+{
+--wxr-transform:translate3d(-0.0999487,-0.5013499257048857,0.296761)rotate3d(0,0,0)scale3d(1.3,1.3,1.3);
+}
+
+</style>
+
+<wxr-user user-id="jisoo.lee@wrl.onl" authority="owner" me=""></wxr-user>
+
+<wxr-description title="insstek AR" img="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/thumb/ar-thumb.png" desc="insstek 3D printer maintenance using WXR AR browser"></wxr-description>
+<wxr-view default="3D" current="3D" modes="[&quot;3D&quot;,&quot;AR&quot;,&quot;VR&quot;]"></wxr-view>
+<wxr-ar engine="vuforia"></wxr-ar>
+
+<wxr-camera fovy="61" near="0.05000024999875001" far="10000.099999934488" fov="63.5824998097939" aspect="1.7053669222343921"></wxr-camera>
+<wxr-space src="http://content.wxr.webizing.org/space/1" augbase="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/target/test/stones" webgl_uuid="1822791D-EAB9-414E-9A98-C35D86B251D0" css3d_uuid="2A7DB9FB-9686-48DB-A702-00438D8A6E0C" id="null">
+  
+  
+  <script> 
+/*
+    var step2=false;
+    var step3=false;
+        function onCollide(box, result){
+            for(var i=0; i<result.length; i++){
+              console.log(result[i]);
+                if(result[i]==$("#model1_1")[0] && !step2){
+                  alert('nozzle_attatch');
+                    step2 = true;
+                }
+                else if(result[i]==$("#model4_1")[0] && !step3){
+                  alert('plate collision');
+                  step3 = true;
+                  box.oncollide="";
+                }
+            }
+        }
+*/      
+       //check the collision between nozzle part and new nozzle
+       function collision1(trigger, target){
+              const distance = trigger.webGLObject3D.getWorldPosition().distanceTo(target.webGLObject3D.getWorldPosition());
+              return distance < 0.01 ? true : false;
+       }
+       //check the collision between nozzle part and plate
+       function collision2(trigger, target){
+              const distance = trigger.webGLObject3D.getWorldPosition().distanceTo(target.webGLObject3D.getWorldPosition());
+              return distance < 0.08 ? true : false;
+       }
+       //correspond with collision1() : append new nozzle to nozzle part and remove rotation arrow. then start the animation that nozzle part move to the plate  
+       function action1(trigger, target){
+          //alert('first collision!');
+            $('#model1_1')[0].append($('#model3_1')[0]) //parent : nozzle part, child : new nozzle
+            $('#model3_1')[0].moveTo(0,0,0) 
+
+            $('#model3_2').remove();
+            $('#model1_1')[0].startAnimation();
+
+            trigger.ontrigger="";
+       }
+       //correspond with collision2() : append nozzle part to center of the plate and move it to appropriate location.
+       function action2(trigger, target){
+          //alert('second collison!');
+            $('#model4_1')[0].append($('#model1_1')[0])
+            $('#model1_1')[0].moveTo(0,0.097,0) 
+ 
+///////////////////////////////////////append를 하면 model3_1 사라짐. 근데 코드에는 hierarchy까지 맞춰서 들어가있는데..? worldPosition은 0 0 0 이라 나옴.
+//append에 append를 해서 조부모가 생긴 경우 사라지는지 box로 테스트 해보기.
+
+
+          //show pencil and start animation
+            $('#model4_2')[0].changedDomStyleDisplay('block'); 
+            $('#model4_2')[0].startAnimation();
+            setTimeout(function() {
+              var x11 = $('#model1_1')[0].webGLObject3D.getWorldPosition().x;
+              var y11 = $('#model1_1')[0].webGLObject3D.getWorldPosition().y;
+              var z11 = $('#model1_1')[0].webGLObject3D.getWorldPosition().z;
+              $('#model4_2')[0].changedDomStyleDisplay('none'); 
+              setTimeout(function(){
+                  //before show the wrench, move it to appropriate position (It depends on the location of nozzle part) 
+                  $('#model1_2')[0].moveTo(x11, y11 + 0.0787986341506225, z11 + 0.0357455590428265); 
+                  $('#model1_2')[0].changedDomStyleDisplay('block');
+                  $('#model1_2')[0].startAnimation();
+              }, 1000);
+            }, 15000); 
+            //Wait for pencil animation and pause for 1 second
+          //After that, hide the pencil and show hex wrench
+           
+
+            trigger.ontrigger="";
+       }
+
+       //default settings
+       function action0(object){
+   
+           $('#model2_1')[0].append($('#model2_2')[0])  //parent : destroyed, child : rotation arrow
+           $('#model3_1')[0].append($('#model3_2')[0])  //parent : new, child : rotation arrow
+          // $('#model1_1')[0].append($('#model1_2')[0])  //parent : nozzle part, child : hex wrench
+          // $('#model1_2')[0].moveTo(0, 0.0787986341506225, 0.0357455590428265) 
+          
+           $('#model1_2')[0].changedDomStyleDisplay('none');  //hide hex wrench 
+           $('#model4_2')[0].changedDomStyleDisplay('none');  //hide pencil   
+
+            
+           object.oncollide="";
+       }
+
+        //replace "function action2" to "function onCollide" ????? ==>(X)
+/*        function onCollide(object, result){
+            var count=1;
+            for(var i=0; i<result.length; i++){
+                if(result[i]==$("#model4_1")[0] && count==4){
+
+                    $('#model4_2')[0].changedDomStyleDisplay('block'); 
+                    $('#model4_2')[0].startAnimation();
+                    setTimeout(function() {
+                    $('#model4_2')[0].changedDomStyleDisplay('none'); 
+                        setTimeout(function(){
+                          $('#model1_2')[0].changedDomStyleDisplay('block');
+                        }, 1000);
+                    }, 15000); 
+                    count++;  
+                    object.oncollide="";
+                }
+            }
+
+        }
+*/
+    </script> 
+
+    
+    <wxr-target id="target0" src="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/target/nozzle/remove_nozzle" webgl_uuid="67096D42-4482-4B17-A3A4-8FA37D1E9B4D" css3d_uuid="29665AD2-432B-4B20-8A43-4B8C71B363B5" observetrigger="true" style="display: block;">
+        <wxr-light-ambient color="0xf0f0f0" intensity="0.3" webgl_uuid="E84EBA88-AB2E-4DBB-8827-810E2AF1C2D9" css3d_uuid="F76485D3-8A10-4E13-8B3A-0B669D63C4A0"></wxr-light-ambient>
+        <wxr-light-directional color="0xf0f0f0" intensity="0.5" webgl_uuid="5F979BF7-CBC8-444A-A71F-829F560CDC70" css3d_uuid="80961F94-F25D-418A-AFED-DC0CFAAE3702"></wxr-light-directional> 
+        
+        <!--simple printer-->
+        <wxr-obj id="model0_1" mtl="s_printer.mtl" obj="s_printer.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/nozzle" webgl_uuid="DFB14683-98A4-4FE0-A8B1-8C079580FFD3" css3d_uuid="48318B6D-9A63-4CA1-A83D-C2EBF4DD641E" observetrigger="true">
+        </wxr-obj>
+    </wxr-target>
+    
+  
+    <wxr-target id="target1" src="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/target/nozzle/nozzle_part" webgl_uuid="A9D88573-1D3F-4C12-844C-EDFA1E6F3255" css3d_uuid="C5B7703F-038C-4ADE-B910-187C5F0D70F0" observetrigger="true" style="display: block;">
+<!--        <wxr-obj id="model1_1" mtl="nozzle_part.mtl" obj="nozzle_part.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/nozzle" observetrigger="true" collisionmesh="true" collisionradius="0.05" oncollide="action0(this)" disable-animation-auto-start="" webgl_uuid="65B5022C-1D35-4F4E-B638-3F6B9F50696E" css3d_uuid="E92C6ABA-C5EC-4FF3-BC20-639B3732C9C7"> 
+        <wxr-animation type="movement" to="-0.0985776373860987 -0.2102909056489448 0.2441634944775313" duration="5000" repeat="2" easing="linear"></wxr-animation>
+-->     
+    <!--nozzle part : apply animation moving by x,y,z axis -->
+    <wxr-obj id="model1_1" mtl="nozzle_part.mtl" obj="nozzle_part.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/nozzle" observetrigger="true" collisionmesh="true" collisionradius="0.05" oncollide="action0(this)" disable-animation-auto-start="" animationrepeat="2" webgl_uuid="DF65CD38-9B51-4EB4-8497-445CA5B4AD11" css3d_uuid="1AB7B9F7-234B-46C5-9623-975A5A272DE8">
+      <wxr-animation type="movement" to="0 0 0.2441634944775313" duration="1500" easing="linear"></wxr-animation>
+        <wxr-animation type="movement" to="-0.0985776373860987 0 0" duration="1500" easing="linear"></wxr-animation>
+        <wxr-animation type="movement" to="0 -0.2102909056489448 0" duration="1500" easing="linear"></wxr-animation>
+    </wxr-obj>
+
+    <wxr-obj id="model1_2" mtl="hexkey2.mtl" obj="hexkey2.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/nozzle" observetrigger="true" disable-animation-auto-start="" webgl_uuid="5F645A54-A986-46B3-AF31-96883C1BE737" css3d_uuid="1A76A10B-6B77-4A66-92C3-C904B55BA2BF">
+        <wxr-animation type="helix" to="0 0 0.01 0 0 -6.2831" repeat="4" duration="5000"></wxr-animation>     
+    </wxr-obj>
+      
+
+      
+
+        
+  </wxr-target>
+  
+  
+  <wxr-target id="target2" src="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/target/nozzle/destroyed_nozzle" webgl_uuid="D89AB311-5B28-4375-9122-362CC8485457" css3d_uuid="4716024B-9A4B-42AA-8E9C-71CCE48CF0AE" observetrigger="true" style="display: block;">
+        
+    <script>
+        function isFaraway(trigger, target){  //check distance between nozzle part and destroyed nozzle
+          const distance = trigger.webGLObject3D.getWorldPosition().distanceTo(target.webGLObject3D.getWorldPosition());
+          return distance > 0.15 ? true : false;
+        }
+        function removeTarget(target){  //If destroyed nozzle is far enough from nozzle part, discard destroyed nozzle and rotational arrow.
+          //alert('far away~~~');
+          $('#model2_1').remove();
+          $('#model2_2').remove();
+          //target.ontrigger="";
+        }
+    </script>
+    
+    <!--destroyed nozzle-->
+    <wxr-obj id="model2_1" mtl="destroyed.mtl" obj="destroyed.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/nozzle" observetrigger="true" collisionmesh="true" webgl_uuid="A0AD44E2-B3E8-4370-AAB8-A83BC12937E9" css3d_uuid="A96CE39D-78F3-47B3-A0DE-EA496C33F84F">
+    </wxr-obj>
+
+    <!--rotation arrow(clockwise)-->  
+    <wxr-obj id="model2_2" mtl="rotate.mtl" obj="rotate.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/nozzle" observetrigger="true" webgl_uuid="5983D4FD-A5D5-40A4-82C4-A645276CE68A" css3d_uuid="3B7B809C-FBCF-4B15-A4A1-D677DC249DCD">
+      <wxr-animation type="rotation" to="0 -6.2830 0" duration="3000" repeat="Infinity" easing="linear"></wxr-animation>   
+    </wxr-obj>
+          
+  </wxr-target>
+  
+  
+  <wxr-target id="target3" src="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/target/nozzle/new_nozzle" webgl_uuid="14739FDE-FD89-4771-A602-E1E5472AFF8E" css3d_uuid="7D582F6A-43A8-4CB1-BE69-A220EA0A9FE3" observetrigger="true" style="display: block;">
+    <!--new nozzle-->
+    <wxr-obj id="model3_1" mtl="new.mtl" obj="new.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/nozzle" observetrigger="true" webgl_uuid="1D09AD4F-F5CC-4501-B731-1AD61B913D6C" css3d_uuid="A2EF40C6-EDF6-4D44-8217-E160B55719C6">
+    </wxr-obj>
+
+    <!--rotation arrow(counter clockwise)-->  
+    <wxr-obj id="model3_2" mtl="rotate.mtl" obj="rotate.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/nozzle" observetrigger="true" webgl_uuid="3F75F4A5-00D1-4ED4-923C-A134FE711D5F" css3d_uuid="A8751A71-6370-4FB1-A10C-0A11C0CD837F">
+      <wxr-animation type="rotation" to="0 -6.2830 0" duration="3000" repeat="Infinity" easing="linear"></wxr-animation>
+    </wxr-obj>
+    
+      
+  </wxr-target>
+
+  <wxr-target id="target4" src="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/target/nozzle/plate" webgl_uuid="DABC52AC-A69B-4BF2-9D83-526F5D38FE4D" css3d_uuid="7761E907-DC65-4CAD-8E6E-00C9ED31CE17" observetrigger="true" style="display: block;">
+    <!--plate-->  
+    <wxr-obj id="model4_1" mtl="plate.mtl" obj="plate.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/nozzle" collisionmesh="true" webgl_uuid="1A4A9C95-DCC9-46A4-8A55-3B5707F413B9" css3d_uuid="D93DE815-FA41-4E8A-A78E-9E86E2D313E8" observetrigger="true">
+    </wxr-obj>
+    
+    <!--pencil-->
+    <wxr-obj id="model4_2" mtl="pencil4.mtl" obj="pencil4.obj" base-url="https://wxr.nyc3.digitaloceanspaces.com/ar3dp/resources/models/nozzle" observetrigger="true" webgl_uuid="F28A639B-7148-44F9-A95A-586F4B8C9D08" css3d_uuid="C36537E3-A069-4927-9E9D-A2D68E8C0806"><!-- disable-animation-auto-start="" >-->
+      <wxr-animation type="rotation" to="0 -6.2830 0" duration="5000" repeat="Infinity" easing="linear"></wxr-animation>
+    </wxr-obj>
+  </wxr-target>
+  
+
+  <wxr-trigger id="triggerTarget" targets="[&quot;model2_1&quot;]" condition="isFaraway(this,target)" ontrigger="removeTarget(this, target)"></wxr-trigger> <!--Nozzle part and Destroyed nozzle : check "isFaraway"-->   
+  <wxr-trigger id="triggerTarget2" targets="[&quot;model3_1&quot;]" condition="collision1(this, target)" ontrigger="action1(this, target)"></wxr-trigger> <!--Nozzle part and New nozzle : check "collision1"-->
+  <wxr-trigger id="triggerTarget3" targets="[&quot;model1_1&quot;]" condition="collision2(this, target)" ontrigger="action2(this, target)" observetrigger="true"></wxr-trigger> <!--Plate and Nozzle part : check "collision2"-->
+
+  </wxr-space>
+</wxr-world>
+	
+
